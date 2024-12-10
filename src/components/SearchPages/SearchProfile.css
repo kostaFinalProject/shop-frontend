@@ -1,0 +1,85 @@
+
+.SearchProfile_full{
+    margin: 0 auto;
+    padding: 0;
+    height: auto;
+    width: 1280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.SearchProfile_feed_user {
+
+    width: 640px;
+    height: 75px;
+    display: flex;
+
+}
+
+.SearchProfile_user_img {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.SearchProfile_user_img img {
+    border-radius: 50px;
+}
+
+.SearchProfile_user_information {
+    width: 80%;
+
+    display: block;
+}
+
+.SearchProfile_user_information a {
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+}
+
+.SearchProfile_user_id {
+    margin: 0;
+    padding: 0;
+    height: 50%;
+    font-size: 15px;
+    color: black;
+    justify-content: end;
+
+    
+}
+.SearchProfile_user_id{
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+    justify-content: flex-end; /* 하단으로 정렬 */
+}
+.SearchProfile_user_message {
+    margin: 0;
+    padding: 0;
+    height: 50%;
+    font-size: 15px;
+    color: #999;
+
+}
+.SearchProfile_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.SearchProfile_follow_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-size: 15px;
+    width: 80px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 10px;
+}

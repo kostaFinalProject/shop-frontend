@@ -1,0 +1,301 @@
+
+.DetailPage_full_screen  {
+    margin: 0 auto;
+    padding: 0;
+
+    margin-top: 215px;
+    list-style: none;
+}
+
+.DetailPage_detail_page {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    max-width: 1360px;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+
+}
+
+/*---------------- 상세페이지 전체 설정 ----------------*/
+.DetailPage_product_detail {
+    width: 100%;
+    max-width: 1360px;
+    height: auto;
+    display: flex;
+}
+
+/* ----------------상세페이지 이미지---------------- */
+.DetailPage_detail_img {
+
+    width: 680px;
+    height: auto;
+    max-height: 680px;
+
+}
+
+.DetailPage_detail_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 비율을 유지하면서 자르지 않도록 설정 */
+    background-size: auto;
+    /* 원본 크기 그대로 유지 */
+    background-repeat: no-repeat;
+    /* 이미지 반복하지 않도록 설정 */
+    background-position: center;
+    /* 이미지를 요소 중앙에 배치 */
+}
+
+
+
+/* ---------------- 상세페이지 설명글 ----------------*/
+ .DetailPage_detail_text {
+    width: 680px;
+    height: 100%;
+    margin-left: 80px;
+
+
+}
+
+/* --------------------------좋아요 장바구니 관심상품_--------------- */
+
+
+
+.DetailPage_sub_button_menu {
+    padding-top: 20px;
+    height: 50px;
+    width: 610px;
+
+    display: flex;
+    justify-content: space-between;
+    /* 버튼 간 간격 조정 (옵션) */
+    align-items: center;
+    /* 수직 정렬 */
+    gap: 10px;
+    /* 버튼 간 간격 */
+}
+
+.DetailPage_like_button,
+.DetailPage_basket_button,
+.DetailPage_interest_product_button {
+    height: 50px;
+    border: 2px solid #B5B6B5;
+    /* border-style과 border-width를 통합 */
+    border-radius: 10px;
+    color: #B5B6B5;
+}
+
+.DetailPage_like_button:hover,
+.DetailPage_basket_button:hover,
+.DetailPage_interest_product_button:hover {
+    border-style: 2px solid black;
+}
+
+.DetailPage_like_button {
+    width: 100px;
+    background-color: white;
+}
+
+.DetailPage_basket_button,
+.DetailPage_interest_product_button {
+    width: 250px;
+    background-color: white;
+}
+
+.DetailPage_like_button a,
+.DetailPage_basket_button a,
+.DetailPage_interest_product_button a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 16px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 16px;
+    /* 텍스트 flex로 분리 후 가운데 가로 세로 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.DetailPage_like_button:hover,
+.DetailPage_basket_button:hover,
+.DetailPage_interest_product_button:hover {
+    border: 2px solid black;
+    /* 주위 선만 강조 (원하는 색상으로 변경) */
+    color: black;
+    /* 글자 색상도 바꾸고 싶으면 추가 */
+    text-decoration: none;
+    /* 밑줄 없애기 (선택 사항) */
+}
+
+
+
+/* ----------------------상품상세설명 후기 버튼------------------ */
+.DetailPage_product_detail_description {
+    width: 1360px;
+    height: 60px;
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    color: #B5B6B5;
+    display: flex;
+
+    /* border-bottom: 2px solid #B5B6B5; */
+}
+
+.DetailPage_button_product_detail_description {
+    width: 50%;
+    height: 100%;
+
+}
+
+.DetailPage_button_review {
+    width: 50%;
+    height: 100%;
+}
+
+.DetailPage_button_product_detail_description a,
+.DetailPage_button_review a {
+    display: block;
+    width: 50%;
+    height: 100%;
+    font-size: 16px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 16px;
+    /* 텍스트 flex로 분리 후 가운데 가로 세로 정렬 */
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+}
+
+/* ----------------------상품상세설명란------------------ */
+
+.DetailPage_text_product_detail_description {
+    width: 100%;
+    max-width: 1360px;
+    height: auto;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+}
+
+.DetailPage_text_product_detail_description_img {
+
+    max-width: 100%;
+    /* 최대 너비를 100%로 설정하여 부모 요소의 크기에 맞게 확장 */
+    height: auto;
+    /* 세로 크기는 자동으로 조정 (비율 유지) */
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+    background-size: auto;
+    /* 원본 크기 그대로 유지 */
+    background-repeat: no-repeat;
+    /* 이미지 반복하지 않도록 설정 */
+    background-position: center;
+    /* 이미지를 요소 중앙에 배치 */
+}
+
+
+/* ----------------------SNS 형식 후기글------------------  */
+.DetailPage_sns_style {
+    width: 100%;
+    max-width: 1360px;
+    margin-bottom: 20px;
+    height: 40px;
+
+    font-size: 20px;
+    /* border-top: 1px solid #B5B6B5; */
+    color: black;
+    text-align: left;
+
+}
+
+.DetailPage_sns_style a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.DetailPage_detail_page_review_list {
+
+    width: calc(272x5);
+    height: auto;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.DetailPage_detail_page_review_list_body {
+    width: 100%;
+    max-width: 262px;
+    height: 400px;
+}
+
+.DetailPage_detail_page_review_list a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.DetailPage_detail_page_review_list_item_img img {
+    width: 262px;
+    height: 262px;
+    object-fit: contain;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+
+}
+
+.DetailPage_detail_page_review_content {
+    width: 100%;
+
+    padding: 0;
+
+}
+
+.DetailPage_detail_page_review_title {
+    width: 262px;
+    padding: 0;
+    height: 28px;
+    margin-top: 5px;
+    display: flex;
+
+}
+
+.DetailPage_detail_page_review_title_img {
+    justify-content: center;
+    border-radius: 100px;
+    width: 28px;
+    height: 28px;
+
+}
+
+.DetailPage_detail_page_review_title_id {
+    width: 75%;
+    margin-left: 5px;
+
+}
+
+.DetailPage_detail_page_review_title_like {
+
+    /* 만약 좋아요 script 기능 한 후 아이콘 벗어날 시 
+    위의 아이디와 라이크 width 조정하거나 다시 정렬 */
+
+}
+
+.DetailPage_detail_page_review_body_tag {
+    width: 100%;
+    font-size: 13px;
+    margin-top: 10px;
+}

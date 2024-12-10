@@ -1,0 +1,49 @@
+/* -------------------sns_container---------------- */
+
+
+.ProfileMyInterests_detail_page_review_list_body {
+
+    list-style: none;
+    display: flex;
+    margin-left: 20px;
+    width: 1280px;
+    justify-content: center;
+
+}
+.ProfileMyInterests_masonry_column{
+    width: 300px !important;
+
+}
+.ProfileMyInterests_detail_page_review_list_item  {
+    width: 300px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    
+
+}
+.ProfileMyInterests_detail_page_review_list_item:hover {
+    cursor: pointer;
+}
+
+.ProfileMyInterests_detail_page_review_list_item_img{
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* -------------------리뷰 리스트 --------------- */
+
+
+.ProfileMyInterests_detail_page_review_title_id {
+    display: none;
+}   
+
+
+.ProfileMyInterests_etail_page_review_MyInterests {
+     display: none;
+}
+

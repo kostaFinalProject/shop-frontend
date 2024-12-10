@@ -1,0 +1,238 @@
+
+.SizeSelection_inner {
+    width: 610px;
+}
+
+.SizeSelection_option {
+    text-align: left;
+    width: 100%;
+    max-width: 610px;
+}
+
+.SizeSelection_title {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.SizeSelection_size {
+    
+    width: 100%;
+    border-radius: 10px;
+}
+
+.SizeSelection_select {
+    width: 100%;
+    padding: 10px 5px;
+}
+
+
+
+
+
+/* ------------------------------------------------------ */
+.DetailSelecte_total_price {
+
+    font-size: 20px;
+    overflow: hidden;
+    width: 610px;
+}
+
+
+.DetailSelecte_price_total {
+
+    float: right;
+
+}
+
+.BuyInformation_buyBtn {
+    margin-top: 20px;
+    background-color: #000;
+    border-radius: 10px;
+    width: 610px;
+    height: 48px;
+    color: white;
+    font-size: 16px;
+
+}
+
+.BuyInformation_buyBtn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 배경색을 반투명하게 설정 */
+    opacity: 3;
+    /* 전체적으로 흐려지는 효과 */
+}
+
+.BuyInformation_buyBtn a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 16px;
+    text-decoration: none;
+    color: inherit;
+    font-size: 16px;
+    /* 텍스트 flex로 분리 후 가운데 가로 세로 정렬 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+
+
+/* ------------------------------- 옵션 창----------------------- */
+.DetailSelect_Selected_option { 
+    width: 610px;
+
+}
+
+.DetailSelect_list {
+    height: 100px;
+    font-size: 10px;
+    width: 100%;
+}
+.DetailSelect_NewOption{
+    width: 100%;
+    height: 100px;
+
+    display: flex;
+}
+
+.DetailSelect_name {
+    width: 70%;
+    height: 100px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+
+}
+.DetailSelect_title  {
+    font: size 16px;
+
+}
+.DetailSelect_size {
+    font-size: 12px;
+    color: #B5B6B5;
+}
+/* --------------------옵션 버튼0-------------- */
+
+.DetailSelect_list_quantity {
+    width: 17%;
+    padding: 20 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+.quantityInput{
+    width: 30px !important;
+    height: 25px;
+    font-size: 14px !important;
+    text-align: center !important;
+    margin-left: 10px !important;
+    all:unset;
+}
+.DetailSelect_increaseBtn,
+.DetailSelect_decreaseBtn {
+    font-size: 15px !important;
+    all:unset;
+}
+
+.DetailSelect_increaseBtn {
+    margin-right: 10px;
+}
+
+.DetailSelect_increaseBtn:hover,
+.DetailSelect_decreaseBtn:hover {
+    cursor: pointer;
+}
+
+.DetailSelect_remove {
+    text-align: right;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    background-color: inherit;
+    border: none;
+    color: #B5B6B5;
+
+    
+}
+
+.DetailSelect_remove:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.DetailSelect_total_count {
+    width: 20%;
+    font-size: 14px;
+    text-align: right;
+
+}
+
+ /* ----------------------적립금 ------------------- */
+.DetailSelect_total_count{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+.DetailSelect_total_price{
+    font-size: 18px;
+
+}
+.DetailSelect_total_rewardRate {
+    margin-top: 3px;
+    font-size: 9px;
+}
+/* ----------------- */
+.BuyInformation_buyBtn {
+    margin-top: 20px;
+    background-color: #000;
+    border-radius: 10px;
+    width: 610px;
+    height: 48px;
+    color: white;
+    font-size: 16px;
+}
+
+.BuyInformation_buyBtn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 3;
+}
+
+.BuyInformation_buyBtn a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 16px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+--------------------
+.DetailSelecte_total_price {
+    display: flex;
+    justify-content: space-between;
+    width: 610px;
+    font-size: 16px;
+}
+
+.DetailSelecte_price_title {
+    font-size: 16px;
+}
+
+.DetailSelecte_price_total {
+    font-weight: bold;
+    font-size: 16px;
+}

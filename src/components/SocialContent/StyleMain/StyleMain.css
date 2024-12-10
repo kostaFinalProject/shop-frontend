@@ -1,0 +1,232 @@
+
+.StyleMain_full_screen  {
+    margin-top: 215px;
+    width: 1280px;
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+/* -------------------------  banner------------------------ */
+
+.StyleMain_banner{
+    width: 100%;
+    /* max-width: 1280px; */
+    height: 30px;
+    padding: 0;
+    font-size:  25px;
+
+    padding: 15px 0 15px 0;
+    
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+/* ------------------------- navigation ------------------------ */
+
+
+.StyleMain_navigation {
+    width: 100%;
+    /* max-width: 1260px; */
+    height: 45px;
+
+    padding-left: 20px;
+    list-style: none;  
+    display: flex;
+    gap: 20px;
+
+    
+}
+.StyleMain_navigation li {
+    margin: 0;
+    padding: 0;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.StyleMain_navigation a {
+    text-decoration: none;
+    color: inherit;
+}
+/* ------------------------- keyword_search ------------------------ */
+
+
+.StyleMain_keyword_search {
+    width: 100%;
+    /* max-width: 1280px; */
+    height: 150px;
+    border-top: 1px solid #B5B6B5;
+    border-bottom: 1px solid #B5B6B5;
+    padding-bottom: 10px;
+    list-style: none;  
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+
+}
+.StyleMain_search_list{
+    width: 110px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.StyleMain_search_list_img {
+    width: 110px;
+    height: 100px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    object-fit: contain;
+
+}
+
+.StyleMain_search_list p {
+
+    margin: 5px;
+    text-align: center;
+    font-size: 12px;
+    word-wrap: break-word;
+    position: relative;
+    height: 30px;
+}
+.StyleMain_search_list a {
+    text-decoration: none;
+    color: inherit;
+
+}
+
+/* ------------------------- sorting ------------------------ */
+
+
+.StyleMain_sorting {
+    width: 100%;
+    max-width: 1280px;
+    height: 50px;
+    display: block;
+    text-align: right;
+    font-size: 15px;
+
+    margin-top: 10px;
+
+
+}
+.StyleMain_sorting span{
+    font-size: 20px;
+
+}
+.StyleMain_sorting a {
+    text-decoration: none;
+    color: inherit;
+    padding-right: 20px;
+}
+
+
+/* -------------------sns_container---------------- */
+.StyleMain_sns_container{
+
+    margin: 0 auto;
+    padding: 0;
+    width: 1360px;
+    height: auto;
+    display: flex;
+
+}
+
+
+.StyleMain_detail_page_review_list_body {
+    width: 100%;
+    max-width: 1360px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+
+}
+
+.StyleMain_detail_page_review_list_item {
+
+    flex: 1 1 calc(25% - 20px);
+    max-width: calc(25% - 20px);
+    height: 410px;
+    
+    text-align: center;
+    list-style: none;
+    justify-content: flex;
+}
+
+.StyleMain_detail_page_review_list_item_img img {
+    width: 305px;
+    height: 305px;
+    margin-top: 10px;
+    object-fit: contain;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    
+}
+
+/* -------------------리뷰 리스트 --------------- */
+
+
+.StyleMain_detail_page_review_content {
+    width: 270px;
+    height: 50px;
+    margin: 0 auto;
+    padding: 0;
+    display: block;
+    justify-content: center;
+}
+
+.StyleMain_detail_page_review_title {
+    width: 100%;
+    padding: 0;
+    height: 28px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;    
+
+}
+
+.StyleMain_detail_page_review_title_img {
+    justify-content: center;
+    border-radius: 100px;
+    width: 28px;
+    height: 28px;
+
+}
+
+.StyleMain_detail_page_review_title_id {
+    width: 75%;
+    margin-left: 5px;
+
+}
+
+.StyleMain_detail_page_review_title_like {
+
+    /* 만약 좋아요 script 기능 한 후 아이콘 벗어날 시 
+    위의 아이디와 라이크 width 조정하거나 다시 정렬 */
+
+}
+
+.StyleMain_detail_page_review_body_tag {
+    width: 100%;
+    font-size: 13px;
+    margin-top: 10px;
+    height: 40px;
+
+}
+

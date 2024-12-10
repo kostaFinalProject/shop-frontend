@@ -1,0 +1,582 @@
+/* Google Fonts - Jost */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+/* Pretendard CDN */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.MyPageOrdercontainer #content{
+  padding-bottom: 150px;
+}
+
+body{
+  margin-top: 215px;
+  font-family: 'Jost', 'Pretendard', '맑은고딕', 'Malgun Gothic', '돋움', Dotum, Helvetica, Arial, AppleGothic, sans-serif;
+}
+
+.MyPageOrdercontainer ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.MyPageOrdercontainer li{
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+  color: #757575;
+}
+
+.MyPageOrdercontainer a{
+  text-decoration: none;
+  font-size: 13px;
+  color: #010101;
+}
+
+.MyPageOrdercontainer thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageOrdercontainer table {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.MyPageOrdercontainer tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageOrdercontainer th {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 15px 10px 16px;
+}
+
+.MyPageOrdercontainer button{
+  border: none;
+}
+
+.MyPageOrdercontainer div{
+  display: block;
+}
+
+.MyPageOrdercontainer select{
+  background: #fff;
+  background-size: 10px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-size: 13px;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 30px 0 15px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+/* 메인 컨테이너 스타일 */
+.MyPageOrdercontainer #content {
+  width: 1360px; /* 전체 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
+  display: flex; /* 플렉스 컨테이너 */
+  gap: 20px; /* 좌우 간격 */
+}
+
+/* 왼쪽 메뉴 스타일 */
+.MyPageOrdercontainer .manuwrap {
+  width: 200px; /* 고정 너비 */
+  font-size: 16px; /* 글씨 크기 */
+  line-height: 1.8; /* 행간 */
+  background-color: #ffffff; /* 배경색 */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.MyPageOrdercontainer .manuwrap h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.MyPageOrdercontainer .manuwrap article{
+  line-height: 1,5;
+}
+
+.MyPageOrdercontainer .manuwrap article ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 5px;
+}
+
+.MyPageOrdercontainer article h4{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+.MyPageOrdercontainer .manuwrap article ul li a{
+  color: var(--font-color-gray);
+}
+
+/* 오른쪽 콘텐츠 스타일 */
+.MyPageOrdercontainer .contentwrap {
+  width: 1130px;
+  background-color: #ffffff; /* 배경색 */
+}
+
+.MyPageOrdercontainer .typeNav{
+  position: relative;
+}
+
+
+.MyPageOrdercontainer .contentwraptitle{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+
+.MyPageOrdercontainer .menu {
+  margin: 0 0 20px;
+  border-bottom: 1px solid #868686;
+  background: #fff;
+  box-sizing: border-box;
+  height: 53px;
+  padding: 0;
+}
+
+.MyPageOrdercontainer .menu li {
+  float: left;
+  margin-left: -1px;
+  background: #f6f6f6;
+}
+
+.MyPageOrdercontainer .selected{
+  border: 1px solid #000;
+  border-bottom: #f9f9f9;
+  margin-right: 1px;
+}
+
+.MyPageOrdercontainer .cs{
+  border-bottom: 1px solid #868686;;
+}
+
+.MyPageOrdercontainer .menu .selected a {
+  position: relative;
+  border-color: #868686;
+  color: #000;
+  font-weight: bold;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-bottom: 0;
+  display: inline-block;
+  text-decoration: none;
+  outline: 0;
+  text-align: center;
+}
+
+.MyPageOrdercontainer .menu li a {
+  min-width: 218px;
+  padding: 16px 20px;
+  border: 1px solid #e5e5e5;
+  border-bottom: 0;
+  color: #545454;
+  background: #f6f6f6;
+}
+
+.MyPageOrdercontainer .menu .cs a{
+  border: 1px solid #e5e5e5;
+  border-bottom: 0;
+  color: #545454;
+  background: #f6f6f6;
+  display: inline-block;
+  text-decoration: none;
+  outline: 0;
+  text-align: center;
+}
+
+
+.MyPageOrdercontainer fieldset{
+  display: flex;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  vertical-align: top;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+}
+
+.MyPageOrdercontainer legend {
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 0;
+  height: 0;
+  line-height: 0;
+}
+
+.MyPageOrdercontainer .stateSelect {
+  display: inline-block;
+  margin: 0 20px 0 0;
+}
+
+.MyPageOrdercontainer .stateSelect select {
+  width: 155px;
+}
+
+.MyPageOrdercontainer .OrderOption {
+  font-weight: normal;
+  display: block;
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+  white-space: nowrap;
+}
+
+.MyPageOrdercontainer .period {
+  margin: 0 20px 0 0;
+}
+
+.MyPageOrdercontainer .period a{
+  margin-right: 1px;
+}
+
+.MyPageOrdercontainer .period .btnNormalSizeM {
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid #e0e0e0;
+  line-height: 1;
+  font-weight: normal;
+  vertical-align: middle;
+  word-spacing: -0.5px;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  color: #000;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 13px 20px;
+  font-size: 13px;
+}
+
+.MyPageOrdercontainer .period .btnNormalSizeMselected {
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  line-height: 1;
+  font-weight: normal;
+  vertical-align: middle;
+  word-spacing: -0.5px;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  color: #000;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 13px 20px;
+  font-size: 13px;
+}
+
+.MyPageOrdercontainer .date {
+  display: inline-block;
+}
+
+.MyPageOrdercontainer input[type=text][readonly] {
+  background: #f9f9f9;
+}
+
+.MyPageOrdercontainer .TextDatepicker{
+  height: 40px;
+  line-height: 40px;
+  padding: 2px 4px 2px 15px;
+  border: 1px solid #e0e0e0;
+  color: var(--font-color-base);
+  user-select: none;
+  border-color: #000;
+    transition: .3s;
+}
+
+.MyPageOrdercontainer .datepickertrigger{
+  width: 20px;
+  height: 20px;
+  margin: 0 10px;
+  vertical-align: middle;
+  background-size: 20px 20px;
+}
+
+.MyPageOrdercontainer #history_end_date {
+  margin-left: 10px;
+}
+
+.MyPageOrdercontainer .btnSubmitSizeMeDataSet {
+  position: relative;
+  padding: 13px 20px;
+  font-size: 13px;
+  display: inline-block;
+  box-sizing: border-box;
+    border: 1px solid transparent;
+    line-height: 1;
+    font-weight: normal;
+    text-decoration: none;
+    vertical-align: middle;
+    word-spacing: -0.5px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--font-color-sp-rev);
+    background-color: var(--font-color-sp);
+    border-radius: 3px;
+}
+
+.MyPageOrdercontainer #order_search_btn {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.0001;
+}
+
+.MyPageOrdercontainer .help{
+  margin: 10px 0;
+}
+
+.MyPageOrdercontainer .help li{
+  margin: 2px 0;
+    padding: 2px 0 2px 22px;
+    font-size: 12px;
+    line-height: 19px;
+    color: #6d6d6d;
+}
+
+.MyPageOrdercontainer .none{
+  text-align: center;
+  padding: 60px 0;
+}
+
+.MyPageOrdercontainer img{
+  padding-left: 3px;
+}
+
+.MyPageOrdercontainer .prdBox{
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  margin: 5px 0;
+}
+
+/* 체크박스 */
+.MyPageOrdercontainer .check {
+  margin-right: 10px;
+  position: relative;
+    opacity: 1;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    vertical-align: text-top;
+    border: 1px solid #000;
+    background: #fff;
+}
+
+/* 썸네일 이미지 */
+.MyPageOrdercontainer .thumbnail img {
+  border-radius: 5px;
+  object-fit: cover;
+  margin: 0 20px 0 0;
+}
+
+/* 상품 정보 */
+.MyPageOrdercontainer .description {
+  transform: translate(0,5px);
+  width: 700px;
+}
+
+.MyPageOrdercontainer .description .price li {
+  font-size: 12px;
+  color: var(--font-color-lightgray);
+  line-height: 20px;
+}
+.MyPageOrdercontainer .description .prdName {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.MyPageOrdercontainer .info li {
+  margin: 0 0 3px;
+  font-size: 12px;
+  color: var(--font-color-gray);
+}
+
+.MyPageOrdercontainer .discount{
+  font-size: 12px;
+    color: var(--font-color-lightgray);
+    line-height: 20px;
+    font-weight: 400;
+}
+
+
+.MyPageOrdercontainer .description .price li strong {
+  font-size: 12px;
+  color: var(--font-color-lightgray);
+  line-height: 20px;
+}
+
+.MyPageOrdercontainer .description .info,
+.MyPageOrdercontainer .description .optional {
+  font-size: 0.85em;
+  color: #777;
+  margin-top: 5px;
+}
+
+.MyPageOrdercontainer .optional li{
+  margin-bottom: 5px;
+}
+
+.MyPageOrdercontainer .prdBox a{
+  transform: translate(0,5px);
+}
+/* 총 가격 */
+.MyPageOrdercontainer .sumprice {
+  transform: translate(215px,-10px);
+  display: flex;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #000;
+  min-width: 80px;
+  align-items: center
+}
+
+/* 수량 조절 */
+.MyPageOrdercontainer .quentity {
+  display: flex;
+  align-items: center;
+  margin: 0 347px 15px 188px;
+}
+
+.MyPageOrdercontainer .quentity .qtyBtnTotal {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.MyPageOrdercontainer .quentity input {
+  width: 50px;
+  height: 35px;
+  text-align: center;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.MyPageOrdercontainer .quentity button {
+  width: 35px;
+  height: 35px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1em;
+}
+
+.MyPageOrdercontainer .quentity button:hover {
+  background-color: #eee;
+}
+
+.MyPageOrdercontainer .buttonGroup{
+  display: flex;
+  justify-content: flex-end;
+
+  align-items: flex-end;
+}
+
+
+/* 버튼 그룹 */
+.MyPageOrdercontainer .buttonGroup a {
+  display: inline-block;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9em;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 5px;
+  transform: translate(3px, -5px);
+}
+
+.MyPageOrdercontainer .buttonGroup a img{
+  transform: translate(28px,4px);
+}
+
+.MyPageOrdercontainer .buttonGroup .btnNormal {
+  background-color: #555;
+}
+
+.MyPageOrdercontainer .buttonGroup .btnNormal:hover {
+  background-color: #333;
+}
+
+.MyPageOrdercontainer .buttonGroup .orderBtn {
+  border: 1px solid #e0e0e0;
+    color: #000;
+    background-color: #fff;
+}
+
+.MyPageOrdercontainer .buttonGroup .Basketbtn {
+  border: 1px solid #000;
+    font-weight: bold;
+    background: #000;
+    color: #ffffff;
+}
+
+.MyPageOrdercontainer .Basketbtn:hover{
+  color: #f9f9f9;
+  background-color: #444;
+}
+
+.MyPageOrdercontainer .orderBtn:hover{
+  border: 1px solid #000;
+}
+
+.MyPageOrdercontainer .status{
+  border-bottom: 1px solid #000;
+}
+
+.MyPageOrdercontainer .status span{
+  margin-left: 5px;
+}
+
+.MyPageOrdercontainer .inquireCard{
+  border: 1px solid #000;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 10px;
+}

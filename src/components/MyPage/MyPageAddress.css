@@ -1,0 +1,321 @@
+/* Google Fonts - Jost */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+/* Pretendard CDN */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.MyPageAddresscontainer #content{
+  padding-bottom: 150px;
+}
+
+body{
+  margin-top: 215px;
+  font-family: 'Jost', 'Pretendard', '맑은고딕', 'Malgun Gothic', '돋움', Dotum, Helvetica, Arial, AppleGothic, sans-serif;
+}
+
+.MyPageAddresscontainer ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.MyPageAddresscontainer li{
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+  color: #757575;
+}
+
+.MyPageAddresscontainer a{
+  text-decoration: none;
+  font-size: 13px;
+  color: #010101;
+}
+
+.MyPageAddresscontainer thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageAddresscontainer table {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.MyPageAddresscontainer tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageAddresscontainer .th1 {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 15px 10px 16px;
+}
+
+.MyPageAddresscontainer button{
+  border: none;
+  margin: 0 0 0 -1px !important;
+}
+
+.MyPageAddresscontainer div{
+  display: block;
+}
+
+.MyPageAddresscontainer select{
+  background: #fff;
+  background-size: 10px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-size: 13px;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 30px 0 15px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.MyPageAddresscontainer img{
+  transform: translate(0,5px);
+}
+
+/* 메인 컨테이너 스타일 */
+.MyPageAddresscontainer #content {
+  width: 1360px; /* 전체 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
+  display: flex; /* 플렉스 컨테이너 */
+  gap: 20px; /* 좌우 간격 */
+}
+
+/* 왼쪽 메뉴 스타일 */
+.MyPageAddresscontainer .manuwrap {
+  width: 200px; /* 고정 너비 */
+  font-size: 16px; /* 글씨 크기 */
+  line-height: 1.8; /* 행간 */
+  background-color: #ffffff; /* 배경색 */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.MyPageAddresscontainer .manuwrap h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.MyPageAddresscontainer .manuwrap article{
+  line-height: 1,5;
+}
+
+.MyPageAddresscontainer .manuwrap article ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 5px;
+}
+
+.MyPageAddresscontainer article h4{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+.MyPageAddresscontainer .manuwrap article ul li a{
+  color: var(--font-color-gray);
+}
+
+/* 오른쪽 콘텐츠 스타일 */
+.MyPageAddresscontainer .contentwrap {
+  width: 1130px;
+  background-color: #ffffff; /* 배경색 */
+}
+
+.MyPageAddresscontainer .typeNav{
+  position: relative;
+}
+
+
+.MyPageAddresscontainer .contentwraptitle{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  
+}
+
+
+.MyPageAddresscontainer .menu {
+  margin: 50px 0 0;
+  border-bottom: 1px solid #868686;
+  background: #fff;
+  box-sizing: border-box;
+  height: 53px;
+  padding: 0;
+}
+
+.MyPageAddresscontainer .basketfield1{
+  width :1130px;
+  display:flex;
+  justify-content: space-between;
+}
+
+.MyPageAddresscontainer .help{
+  margin: 10px 0;
+}
+
+.MyPageAddresscontainer .help li{
+  margin: 2px 0;
+    padding: 2px 0 2px 22px;
+    font-size: 12px;
+    line-height: 19px;
+    color: #6d6d6d;
+}
+
+.MyPageAddresscontainer .none{
+  text-align: center;
+  padding: 60px 0;
+}
+
+.MyPageAddresscontainer .basket1{
+  width: 1130px;
+}
+
+
+/* 전체 컨테이너 */
+.MyPageAddresscontainer .basketitem1 {
+  width: 1130px;
+  position: relative;
+
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.MyPageAddresscontainer .prdBox1{
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+/* 체크박스 */
+.MyPageAddresscontainer .check {
+  margin-right: 10px;
+  position: relative;
+    opacity: 1;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    vertical-align: text-top;
+    border: 1px solid #000;
+    background: #fff;
+}
+
+.MyPageAddresscontainer td{
+  background-color: #ffffff;
+  vertical-align: middle;
+  border: none;
+  height: 60px;
+  text-align: center;
+  font-size: 13px;
+  padding: 15px 10px 16px;
+}
+
+.MyPageAddresscontainer td a{
+  border: 1px solid #868686;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.MyPageAddresscontainer td a:hover{
+  border: 1px solid #cfcfcf;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.MyPageAddresscontainer tbody{
+  border-bottom: 1px solid #e8e8e8;
+}
+
+
+.MyPageAddresscontainer .buttonGroup{
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+
+/* 버튼 그룹 */
+.MyPageAddresscontainer .buttonGroup a {
+  display: inline-block;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9em;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 5px;
+  width: 135px;
+  height: 41px;
+}
+
+
+.MyPageAddresscontainer .buttonGroup .btnNormal:hover {
+  background-color: #333;
+}
+
+.MyPageAddresscontainer .buttonGroup .selectDeleteBtn {
+  border: 1px solid #e0e0e0;
+    color: #000;
+    background-color: #fff;
+}
+
+.MyPageAddresscontainer .buttonGroup .addressRegistbtn {
+  border: 1px solid #000;
+    font-weight: bold;
+    background: #000;
+    color: #ffffff;
+}
+
+.MyPageAddresscontainer .addressRegistbtn:hover{
+  color: #f9f9f9;
+  background-color: #444;
+}
+
+.MyPageAddresscontainer .selectDeleteBtn:hover{
+  border: 1px solid #000;
+}
+
+.MyPageAddresscontainer .help h3{
+  margin: 20px 0;
+}
+
+.MyPageAddresscontainer .inner{
+  border: 1px solid #e0e0e0;
+  border-top: 1px solid #000;
+}
+
+.MyPageAddresscontainer .help li{
+    padding: 2px 0 2px 22px;
+    font-size: 12px;
+    line-height: 19px;
+    color: #6d6d6d;
+}

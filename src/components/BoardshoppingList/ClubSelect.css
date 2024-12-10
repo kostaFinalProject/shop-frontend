@@ -1,0 +1,33 @@
+/* ------------------구단별 유니폼 찾기 버튼------------------  */
+.select_club {
+    margin-top: 10px;
+    width: 1330px;
+    height: 20px;
+
+}
+
+.select_club_ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.select_club li {
+
+    font-size: 11px;
+    display: inline-block;
+    color: #B5B6B5;
+}
+
+.select_club_ul a.active {
+
+    color: black;
+    font-weight: bold;
+}
+
+.select_club_ul a:hover {
+    color: black;
+    font-weight: bold;
+}

@@ -1,0 +1,229 @@
+.NewCreate_full_screen {
+    margin-top: 215px;
+
+}
+
+
+/* 전체적인 폼 크기 */
+.NewCreate_Form {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    max-width: 1280px;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+}  
+
+/* 게시글 작성 */
+.NewCreate_TitleText {
+    width: 100%;
+    max-width: 1280px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/* 선택 폼 */
+.NewCreate_option_form {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    color: #B5B6B5;
+    justify-content: center;
+    gap: 20px;
+}
+
+.NewCreate_option_form_select {
+    width: 35%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.NewCreate_select_list {
+    text-align: left;
+    width: 100%;
+    max-width: 640px;
+    height: 40px;
+
+}
+.NewCreate_select_list:focus {
+    border: 2px solid #007bff;
+}
+
+.NewCreate_select_list option:hover {
+    background-color: #007bff;
+}
+
+
+
+/* ------- 텍스트 양식 전체 크기지정------------ */
+.NewCreate_BoxLine{
+    width: 1280px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.NewCreate_text_cover_file{
+    display: flex;
+    width: 80%;
+    height: auto;
+    font-size: 15px;
+}
+
+.NewCreate_Name_file{
+    height: auto;
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+/* 이미지 입력 */
+.NewCreate_text_cover {
+    display: flex;
+    width: 80%;
+    height: 60px;
+    font-size: 15px;
+
+}
+.NewCreate_Name{
+    height: 60px;
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+}
+.NewCreate_RepresentativeTag{
+    font-size: 12px;
+    padding-right: 150px;
+
+}
+.NewCreate_img_checkbox{
+    height: auto;
+    font-size: 15px;
+    
+}
+.NewCreate_file_name{
+    width: 100%;
+
+}
+.NewCreate_image_list_file {
+
+    width: 495px;
+    list-style-type: none;
+    padding: 0;
+    height: auto;
+}
+.NewCreate_image_list_file input{
+    padding-left: 10px;
+    
+}
+.NewCreate_Btn_add{
+    padding-left: 30px !important;
+}
+.NewCreate_Btn_add,
+.NewCreate_Btn_remove {
+        all: unset;
+        padding-right: 15px;
+       
+
+}
+.NewCreate_Btn_add:hover,
+.NewCreate_Btn_remove:hover {
+        cursor: pointer;
+
+}
+
+/* ------------------------------- */
+
+.NewCreate_Input_cover{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+
+}
+.NewCreate_Text_input {
+    height: 30px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.NewCreate_Text_input:focus {
+    border: 2px solid blue;
+    background-color: #f0f8ff;
+    caret-color: black;
+}
+.cover_form_TextArea {
+    display: flex;
+    width: 80%;
+    height: auto;
+    font-size: 15px;
+
+}
+.NewCreate_Name_TextArea{
+    height: auto;
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+}
+.cover_form_TextArea textarea:focus {
+    border: 2px solid blue;
+    background-color: #f0f8ff;
+    caret-color: black;
+    padding: 5px;
+}
+.cover_form_TextArea textarea {
+    margin-left: 15px;
+    height: 300px;
+    width: 71%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    resize: none;  /* 크기 조절을 비활성화 */
+
+}
+
+
+.NewCreate_text_cover_Btn {
+    display: flex;
+    width: 80%;
+    height: 60px;
+    justify-content: center;
+    font-size: 15px;
+}
+.NewCreate_listBtn,
+.NewCreate_primaryBtn,
+.NewCreate_dangerBtn {
+ width: 100px;
+ height: 40px;
+ border-radius: 10px;
+ margin-right: 20px;
+ margin-top: 20px;
+ justify-content: center;
+}
+
+.NewCreate_f {
+    display: flex;
+    align-items: center; /* 세로로 가운데 정렬 */
+    margin-bottom: 10px; /* 각 항목 간 간격을 위해 추가 */
+  }
+  
+  .NewCreate_img_checkbox {
+    margin-left: 10px; /* 체크박스와 이미지 간 간격 */
+  }

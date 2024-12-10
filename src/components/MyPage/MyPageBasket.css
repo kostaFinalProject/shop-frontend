@@ -1,0 +1,443 @@
+/* Google Fonts - Jost */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+/* Pretendard CDN */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.MyPageBasketcontainer #content{
+  padding-bottom: 150px;
+}
+
+body{
+  margin-top: 215px;
+  font-family: 'Jost', 'Pretendard', '맑은고딕', 'Malgun Gothic', '돋움', Dotum, Helvetica, Arial, AppleGothic, sans-serif;
+}
+
+.MyPageBasketcontainer ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.MyPageBasketcontainer li{
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+  color: #757575;
+}
+
+.MyPageBasketcontainer a{
+  text-decoration: none;
+  font-size: 13px;
+  color: #010101;
+}
+
+.MyPageBasketcontainer thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageBasketcontainer table {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.MyPageBasketcontainer tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageBasketcontainer th {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 15px 10px 16px;
+}
+
+.MyPageBasketcontainer button{
+  border: none;
+  margin: 0 0 0 -1px !important;
+}
+
+.MyPageBasketcontainer div{
+  display: block;
+}
+
+.MyPageBasketcontainer select{
+  background: #fff;
+  background-size: 10px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-size: 13px;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 30px 0 15px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.MyPageBasketcontainer img{
+  transform: translate(0,5px);
+}
+
+/* 메인 컨테이너 스타일 */
+.MyPageBasketcontainer #content {
+  width: 1360px; /* 전체 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
+  display: flex; /* 플렉스 컨테이너 */
+  gap: 20px; /* 좌우 간격 */
+}
+
+/* 왼쪽 메뉴 스타일 */
+.MyPageBasketcontainer .manuwrap {
+  width: 200px; /* 고정 너비 */
+  font-size: 16px; /* 글씨 크기 */
+  line-height: 1.8; /* 행간 */
+  background-color: #ffffff; /* 배경색 */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.MyPageBasketcontainer .manuwrap h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.MyPageBasketcontainer .manuwrap article{
+  line-height: 1,5;
+}
+
+.MyPageBasketcontainer .manuwrap article ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 5px;
+}
+
+.MyPageBasketcontainer article h4{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+.MyPageBasketcontainer .manuwrap article ul li a{
+  color: var(--font-color-gray);
+}
+
+/* 오른쪽 콘텐츠 스타일 */
+.MyPageBasketcontainer .contentwrap {
+  width: 1130px;
+  background-color: #ffffff; /* 배경색 */
+}
+
+.MyPageBasketcontainer .typeNav{
+  position: relative;
+}
+
+
+.MyPageBasketcontainer .contentwraptitle{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+
+.MyPageBasketcontainer .menu {
+  margin: 0 0 20px;
+  border-bottom: 1px solid #868686;
+  background: #fff;
+  box-sizing: border-box;
+  height: 69px;
+  padding: 0;
+}
+
+.MyPageBasketcontainer .basketfield{
+  width :1130px;
+  display:flex;
+  justify-content: space-between;
+}
+
+.MyPageBasketcontainer .help{
+  margin: 10px 0;
+}
+
+.MyPageBasketcontainer .help li{
+  margin: 2px 0;
+    padding: 2px 0 2px 22px;
+    font-size: 12px;
+    line-height: 19px;
+    color: #6d6d6d;
+}
+
+.MyPageBasketcontainer .none{
+  text-align: center;
+  padding: 60px 0;
+}
+
+.MyPageBasketcontainer .basket1{
+  width: 800px;
+}
+
+
+/* 전체 컨테이너 */
+.MyPageBasketcontainer .basketitem {
+  width: 800px;
+  position: relative;
+
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.MyPageBasketcontainer .prdBox{
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  border: 1px solid #e8e8e8;
+  margin-bottom: 5px;
+}
+
+/* 체크박스 */
+.MyPageBasketcontainer .check {
+  margin-right: 10px;
+  position: relative;
+    opacity: 1;
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    vertical-align: text-top;
+    border: 1px solid #000;
+    background: #fff;
+    transform: translate(5px,5px);
+}
+
+/* 썸네일 이미지 */
+.MyPageBasketcontainer .thumbnail img {
+  border-radius: 5px;
+  object-fit: cover;
+  margin: 0 20px 0 0;
+}
+
+/* 상품 정보 */
+.MyPageBasketcontainer .description {
+  transform: translate(0,5px);
+  width: 500px;
+}
+
+.MyPageBasketcontainer .description .price li {
+  font-size: 12px;
+  color: var(--font-color-lightgray);
+  line-height: 20px;
+}
+.MyPageBasketcontainer .description .prdName {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.MyPageBasketcontainer .info li {
+  margin: 0 0 3px;
+  font-size: 12px;
+  color: var(--font-color-gray);
+}
+
+.MyPageBasketcontainer .discount{
+  font-size: 12px;
+    color: var(--font-color-lightgray);
+    line-height: 20px;
+    font-weight: 400;
+}
+
+
+.MyPageBasketcontainer .description .price li strong {
+  font-size: 12px;
+  color: var(--font-color-lightgray);
+  line-height: 20px;
+}
+
+.MyPageBasketcontainer .description .info,
+.MyPageBasketcontainer .description .optional {
+  font-size: 0.85em;
+  color: #777;
+  margin-top: 5px;
+}
+
+.MyPageBasketcontainer .optional li{
+  margin-bottom: 5px;
+}
+
+.MyPageBasketcontainer .prdBox a{
+  transform: translate(0,5px);
+}
+/* 총 가격 */
+.MyPageBasketcontainer .sumprice {
+  transform: translate(0,5px);
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #000;
+  min-width: 80px;
+}
+
+/* 수량 조절 */
+.MyPageBasketcontainer .quentity {
+  display: flex;
+  align-items: center;
+  margin: 0 347px 15px 188px;
+}
+
+.MyPageBasketcontainer .quentity .qtyBtnTotal {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.MyPageBasketcontainer .quentity input {
+  width: 50px;
+  height: 35px;
+  text-align: center;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.MyPageBasketcontainer .quentity button {
+  width: 35px;
+  height: 35px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1em;
+}
+
+.MyPageBasketcontainer .quentity button:hover {
+  background-color: #eee;
+}
+
+/* 버튼 그룹 */
+.MyPageBasketcontainer .buttonGroup a {
+  display: inline-block;
+  padding: 8px 15px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9em;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.MyPageBasketcontainer .buttonGroup .btnNormal {
+  background-color: #555;
+}
+
+.MyPageBasketcontainer .buttonGroup .btnNormal:hover {
+  background-color: #333;
+}
+
+.MyPageBasketcontainer .buttonGroup .btnSubmit {
+  background-color: #007bff;
+}
+
+.MyPageBasketcontainer .buttonGroup .btnSubmit:hover {
+  background-color: #0056b3;
+}
+
+/* 삭제 버튼 */
+.MyPageBasketcontainer .basketitem > a {
+  font-size: 1.2em;
+  color: #999;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.MyPageBasketcontainer .basketitem > a:hover {
+  color: #ff4d4f;
+}
+
+.MyPageBasketcontainer .basket2{
+  width: 300px;
+}
+.MyPageBasketcontainer .totalSummary{
+  border: 1px solid #999;
+  padding: 20px;
+}
+.MyPageBasketcontainer .totalSummaryTitle{
+  font-size: 15px;
+  font-weight: bold;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.MyPageBasketcontainer .Price{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.MyPageBasketcontainer .Price h4{
+  font-weight: 400;
+}
+
+.MyPageBasketcontainer .totalPrice{
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.MyPageBasketcontainer .submitBtn{
+  transform: translateX(1px);
+  width: 299.5px;
+  height: 48px;
+  border: 1px solid #000;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: bold;
+    background: #000;
+    color: #ffffff;
+}
+.MyPageBasketcontainer .basket2 button{
+  margin-top: 10px !important;
+}
+
+.MyPageBasketcontainer .selectSubmitBtn{
+  transform: translateX(1px);
+  width: 299.5px;
+  height: 48px;
+  border: 1px solid #e0e0e0;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: bold;
+    color: #000;
+    background-color: #fff;
+}
+
+.MyPageBasketcontainer .submitBtn:hover{
+  color: #f9f9f9;
+  background-color: #444;
+}
+
+.MyPageBasketcontainer .selectSubmitBtn:hover{
+  border: 1px solid #000;
+}

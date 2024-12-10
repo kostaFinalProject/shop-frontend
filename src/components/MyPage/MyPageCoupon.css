@@ -1,0 +1,364 @@
+/* Google Fonts - Jost */
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+/* Pretendard CDN */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+.MyPageCouponcontainer #content{
+  padding-bottom: 150px;
+}
+
+body{
+  margin-top: 215px;
+  font-family: 'Jost', 'Pretendard', '맑은고딕', 'Malgun Gothic', '돋움', Dotum, Helvetica, Arial, AppleGothic, sans-serif;
+}
+
+.MyPageCouponcontainer ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.MyPageCouponcontainer li{
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+  color: #757575;
+}
+
+.MyPageCouponcontainer a{
+  text-decoration: none;
+  font-size: 13px;
+  color: #010101;
+}
+
+.MyPageCouponcontainer thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageCouponcontainer table {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.MyPageCouponcontainer tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.MyPageCouponcontainer th {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 15px 10px 16px;
+}
+
+.MyPageCouponcontainer button{
+  border: none;
+  margin: 0 0 0 -1px !important;
+}
+
+.MyPageCouponcontainer div{
+  display: block;
+}
+
+.MyPageCouponcontainer select{
+  background: #fff;
+  background-size: 10px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-size: 13px;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 30px 0 15px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.MyPageCouponcontainer img{
+  transform: translate(0,5px);
+}
+
+/* 메인 컨테이너 스타일 */
+.MyPageCouponcontainer #content {
+  width: 1360px; /* 전체 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
+  display: flex; /* 플렉스 컨테이너 */
+  gap: 20px; /* 좌우 간격 */
+}
+
+/* 왼쪽 메뉴 스타일 */
+.MyPageCouponcontainer .manuwrap {
+  width: 200px; /* 고정 너비 */
+  font-size: 16px; /* 글씨 크기 */
+  line-height: 1.8; /* 행간 */
+  background-color: #ffffff; /* 배경색 */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.MyPageCouponcontainer .manuwrap h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.MyPageCouponcontainer .manuwrap article{
+  line-height: 1,5;
+}
+
+.MyPageCouponcontainer .manuwrap article ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 5px;
+}
+
+.MyPageCouponcontainer article h4{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+.MyPageCouponcontainer .manuwrap article ul li a{
+  color: var(--font-color-gray);
+}
+
+/* 오른쪽 콘텐츠 스타일 */
+.MyPageCouponcontainer .contentwrap {
+  width: 1130px;
+  background-color: #ffffff; /* 배경색 */
+}
+
+.MyPageCouponcontainer .typeNav{
+  position: relative;
+}
+
+
+.MyPageCouponcontainer .contentwraptitle{
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+
+.MyPageCouponcontainer .menu {
+  background: #fff;
+  box-sizing: border-box;
+  height: 53px;
+  padding: 0;
+}
+
+.MyPageCouponcontainer .couponRegister{
+  text-align: center;
+  margin: 0 0 50px;
+  text-align: center;
+
+  height: 160px;
+}
+
+.MyPageCouponcontainer .couponRegisterBox{
+    margin: 0 0 50px;
+    padding: 37px;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+    border-top: 1px solid #000;
+}
+
+.MyPageCouponcontainer fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border: none;
+}
+.MyPageCouponcontainer legend {
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 0;
+  height: 0;
+  line-height: 0;
+}
+
+.MyPageCouponcontainer .couponCode{
+  width: 342px;
+  box-sizing: border-box;
+    font-size: 14px;
+    outline: none !important;
+    height: 40px;
+    line-height: 40px;
+    padding: 2px 4px 2px 15px;
+    border: 1px solid #e0e0e0;
+    color: var(--font-color-base);
+}
+
+.MyPageCouponcontainer .couponsubmit{
+  min-width: 135px;
+  padding: 13px 20px;
+  font-size: 13px;
+  margin: 0 0 0 6px;
+  border: 1px solid #000;
+  font-weight: bold;
+  background: #000;
+  color: #ffffff;
+  border-radius: 5px;
+}
+
+
+.MyPageCouponcontainer .couponsubmit:hover{
+  color: #f9f9f9;
+  background-color: #444;
+}
+
+.MyPageCouponcontainer .textInfo{
+  color: #757575;;
+    font-size: 12px;
+    line-height: 22px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.MyPageCouponcontainer .none{
+  color: #757575;
+  font-size: 12px;
+  line-height: 22px;
+  font-weight: normal;
+  margin-top: 10px;
+  padding: 120px 0;
+  text-align: center;
+}
+
+.MyPageCouponcontainer .couponlist{
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.MyPageCouponcontainer .help h3{
+  margin: 20px 0;
+}
+
+.MyPageCouponcontainer .inner{
+  border: 1px solid #e0e0e0;
+  border-top: 1px solid #000;
+}
+
+.MyPageCouponcontainer .help li{
+    padding: 2px 0 2px 22px;
+    font-size: 12px;
+    line-height: 19px;
+    color: #6d6d6d;
+}
+
+
+.MyPageCouponcontainer .basketitem > a {
+  font-size: 1.2em;
+  color: #999;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.MyPageCouponcontainer .basketitem > a:hover {
+  color: #ff4d4f;
+}
+
+.MyPageCouponcontainer .prdBox{
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  margin: 0px 15px 10px 15px;
+}
+
+.MyPageCouponcontainer .coupondetail{
+  margin-left: 5px;
+}
+
+.MyPageCouponcontainer .description {
+  transform: translate(0,5px);
+  width: 530px;
+  border: 1px solid #000;
+}
+
+.MyPageCouponcontainer .description .price li {
+  font-size: 12px;
+  color: var(--font-color-lightgray);
+  line-height: 20px;
+}
+.MyPageCouponcontainer .description .prdName {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.MyPageCouponcontainer .info li {
+  margin: 0 0 3px;
+  font-size: 12px;
+  color: var(--font-color-gray);
+}
+
+.MyPageCouponcontainer .discount{
+  font-size: 12px;
+    color: var(--font-color-lightgray);
+    line-height: 20px;
+    font-weight: 400;
+}
+
+
+.MyPageCouponcontainer .description .price li strong {
+  font-size: 12px;
+  color: var(--font-color-lightgray);
+  line-height: 20px;
+}
+
+.MyPageCouponcontainer .description .info,
+.MyPageCouponcontainer .description .optional {
+  font-size: 0.85em;
+  color: #777;
+  margin-top: 5px;
+}
+
+.MyPageCouponcontainer .optional li{
+  margin-bottom: 5px;
+}
+
+.MyPageCouponcontainer .prdBox a{
+  transform: translate(0,5px);
+}
+/* 총 가격 */
+.MyPageCouponcontainer .sumprice {
+  transform: translate(0,5px);
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #000;
+  min-width: 80px;
+}
+
+.MyPageCouponcontainer .couponbox{
+  display: flex;
+  flex-wrap: wrap
+}

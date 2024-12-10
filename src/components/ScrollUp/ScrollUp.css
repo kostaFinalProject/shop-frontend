@@ -1,0 +1,18 @@
+.scroll_Up_Top_Btn {
+    width: 50px;
+    height: 70px;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+.scroll_Up_Top_Btn:hover {
+
+    font-size: 30px;
+}

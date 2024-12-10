@@ -1,0 +1,37 @@
+
+/* -----------------------postlist,taglist ------------------------ */
+.ProfileMyInterests_detail_page_review_list_body {
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+
+
+
+}
+
+.Styleprofile_postlist,
+.Styleprofile_taglist,
+.Styleprofile_MyInterestlist {
+    margin-left: 20px;
+}
+
+.Styleprofile_postlist:hover,
+.Styleprofile_taglist:hover,
+.Styleprofile_MyInterestlist:hover {
+    cursor: pointer;
+}
+
+.Styleprofile_postlist.active, 
+.Styleprofile_taglist.active,
+.Styleprofile_MyInterestlist.active { 
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+
+/* ----------------------Styleprofile_MyInterestlist------------------ */

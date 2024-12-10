@@ -1,0 +1,86 @@
+/* ------------------------- profile------------------------  */
+
+.Styleprofile_profile a,
+.Styleprofile_follow a,
+.Styleprofile_following a {
+    text-decoration: none;
+    color: inherit;
+
+}
+
+.Styleprofile_profile {
+    margin: 20px 0 0 20px;
+    width: 1200px;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+.Styleprofile_profile_img{
+    margin: 20px 0 0 0;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+
+    
+}
+.Styleprofile_profile_img img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 100px;
+}
+.Styleprofile_profile_text {
+    margin: 20px 0 0 20px;
+    padding-top: 10px;
+    width: 1000px;
+    height: 100%;
+
+}
+.Styleprofile_profile_head{
+    
+    height: 36px;
+    margin: 0;
+    padding-left: 10px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+.Styleprofile_follow_btn{
+    background-color: black;
+    color: white;
+    font-size: 10px;
+    width: 55px;
+    height: 25px;
+    margin-left: 10px;
+    border-radius: 10px;
+}
+.Styleprofile_follow_following {
+    height: 36px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+
+}
+.Styleprofile_follow {
+    width: 80px;
+    display: flex;
+
+
+}
+.Styleprofile_following {
+    width: 80px;
+    display: flex;
+
+}
+
+.Styleprofile_profile_information {
+    height: 36px;
+    margin: 10px 0 10px 0;
+    padding-left: 10px;
+    font-size: 12px;
+    align-items: center;
+
+}
