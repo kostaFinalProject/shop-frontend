@@ -205,6 +205,7 @@ const Signup = () => {
             .then(response => {
                 if (response.status === 200) {
                     alert("회원가입이 완료되었습니다.");
+                    window.location.href='/login';
                 } else {
                     const errorMessage = response.text();
                     alert(errorMessage);
@@ -297,11 +298,11 @@ const Signup = () => {
                                     id="userid"
                                     name="userid"
                                     placeholder="아이디를 입력하세요."
-                                    style={{ width: 250 }}
+                                    style={{ width: 170 }}
                                     onChange={handleUseridChange}
                                     required
                                 />
-                                {!useridChk && <span style={{ color: "#FA3E3E" }}>영문과 숫자 조합으로 8~16자 사이로 입력하세요.</span>}
+                                {!useridChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>영문과 숫자 조합으로 8~16자 사이로 입력하세요.</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="pw">
@@ -312,12 +313,12 @@ const Signup = () => {
                                     maxLength={16}
                                     id="pw"
                                     name="password"
-                                    style={{ width: 250 }}
+                                    style={{ width: 170 }}
                                     placeholder="비밀번호를 입력하세요."
                                     onChange={handlePwChange}
                                     required
                                 />
-                                {!pwChk && <span style={{ color: "#FA3E3E" }}>영문 대문자 및 소문자, 숫자, 특수문자(!,@,#,$,%)를 최소 1자 이상 포함해 8 ~ 16자 사이로 입력하세요.</span>}
+                                {!pwChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>영문 대소문자, 숫자, 특수문자(!,@,#,$,%)를 최소 1자 이상 포함해 8~16자 사이로 입력하세요.</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="re_pw">
@@ -328,13 +329,13 @@ const Signup = () => {
                                     maxLength={16}
                                     id="re_pw"
                                     name="re_pw"
-                                    style={{ width: 250 }}
-                                    placeholder="설정한 비밀번호를 입력하세요."
+                                    style={{ width: 170 }}
+                                    placeholder="비밀번호를 입력하세요."
                                     onChange={handleRePwChange}
                                     onPaste="return false;"
                                     onCopy="return false;"
                                 />
-                                {!pwMatchChk && <span style={{ color: "#FA3E3E" }}>비밀번호가 일치하지 않습니다.</span>}
+                                {!pwMatchChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>비밀번호가 일치하지 않습니다.</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="name">
@@ -345,12 +346,12 @@ const Signup = () => {
                                     maxLength={10}
                                     id="name"
                                     name="name"
-                                    style={{ width: 250 }}
+                                    style={{ width: 170 }}
                                     placeholder="이름을 입력하세요."
                                     onChange={handleNameChange}
                                     required
                                 />
-                                {!nameChk && <span style={{ color: "#FA3E3E" }}>이름은 10자 이하로 입력</span>}
+                                {!nameChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>이름은 10자 이하로 입력하세요</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="nickname">
@@ -361,12 +362,12 @@ const Signup = () => {
                                     maxLength={10}
                                     id="nickname"
                                     name="nickname"
-                                    style={{ width: 250 }}
+                                    style={{ width: 170 }}
                                     placeholder="사용할 닉네임을 입력하세요"
                                     onChange={handleNicknameChange}
                                     required
                                 />
-                                {!nicknameChk && <span style={{ color: "#FA3E3E" }}>영문, 숫자, 특수문자(.,_)만 가능</span>}
+                                {!nicknameChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>영문, 숫자, 특수문자(.,_)만 가능합니다.</span>}
                             </div>
                         </div>
 
@@ -400,10 +401,10 @@ const Signup = () => {
                                     <select
                                         id="emailDomainSelect"
                                         name="emailDomainSelect"
-                                        style={{ width: "150px" }}
+                                        style={{ width: "120px" }}
                                         onChange={handleEmailDomainChange}
                                     >
-                                        <option value="">도메인 선택</option>
+                                        <option value="">선택</option>
                                         <option value="gmail.com">gmail.com</option>
                                         <option value="naver.com">naver.com</option>
                                         <option value="daum.net">daum.net</option>
@@ -423,7 +424,7 @@ const Signup = () => {
                                     <select
                                         id="phonePrefix"
                                         name="phonePrefix"
-                                        style={{ width: "80px" }}
+                                        style={{ width: "100px" }}
                                         value={phonePrefix}
                                         onChange={handlePhonePrefixChange}
                                     >
@@ -441,7 +442,7 @@ const Signup = () => {
                                         value={phoneMiddle}
                                         onChange={handlePhoneMiddleChange}
                                         onKeyPress={(e) => {
-                                            if (!/^[0-9]$/.test(e.key)) e.preventDefault(); // 숫자 외 입력 차단
+                                            if (!/^[0-9]$/.test(e.key)) e.preventDefault();
                                         }}
                                         required
                                     />
@@ -459,7 +460,7 @@ const Signup = () => {
                                         }}
                                         required
                                     />
-                                    {(!phoneMiddleChk || !phoneLastChk) && <span style={{ color: "#FA3E3E" }}>전화번호를 확인하세요</span>}
+                                    {(!phoneMiddleChk || !phoneLastChk) && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>전화번호를 확인하세요</span>}
                                 </div>
                             </div>
                         </div>
@@ -503,7 +504,7 @@ const Signup = () => {
                                     onChange={handleDetailAddressChange}
                                 />
                                 <div id="addressMessage" />
-                                {!detailAddressChk && <span style={{ color: "#FA3E3E" }}>주소를 확인하세요.</span>}
+                                {!detailAddressChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>주소를 확인하세요.</span>}
                             </div>
                         </div>
                     </div>
