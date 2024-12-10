@@ -67,7 +67,7 @@ const Login = ({ setIsLoggedIn }) => {
                 <a href="#">아이디 찾기</a>
                 <a href="#">비밀번호 찾기</a>
               </div>
-              <a href="#" className="btnNormal gFull sizeL">
+              <a href="/signup" className="btnNormal gFull sizeL">
                 회원가입
               </a>
             </article>

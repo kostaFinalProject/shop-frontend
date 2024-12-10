@@ -14,6 +14,7 @@ import MyPageAddress from "./components/MyPage/MyPageAddress";
 import AddressRegisterForm from "./components/MyPage/AddressRegisterForm";
 import StyleModify from "./components/MyPage/StyleModify";
 import Footer from "./components/Footer/footer";
+import Signup from "./components/Login/signup";
 //연규님이 하신거
 
 import BoardshoppingLi from './components/BoardshoppingList/BoardshoppingLi.js';
@@ -54,6 +55,7 @@ function App() {
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} />}
         />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Main />} />
         <Route path="/MyPage" element={<MyPageIntro />} />
         <Route path="/MyPage/order" element={<MyPageOrder />} />
@@ -65,7 +67,7 @@ function App() {
         <Route path="/MyPage/address" element={<MyPageAddress />} />
         <Route path="/MyPage/address/addressregist" element={<AddressRegisterForm />} />
         <Route path="/MyPage/stylemodify" element={<StyleModify />} />
-{/* 연규님이 하신거 */}
+        {/* 연규님이 하신거 */}
         <Route path="/BoardshoppingLi" element={<BoardshoppingLi />} />
         <Route path="/boardshoppingsearch" element={<BoardshoppingSearch />} />
         <Route path="/detailpage" element={<DetailPage />} />
