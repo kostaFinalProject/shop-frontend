@@ -55,7 +55,7 @@ const MyPageIntro = () => {
               <a href="/MyPage/address">
                 <li>배송지 관리</li>
               </a>
-              <a href="">
+              <a href="/MyPage/membermodify">
                 <li>회원 정보 수정</li>
               </a>
               <a href="">

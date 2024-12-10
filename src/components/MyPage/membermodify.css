@@ -1,0 +1,319 @@
+.membermodifyformwrap #content{
+  padding-bottom: 150px;
+}
+
+
+.membermodifyformwrap ul {
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.membermodifyformwrap li{
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+  color: #757575;
+}
+
+.membermodifyformwrap a{
+  text-decoration: none;
+  font-size: 13px;
+  color: #010101;
+}
+
+.membermodifyformwrap thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.membermodifyformwrap table {
+  width: 100%;
+  border: 0;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.membermodifyformwrap tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.membermodifyformwrap th {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 15px 10px 16px;
+}
+
+.membermodifyformwrap button{
+  border: none;
+  margin: 0 0 0 -1px !important;
+}
+
+.membermodifyformwrap div{
+  display: block;
+}
+
+.membermodifyformwrap select{
+  background: #fff;
+  background-size: 10px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-size: 13px;
+  max-width: 100%;
+  height: 40px;
+  padding: 0 30px 0 15px;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.membermodifyformwrap img{
+  transform: translate(0,5px);
+}
+
+/* 메인 컨테이너 스타일 */
+.membermodifyformwrap #content {
+  width: 1360px; /* 전체 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
+  display: flex; /* 플렉스 컨테이너 */
+  gap: 20px; /* 좌우 간격 */
+}
+
+/* 왼쪽 메뉴 스타일 */
+.membermodifyformwrap .manuwrap {
+  width: 200px; /* 고정 너비 */
+  font-size: 16px; /* 글씨 크기 */
+  line-height: 1.8; /* 행간 */
+  background-color: #ffffff; /* 배경색 */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.membermodifyformwrap .manuwrap h3{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.membermodifyformwrap .manuwrap article{
+  line-height: 1,5;
+}
+
+.membermodifyformwrap .manuwrap article ul{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 5px;
+}
+
+.membermodifyformwrap article h4{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 20px;
+}
+
+.membermodifyformwrap .manuwrap article ul li a{
+  color: var(--font-color-gray);
+}
+
+/* 오른쪽 콘텐츠 스타일 */
+.membermodifyformwrap .contentwrap {
+  width: 1130px;
+  background-color: #ffffff; /* 배경색 */
+}
+
+.membermodifyformwrap .typeNav{
+  position: relative;
+}
+
+
+.membermodifyformwrap .contentwraptitle{
+  margin-bottom: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+
+.membermodifyformwrap .secondmenu {
+  width: 1130px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.membermodifyformwrap .membermodifycontainer{
+  background-color: #edededaa;
+}
+
+.membermodifyformwrap .form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.membermodifyformwrap .form-row {
+  display: flex;  /* 가로 방향 */
+  align-items: center; /* 수직한 방향으로 가운데 정렬하는 역할 */
+  gap: 10px;
+}
+
+.membermodifyformwrap .form-row label {
+  flex: 0 0 120px; /* 라벨의 고정 너비 */
+  font-weight: bold;
+}
+
+.membermodifyformwrap .form-row input[type="text"] {
+  /* font-weight: bold; */
+  font-size: 13px;
+  width: 250px;
+  flex: 0 0 auto; /* 크기 조정 안 되도록 설정 */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.membermodifyformwrap .form-row input[type="password"] {
+  width: 360px;
+  /* flex: 0.65;  이게 input box 길이가 조정된다 */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  user-select: none; /* 선택 방지 */
+  -webkit-user-select: none; /* Safari 지원 */
+  -ms-user-select: none; /* IE/Edge 지원 */
+  -moz-user-select: none; /* Firefox 지원 */
+}
+
+.membermodifyformwrap .form-row input[type="button"] {
+  padding: 8px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.membermodifyformwrap .form-row input[type="button"]:hover {
+  background-color: #555;
+}
+
+.membermodifyformwrap .form-row button {
+  padding: 8px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.membermodifyformwrap .form-row button:hover {
+  background-color: #555;
+}
+
+
+/* select 요소 스타일 */
+.membermodifyformwrap .form-row select {
+  
+  padding: 8px; /* input과 동일한 패딩 */
+  border: 1px solid #ccc; /* input과 동일한 테두리 */
+  border-radius: 4px; /* input과 동일한 테두리 반경 */
+  font-size: 16px; /* input과 동일한 폰트 크기 */
+}
+
+
+.membermodifyformwrap .join-button {
+  flex: 0 0 auto; /* 버튼의 크기가 고정되고, 공간을 확장하거나 축소하지 않도록 설정 */
+  display: inline-block;
+  width: 49%;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.membermodifyformwrap .join-button:hover {
+  background-color: #555;
+  border: 1px solid #333;  /* hover 시 테두리 색 */
+}
+
+.membermodifyformwrap .button-container {
+  display: flex;  /* 버튼들이 가로로 나란히 배치되도록 설정 */
+  justify-content: space-between;  /* 버튼 간 간격을 고르게 조절 */
+}
+
+.membermodifyformwrap .cancel-button {
+  flex: 0 0 auto; /* 버튼의 크기가 고정되고, 공간을 확장하거나 축소하지 않도록 설정 */
+  display: inline-block;
+  width: 49%;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #333;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.membermodifyformwrap .cancel-button:hover {
+  background-color: #555;
+  border: 1px solid #333;  /* hover 시 테두리 색 */
+}
+
+
+.membermodifyformwrap #email1, #email2{
+  background-color: #999;
+  flex: 0.1 !important;
+}
+
+/* 'withdrawal' 클래스에 스타일을 추가 */
+.membermodifyformwrap .withdrawal {
+  display: inline-block;           /* 버튼처럼 보이게 inline block으로 설정 */
+  padding: 10px 20px;              /* 버튼 크기 설정 (좌우 20px, 상하 10px) */
+  font-size: 14px;                 /* 글자 크기 */
+  background-color: white;        /* 배경색 (기본은 흰색) */
+  color: black;                   /* 글자 색 */
+  text-align: center;             /* 텍스트 가운데 정렬 */
+  text-decoration: none;           /* 링크의 기본 밑줄 제거 */
+  border: 2px solid white;
+  border-radius: 5px;             /* 둥근 모서리 */
+  cursor: pointer;                /* 마우스 커서를 포인터로 변경 */
+  transition: background-color 0.3s, border-color 0.3s; /* 배경색과 테두리 색의 전환 효과 */
+}
+
+/* Hover 상태 */
+.membermodifyformwrap .withdrawal:hover {
+  background-color: #007bff;      /* 호버 시 배경색을 파란색으로 변경 */
+  color: white;                   /* 호버 시 텍스트 색을 흰색으로 변경 */
+  border-color: #0056b3;          /* 호버 시 테두리 색을 어두운 파란색으로 변경 */
+  border: 2px solid #007bff;      /* 테두리 색 (파란색 테두리) */
+}
+
+/* Focus 상태 */
+.membermodifyformwrap .withdrawal:focus {
+  outline: none;                  /* 포커스 상태에서 기본 아웃라인 제거 */
+  border-color: #0056b3;          /* 포커스 시 테두리 색 변경 */
+}
+
+/* Active 상태 (클릭 시) */
+.membermodifyformwrap .withdrawal:active {
+  background-color: #0056b3;      /* 클릭 시 배경색을 어두운 파란색으로 변경 */
+  border-color: #003d73;          /* 클릭 시 테두리 색을 더 어두운 파란색으로 변경 */
+}

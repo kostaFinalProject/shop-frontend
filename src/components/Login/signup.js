@@ -1,9 +1,76 @@
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
+import { useNavigate } from "react-router-dom";
 import "./signup.css";
 
-const signup = () => {
+const Signup = () => {
+  const [userId, setUserId] = useState("");
+  const [useridMessage, setUseridMessage] = useState("");
+  const [useridchk, setUseridchk] = useState(false);
+  const navigate = useNavigate();
+
+  const handleKeyUp = async (event) => {
+    const regExp = /^[a-z]+[a-z0-9]{3,15}$/g;
+    const value = event.target.value;
+    setUserId(value);
+
+    if (!value) {
+      setUseridchk(false);
+      setUseridMessage(
+        <span style={{ color: "#FA3E3E", fontSize: "10px" }}>
+          아이디는 필수입니다.
+        </span>
+      );
+    } else if (!regExp.test(value)) {
+      setUseridchk(false);
+      setUseridMessage(
+        <span style={{ color: "#FA3E3E", fontSize: "10px" }}>
+          사용할 수 없는 아이디입니다.
+        </span>
+      );
+    } else {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/members/signcheck",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userId: value }),
+          }
+        );
+        const data = await response.json();
+
+        if (data === 1) {
+          setUseridchk(false);
+          setUseridMessage(
+            <span style={{ color: "#FA3E3E", fontSize: "10px" }}>
+              이미 존재하는 아이디입니다.
+            </span>
+          );
+        } else {
+          setUseridchk(true);
+          setUseridMessage(
+            <span style={{ color: "#0D6EFD", fontSize: "10px" }}>
+              사용 가능한 아이디입니다.
+            </span>
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    if (useridchk) {
+      navigate("/welcome");
+    } else {
+      alert("아이디를 확인하세요.");
+    }
+  };
+
 
 
   return (
@@ -226,11 +293,13 @@ const signup = () => {
           <div id="emailMessage1" /> {/* 이메일 경고 문구 출력할 div 추가 */}
           <div id="emailMessage2" />
         </div>
-        <submit className="join-button">회원가입</submit>
+        <button type="submit" className="join-button" onClick={handleSignup}>
+          회원가입
+        </button>
       </div>
     </div>
 
   );
 };
 
-export default signup;
+export default Signup;

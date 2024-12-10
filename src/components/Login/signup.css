@@ -1,13 +1,12 @@
 
 .form-wrap {
-    width: 100%;
-    max-width: 720px;
-    margin: 0 auto;
+    width: 1200px;
     padding: 20px;
     border: 1px solid #f1eded;
     border-radius: 10px;
     background-color: #f9f9f9;
     text-align: center;
+    margin: 0 auto;
   }
   
   .form-wrap .firstmenu, .secondmenu {
