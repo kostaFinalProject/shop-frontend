@@ -92,7 +92,7 @@ const NewCreate = () => {
   const [formData, setFormData] = useState({
     tag_id: "@아이디",
     tag_product: "@상품",
-    tag_keyword: "@키워드",
+    tag_keyword: "#",
     form_title: "제목을 입력해주세요",
     form_content: "",
   });
@@ -101,11 +101,18 @@ const NewCreate = () => {
 
   // 해시태그 입력 처리
   const handleKeywordChange = (e) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    setFormData((prev) => ({ ...prev, tag_keyword: value }));
+
+    // #으로 시작하지 않으면 #을 강제로 추가
+    if (!value.startsWith("#")) {
+      value = "#" + value;
+    }
+
     setFormData((prev) => ({ ...prev, tag_keyword: value }));
 
     // 해시태그 추출
-    const hashtags = value.match(/@[a-zA-Z0-9ㄱ-ㅎ가-힣?!.,-_]+/g);  // 해시태그 추출 정규식
+    const hashtags = value.match(/#[a-zA-Z0-9ㄱ-ㅎ가-힣?!.,-_]+/g);  // 해시태그 추출 정규식
     if (hashtags) {
       setHashTags(hashtags);
     } else {
@@ -113,11 +120,6 @@ const NewCreate = () => {
     }
   };
 
-    // 해시태그 삭제
-    const removeHashTag = (tag) => {
-      setHashTags((prevTags) => prevTags.filter((t) => t !== tag));
-      setFormData((prev) => ({ ...prev, tag_keyword: prev.tag_keyword.replace(tag, "") }));
-    };
 
 
   const formRef = useRef(null);
@@ -188,100 +190,10 @@ const NewCreate = () => {
     <div className="NewCreate_full_screen">
       <form ref={formRef} className="NewCreate_Form" onSubmit={handleFormSubmit}>
         <h2 className="NewCreate_TitleText">게시글 작성</h2>
-        {/* 옵션 선택 */}
-        <div className="NewCreate_option_form">
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 스포츠를 선택해 주세요 -</option>
-              <option value="1">해외축구</option>
-              <option value="2">국내축구</option>
-              <option value="3">축구 국가대표</option>
-              <option value="4">한국야구</option>
-              <option value="5">여자배구</option>
-              <option value="6">E-스포츠</option>
-            </select>
-          </div>
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 구단을 선택해 주세요 -</option>
-              <option value="1">울산 HD FC</option>
-              <option value="2">김천상무 FC</option>
-              <option value="3">강원 FC</option>
-              <option value="4">포항 노틸러스</option>
-              <option value="5">FC서울</option>
-              <option value="6">수원FC</option>
-              <option value="7">제주 유나이티드</option>
-              <option value="8">대전 하나 시티즌</option>
-              <option value="9">광주 FC</option>
-              <option value="10">전북 현대 모터스</option>
-              <option value="11">대구FC</option>
-              <option value="12">인천 유나이티드</option>
-            </select>
-          </div>
-        </div>
-        <div className="NewCreate_option_form">
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 사이즈를 선택해 주세요 -</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-              <option value="XXXL">XXXL</option>
-            </select>
-          </div>
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 홈 어웨이 선택해 주세요 -</option>
-              <option value="1">홈</option>
-              <option value="2">어웨이</option>
-            </select>
-          </div>
-        </div>
 
 
         {/* 이미지 입력 */}
         <div className="NewCreate_BoxLine">
-          <div className="NewCreate_text_cover_file">
-            <label className="NewCreate_Name_file">이미지 등록</label>
-            <ul className="NewCreate_image_list_file">
-              {images.map((item, index) => (
-                <li key={item.id} className="NewCreate_f">
-                  {index === 0 && updateRepresentativeLabel()}
-                  {index !== 0 && (
-                    <input
-                      type="checkbox"
-                      className="img-checkbox"
-                      checked={item.checked}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                  )}
-                  <input
-                    type="file"
-                    name="files"
-                    accept="image/*"
-                    required
-                    onChange={(e) => handleFileChange(index, e)}
-                  />
-                  <span>{item.fileName}</span>
-                </li>
-              ))}
-            </ul>
-            <button type="button" className="NewCreate_Btn_add" onClick={addImageInput}>
-              + 이미지 추가
-            </button>
-
-            <button
-              type="button"
-              className="NewCreate_Btn_remove"
-              onClick={removeCheckedImages}
-              disabled={images.length <= 1}
-            >
-              체크된 이미지 삭제
-            </button>
-
-          </div>
 
           {/* 태그 및 텍스트 입력란
           <div className="NewCreate_text_cover">
@@ -332,16 +244,17 @@ const NewCreate = () => {
                 className="NewCreate_Text_input"
                 value={formData.tag_keyword}
                 onChange={handleKeywordChange}  // 키워드 변경 시 해시태그 처리
+                onFocus={(e) => { if (e.target.value === "#") e.target.value = ""; }}
+                onBlur={(e) => { if (e.target.value === "") e.target.value = "#"; }}
               />
             </div>
           </div>
 
           {/* 해시태그 목록 표시 */}
-          <div className="hashTagsContainer">
+          <div className="NewCreate_hashTagsContainer">
             {hashTags.map((tag, index) => (
               <span key={index} className="hashTagItem">
                 {tag}
-                <button type="button" onClick={() => removeHashTag(tag)}>x</button>
               </span>
             ))}
           </div>
@@ -375,6 +288,46 @@ const NewCreate = () => {
               value={formData.form_content}
               onChange={handleInputChange}
             />
+          </div>
+
+          <div className="NewCreate_text_cover_file">
+            <label className="NewCreate_Name_file">이미지 등록</label>
+            <ul className="NewCreate_image_list_file">
+              {images.map((item, index) => (
+                <li key={item.id} className="NewCreate_f">
+                  {index === 0 && updateRepresentativeLabel()}
+                  {index !== 0 && (
+                    <input
+                      type="checkbox"
+                      className="img-checkbox"
+                      checked={item.checked}
+                      onChange={() => handleCheckboxChange(index)}
+                    />
+                  )}
+                  <input
+                    type="file"
+                    name="files"
+                    accept="image/*"
+                    required
+                    onChange={(e) => handleFileChange(index, e)}
+                  />
+                  <span>{item.fileName}</span>
+                </li>
+              ))}
+            </ul>
+            <button type="button" className="NewCreate_Btn_add" onClick={addImageInput}>
+              + 이미지 추가
+            </button>
+
+            <button
+              type="button"
+              className="NewCreate_Btn_remove"
+              onClick={removeCheckedImages}
+              disabled={images.length <= 1}
+            >
+              체크된 이미지 삭제
+            </button>
+
           </div>
 
           <div className="NewCreate_text_cover_Btn">
