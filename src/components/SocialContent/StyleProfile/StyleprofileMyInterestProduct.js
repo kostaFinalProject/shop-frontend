@@ -27,6 +27,9 @@ const Styleprofile = () => {
                     >
                         게시글
                         <span>465</span>
+                        <a href="/NewCreate">
+                            <button>게시글 작성</button>
+                        </a>
                     </span>
 
                     <span

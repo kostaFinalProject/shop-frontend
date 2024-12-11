@@ -305,9 +305,13 @@ const Header = ( {isLoggedIn, setIsLoggedIn}) => {
                 />
                 <span>마이페이지</span>
               </a>
-              <a href="/basket">
+              <a href="/MyPage/basket">
                 <img src="/img/basket3.svg" alt="장바구니" className="icon" />
                 <span>장바구니</span>
+              </a>
+              <a href="/CheckoutPage">
+                <img src="/img/list.svg" alt="장바구니" className="icon" />
+                <span>결제창</span>
               </a>
               <a href="/" onClick={() => setIsLoggedIn(false)}>
                 <img src="/img/box-arrow-right.svg" alt="장바구니" className="icon" />

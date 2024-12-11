@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import './CheakoutPageBuyerAddress.css';
+import './CheckoutPageBuyerAddress.css';
 
-const CheakoutPageBuyerAddress = () => {
+const CheckoutPageBuyerAddress = () => {
 
     const addressNameRef = useRef(null);
     const userNameRef = useRef(null);
@@ -87,39 +87,39 @@ const CheakoutPageBuyerAddress = () => {
     };
     return (
         <>
-            <div className="CheakoutPageAddress_Form">
+            <div className="CheckoutPageAddress_Form">
                 <form action="" method="post" target="_self" >
-                    <div className="CheakoutPageAddress_body">
+                    <div className="CheckoutPageAddress_body">
 
                     
                         {/* 배송지 성명 칸--------------------- */}
-                        <div className='CheakoutPageAddress_Buyer_Name'>
-                            <div className="CheakoutPageAddress_Buyer_Name_Title">
+                        <div className='CheckoutPageAddress_Buyer_Name'>
+                            <div className="CheckoutPageAddress_Buyer_Name_Title">
                                 <label htmlFor="name">받는사람</label>
                             </div>
-                            <input type="text" className="CheakoutPageAddress_Buyer_Name_Body" placeholder="" ref={userNameRef} />
+                            <input type="text" className="CheckoutPageAddress_Buyer_Name_Body" placeholder="" ref={userNameRef} />
                         </div>
 
 
                         {/* 주소 칸------------------------- */}
-                        <div className='CheakoutPageAddress_Address_address'>
-                            <div className="CheakoutPageAddress_Address_address_Form">
-                                <div className="CheakoutPageAddress_Address_address_label">
+                        <div className='CheckoutPageAddress_Address_address'>
+                            <div className="CheckoutPageAddress_Address_address_Form">
+                                <div className="CheckoutPageAddress_Address_address_label">
                                     <label htmlFor="address">주소</label>
                                 </div>
 
-                                <div className="CheakoutPageAddress_Address_address_inpuit">
+                                <div className="CheckoutPageAddress_Address_address_inpuit">
                                     <input
                                         type="text"
                                         id="addressnumber"
-                                        className="CheakoutPageAddress_AddressNumber"
+                                        className="CheckoutPageAddress_AddressNumber"
                                         placeholder="우편번호"
                                         readOnly=""
                                         ref={addressNumberRef}
                                     />
                                     <button
                                         id="SearchAddress"
-                                        className="CheakoutPageAddress_SearchBtn"
+                                        className="CheckoutPageAddress_SearchBtn"
                                         type="button"
                                         style={{ cursor: "pointer" }}
                                         onClick={handleSearchAddress}
@@ -129,7 +129,7 @@ const CheakoutPageBuyerAddress = () => {
                                     <div>
                                         <input
                                             type="text"
-                                            className="CheakoutPageAddress_AddressBox"
+                                            className="CheckoutPageAddress_AddressBox"
                                             id="address"
                                             placeholder="기본주소"
                                             readOnly=""
@@ -140,7 +140,7 @@ const CheakoutPageBuyerAddress = () => {
                                     <div>
                                         <input
                                             type="text"
-                                            className="CheakoutPageAddress_AddressBox"
+                                            className="CheckoutPageAddress_AddressBox"
                                             id="detailaddress"
                                             placeholder="상세주소"
                                             ref={detailAddressRef}
@@ -155,11 +155,11 @@ const CheakoutPageBuyerAddress = () => {
                         {/* 일반전화 --------------------- */}
 
 
-                        <div className='CheakoutPageAddress_callNumber'>
-                            <div className="CheakoutPageAddress_callNumber_label">
+                        <div className='CheckoutPageAddress_callNumber'>
+                            <div className="CheckoutPageAddress_callNumber_label">
                                 <label htmlFor="address">일반전화</label>
                             </div>
-                            <select name="" id="homeNumber1" className="CheakoutPageAddress_callNumber_callbox">
+                            <select name="" id="homeNumber1" className="CheckoutPageAddress_callNumber_callbox">
                                 <option value="02">02</option>
                                 <option value="031">031</option>
                                 <option value="032">032</option>
@@ -185,17 +185,17 @@ const CheakoutPageBuyerAddress = () => {
                                 <option value="0507">0507</option>
                                 <option value="070">070</option>
                             </select>
-                            <p className="CheakoutPageAddress_callNumber_p">-</p>
-                            <input type="text" id="homeNumber2" className="CheakoutPageAddress_callNumber_callbox" />
-                            <p className="CheakoutPageAddress_callNumber_p">-</p>
-                            <input type="text" id="homeNumber3" className="CheakoutPageAddress_callNumber_callbox" />
+                            <p className="CheckoutPageAddress_callNumber_p">-</p>
+                            <input type="text" id="homeNumber2" className="CheckoutPageAddress_callNumber_callbox" />
+                            <p className="CheckoutPageAddress_callNumber_p">-</p>
+                            <input type="text" id="homeNumber3" className="CheckoutPageAddress_callNumber_callbox" />
                         </div>
 
-                        <div className='CheakoutPageAddress_callNumber'>
-                            <div className="CheakoutPageAddress_callNumber_label">
+                        <div className='CheckoutPageAddress_callNumber'>
+                            <div className="CheckoutPageAddress_callNumber_label">
                                 <label htmlFor="address">휴대전화</label>
                             </div>
-                            <select name="" id="phone1" className="CheakoutPageAddress_callNumber_callbox">
+                            <select name="" id="phone1" className="CheckoutPageAddress_callNumber_callbox">
                                 <option value="010">010</option>
                                 <option value="011">011</option>
                                 <option value="016">016</option>
@@ -203,10 +203,10 @@ const CheakoutPageBuyerAddress = () => {
                                 <option value="018">018</option>
                                 <option value="019">019</option>
                             </select>
-                            <p className="CheakoutPageAddress_callNumber_p">-</p>
-                            <input type="text" id="phone2" className="CheakoutPageAddress_callNumber_callbox" ref={phonenumber2Ref} />
-                            <p className="CheakoutPageAddress_callNumber_p">-</p>
-                            <input type="text" id="phone3" className="CheakoutPageAddress_callNumber_callbox" ref={phonenumber3Ref} />
+                            <p className="CheckoutPageAddress_callNumber_p">-</p>
+                            <input type="text" id="phone2" className="CheckoutPageAddress_callNumber_callbox" ref={phonenumber2Ref} />
+                            <p className="CheckoutPageAddress_callNumber_p">-</p>
+                            <input type="text" id="phone3" className="CheckoutPageAddress_callNumber_callbox" ref={phonenumber3Ref} />
                         </div>
 
                     </div>
@@ -218,4 +218,4 @@ const CheakoutPageBuyerAddress = () => {
     );
 };
 
-export default CheakoutPageBuyerAddress;
+export default CheckoutPageBuyerAddress;

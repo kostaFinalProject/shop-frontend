@@ -44,7 +44,7 @@ const MyPageIntro = () => {
               <a href="/MyPage/stylemodify">
                 <li>프로필 관리</li>
               </a>
-              <a href="">
+              <a href="/StyleprofileMyInterestProduct">
                 <li>내 스타일</li>
               </a>
             </ul>

@@ -35,6 +35,8 @@ import StyleDetail from "./components/SocialContent/StyleDetail.js";
 import StyleMain from "./components/SocialContent//StyleMain/StyleMain.js";
 import Styleprofile from "./components/SocialContent/StyleProfile/Styleprofile.js";
 import StyleprofileMyInterestProduct from "./components/SocialContent/StyleProfile/StyleprofileMyInterestProduct.js";
+import CheckoutPage from "./components/CheckoutPage/CheckoutPage.js";
+
 
 
 function App() {
@@ -86,12 +88,13 @@ function App() {
         <Route path="/QnA" element={<QnA />} />
         <Route path="/SearchProduct" element={<SearchProduct />} />
         <Route path="/SearchProfile" element={<SearchProfile />} />
-        <Route path="/SearchStyle" element={<SearchStyle />} />
+        <Route path="/SearchStyle" element={<SearchStyle />} ㅎ/>
         <Route path="/TotalSearchHead" element={<TotalSearchHead />} />
         <Route path="/StyleDetail" element={<StyleDetail />} />
         <Route path="/StyleMain" element={<StyleMain />} />
         <Route path="/Styleprofile" element={<Styleprofile />} />
         <Route path="/StyleprofileMyInterestProduct" element={<StyleprofileMyInterestProduct />} />
+        <Route path="/CheckoutPage" element={<CheckoutPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>
