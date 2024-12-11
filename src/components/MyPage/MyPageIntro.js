@@ -209,7 +209,7 @@ const MyPageIntro = () => {
               최근 주문 내역
               <span className="desc">최근 5개 출력</span>
               <span className="desc" />
-              <a href="">+ more</a>
+              <a href="/MyPage/order">+ more</a>
             </div>
             <div className="listwrap">
               <div className="ec-base-table typelist">

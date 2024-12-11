@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./NewCreate.css";
 
 const NewCreate = () => {
-  const [images, setImages] = useState([]); // 이미지 리스트
+  const [images, setImages] = useState([{ file: null, checked: false }]); // 이미지 리스트
   const [existingFiles, setExistingFiles] = useState(new Set()); // 중복된 이미지를 막기 위한 Set
 
   // 이미지 추가 함수

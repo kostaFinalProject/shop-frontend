@@ -1,0 +1,213 @@
+.registproductsection {
+  width: 1080px;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  justify-content: space-between;
+  font-family: 'SpoqaHanSansNeo-Regular';
+}
+
+.registproductsection .list {
+  width: 182px;
+  margin: 64px 0 0 20px;
+  border: 1px solid #111;
+}
+
+.registproductsection .name {
+  padding-left: 5px;
+  height: 52px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(248, 248, 248);
+  border-bottom: 1px solid #111;
+  background-repeat: no-repeat;
+  background-size: 36% 0.5em;
+  background-position: 13% 69%;
+}
+
+.registproductsection .detail-list {
+  padding: 14px 16px 15px 0px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.registproductsection .detail-select {
+  padding: 14px 16px 15px;
+  border-bottom: 1px solid #111;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.registproductsection .order .member .item {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.registproductsection .detail-noselect {
+  padding: 14px 16px 15px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #111;
+}
+
+.registproductsection .detail div:hover {
+  background-color: #F3F5F7;
+}
+
+.registproductsection .info {
+  width: 824px;
+  margin: 64px 10px 100px 0;
+}
+
+
+.registproductsection .content-name {
+  color: rgb(24, 26, 28);
+  height: 44px;
+  letter-spacing: -0.4px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.registproductsection hr {
+  border-color: rgb(231, 231, 231, 0.3);
+  background: rgb(231, 231, 231, 0.3);
+  height: 1px;
+}
+
+
+.registproductsection h2 {
+  color: #333;
+}
+
+.registproductsection .categoryselect{
+  display: flex;
+}
+
+.registproductsection .mainselect,
+.registproductsection .subselect{
+width: 412px;
+}
+
+
+
+.registproductsection select{
+  width: 220px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 3px 0 10px 0;
+  text-align:left;
+}
+.registproductsection .category{
+  margin-top: 10px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.registproductsection .form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.registproductsection .form-group input[type="text"],
+.registproductsection .form-group input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.registproductsection .image-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.registproductsection .image-list li {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.registproductsection .image-list li input[type="file"] {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.registproductsection .rep-img-label {
+  font-weight: bold;
+  color: green;
+  font-size: 12px;
+  background-color: #e0f7e0;
+  padding: 3px 5px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.registproductsection .add-image-btn,
+.registproductsection .remove-image-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.registproductsection .add-image-btn:hover{
+  background-color: #47C83E;
+}
+
+
+.registproductsection .remove-image-btn {
+  background-color: red;
+}
+
+.registproductsection .remove-image-btn:disabled {
+  background-color: red; /* 여전히 빨간색을 유지 */
+  cursor: not-allowed;  /* 사용 금지 상태 커서 */
+  opacity: 0.6;         /* 비활성화 상태 표시 */
+}
+
+.registproductsection button[type="submit"] {
+  background-color: #008CBA;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px
+}
+
+.registproductsection button[type="submit"]:hover {
+  background-color: #007bb5;
+}
+
+.registproductsection .error-message {
+  color: red;
+  font-size: 14px;
+}

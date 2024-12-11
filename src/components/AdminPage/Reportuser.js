@@ -48,6 +48,24 @@ const Reportuser = () => {
           >
             <div className="item">카테고리 등록</div>
           </div>
+          <div
+            className="detail-noselect"
+            onClick={() => (window.location.href = "/AdminPage/registproduct")}
+          >
+            <div className="item">상품 등록</div>
+          </div>
+          <div
+            className="detail-noselect"
+            onClick={() => (window.location.href = "/AdminPage/modifyproduct")}
+          >
+            <div className="item">상품 수정</div>
+          </div>
+          <div
+            className="detail-noselect"
+            onClick={() => (window.location.href = "/AdminPage/admindelivery")}
+          >
+            <div className="item">배송 관리</div>
+          </div>
         </div>
       </div>
       <div className="info">

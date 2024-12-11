@@ -17,11 +17,15 @@ import Footer from "./components/Footer/footer";
 import Adminright from "./components/AdminPage/Adminright";
 import Categorymaker from "./components/AdminPage/Categorymaker";
 import Reportuser from "./components/AdminPage/Reportuser";
+import Registproduct from "./components/AdminPage/Registproduct.js";
+import Modifyproduct from "./components/AdminPage/modifyproduct.js";
+import Admindelivery from "./components/AdminPage/Admindelivery.js";
+//테스트 react
+import Test from "./components/test.js";
 //태온님이 하신거
 import Signup from "./components/Login/signup";
 import Membermodify from "./components/MyPage/membermodify";
 //연규님이 하신거
-
 import BoardshoppingLi from './components/BoardshoppingList/BoardshoppingLi.js';
 import BoardshoppingSearch from './components/BoardshoppingSearch/BoardshoppingSearch.js';
 import DetailPage from './components/DetailPage/DetailPage.js';
@@ -76,7 +80,11 @@ function App() {
         <Route path="/AdminPage/reportuser" element={<Reportuser />} />
         <Route path="/AdminPage/categorymaker" element={<Categorymaker />} />
         <Route path="/AdminPage/adminright" element={<Adminright />} />
-
+        <Route path="/AdminPage/registproduct" element={<Registproduct />} />
+        <Route path="/AdminPage/modifyproduct" element={<Modifyproduct />} />
+        <Route path="/AdminPage/admindelivery" element={<Admindelivery />} />
+        {/* 테스트 */}
+        <Route path="/test" element={<Test />} />
         {/* 태온님이 하신거 */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/MyPage/membermodify" element={<Membermodify />} />
@@ -88,7 +96,7 @@ function App() {
         <Route path="/QnA" element={<QnA />} />
         <Route path="/SearchProduct" element={<SearchProduct />} />
         <Route path="/SearchProfile" element={<SearchProfile />} />
-        <Route path="/SearchStyle" element={<SearchStyle />} ㅎ/>
+        <Route path="/SearchStyle" element={<SearchStyle />} ㅎ />
         <Route path="/TotalSearchHead" element={<TotalSearchHead />} />
         <Route path="/StyleDetail" element={<StyleDetail />} />
         <Route path="/StyleMain" element={<StyleMain />} />
