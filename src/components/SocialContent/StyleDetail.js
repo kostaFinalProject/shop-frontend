@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import './StyleDetail.css';
 import { Link } from "react-router-dom";
+import MoreView from "./MoreView";
+
 
 const StyleDetail = () => {
 
@@ -41,15 +43,27 @@ const StyleDetail = () => {
                     </div>
                     {/* ----------------------social_body-----------------  */}
                     <div className="StyleDetail_body">
+                        <div className="StyleDetail_ImageBox">
+                            {/* 슬라이드 컨테이너 */}
+                            <button className="StyleDetail_prev" onClick={prevImage}> &#8249; </button>
 
-                        {/* 슬라이드 컨테이너 */}
-                        <div className="StyleDetail_main_img">
-                            <div className="StyleDetail_image_slider">
-                                <img src={images[currentIndex]} alt="slider" className="StyleDetail_image_sliderImage" />
+                            <div className="StyleDetail_main_img">
+                                <div className="StyleDetail_image_slider">
+                                    <img src={images[currentIndex]} alt="slider" className="StyleDetail_image_sliderImage" />
+                                </div>
                             </div>
+                                
+                            <button className="StyleDetail_next" onClick={nextImage}>  &#8250; </button>
+                            
+                         </div>
+
 
                             {/* 페이지 표시 */}
                             <div className="StyleDetail_pagination">
+                                {/* 이동 버튼 */}
+
+
+
                                 {images.map((_, index) => (
                                     <span
                                         key={index}
@@ -57,16 +71,11 @@ const StyleDetail = () => {
                                         .
                                     </span>
                                 ))}
+
                             </div>
 
-                            {/* 이동 버튼 */}
-                            <button className="StyleDetail_prev" onClick={prevImage}>
-                                &#8249;
-                            </button>
-                            <button className="StyleDetail_next" onClick={nextImage}>
-                                &#8250;
-                            </button>
-                        </div>
+
+                 
                     </div>
 
 
@@ -87,18 +96,7 @@ const StyleDetail = () => {
             </div>
             {/* ----------------------------social_container----------------------------  */}
             <div className="StyleDetail_social_container">
-                <div className="StyleDetail_container_title">@j_0_x_0님의 다른 스타일
-                    <Link to="/Styleprofile">
-                        <button className="more_btn">더보기</button>
-                    </Link>
-                                
-                </div>
-                <div className="StyleDetail_container_img">
-                    <div><a href="#"><img src="https://cdn.4mation.net/market/mainimage/sethb_72b2f7b4-6221-4b3d-8a64-319ba82bd7e1_1045x1436.jpeg" alt="" /></a></div>
-                    <div><a href="#"><img src="https://fakeimg.pl/150x200/" alt="" /></a></div>
-                    <div><a href="#"><img src="https://fakeimg.pl/150x200/" alt="" /></a></div>
-                    <div><a href="#"><img src="https://fakeimg.pl/150x200/" alt="" /></a></div>
-                </div>
+                <MoreView />
             </div>
         </>
 

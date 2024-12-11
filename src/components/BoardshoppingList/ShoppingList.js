@@ -47,7 +47,7 @@ const ShoppingList = ({ items }) => {
                             </div>
                             <div className="BoardshoppingLi_board_name">Official Licensed Product</div>
                         </div>
-                    </li>
+                    </li>       
                 ))}
             </ul>
 

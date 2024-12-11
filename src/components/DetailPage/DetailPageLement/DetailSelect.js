@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./DetailSelect.css";
 
 const ProductSelector = () => {
@@ -8,6 +8,9 @@ const ProductSelector = () => {
   const rewardRate = 0.01;
   const productPrice = 50000;
   const productName = "에버튼 'BAR SCARF' 스카프 (머플러) - 오피셜";
+
+  const itemSelectorRef = useRef(null); // Ref 선언
+
   useEffect(() => {
     const newTotalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
     const newTotalAmount = items.reduce(
@@ -60,7 +63,18 @@ const ProductSelector = () => {
 
   const removeItem = (itemId) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+
+    
   };
+
+  // 구매눌렀을 대 옵션 선택 유무
+  const handlePurchase = () => {
+    if(items.length === 0){
+      alert("옵션을 선택해주세요!");
+      itemSelectorRef.current.focus(); // 포커스 설정
+      return;
+    }
+  }
 
   return (
     <>
@@ -73,6 +87,7 @@ const ProductSelector = () => {
             <select
               id="itemSelector"
               className="SizeSelection_select"
+              ref={itemSelectorRef} //Ref 포커스 연결 바로구매 클릭 시 옵션 미선택
               style={{ fontSize: "15px" }}
               onChange={handleSizeSelect}
             >
@@ -183,8 +198,8 @@ const ProductSelector = () => {
         </span>
       </div>
 
-      <button className="BuyInformation_buyBtn">
-        <a href="#">바로구매</a>
+      <button className="BuyInformation_buyBtn" onClick={handlePurchase}>
+        <p>바로구매</p>
       </button>
     </>
   );

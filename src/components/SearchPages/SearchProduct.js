@@ -1,12 +1,18 @@
 import React from "react";
 import "./SearchProduct.css";
 import TotalSearchHead from "./TotalSearchHead.js";
-
+import ProductListMenu from "../ProductListMenu/ProductListMenu.js";
 const SearchProduct = () => {
     return (
         <>
 
+
             <TotalSearchHead />
+                    {/* ------------------상품 조회수 및 상품 조회------------------ */}
+        <div>
+                <ProductListMenu />
+
+            </div>
                     {/* --------------------------------각각의 본문-------------------- */}
             <section className="SearchProduct_container">
                 <div className="SearchProduct_board_list_wrap">

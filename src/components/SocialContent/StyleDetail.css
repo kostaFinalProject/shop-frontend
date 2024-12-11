@@ -55,30 +55,27 @@
 }
 
 /* ----------------------social_body----------------- */
-.StyleDetail_body {
-    width: 100%;
 
-    padding: 10px 0 10px 0;
-}
 .StyleDetail_main_img {
     width: 100%;
     height: auto;
 }
 .StyleDetail_main_img img {
+    display: flex;
     width: 640px;
     height: 640px;
     object-fit: cover;
 }
-.StyleDetail_main_img_list {
-    width: 100%;
-    max-width: 640px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    padding: 10px 0 10px 0;
-}
+
 
 /* 이미지 슬라이드 스타일링 */
+.StyleDetail_ImageBox{
+    display: flex;
+    width: 660px;
+    height: 640px;
+    align-items: center;
+
+}
   
   .StyleDetail_image_slider {
     width: 100%;
@@ -86,20 +83,46 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
   
   .StyleDetail_image_sliderImage {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+
   }
   
+  .StyleDetail_prev {
+
+    height: 50px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  .StyleDetail_next {
+    
+    height: 50px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    
+  }
   .StyleDetail_pagination {
+
     text-align: center;
 
   }
   
   .StyleDetail_dot {
+
     font-size: 40px;
     margin: 0 5px;
     cursor: pointer;
@@ -110,31 +133,6 @@
     color: #333;
   }
   
-  .StyleDetail_prev {
-    position: absolute;
-    top: 80%;
-    right: 70%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  .StyleDetail_next {
-    position: absolute;
-    top: 80%;
-    left: 70%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    
-  }
 
 /* ---------------------interest-----------------  */
 .StyleDetail_interest{
@@ -186,39 +184,4 @@
     display: block;
     
     padding-bottom: 20px;
-}
-.StyleDetail_container_title{
-    height: 100px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 640px;
-    font-size: 20px;
-    font-weight: bold;
-}
-.more_btn{
-    all: unset;
-    font-size: 16px;
-    color: #B5B6B5;
-    
-}
-.more_Btn:hover{
-    cursor: pointer;
-}
-.StyleDetail_container_img{
-    width: 640px;
-    height: 200px;
-    display: flex;
-    list-style-position: initial;
-    gap: 10px;
-
-
-}
-.StyleDetail_container_img li {
-    list-style: none;
-}
-.StyleDetail_container_img img {
-    height: 200px;
-    width: 150px;
-    object-fit: cover;
 }

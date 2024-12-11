@@ -71,7 +71,7 @@ const Categorymaker = () => {
           <div className="categorylist">
             <span>카테고리 리스트</span>
             <button>삭제</button>
-            <div className="category">
+            <div className="categoryli">
               <div>
                 <input type="checkbox" />
                 해외축구

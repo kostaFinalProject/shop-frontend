@@ -4,25 +4,20 @@ import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
 import "./Reportuser.css";
 
 const Reportuser = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
-  const [activePage, setActivePage] = useState("page1"); // 활성화된 페이지
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activePage, setActivePage] = useState('page1');
 
-  // 모달 열기
-  const openModal = () => setIsModalOpen(true);
-
-  // 모달 닫기
-  const closeModal = () => setIsModalOpen(false);
-
-  // 모달 배경 클릭 시 닫기
-  const handleBackgroundClick = (event) => {
-    if (event.target.id === "popup") {
-      closeModal();
-    }
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
-  // 페이지 열기
-  const openPage = (pageName) => setActivePage(pageName);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
+  const openPage = (pageName) => {
+    setActivePage(pageName);
+  };
 
   return (
     <section className="reportusersection">
@@ -109,79 +104,81 @@ const Reportuser = () => {
                   </div>
                 </div>
               </div>
-              <div className="profile-button">
-                <button id="modal-open" onClick={openModal}>글보기</button>
-              </div>
-              <div id="popup" className="modal" style={{ display: "none" }}>
-                <div className="modal-content">
-                  {/* 탭 */}
-                  <div className="tabs">
-                    <button
-                      className={`tab-link ${activePage === "page1" ? "active" : ""}`}
-                      onClick={() => openPage("page1")}
-                    >
-                      게시글
-                    </button>
-                    <button
-                      className={`tab-link ${activePage === "page2" ? "active" : ""}`}
-                      onClick={() => openPage("page2")}
-                    >
-                      댓글
-                    </button>
-                  </div>
-                  {/* 페이지 내용 */}
-                  <div id="page1" className={`page ${activePage === "page1" ? "active" : ""}`}>
-                    <article>
-                      {/* ----------------------social_head----------------- */}
-                      <div className="social_head">
-                        {/* <div class="profile_img"><img src="https://fakeimg.pl/44x44/"  alt=""></div> */}
-                        <div className="profile_img">
-                          <img
-                            src="https://cdn.4mation.net/profile/image/tmdals4872_7de6ba24-cec8-4862-89f3-e303a4ff8e01.png?s=100x100&q=100"
-                            alt=""
-                          />
-                        </div>
-                        <div className="profile_text">
-                          <p className="profile_id">under_lapping </p>
-                          <p className="registration_time">2024년 8월 20일</p>
+              <div>
+                <div className="profile-button">
+                  <button id="modal-open" onClick={openModal}>글보기</button>
+                </div>
+
+                {isModalOpen && (
+                  <div id="popup" className="modal" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                      {/* 탭 */}
+                      <div className="tabs">
+                        <button
+                          className={`tab-link ${activePage === "page1" ? "active" : ""}`}
+                          onClick={() => openPage("page1")}
+                        >
+                          게시글
+                        </button>
+                        <button
+                          className={`tab-link ${activePage === "page2" ? "active" : ""}`}
+                          onClick={() => openPage("page2")}
+                        >
+                          댓글
+                        </button>
+                      </div>
+                      {/* 페이지 내용 */}
+                      <div id="page1" className={`page ${activePage === "page1" ? "active" : ""}`}>
+                        <article>
+                          {/* ----------------------social_head----------------- */}
+                          <div className="social_head">
+                            <div className="profile_img">
+                              <img
+                                src="https://cdn.4mation.net/profile/image/tmdals4872_7de6ba24-cec8-4862-89f3-e303a4ff8e01.png?s=100x100&q=100"
+                                alt=""
+                              />
+                            </div>
+                            <div className="profile_text">
+                              <p className="profile_id">under_lapping</p>
+                              <p className="registration_time">2024년 8월 20일</p>
+                            </div>
+                          </div>
+                          {/* ----------------------social_body----------------- */}
+                          <div className="social_body">
+                            <div className="main_img">
+                              <img
+                                src="https://cdn.4mation.net/market/mainimage/sethb_72b2f7b4-6221-4b3d-8a64-319ba82bd7e1_1045x1436.jpeg"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          {/* ---------------------social_text----------------- */}
+                          <div className="social_text">
+                            <h2 className="text_title">
+                              코듀로이의 계절 셔츠도 코듀로이로
+                            </h2>
+                            <p className="text_tag">
+                              #겨울데일리 #겨울코디추천 #아우터추천 #연말선물 #연말룩
+                              #신발리뷰 #사이즈팁 #요즘신발 #KICKS #남자코디
+                              #겨울남자코디 #남자겨울코디 #남자데일리룩
+                            </p>
+                          </div>
+                        </article>
+                      </div>
+                      <div id="page2" className={`page ${activePage === "page2" ? "active" : ""}`}>
+                        <div id="reportcomment">
+                          대충 댓글 양식 따오기 Lorem ipsum dolor sit amet consectetur
+                          adipisicing elit. Ea libero numquam quae recusandae?
+                          Blanditiis, temporibus? Ipsum laborum ea repudiandae magni
+                          amet, accusantium harum illum dolorum animi expedita at
+                          tempora suscipit?
                         </div>
                       </div>
-                      {/* ----------------------social_body----------------- */}
-                      <div className="social_body">
-                        {/* <div class="main_img"><img src="https://fakeimg.pl/640x640/"  alt=""></div> */}
-                        <div className="main_img">
-                          <img
-                            src="https://cdn.4mation.net/market/mainimage/sethb_72b2f7b4-6221-4b3d-8a64-319ba82bd7e1_1045x1436.jpeg"
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                      {/* ---------------------social_text-----------------           */}
-                      <div className="social_text">
-                        <h2 className="text_title">
-                          코듀로이의 계절 셔츠도 코듀로이로
-                        </h2>
-                        <p className="text_tag">
-                          #겨울데일리 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                          #신발리뷰 #사이즈팁 #요즘신발 #KICKS #남자코디
-                          #겨울남자코디 #남자겨울코디 #남자데일리룩
-                        </p>
-                      </div>
-                    </article>
-                  </div>
-                  <div id="page2" className={`page ${activePage === "page2" ? "active" : ""}`}>
-                    <div id="reportcomment">
-                      {" "}
-                      대충 댓글 양식 따오기 Lorem ipsum dolor sit amet consectetur
-                      adipisicing elit. Ea libero numquam quae recusandae?
-                      Blanditiis, temporibus? Ipsum laborum ea repudiandae magni
-                      amet, accusantium harum illum dolorum animi expedita at
-                      tempora suscipit?
+                      {/* 모달 닫기 버튼 */}
+                      <button id="close" onClick={closeModal}>Close</button>
                     </div>
                   </div>
-                  {/* 모달 닫기 버튼 */}
-                  <button id="close">Close</button>
-                </div>
+                )}
               </div>
               <div className="profile-button">
                 <select

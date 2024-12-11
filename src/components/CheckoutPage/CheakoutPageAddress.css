@@ -1,0 +1,176 @@
+.CheakoutPageAddress_Form {
+  width: 900px;
+
+    margin: 0 auto;
+    padding: 0;
+
+}
+/* 배송지 전체 폼  */
+.CheakoutPageAddress_body{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 5px;
+
+  font-weight: normal;
+
+}
+
+/* 배송지명 칸-------------------------  */
+.CheakoutPageAddress_Address_Name{
+
+  display: flex;
+  height: 40px;
+}
+.CheakoutPageAddress_Address_Name_Title{
+  width: 200px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+}
+.CheakoutPageAddress_Address_Title label {
+  font-size: 18px;
+}
+.CheakoutPageAddress_Address_Name_Body{
+
+  width: 700px;
+}
+
+/* 주문자 성명 칸-------------------------  */
+.CheakoutPageAddress_Buyer_Name{
+
+  display: flex;
+  height: 40px;
+}
+.CheakoutPageAddress_Buyer_Name_Title{
+  width: 200px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+}
+.CheakoutPageAddress_Buyer_Name_Title label {
+  font-size: 18px;
+}
+.CheakoutPageAddress_Buyer_Name_Body{
+
+  width: 700px;
+}
+
+
+/* 이메일 칸-------------------------  */
+.CheakoutPageAddress_Email{
+
+  display: flex;
+  height: 40px;
+}
+.CheakoutPageAddress_Email_Title{
+  width: 200px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+}
+.CheakoutPageAddress_Email_Title label {
+  font-size: 18px;
+}
+.CheakoutPageAddress_Email_Body{
+
+  width: 330px;
+}
+.CheakoutPageAddress_Email_Body_p {
+  padding: 0 10px 0 10px;
+}
+
+
+/* 주소 칸-------------------------  */
+
+.CheakoutPageAddress_Address_address_Form{
+  display: flex;
+}
+.CheakoutPageAddress_Address_address_label{
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+.CheakoutPageAddress_Address_address_inpuit{
+  width:700px;
+
+  
+}
+.CheakoutPageAddress_AddressNumber{
+  width: 200px;
+  height: 40px;
+
+  margin-bottom: 10px;
+}
+.CheakoutPageAddress_SearchBtn{
+  width: 120px;
+  height: 43px;
+  margin-left: 10px;
+
+}
+.CheakoutPageAddress_AddressBox{
+  width: 690px;
+  height: 40px;
+  margin-bottom: 10px;
+
+}
+
+/* 일반전화 ---------------------  */
+.CheakoutPageAddress_callNumber{
+  width: 900px;
+  display: flex;
+  font-size: 18px;
+  height: 40px;
+
+}
+.CheakoutPageAddress_callNumber_label{
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+
+}
+.CheakoutPageAddress_callNumber_callbox{
+  width: 225px;
+  margin: 0 10px 0 10px;
+  font-size: 15px;
+}
+.CheakoutPageAddress_callNumber_callbox:nth-last-child(1){
+  margin-right: 0;
+}
+
+
+/* 배송지 기본저장 및 버튼----------------- */
+.CheakoutPageAddress_Save_Btn{
+  width: 900px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+.CheakoutPageAddress_Save_Btn_AddressSave{
+  width: 200px;
+  font-size: 13px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.CheakoutPageAddress_SaveBtn{
+  width: 100px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
+}

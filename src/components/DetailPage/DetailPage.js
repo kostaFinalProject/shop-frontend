@@ -24,7 +24,6 @@ const DetailPage = () => {
                             <DetailSelect />
 
                             <div className="DetailPage_sub_button_menu">
-                                <button className="DetailPage_like_button"><a href="#">좋아요</a></button>
                                 <button className="DetailPage_basket_button"><a href="#">장바구니</a></button>
                                 <button className="DetailPage_interest_product_button"><a href="#">관심상품</a></button>
                             </div>
@@ -47,33 +46,46 @@ const DetailPage = () => {
 
                     {/* ----------------------SNS 형식 후기글------------------ */}
                     <div className="DetailPage_sns_style">
-                        <div className="DetailPage_sns_style_title"><a href="#" id="review">스타일</a></div>
-                    </div>
-                    <div className="DetailPage_detail_page_review_list">
-                        <ul className="DetailPage_detail_page_review_list_body">
-                            <a href="#">
-                                <li className="DetailPage_detail_page_review_list_item">
-                                    <div className="DetailPage_detail_page_review_list_item_img">
-                                        <img src="https://fakeimg.pl/262x262/" alt="리뷰 이미지" />
-                                    </div>
-                                    <div className="DetailPage_detail_page_review_content">
-                                        <div className="DetailPage_detail_page_review_title">
-                                            <img src="https://fakeimg.pl/26x26/" alt="" className="DetailPage_detail_page_review_title_img" />
-                                            <span className="DetailPage_detail_page_review_title_id">아이디</span>
-                                            <span className="DetailPage_detail_page_review_title_like">♡4</span>
-                                            {/* 하트 다시 넣기  */}
-                                        </div>
-                                        <p className="DetailPage_detail_page_review_body_tag">#겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩 #사이즈팁 #KICKS</p>
-                                    </div>
-                                </li>
-                            </a>
-                        </ul>
+                        <div className="DetailPage_sns_style_title"><a href="#" id="review">후기 및 스타일 </a></div>
                     </div>
 
+                    <ul className="DetailPage_detail_page_review_list_body">
+         
+
+                        <li className="DetailPage_review_list_item">
+                            <img src="https://cdn.4mation.net/talk/mainimage/axd189_049247ab-a2c1-46f6-8f7b-3a1f1b160ac5_1200x1600.jpg" alt="interestData" className='DetailPage_review_list_item_img' />
+                            <span className="DetailPage_review_title_id">1</span>
+                            <p className="DetailPage_review_MyInterests">2</p>
+
+                        </li>
+
+                        <li className="DetailPage_review_list_item">
+                            <img src="https://cdn.4mation.net/talk/mainimage/axd189_049247ab-a2c1-46f6-8f7b-3a1f1b160ac5_1200x1600.jpg" alt="interestData" className='DetailPage_review_list_item_img' />
+                            <span className="DetailPage_review_title_id">1</span>
+                            <p className="DetailPage_review_MyInterests">2</p>
+
+                        </li>
+
+
+                        <li className="DetailPage_review_list_item">
+                            <img src="https://cdn.4mation.net/talk/mainimage/axd189_049247ab-a2c1-46f6-8f7b-3a1f1b160ac5_1200x1600.jpg" alt="interestData" className='DetailPage_review_list_item_img' />
+                            <span className="DetailPage_review_title_id">1</span>
+                            <p className="DetailPage_review_MyInterests">2</p>
+
+                        </li>
+
+
+                        <li className="DetailPage_review_list_item">
+                            <img src="https://cdn.4mation.net/talk/mainimage/axd189_049247ab-a2c1-46f6-8f7b-3a1f1b160ac5_1200x1600.jpg" alt="interestData" className='DetailPage_review_list_item_img' />
+                            <span className="DetailPage_review_title_id">1</span>
+                            <p className="DetailPage_review_MyInterests">2</p>
+
+                        </li>
+                    </ul>
                 </div>
 
                 <ScrollUp />
-               
+
             </div>
             <div id="footer"></div>
         </div>

@@ -7,8 +7,9 @@
     height: auto;
 
 }
+
 /* search 양식 */
-.TotalSearchHead_search {
+/* .TotalSearchHead_search {
     width: 100%;
     height: 50px;
     padding-bottom: 50px;
@@ -63,7 +64,7 @@
     border-bottom: 1px solid #575756;
     border-radius: 0;
     background-position: 100% center;
-}
+} */
 
 
 /* --------------------------navi------------------- */
