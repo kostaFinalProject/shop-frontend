@@ -14,6 +14,9 @@ import MyPageAddress from "./components/MyPage/MyPageAddress";
 import AddressRegisterForm from "./components/MyPage/AddressRegisterForm";
 import StyleModify from "./components/MyPage/StyleModify";
 import Footer from "./components/Footer/footer";
+import Adminright from "./components/AdminPage/Adminright";
+import Categorymaker from "./components/AdminPage/Categorymaker";
+import Reportuser from "./components/AdminPage/Reportuser";
 //태온님이 하신거
 import Signup from "./components/Login/signup";
 import Membermodify from "./components/MyPage/membermodify";
@@ -68,6 +71,10 @@ function App() {
         <Route path="/MyPage/address" element={<MyPageAddress />} />
         <Route path="/MyPage/address/addressregist" element={<AddressRegisterForm />} />
         <Route path="/MyPage/stylemodify" element={<StyleModify />} />
+        <Route path="/AdminPage/reportuser" element={<Reportuser />} />
+        <Route path="/AdminPage/categorymaker" element={<Categorymaker />} />
+        <Route path="/AdminPage/adminright" element={<Adminright />} />
+
         {/* 태온님이 하신거 */}
         <Route path="/signup" element={<Signup />} />
         <Route path="/MyPage/membermodify" element={<Membermodify />} />

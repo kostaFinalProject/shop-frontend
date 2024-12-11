@@ -1,0 +1,177 @@
+
+.adminrightsection {
+  width: 1080px;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  justify-content: space-between;
+  font-family: 'SpoqaHanSansNeo-Regular';
+}
+
+.adminrightsection .list {
+  width: 182px;
+  margin: 64px 0 0 20px;
+  border: 1px solid #111;
+}
+
+.adminrightsection .name {
+  padding-left: 5px;
+  height: 52px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(248, 248, 248);
+  border-bottom: 1px solid #111;
+  background-repeat: no-repeat;
+  background-size: 36% 0.5em;
+  background-position: 13% 69%;
+}
+
+.adminrightsection .detail-list {
+  padding: 14px 16px 15px 0px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.adminrightsection .detail-select {
+  padding: 14px 16px 15px;
+  border-bottom: 1px solid #111;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.adminrightsection .order .member .item {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.adminrightsection .detail-noselect {
+  padding: 14px 16px 15px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #111;
+}
+
+.adminrightsection .detail div:hover {
+  background-color: #F3F5F7;
+}
+
+.adminrightsection .info {
+  width: 824px;
+  margin: 64px 10px 0 0;
+}
+
+
+.adminrightsection .content-name {
+  color: rgb(24, 26, 28);
+  height: 44px;
+  letter-spacing: -0.4px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.adminrightsection hr {
+  border-color: rgb(231, 231, 231, 0.3);
+  background: rgb(231, 231, 231, 0.3);
+  height: 1px;
+}
+
+.adminrightsection .content {
+  height: 430px;
+  background-color: #e1e1e1;
+  margin: 0 0 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.adminrightsection .contentlist {
+  width: 824px;
+  display: flex;
+  justify-content: center;
+}
+
+.adminrightsection .aaaa {
+  width: 422px;
+  height: 50px;
+  border: 1px solid #111;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  color: black;
+}
+
+.adminrightsection .contentlistselected {
+  text-decoration: underline;
+}
+
+.adminrightsection .profile {
+  width: 810px;
+  height: 130px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  border: 1px solid #111;
+}
+
+
+.adminrightsection .profile_img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin: 31px 0 31px 5px;
+}
+
+.adminrightsection .profile_img img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 100px;
+}
+
+.adminrightsection .profile_text {
+  display: flex;
+  width: 800px;
+  justify-content: space-evenly;
+  flex-direction: column;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.adminrightsection .profile-button div {
+  border: 1px solid #000;
+  border-radius: 10px;
+  height: 36px;
+  line-height: 34px;
+  margin-bottom: 5px;
+  font-weight: 800;
+  width: 80px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  /* color: black !important;
+  text-decoration: none !important; */
+}
+
+.adminrightsection .profile-button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+}
