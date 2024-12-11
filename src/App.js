@@ -36,17 +36,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
-
-  useEffect(() => {
-    console.log("로그인 상태가 변경되었습니다:", isLoggedIn);
-  }, [isLoggedIn]);  // isLoggedIn 값이 변경될 때마다 실행됨
-
-  const handleLoginSuccess = () => {
-    console.log("로그인 성공 상태 변경 전:", isLoggedIn);
-    setIsLoggedIn(true);
-    // 상태 변경 후 로그는 useEffect에서 처리됨
-  };
-
   return (
     <BrowserRouter>
       <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

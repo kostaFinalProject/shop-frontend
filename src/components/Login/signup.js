@@ -216,7 +216,6 @@ const Signup = () => {
             });
     }
 
-
     return (
         <div className="form-wrap">
             <form>
@@ -258,7 +257,7 @@ const Signup = () => {
                         </p>
                     </div>
 
-                    <div className="form" style={{ marginLeft: "400px" }}>
+                    <div className="form" style={{ marginLeft: "390px" }}>
                         {/* 사용자 유형 체크박스 */}
                         <div className="form-section">
                             <div className="form-row" style={{ marginTop: "10px" }}>

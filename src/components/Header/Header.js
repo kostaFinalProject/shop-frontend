@@ -4,9 +4,77 @@ import "./Header.css";
 const Header = ( {isLoggedIn, setIsLoggedIn}) => {
   const [visibleSubmenu, setVisibleSubmenu] = useState(null);
 
+  // 초기 isLoggedIn 상태 설정
   useEffect(() => {
-    console.log("Header에서 isLoggedIn 상태:", isLoggedIn);
-  }, [isLoggedIn]); // isLoggedIn 상태가 변경될 때마다 출력
+    const initializeLoginState = async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      if (!accessToken || !refreshToken) {
+        setIsLoggedIn(false);
+        return;
+      }
+
+      try {
+        // 회원 정보 조회 시도
+        const userResponse = await fetch("http://localhost:8080/api/v1/members", {
+          method: "GET",
+          headers: {
+            'Authorization': accessToken,
+            'Refresh-Token': refreshToken,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (userResponse.ok) {
+          // 회원 정보 조회 성공
+          setIsLoggedIn(true);
+        } else {
+          // AccessToken 만료로 인한 실패 시
+          const refreshResponse = await fetch("http://localhost:8080/api/v1/members/refresh-token", {
+            method: "POST",
+            headers: {
+              'Refresh-Token': refreshToken,
+              'Content-Type': "application/json",
+            },
+          });
+
+          if (refreshResponse.ok) {
+            const data = await refreshResponse.json();
+
+            // 갱신된 AccessToken 저장
+            localStorage.setItem("accessToken", data.newToken);
+
+            // 갱신된 토큰으로 회원 정보 조회 재시도
+            const retryResponse = await fetch("http://localhost:8080/api/v1/members", {
+              method: "GET",
+              headers: {
+                'Authorization': localStorage.getItem("accessToken"),
+                'Refresh-Token': refreshToken,
+                'Content-Type': 'application/json',
+              },
+            });
+
+            if (retryResponse.ok) {
+              setIsLoggedIn(true);
+            } else {
+              throw new Error("회원 정보 조회 실패");
+            }
+          } else {
+            throw new Error("AccessToken 갱신 실패");
+          }
+        }
+      } catch (error) {
+        // 최종적으로 실패 시 로그아웃 처리
+        console.error(error);
+        setIsLoggedIn(false);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    };
+
+    initializeLoginState();
+  }, [setIsLoggedIn]);
 
   const handleCategoryClick = (index) => {
     setVisibleSubmenu(visibleSubmenu === index ? null : index);
@@ -38,6 +106,42 @@ const Header = ( {isLoggedIn, setIsLoggedIn}) => {
     });
   });
 
+  const handleLogout = async function(event) {
+    event.preventDefault();
+
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+  
+    if (!accessToken || !refreshToken) {
+      alert("로그아웃 실패: 토큰이 없습니다.");
+      return;
+    }
+  
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/members/logout", {
+        method: "POST",
+        headers: {
+          'Authorization': accessToken,
+          'Refresh-Token': refreshToken,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setIsLoggedIn(false);
+        alert("로그아웃 성공!");
+        window.location.href='/';
+      } else {
+        const errorMessage = await response.text();
+        alert("로그아웃 실패: " + errorMessage);
+        return;
+      }
+    } catch (error) {
+      alert("로그아웃 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
 
   const categories = [
     {
@@ -275,9 +379,6 @@ const Header = ( {isLoggedIn, setIsLoggedIn}) => {
     },
   ];
 
-
-
-
   return (
     <header>
       <div className="headerContainer">
@@ -309,7 +410,7 @@ const Header = ( {isLoggedIn, setIsLoggedIn}) => {
                 <img src="/img/basket3.svg" alt="장바구니" className="icon" />
                 <span>장바구니</span>
               </a>
-              <a href="/" onClick={() => setIsLoggedIn(false)}>
+              <a href="/" onClick={handleLogout}>
                 <img src="/img/box-arrow-right.svg" alt="장바구니" className="icon" />
                 <span>로그아웃</span>
               </a>
@@ -330,9 +431,6 @@ const Header = ( {isLoggedIn, setIsLoggedIn}) => {
               </a>
             </div>
           )}
-
-
-
         </div>
 
         <div className="headerNavContainer">
