@@ -503,7 +503,7 @@ const CheckoutPage = () => {
 
             {/* 결제하기 버튼 */}
             <div className='CheckoutPage_BuyBtnBox'>
-            <Link to='/StyleMain'>  <button>뒤로가기</button> </Link>
+            <Link to='/StyleMain'>  <button className='CheckoutPage_BackBtn'>뒤로가기</button> </Link>
                 <button className='CheckoutPage_BuyBtn' onClick={handleCheckout}>{finalPrice}원 결제하기</button>
                
             </div>

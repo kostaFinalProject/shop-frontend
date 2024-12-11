@@ -1,117 +1,121 @@
 
 .form-wrap {
-    width: 1200px;
-    padding: 20px;
-    border: 1px solid #f1eded;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    text-align: center;
-    margin: 0 auto;
-  }
+  width: 1200px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-wrap .firstmenu, .secondmenu {
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-wrap .form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-wrap .form-row {
+  display: flex;  /* 가로 방향 */
+  align-items: center; /* 수직한 방향으로 가운데 정렬하는 역할 */
+  gap: 10px;
+}
+
+.form-wrap .form-row label {
+  flex: 0 0 120px; /* 라벨의 고정 너비 */
+  font-weight: bold;
+}
+
+.form-wrap .form-row input[type="text"] {
+  /* font-weight: bold; */
+  font-size: 13px;
+  width: 250px;
+  flex: 0 0 auto; /* 크기 조정 안 되도록 설정 */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-wrap .form-row input[type="password"] {
+  width: 360px;
+  /* flex: 0.65;  이게 input box 길이가 조정된다 */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  user-select: none; /* 선택 방지 */
+  -webkit-user-select: none; /* Safari 지원 */
+  -ms-user-select: none; /* IE/Edge 지원 */
+  -moz-user-select: none; /* Firefox 지원 */
+}
+
+.form-wrap .form-row input[type="button"] {
+  padding: 8px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-wrap .form-row input[type="button"]:hover {
+  background-color: #555;
+}
+
+.form-wrap .form-row button {
+  padding: 8px 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-wrap .form-row button:hover {
+  background-color: #555;
+}
+
+
+/* select 요소 스타일 */
+.form-wrap .form-row select {
   
-  .form-wrap .firstmenu, .secondmenu {
-    width: 100%;
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  
-  .form-wrap .form-section {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .form-wrap .form-row {
-    display: flex;  /* 가로 방향 */
-    align-items: center; /* 수직한 방향으로 가운데 정렬하는 역할 */
-    gap: 10px;
-  }
-  
-  .form-wrap .form-row label {
-    flex: 0 0 120px; /* 라벨의 고정 너비 */
-    font-weight: bold;
-  }
-  
-  .form-wrap .form-row input[type="text"] {
-    /* font-weight: bold; */
-    font-size: 13px;
-    width: 250px;
-    flex: 0 0 auto; /* 크기 조정 안 되도록 설정 */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-wrap .form-row input[type="password"] {
-    width: 360px;
-    /* flex: 0.65;  이게 input box 길이가 조정된다 */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    user-select: none; /* 선택 방지 */
-    -webkit-user-select: none; /* Safari 지원 */
-    -ms-user-select: none; /* IE/Edge 지원 */
-    -moz-user-select: none; /* Firefox 지원 */
-  }
-  
-  .form-wrap .form-row input[type="button"] {
-    padding: 8px 12px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-wrap .form-row input[type="button"]:hover {
-    background-color: #555;
-  }
-  
-  .form-wrap .form-row button {
-    padding: 8px 12px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-wrap .form-row button:hover {
-    background-color: #555;
-  }
-  
-  
-  /* select 요소 스타일 */
-  .form-wrap .form-row select {
-    
-    padding: 8px; /* input과 동일한 패딩 */
-    border: 1px solid #ccc; /* input과 동일한 테두리 */
-    border-radius: 4px; /* input과 동일한 테두리 반경 */
-    font-size: 16px; /* input과 동일한 폰트 크기 */
-  }
-  
-  
-  .form-wrap .join-button {
-    display: inline-block;
-    width: 100%;
-    padding: 15px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-  }
-  
-  .form-wrap .join-button:hover {
-    background-color: #555;
-  }
-  
-  .form-wrap #email1, #email2{
-    background-color: #999;
-    flex: 0.1 !important;
-  }
+  padding: 8px; /* input과 동일한 패딩 */
+  border: 1px solid #ccc; /* input과 동일한 테두리 */
+  border-radius: 4px; /* input과 동일한 테두리 반경 */
+  font-size: 16px; /* input과 동일한 폰트 크기 */
+}
+
+
+.form-wrap .join-button {
+  display: inline-block;
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.form-wrap .join-button:hover {
+  background-color: #555;
+}
+
+.form-wrap #email1, #email2{
+  background-color: #999;
+  flex: 0.1 !important;
+}
+
+.register {
+  padding: 8px 12px;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

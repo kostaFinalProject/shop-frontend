@@ -1,33 +1,54 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
+import { useNavigate } from "react-router-dom"; // useNavigate 훅 임포트
 import "./login.css";
 
 const Login = ({ setIsLoggedIn }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();  // useNavigate 훅 사용
+  const [userId, setUserId] = useState(""); // 아이디 상태
+  const [password, setPassword] = useState(""); // 비밀번호 상태
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault(); // 기본 폼 제출 동작 방지
 
-    // 임시 사용자 데이터
-    const dummyUser = {
-      email: "test@example.com",
-      password: "1",
-    };
+    // 입력 값 유효성 검사
+    if (!userId || !password) {
+      alert("아이디와 비밀번호를 입력해주세요.");
+      return;
+    }
 
-    // 사용자 검증
-    if (email === dummyUser.email && password === dummyUser.password) {
-      alert("로그인 성공!");
-      setIsLoggedIn(true); // 상태 변경
-      console.log("로그인 후 setIsLoggedIn 호출됨");
-      navigate("/"); // 로그인 성공 후 바로 홈 페이지로 이동
-    } else {
-      alert("이메일 또는 비밀번호가 잘못되었습니다.");
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/members/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorMessage = await response.text(); // 오류 메시지
+        alert("로그인 실패: " + errorMessage);
+        return;
+      }
+
+      const data = await response.json(); // 응답 데이터 파싱
+      if (data.accessToken && data.refreshToken) {
+        // 로그인 성공: 토큰 저장
+        localStorage.setItem("accessToken", data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
+        alert("로그인 성공!");
+        setIsLoggedIn(true); // 로그인 상태 변경
+        navigate("/"); // 홈 페이지로 이동
+      } else {
+        alert("로그인 실패: 응답 데이터에 문제가 있습니다.");
+      }
+    } catch (error) {
+      alert("로그인 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
-
-  
 
   return (
     <div className="Loginframe">
@@ -42,19 +63,19 @@ const Login = ({ setIsLoggedIn }) => {
                     id="memberid"
                     name="memberid"
                     placeholder="아이디"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)} // 상태 업데이트
                     type="text"
                     required
                   />
                 </label>
                 <label className="pwePlaceholder" title="비밀번호">
                   <input
-                    id="memberpw"
-                    name="memberpw"
+                    id="password"
+                    name="password"
                     placeholder="비밀번호"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)} // 상태 업데이트
                     type="password"
                     required
                   />
