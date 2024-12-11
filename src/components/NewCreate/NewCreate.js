@@ -96,6 +96,30 @@ const NewCreate = () => {
     form_title: "제목을 입력해주세요",
     form_content: "",
   });
+
+  const [hashTags, setHashTags] = useState([]);  // 해시태그 목록
+
+  // 해시태그 입력 처리
+  const handleKeywordChange = (e) => {
+    const value = e.target.value;
+    setFormData((prev) => ({ ...prev, tag_keyword: value }));
+
+    // 해시태그 추출
+    const hashtags = value.match(/@[a-zA-Z0-9ㄱ-ㅎ가-힣?!.,-_]+/g);  // 해시태그 추출 정규식
+    if (hashtags) {
+      setHashTags(hashtags);
+    } else {
+      setHashTags([]);
+    }
+  };
+
+    // 해시태그 삭제
+    const removeHashTag = (tag) => {
+      setHashTags((prevTags) => prevTags.filter((t) => t !== tag));
+      setFormData((prev) => ({ ...prev, tag_keyword: prev.tag_keyword.replace(tag, "") }));
+    };
+
+
   const formRef = useRef(null);
 
 
@@ -105,9 +129,9 @@ const NewCreate = () => {
 
     // 유효성 검사: 필수 항목 체크
     const requiredFields = [
-      { name: "tag_id", label: "태그 아이디" },
-      { name: "tag_product", label: "상품" },
-      { name: "tag_keyword", label: "키워드" },
+      // { name: "tag_id", label: "태그 아이디" },
+      // { name: "tag_product", label: "상품" },
+      // { name: "tag_keyword", label: "키워드" },
       { name: "form_title", label: "제목" },
       { name: "form_content", label: "내용" },
     ];
@@ -122,13 +146,13 @@ const NewCreate = () => {
         return;
       }
 
-      // @로 시작하는지 확인 (태그아이디, 상품, 키워드)
-      if (["tag_id", "tag_product", "tag_keyword"].includes(field.name)) {
-        if (!value.startsWith("@")) {
-          alert(`${field.label}은(는) @로 시작해야 합니다.`);
-          return;
-        }
-      }
+      // // @로 시작하는지 확인 (태그아이디, 상품, 키워드)
+      // if (["tag_id", "tag_product"].includes(field.name)) {
+      //   if (!value.startsWith("@")) {
+      //     alert(`${field.label}은(는) @로 시작해야 합니다.`);
+      //     return;
+      //   }
+      // }
     }
 
     // 이미지 첨부 체크
@@ -136,24 +160,15 @@ const NewCreate = () => {
       alert('적어도 하나의 이미지를 업로드해야 합니다.');
       return;
     }
-    // ----------------------이거 없으면 잘되는데 이건 콘솔로그 찍어보는건데 에러뜨네----
 
-    // // 옵션 데이터 가져오기
-    //   const selectedOptions = {
-    //     sport: document.querySelector(".NewCreate_option_form_select select:nth-child(1)").value,
-    //     team: document.querySelector(".NewCreate_option_form_select select:nth-child(2)").value,
-    //     size: document.querySelector(".NewCreate_option_form_select select:nth-child(3)").value,
-    //     homeAway: document.querySelector(".NewCreate_option_form_select select:nth-child(4)").value,
-    //   };
+    // 제출 데이터 확인
+    const submittedData = {
+      ...formData,
+      hashTags,  // 해시태그 추가
+      images: images.map((image) => image.fileName), // 업로드된 이미지 파일 이름 리스트
+    };
 
-    //   // 제출 데이터 확인
-    //   const submittedData = {
-    //     ...formData,
-    //     images: images.map((image) => image.fileName), // 업로드된 이미지 파일 이름 리스트
-    //     selectedOptions, // 선택된 옵션들
-    //   };
-
-    //   console.log("폼 제출 데이터:", submittedData);
+    console.log("폼 제출 데이터:", submittedData);
 
     alert("폼이 성공적으로 제출되었습니다!");
 
@@ -268,7 +283,7 @@ const NewCreate = () => {
 
           </div>
 
-          {/* 태그 및 텍스트 입력란 */}
+          {/* 태그 및 텍스트 입력란
           <div className="NewCreate_text_cover">
             <label className="NewCreate_Name" htmlFor="tag_id">
               태그 아이디
@@ -285,7 +300,7 @@ const NewCreate = () => {
                 onBlur={(e) => { if (e.target.value === "") e.target.value = "@아이디"; }}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="NewCreate_text_cover">
             <label className="NewCreate_Name" htmlFor="tag_product">
@@ -316,11 +331,19 @@ const NewCreate = () => {
                 name="tag_keyword"
                 className="NewCreate_Text_input"
                 value={formData.tag_keyword}
-                onChange={handleInputChange}
-                onFocus={(e) => { if (e.target.value === "@키워드") e.target.value = ""; }}
-                onBlur={(e) => { if (e.target.value === "") e.target.value = "@키워드"; }}
+                onChange={handleKeywordChange}  // 키워드 변경 시 해시태그 처리
               />
             </div>
+          </div>
+
+          {/* 해시태그 목록 표시 */}
+          <div className="hashTagsContainer">
+            {hashTags.map((tag, index) => (
+              <span key={index} className="hashTagItem">
+                {tag}
+                <button type="button" onClick={() => removeHashTag(tag)}>x</button>
+              </span>
+            ))}
           </div>
 
           <div className="NewCreate_text_cover">
