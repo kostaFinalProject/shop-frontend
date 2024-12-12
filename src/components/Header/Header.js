@@ -150,7 +150,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         const updatedData = data.map(item => ({
           categoryId: item.categoryId,
           categoryName: item.categoryName,
-          imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''), 
+          imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
         }));
         console.log(updatedData);
         setSubCategories((prev) => ({
@@ -288,12 +288,30 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                     {category.name}
                   </a>
                   {visibleSubmenu === category.parentCategoryId && (
-                    <ul className="subcategories">
+                    <ul
+                      className="subcategories"
+                      style={{
+                        position: "absolute",
+                        transform: "translate(300px, 100px)",
+                        backgroundColor: "white",
+                        padding: "10px",
+                        border: "1px solid #ccc",
+                        borderRadius: "5px",
+                      }}
+                    >
                       {(subCategories[category.parentCategoryId] || []).map((sub) => (
-                        <li key={sub.categoryId} className="subcategory">
+                        <li key={sub.categoryId} 
+                        className="subcategory"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          fontSize:"14px",
+                          textAlign:"center",
+                        }}
+                        >
                           <a href="#">
                             <div className="categorycircle">
-                                <img src={`/uploads/${sub.imageUrl}`} alt={sub.imageUrl} />
+                              <img src={`/uploads/${sub.imageUrl}`} alt={sub.imageUrl} />
                             </div>
                             <div>{sub.categoryName}</div>
                           </a>
