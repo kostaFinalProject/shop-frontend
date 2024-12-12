@@ -92,12 +92,35 @@ const NewCreate = () => {
   const [formData, setFormData] = useState({
     tag_id: "@아이디",
     tag_product: "@상품",
-    tag_keyword: "@키워드",
+    tag_keyword: "#",
     form_title: "제목을 입력해주세요",
     form_content: "",
   });
-  const formRef = useRef(null);
 
+  const [hashTags, setHashTags] = useState([]);  // 해시태그 목록
+
+  // 해시태그 입력 처리
+  const handleKeywordChange = (e) => {
+    let value = e.target.value;
+    setFormData((prev) => ({ ...prev, tag_keyword: value }));
+
+    // #으로 시작하지 않으면 #을 강제로 추가
+    if (!value.startsWith("#")) {
+      value = "#" + value;
+    }
+
+    setFormData((prev) => ({ ...prev, tag_keyword: value }));
+
+    // 해시태그 추출
+    const hashtags = value.match(/#[a-zA-Z0-9ㄱ-ㅎ가-힣?!.,-_]+/g);  // 해시태그 추출 정규식
+    if (hashtags) {
+      setHashTags(hashtags);
+    } else {
+      setHashTags([]);
+    }
+  };
+
+  const formRef = useRef(null);
 
   // 폼 제출 시 추가적인 검증 및 처리
   const handleFormSubmit = (e) => {
@@ -105,9 +128,9 @@ const NewCreate = () => {
 
     // 유효성 검사: 필수 항목 체크
     const requiredFields = [
-      { name: "tag_id", label: "태그 아이디" },
-      { name: "tag_product", label: "상품" },
-      { name: "tag_keyword", label: "키워드" },
+      // { name: "tag_id", label: "태그 아이디" },
+      // { name: "tag_product", label: "상품" },
+      // { name: "tag_keyword", label: "키워드" },
       { name: "form_title", label: "제목" },
       { name: "form_content", label: "내용" },
     ];
@@ -122,13 +145,13 @@ const NewCreate = () => {
         return;
       }
 
-      // @로 시작하는지 확인 (태그아이디, 상품, 키워드)
-      if (["tag_id", "tag_product", "tag_keyword"].includes(field.name)) {
-        if (!value.startsWith("@")) {
-          alert(`${field.label}은(는) @로 시작해야 합니다.`);
-          return;
-        }
-      }
+      // // @로 시작하는지 확인 (태그아이디, 상품, 키워드)
+      // if (["tag_id", "tag_product"].includes(field.name)) {
+      //   if (!value.startsWith("@")) {
+      //     alert(`${field.label}은(는) @로 시작해야 합니다.`);
+      //     return;
+      //   }
+      // }
     }
 
     // 이미지 첨부 체크
@@ -136,24 +159,15 @@ const NewCreate = () => {
       alert('적어도 하나의 이미지를 업로드해야 합니다.');
       return;
     }
-    // ----------------------이거 없으면 잘되는데 이건 콘솔로그 찍어보는건데 에러뜨네----
 
-    // // 옵션 데이터 가져오기
-    //   const selectedOptions = {
-    //     sport: document.querySelector(".NewCreate_option_form_select select:nth-child(1)").value,
-    //     team: document.querySelector(".NewCreate_option_form_select select:nth-child(2)").value,
-    //     size: document.querySelector(".NewCreate_option_form_select select:nth-child(3)").value,
-    //     homeAway: document.querySelector(".NewCreate_option_form_select select:nth-child(4)").value,
-    //   };
+    // 제출 데이터 확인
+    const submittedData = {
+      ...formData,
+      hashTags,  // 해시태그 추가
+      images: images.map((image) => image.fileName), // 업로드된 이미지 파일 이름 리스트
+    };
 
-    //   // 제출 데이터 확인
-    //   const submittedData = {
-    //     ...formData,
-    //     images: images.map((image) => image.fileName), // 업로드된 이미지 파일 이름 리스트
-    //     selectedOptions, // 선택된 옵션들
-    //   };
-
-    //   console.log("폼 제출 데이터:", submittedData);
+    console.log("폼 제출 데이터:", submittedData);
 
     alert("폼이 성공적으로 제출되었습니다!");
 
@@ -173,61 +187,106 @@ const NewCreate = () => {
     <div className="NewCreate_full_screen">
       <form ref={formRef} className="NewCreate_Form" onSubmit={handleFormSubmit}>
         <h2 className="NewCreate_TitleText">게시글 작성</h2>
-        {/* 옵션 선택 */}
-        <div className="NewCreate_option_form">
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 스포츠를 선택해 주세요 -</option>
-              <option value="1">해외축구</option>
-              <option value="2">국내축구</option>
-              <option value="3">축구 국가대표</option>
-              <option value="4">한국야구</option>
-              <option value="5">여자배구</option>
-              <option value="6">E-스포츠</option>
-            </select>
-          </div>
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 구단을 선택해 주세요 -</option>
-              <option value="1">울산 HD FC</option>
-              <option value="2">김천상무 FC</option>
-              <option value="3">강원 FC</option>
-              <option value="4">포항 노틸러스</option>
-              <option value="5">FC서울</option>
-              <option value="6">수원FC</option>
-              <option value="7">제주 유나이티드</option>
-              <option value="8">대전 하나 시티즌</option>
-              <option value="9">광주 FC</option>
-              <option value="10">전북 현대 모터스</option>
-              <option value="11">대구FC</option>
-              <option value="12">인천 유나이티드</option>
-            </select>
-          </div>
-        </div>
-        <div className="NewCreate_option_form">
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 사이즈를 선택해 주세요 -</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-              <option value="XXXL">XXXL</option>
-            </select>
-          </div>
-          <div className="NewCreate_option_form_select">
-            <select className="NewCreate_select_list">
-              <option value="*" disabled>- 홈 어웨이 선택해 주세요 -</option>
-              <option value="1">홈</option>
-              <option value="2">어웨이</option>
-            </select>
-          </div>
-        </div>
 
 
         {/* 이미지 입력 */}
         <div className="NewCreate_BoxLine">
+
+          {/* 태그 및 텍스트 입력란
+          <div className="NewCreate_text_cover">
+            <label className="NewCreate_Name" htmlFor="tag_id">
+              태그 아이디
+            </label>
+            <div className="NewCreate_Input_cover">
+              <input
+                type="text"
+                id="tag_id"
+                name="tag_id"
+                className="NewCreate_Text_input"
+                value={formData.tag_id}
+                onChange={handleInputChange}
+                onFocus={(e) => { if (e.target.value === "@아이디") e.target.value = ""; }}
+                onBlur={(e) => { if (e.target.value === "") e.target.value = "@아이디"; }}
+              />
+            </div>
+          </div> */}
+
+          <div className="NewCreate_text_cover">
+            <label className="NewCreate_Name" htmlFor="tag_product">
+              상품
+            </label>
+            <div className="NewCreate_Input_cover">
+              <input
+                type="text"
+                id="tag_product"
+                name="tag_product"
+                className="NewCreate_Text_input"
+                value={formData.tag_product}
+                onChange={handleInputChange}
+                onFocus={(e) => { if (e.target.value === "@상품") e.target.value = ""; }}
+                onBlur={(e) => { if (e.target.value === "") e.target.value = "@상품"; }}
+              />
+            </div>
+          </div>
+
+          <div className="NewCreate_text_cover">
+            <label className="NewCreate_Name" htmlFor="tag_keyword">
+              키워드
+            </label>
+            <div className="NewCreate_Input_cover">
+              <input
+                type="text"
+                id="tag_keyword"
+                name="tag_keyword"
+                className="NewCreate_Text_input"
+                value={formData.tag_keyword}
+                onChange={handleKeywordChange}  // 키워드 변경 시 해시태그 처리
+                onFocus={(e) => { if (e.target.value === "#") e.target.value = ""; }}
+                onBlur={(e) => { if (e.target.value === "") e.target.value = "#"; }}
+              />
+            </div>
+          </div>
+
+          {/* 해시태그 목록 표시 */}
+          <div className="NewCreate_hashTagsContainer">
+            {hashTags.map((tag, index) => (
+              <span key={index} className="hashTagItem">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="NewCreate_text_cover">
+            <label className="NewCreate_Name" htmlFor="form_title">
+              제목
+            </label>
+            <div className="NewCreate_Input_cover">
+              <input
+                type="text"
+                id="form_title"
+                name="form_title"
+                className="NewCreate_Text_input"
+                value={formData.form_title}
+                onChange={handleInputChange}
+                onFocus={(e) => { if (e.target.value === "제목을 입력해주세요") e.target.value = ""; }}
+                onBlur={(e) => { if (e.target.value === "") e.target.value = "제목을 입력해주세요"; }}
+              />
+            </div>
+          </div>
+
+          <div className="cover_form_TextArea">
+            <label className="NewCreate_Name_TextArea" htmlFor="form_content">
+              내용
+            </label>
+            <textarea
+              id="form_content"
+              name="form_content"
+              rows="3"
+              value={formData.form_content}
+              onChange={handleInputChange}
+            />
+          </div>
+
           <div className="NewCreate_text_cover_file">
             <label className="NewCreate_Name_file">이미지 등록</label>
             <ul className="NewCreate_image_list_file">
@@ -268,92 +327,6 @@ const NewCreate = () => {
 
           </div>
 
-          {/* 태그 및 텍스트 입력란 */}
-          <div className="NewCreate_text_cover">
-            <label className="NewCreate_Name" htmlFor="tag_id">
-              태그 아이디
-            </label>
-            <div className="NewCreate_Input_cover">
-              <input
-                type="text"
-                id="tag_id"
-                name="tag_id"
-                className="NewCreate_Text_input"
-                value={formData.tag_id}
-                onChange={handleInputChange}
-                onFocus={(e) => { if (e.target.value === "@아이디") e.target.value = ""; }}
-                onBlur={(e) => { if (e.target.value === "") e.target.value = "@아이디"; }}
-              />
-            </div>
-          </div>
-
-          <div className="NewCreate_text_cover">
-            <label className="NewCreate_Name" htmlFor="tag_product">
-              상품
-            </label>
-            <div className="NewCreate_Input_cover">
-              <input
-                type="text"
-                id="tag_product"
-                name="tag_product"
-                className="NewCreate_Text_input"
-                value={formData.tag_product}
-                onChange={handleInputChange}
-                onFocus={(e) => { if (e.target.value === "@상품") e.target.value = ""; }}
-                onBlur={(e) => { if (e.target.value === "") e.target.value = "@상품"; }}
-              />
-            </div>
-          </div>
-
-          <div className="NewCreate_text_cover">
-            <label className="NewCreate_Name" htmlFor="tag_keyword">
-              키워드
-            </label>
-            <div className="NewCreate_Input_cover">
-              <input
-                type="text"
-                id="tag_keyword"
-                name="tag_keyword"
-                className="NewCreate_Text_input"
-                value={formData.tag_keyword}
-                onChange={handleInputChange}
-                onFocus={(e) => { if (e.target.value === "@키워드") e.target.value = ""; }}
-                onBlur={(e) => { if (e.target.value === "") e.target.value = "@키워드"; }}
-              />
-            </div>
-          </div>
-
-          <div className="NewCreate_text_cover">
-            <label className="NewCreate_Name" htmlFor="form_title">
-              제목
-            </label>
-            <div className="NewCreate_Input_cover">
-              <input
-                type="text"
-                id="form_title"
-                name="form_title"
-                className="NewCreate_Text_input"
-                value={formData.form_title}
-                onChange={handleInputChange}
-                onFocus={(e) => { if (e.target.value === "제목을 입력해주세요") e.target.value = ""; }}
-                onBlur={(e) => { if (e.target.value === "") e.target.value = "제목을 입력해주세요"; }}
-              />
-            </div>
-          </div>
-
-          <div className="cover_form_TextArea">
-            <label className="NewCreate_Name_TextArea" htmlFor="form_content">
-              내용
-            </label>
-            <textarea
-              id="form_content"
-              name="form_content"
-              rows="3"
-              value={formData.form_content}
-              onChange={handleInputChange}
-            />
-          </div>
-
           <div className="NewCreate_text_cover_Btn">
             <button type="button" className="NewCreate_listBtn">
               목록
@@ -372,5 +345,3 @@ const NewCreate = () => {
 };
 
 export default NewCreate;
-
-

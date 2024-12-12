@@ -226,7 +226,7 @@ const Signup = () => {
                     <div id="menu1" style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
                         <h3 style={{ textAlign: "center" }}>간편하게 로그인하기</h3>
                     </div>
-                    <div id="form1" style={{ display: "flex", justifyContent: "center" }}>
+                    <div id="form1" style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
                         <h5 style={{ color: "#757575" }}>
                             간편한 회원가입으로 쉽게 본 사이트를 이용할 수 있습니다.
                             <br />
