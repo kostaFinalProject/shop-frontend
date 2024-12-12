@@ -5,7 +5,7 @@
     height: auto;
     width: 1280px;
     display: flex;
-       
+    flex-direction: column;
     justify-content: center;
 
 }
@@ -43,7 +43,6 @@ a {
 
     box-sizing: border-box;
 }
-
 
 .SearchProduct_board_list_body .SearchProduct_item>div {
     display: inline-block;
@@ -155,4 +154,16 @@ a {
     padding: 0;
     text-align: left;
 
+}
+
+/* 할인 정보 */
+.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price > span:first-child {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price > span.discount_info {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-left: 8px;
 }

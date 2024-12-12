@@ -235,12 +235,6 @@ a {
   font-size: 15px;
 }
 
-.haschild:hover .submenu1 {
-  opacity: 1;
-  visibility: visible;
-}
-
-
 #aaa {
   position: relative;
   /* 기준점 설정 */

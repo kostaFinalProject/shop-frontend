@@ -16,13 +16,13 @@ const TotalSearchHead = () => {
     return (
         <>
             <div className="TotalSearchHead_full_screen">
-                <div className="TotalSearchHead_search">
+                {/* <div className="TotalSearchHead_search">
                     <form action="">
                         <div className="TotalSearchHead_search_container">
                             <input className="TotalSearchHead_search_input" type="text" placeholder="Search" />
                         </div>
                     </form>
-                </div>
+                </div> */}
 
                 <div className="TotalSearchHead_navi">
                     <ul>
