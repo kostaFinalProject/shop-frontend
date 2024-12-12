@@ -78,16 +78,6 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     initializeLoginState();
   }, [setIsLoggedIn]);
 
-  const handleCategoryToggle = (categoryId) => {
-    setVisibleSubmenu((prev) => (prev === categoryId ? null : categoryId));
-  };
-
-  const handleDocumentClick = (event) => {
-    if (!event.target.closest(".hasChild")) {
-      setVisibleSubmenu(null);
-    }
-  };
-
   // 카테고리 클릭 시 처리
   const handleCategoryClick = (categoryId) => {
     setVisibleSubmenu((prev) => (prev === categoryId ? null : categoryId)); // 토글
