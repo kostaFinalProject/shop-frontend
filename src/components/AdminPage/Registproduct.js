@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import "./Registproduct.css";
-import { type } from '@testing-library/user-event/dist/type';
 
 const Registproduct = () => {
   const [imageList, setImageList] = useState([{ file: null, checked: false }]); // 초기 상태에 파일 입력 하나 추가
@@ -123,25 +122,28 @@ const Registproduct = () => {
     const price = parseFloat(document.getElementById("price").value);
     const manufacturer = document.getElementById("manufacturer").value;
 
-    // **유효성 검사 추가** - 가격은 음수가 될 수 없습니다.
-    if (price < 0) {
-      alert("가격은 음수가 될 수 없습니다. 올바른 값을 입력하세요.");
-      return; // 유효하지 않으면 제출 중단
-    }
 
     // 사이즈별 수량 값 가져오기
     const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
     const stockQuantities = sizes.map(size => {
-      const input = document.querySelector(`input[name='stockQuantity'][data-size='${size}']`);
+      const input = document.querySelector(`input[name='stockQuantity-${size}']`)
 
       // input이 null인지 확인
       if (input) {
-        return { size, quantity: parseInt(input.value, 10) || 0 };
+        return { size, stockQuantity: parseInt(input.value, 10) || 0 };
       } else {
         console.warn(`Input for size ${size} not found.`);
-        return { size, quantity: 0 }; // 기본값으로 0 설정
+        return { size, stockQuantity: 0 }; // 기본값으로 0 설정
       }
     });
+
+    // **유효성 검사 추가** - 가격은 음수가 될 수 없습니다.
+    if (price < 0 || sizes < 0) {
+      alert("가격은 음수가 될 수 없습니다. 올바른 값을 입력하세요.");
+      return; // 유효하지 않으면 제출 중단
+    }
+
+    console.log(stockQuantities);
 
     // 이미지 파일 리스트 처리
     const images = [];
@@ -162,21 +164,14 @@ const Registproduct = () => {
       manufacturer,
       itemSizes: stockQuantities,
     };
-    formData.append("item", new Blob([JSON.stringify(item)], {type: 'application/json'}));
+    formData.append("item", new Blob([JSON.stringify(item)], { type: 'application/json' }));
     console.log(item);
 
-    
+
     // 이미지 파일들 추가
     images.forEach(image => {
       formData.append('files', image);
     });
-
-    // **콘솔에 출력**
-    console.log("Form Data:");
-    // console.log({
-    //   item,
-    //   files
-    // });
 
 
 
@@ -292,7 +287,7 @@ const Registproduct = () => {
             <div className="subselect">
               <div className="category">하위 카테고리</div>
               <div>
-                <select id="subcategory" name="subcategory" required>
+                <select id="subcategory" name="subcategory" required disabled={!selectedCategory}>
                   {selectedCategory && subCategories[selectedCategory]
                     ? subCategories[selectedCategory].map((sub) => (
                       <option key={sub.categoryName} value={sub.categoryName}>
@@ -327,11 +322,11 @@ const Registproduct = () => {
                 <label>{size}</label>
                 <input
                   type="number"
-                  id={`stockQuantity-${size}`}
-                  name="itemSizes"
+                  id={`stockQuantity-${size}`} // 템플릿 리터럴 수정
+                  name={`stockQuantity-${size}`} // 템플릿 리터럴 수정
                   data-size={size}
-                  required
-                  placeholder={`${size} 수량을 등록해 주세요`}
+                  min="0"
+                  placeholder={`${size} 수량을 등록해 주세요`} // 템플릿 리터럴 수정
                 />
               </div>
             ))}
@@ -355,7 +350,7 @@ const Registproduct = () => {
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleFileChange(index, e)}
-                    required
+                    required={index === 0}
                   />
                   {index === 0 && <span className="rep-img-label">대표 이미지</span>}
                 </li>
