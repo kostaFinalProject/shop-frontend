@@ -27,7 +27,7 @@ const SearchStyle = () => {
                 throw new Error("Refresh Token이 없습니다.");
             }
 
-            const response = await fetch("http://localhost:8080/api/v1/refresh-token", {
+            const response = await fetch("http://localhost:8080/api/v1/members/refresh-token", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

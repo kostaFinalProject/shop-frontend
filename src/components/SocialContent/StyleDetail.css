@@ -34,13 +34,12 @@
 .StyleDetail_profile_img img {
     border-radius: 50px;
     justify-content: center;
-    object-fit: cover;
+    object-fit: contain;
 }
 .StyleDetail_profile_text {
     width: 80%;
     display: block;
     text-align: left;
-    margin-left: 20px;
 }
 
 .StyleDetail_follow_btn{
@@ -162,8 +161,7 @@
 .StyleDetail_social_text{
     width: 100%;
     height: 100px;
-
-  
+    margin-top: 30px;
 }
 
 .StyleDetail_text_title {
@@ -177,7 +175,7 @@
 
 /* ----------------------------social_container---------------------------- */
 .StyleDetail_social_container{
-    margin: 0 auto;
+    margin: 60px auto;
     padding: 0;
     width: 640px;
     height: 300px;
@@ -221,4 +219,31 @@
     height: 200px;
     width: 150px;
     object-fit: cover;
+}
+
+.StyleDetail_edit_buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.StyleDetail_edit_btn,
+.StyleDetail_delete_btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.StyleDetail_edit_btn {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+}
+
+.StyleDetail_delete_btn {
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
 }
