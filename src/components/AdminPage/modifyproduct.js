@@ -142,7 +142,7 @@ const Modifyproduct = () => {
                 <th scope="col">가격</th>
                 <th scope="col">할인율</th>
                 <th scope="col">재고</th>
-                <th scope="col">수정버튼</th>
+                <th scope="col">버튼</th>
               </tr>
             </thead>
             <tbody className="data">
@@ -153,6 +153,7 @@ const Modifyproduct = () => {
                 <td scope="col">500</td>
                 <td scope="col">
                   <button id="modal-open" onClick={openModal}>수정</button>
+                  <button id="delete">삭제</button>
 
                   {isModalOpen && (
                     <div id="popup" className="modal" onClick={closeModal}>

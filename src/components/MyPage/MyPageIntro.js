@@ -71,7 +71,7 @@ const MyPageIntro = () => {
                 <img src="https://fakeimg.pl/150x150/" alt="" />
               </div>
 
-              <div class="profile_text">
+              <div className="profile_text">
 
                 <div className="profile_head">
                   <span className="profile_nickname" id="nickname">j___c_y</span>

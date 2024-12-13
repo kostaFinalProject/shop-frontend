@@ -1,7 +1,7 @@
 
 
 .reportusersection{
-  width: 1080px;
+  width: 1280px;
   display: flex;
   margin: 0 auto;
   padding: 0;
@@ -68,7 +68,7 @@
 }
 
 .reportusersection .info {
-  width: 824px;
+  width: 1024px;
   margin: 64px 10px 0 0;
 }
 

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Registproduct.css";
+import { type } from '@testing-library/user-event/dist/type';
 
 const Registproduct = () => {
   const [imageList, setImageList] = useState([{ file: null, checked: false }]); // 초기 상태에 파일 입력 하나 추가
   const [existingFiles, setExistingFiles] = useState(new Set());
+  const [categories, setCategories] = useState([]); // 상위 카테고리 상태
+  const [subCategories, setSubCategories] = useState({}); // 하위 카테고리 상태
+  const [selectedCategory, setSelectedCategory] = useState(""); // 선택된 상위 카테고리
 
   const addImageInput = () => {
     setImageList(prevList => [...prevList, { file: null, checked: false }]);
@@ -50,6 +54,163 @@ const Registproduct = () => {
     newImages[index].checked = !newImages[index].checked; // 체크 상태 토글
     setImageList(newImages);
   };
+
+
+  // 상위 카테고리 데이터 가져오기
+  useEffect(() => {
+    const fetchTopCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/item-categories");
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+        } else {
+          console.error("Failed to fetch top categories.");
+        }
+      } catch (error) {
+        console.error("Error fetching top categories:", error);
+      }
+    };
+
+    fetchTopCategories();
+  }, []);
+
+  // 특정 상위 카테고리의 하위 카테고리 데이터 가져오기
+  const fetchChildrenCategories = async (categoryId) => {
+    if (subCategories[categoryId]) {
+      return; // 이미 하위 카테고리가 로드된 경우 API 호출 생략
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/item-categories/${categoryId}`);
+      if (response.ok) {
+        const data = await response.json();
+        const updatedData = data.map(item => ({
+          categoryId: item.categoryId,
+          categoryName: item.categoryName,
+          imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
+        }));
+        setSubCategories((prev) => ({
+          ...prev,
+          [categoryId]: updatedData, // 해당 상위 카테고리 ID에 하위 카테고리 저장
+        }));
+      } else {
+        console.error("Failed to fetch children categories.");
+      }
+    } catch (error) {
+      console.error("Error fetching children categories:", error);
+    }
+  };
+
+  // 상위 카테고리 선택 시 하위 카테고리 가져오기
+  const handleCategoryChange = (e) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+    fetchChildrenCategories(categoryId);
+  };
+
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  function handleUpadteItemSubmit(e) {
+    e.preventDefault();
+
+    // 하위 카테고리 값 가져오기
+    const itemCategory = document.getElementById("subcategory").value;
+
+    // 상품명, 가격, 제조사 값 가져오기
+    const name = document.getElementById("name").value;
+    const price = parseFloat(document.getElementById("price").value);
+    const manufacturer = document.getElementById("manufacturer").value;
+
+    // **유효성 검사 추가** - 가격은 음수가 될 수 없습니다.
+    if (price < 0) {
+      alert("가격은 음수가 될 수 없습니다. 올바른 값을 입력하세요.");
+      return; // 유효하지 않으면 제출 중단
+    }
+
+    // 사이즈별 수량 값 가져오기
+    const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
+    const stockQuantities = sizes.map(size => {
+      const input = document.querySelector(`input[name='stockQuantity'][data-size='${size}']`);
+
+      // input이 null인지 확인
+      if (input) {
+        return { size, quantity: parseInt(input.value, 10) || 0 };
+      } else {
+        console.warn(`Input for size ${size} not found.`);
+        return { size, quantity: 0 }; // 기본값으로 0 설정
+      }
+    });
+
+    // 이미지 파일 리스트 처리
+    const images = [];
+    const imageInputs = document.querySelectorAll(".image-list input[type='file']");
+    imageInputs.forEach(input => {
+      if (input.files[0]) {
+        images.push(input.files[0]);
+      }
+    });
+
+    // FormData 객체 생성
+    const formData = new FormData();
+
+    const item = {
+      itemCategory,
+      name,
+      price,
+      manufacturer,
+      itemSizes: stockQuantities,
+    };
+    formData.append("item", new Blob([JSON.stringify(item)], {type: 'application/json'}));
+    console.log(item);
+
+    
+    // 이미지 파일들 추가
+    images.forEach(image => {
+      formData.append('files', image);
+    });
+
+    // **콘솔에 출력**
+    console.log("Form Data:");
+    // console.log({
+    //   item,
+    //   files
+    // });
+
+
+
+    // Fetch로 데이터 전송
+    fetch('http://localhost:8080/api/v1/items', {
+      method: 'POST',
+      headers: {
+        'Authorization': accessToken,
+        'Refresh-Token': refreshToken,
+        // 'Content-Type': 'application/json',
+      },
+      body: formData,
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("상품 등록이 완료되었습니다.");
+
+          // **폼 초기화**
+          document.getElementById("updateItemForm").reset();
+          setImageList([{ file: null, checked: false }]); // 이미지 입력 필드 초기화
+          setSelectedCategory(""); // 선택된 카테고리 초기화
+          setExistingFiles(new Set()); // 기존 파일 이름 초기화
+          window.location.href = '/AdminPage/registproduct';
+        } else {
+          response.text().then(errorMessage => {
+            alert(`오류 발생: ${errorMessage}`);
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error during item registration:", error);
+        alert("서버 오류로 인해 상품 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      });
+  }
 
   return (
     <section className="registproductsection">
@@ -107,34 +268,44 @@ const Registproduct = () => {
           상품등록
         </div>
         <hr />
-        <form id="updateItemForm" action="/api/v1/items" method="post">
-          <div className='categoryselect'>
-            <div className='mainselect'>
+        <form id="updateItemForm" action="" method="post" onSubmit={handleUpadteItemSubmit}>
+          {/* 카테고리 선택 */}
+          <div className="categoryselect">
+            <div className="mainselect">
               <div className="category">상위 카테고리</div>
               <div>
-                <select id="maincategory" name="maincategory" required>
-                  <option value="해축">해외축구</option>
-                  <option value="국축">국내축구</option>
-                  <option value="야구">국내야구</option>
-                  <option value="배구">국내배구</option>
-                  <option value="e스포츠">E스포츠</option>
+                <select
+                  id="maincategory"
+                  name="maincategory"
+                  required
+                  onChange={handleCategoryChange}
+                >
+                  <option value="">카테고리를 선택하세요</option>
+                  {categories.map((category) => (
+                    <option key={category.parentCategoryId} value={category.parentCategoryId}>
+                      {category.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
-            <div className='subselect'>
+            <div className="subselect">
               <div className="category">하위 카테고리</div>
               <div>
                 <select id="subcategory" name="subcategory" required>
-                  <option value="#">맨체스터 유나이티드</option>
-                  <option value="#">FC 인테르나치오날레 밀라노</option>
-                  <option value="#">브라이튼 앤 호브 알비온 FC</option>
-                  <option value="#">OK저축은행 브리온</option>
-                  <option value="#">KWANGDONG FREECS</option>
-                  <option value="#">6</option>
+                  {selectedCategory && subCategories[selectedCategory]
+                    ? subCategories[selectedCategory].map((sub) => (
+                      <option key={sub.categoryName} value={sub.categoryName}>
+                        {sub.categoryName}
+                      </option>
+                    ))
+                    : <option value="">상위 카테고리를 먼저 선택하세요</option>}
                 </select>
               </div>
             </div>
           </div>
+
+          {/* 상품 정보 입력 */}
           <div className="form-group">
             <label htmlFor="name">상품명</label>
             <input type="text" id="name" name="name" required />
@@ -144,18 +315,29 @@ const Registproduct = () => {
             <input type="number" id="price" name="price" required />
           </div>
           <div className="form-group">
-            <label htmlFor="salepercent">제조사</label>
-            <input type="number" id="stockQuantity" name="stockQuantity" required />
+            <label htmlFor="manufacturer">제조사</label>
+            <input type="text" id="manufacturer" name="manufacturer" required />
           </div>
+
+          {/* 사이즈별 재고 입력 */}
           <div className="form-group">
-            <label htmlFor="stockQuantity">수량</label>
-            XS<input type="number" id="stockQuantity" name="stockQuantity" required/>
-            S<input type="number" id="stockQuantity" name="stockQuantity" required/>
-            M<input type="number" id="stockQuantity" name="stockQuantity" required/>
-            L<input type="number" id="stockQuantity" name="stockQuantity" required/>
-            XL<input type="number" id="stockQuantity" name="stockQuantity" required/>
-            2XL<input type="number" id="stockQuantity" name="stockQuantity" required/>
+            <label>수량 (사이즈별)</label>
+            {["XS", "S", "M", "L", "XL", "2XL"].map((size) => (
+              <div key={size} className="size-group">
+                <label>{size}</label>
+                <input
+                  type="number"
+                  id={`stockQuantity-${size}`}
+                  name="itemSizes"
+                  data-size={size}
+                  required
+                  placeholder={`${size} 수량을 등록해 주세요`}
+                />
+              </div>
+            ))}
           </div>
+
+          {/* 이미지 업로드 */}
           <div className="form-group">
             <label>이미지 등록</label>
             <ul className="image-list" id="imageList">
@@ -165,8 +347,8 @@ const Registproduct = () => {
                     <input
                       type="checkbox"
                       id={`checkbox-${index}`}
-                      checked={item.checked} // 체크 상태 반영
-                      onChange={() => toggleCheck(index)} // 체크 상태 변경
+                      checked={item.checked}
+                      onChange={() => toggleCheck(index)}
                     />
                   )}
                   <input
@@ -186,6 +368,8 @@ const Registproduct = () => {
               선택 이미지 삭제
             </button>
           </div>
+
+          {/* 제출 버튼 */}
           <button type="submit">등록하기</button>
         </form>
       </div>
