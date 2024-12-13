@@ -233,14 +233,14 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                 />
                 <span>마이페이지</span>
               </a>
-              <a href="/basket">
+              <a href="/AdminPage/adminright">
                 <img src="/img/basket3.svg" alt="장바구니" className="icon" />
                 <span>장바구니</span>
               </a>
               <a href="/" onClick={handleLogout}>
                 <img
                   src="/img/box-arrow-right.svg"
-                  alt="장바구니"
+                  alt="로그아웃"
                   className="icon"
                 />
                 <span>로그아웃</span>

@@ -107,7 +107,7 @@ const Registproduct = () => {
           상품등록
         </div>
         <hr />
-        <form id="updateItemForm">
+        <form id="updateItemForm" action="/api/v1/items" method="post">
           <div className='categoryselect'>
             <div className='mainselect'>
               <div className="category">상위 카테고리</div>
@@ -144,12 +144,17 @@ const Registproduct = () => {
             <input type="number" id="price" name="price" required />
           </div>
           <div className="form-group">
-            <label htmlFor="salepercent">할인율</label>
+            <label htmlFor="salepercent">제조사</label>
             <input type="number" id="stockQuantity" name="stockQuantity" required />
           </div>
           <div className="form-group">
             <label htmlFor="stockQuantity">수량</label>
-            <input type="number" id="stockQuantity" name="stockQuantity" required/>
+            XS<input type="number" id="stockQuantity" name="stockQuantity" required/>
+            S<input type="number" id="stockQuantity" name="stockQuantity" required/>
+            M<input type="number" id="stockQuantity" name="stockQuantity" required/>
+            L<input type="number" id="stockQuantity" name="stockQuantity" required/>
+            XL<input type="number" id="stockQuantity" name="stockQuantity" required/>
+            2XL<input type="number" id="stockQuantity" name="stockQuantity" required/>
           </div>
           <div className="form-group">
             <label>이미지 등록</label>

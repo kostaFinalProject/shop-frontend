@@ -8,10 +8,13 @@ const Modifyproduct = () => {
 
   const openModal = () => {
     setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // 스크롤 막기
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    document.body.style.overflow = 'auto'; // 스크롤 다시 활성화
+
   };
 
   const openPage = (pageName) => {
@@ -156,12 +159,7 @@ const Modifyproduct = () => {
                       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         {/* 탭 */}
                         <div className="tabs">
-                          <button
-                            className={`tab-link ${activePage === "page1" ? "active" : ""}`}
-                            onClick={() => openPage("page1")}
-                          >
                             수정하기
-                          </button>
                         </div>
                         {/* 페이지 내용 */}
                         <div id="page1" className={`page ${activePage === "page1" ? "active" : ""}`}>
@@ -208,7 +206,12 @@ const Modifyproduct = () => {
                               </div>
                               <div className="form-group">
                                 <label htmlFor="stockQuantity">수량</label>
-                                <input type="number" id="stockQuantity" name="stockQuantity" required />
+                                XS<input type="number" id="stockQuantity" name="stockQuantity" required />
+                                S<input type="number" id="stockQuantity" name="stockQuantity" required />
+                                M<input type="number" id="stockQuantity" name="stockQuantity" required />
+                                L<input type="number" id="stockQuantity" name="stockQuantity" required />
+                                XL<input type="number" id="stockQuantity" name="stockQuantity" required />
+                                2XL<input type="number" id="stockQuantity" name="stockQuantity" required />
                               </div>
                               <div className="form-group">
                                 <label>이미지 등록</label>

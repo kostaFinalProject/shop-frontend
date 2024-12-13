@@ -173,12 +173,15 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   /* 그림자 효과 */
+  overflow: scroll;
+  height: 800px;
 }
 
 /* 탭 스타일 */
 .modifyproductsection .tabs {
-  display: flex;
-  border-bottom: 2px solid #ddd;
+  background-color: #ddd;
+  text-align: center;
+  font-size: 32px;
 }
 
 .modifyproductsection .tab-link {
