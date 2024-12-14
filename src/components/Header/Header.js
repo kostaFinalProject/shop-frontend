@@ -1,10 +1,44 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
 
 const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [categories, setCategories] = useState([]); // 상위 카테고리
   const [subCategories, setSubCategories] = useState({}); // 하위 카테고리
   const [visibleSubmenu, setVisibleSubmenu] = useState(null); // 현재 보이는 하위 카테고리
+  const navigate = useNavigate();
+
+  const refreshAccessToken = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) {
+        throw new Error("Refresh Token이 없습니다.");
+      }
+
+      const response = await fetch("http://localhost:8080/api/v1/members/refresh-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Refresh-Token": refreshToken,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const newAccessToken = data.newToken;
+        localStorage.setItem("accessToken", newAccessToken);
+        return newAccessToken;
+      } else {
+        throw new Error("Access Token 갱신 실패");
+      }
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+      navigate("/login");
+    }
+  };
 
   // 초기 isLoggedIn 상태 설정
   useEffect(() => {
@@ -166,11 +200,14 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
       return;
     }
 
+    const newToken = await refreshAccessToken();
+    localStorage.setItem("accessToken", newToken);
+
     try {
       const response = await fetch("http://localhost:8080/api/v1/members/logout", {
         method: "POST",
         headers: {
-          'Authorization': accessToken,
+          'Authorization': newToken,
           'Refresh-Token': refreshToken,
           'Content-Type': 'application/json',
         },
@@ -180,7 +217,6 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         setIsLoggedIn(false);
-        alert("로그아웃 성공!");
         window.location.href = '/';
       } else {
         const errorMessage = await response.text();
@@ -290,14 +326,14 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                       }}
                     >
                       {(subCategories[category.parentCategoryId] || []).map((sub) => (
-                        <li key={sub.categoryId} 
-                        className="subcategory"
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          fontSize:"14px",
-                          textAlign:"center",
-                        }}
+                        <li key={sub.categoryId}
+                          className="subcategory"
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            fontSize: "14px",
+                            textAlign: "center",
+                          }}
                         >
                           <a href="#">
                             <div className="categorycircle">

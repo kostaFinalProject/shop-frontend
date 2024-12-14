@@ -8,7 +8,7 @@ const Signup = () => {
     const [phoneLast, setPhoneLast] = useState("");
     const [phoneMiddleChk, setPhoneMiddleChk] = useState(false);
     const [phoneLastChk, setPhoneLastChk] = useState(false);
-    const [userType, setUserType] = useState('user');
+    const [userType, setUserType] = useState("USER");
     const [useridChk, setUseridChk] = useState(false);
     const [pwChk, setPwChk] = useState(false);
     const [pwMatchChk, setPwMatchChk] = useState(false);
@@ -218,7 +218,7 @@ const Signup = () => {
 
     return (
         <div className="form-wrap">
-            <form>
+            {/* <form>
                 <div className="firstmenu">
                     <div style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid black" }}>
                         <h2 id="join" style={{ margin: "10px 0" }}>간편 로그인</h2>
@@ -239,7 +239,7 @@ const Signup = () => {
                         </a>
                     </div>
                 </div>
-            </form>
+            </form> */}
 
             <form onSubmit={handleSignupSubmit} action="" method="POST">
                 <div className="secondmenu">
@@ -257,11 +257,14 @@ const Signup = () => {
                         </p>
                     </div>
 
-                    <div className="form" style={{ marginLeft: "390px" }}>
+                    <div className="form">
                         {/* 사용자 유형 체크박스 */}
                         <div className="form-section">
                             <div className="form-row" style={{ marginTop: "10px" }}>
-                                <label>사용자 유형</label>
+                                <label>사용자 유형
+                                    <span style={{ color: "#ed4848" }}>*</span>
+                                </label>
+                                
                                 <label>
                                     <input
                                         type="radio"
