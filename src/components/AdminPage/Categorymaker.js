@@ -1,9 +1,185 @@
-
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
+import React, { useState, useEffect } from "react";
 import "./Categorymaker.css";
 
 const Categorymaker = () => {
+  const [image, setImage] = useState(null); // 선택된 파일을 관리
+  const [existingFiles, setExistingFiles] = useState(new Set()); // 이미 선택한 파일을 추적
+  const [categoryName, setCategoryName] = useState(""); // 카테고리 이름을 관리
+  const [categories, setCategories] = useState([]); // 상위 카테고리 상태
+
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      if (existingFiles.has(file.name)) {
+        alert("이미 이 이미지를 선택했습니다.");
+        event.target.value = null; // 필드를 초기화
+      } else {
+        existingFiles.add(file.name); // 새 파일 이름 추가
+        setImage(file); // 파일을 상태에 저장
+        setExistingFiles(new Set(existingFiles)); // 상태 업데이트
+      }
+    } else {
+      setImage(null); // 파일이 없으면 상태 초기화
+    }
+  };
+
+
+  function handleparentCategorySubmit(e) {
+    e.preventDefault();
+
+    const parentCategory = document.getElementById("parentCategory").value;
+
+    // 선택된 이미지가 없으면 빈 파일로 설정
+    const file = image ? image : new File([], "");
+
+    // category 객체를 먼저 선언
+    const category = {
+      name: parentCategory,
+      parentCategory: "",
+      file,
+    };
+
+    // FormData 객체 생성
+    const formData = new FormData();
+
+    // 카테고리 정보를 'itemCategory'라는 이름으로 추가
+    formData.append("itemCategory", new Blob([JSON.stringify(category)], { type: 'application/json' }));
+    formData.append("file", file); // 이미지 파일 추가
+
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    // Fetch로 데이터 전송
+    fetch('http://localhost:8080/api/v1/item-categories', {
+      method: 'POST',
+      headers: {
+        'Authorization': accessToken,
+        'Refresh-Token': refreshToken,
+      },
+      body: formData,
+    })
+      .then(response => {
+        if (response.ok) {
+          alert("카테고리 등록이 완료되었습니다.");
+
+          // 폼 초기화
+          document.getElementById("updateCategoryForm").reset();
+          window.location.href = '/AdminPage/categorymaker';
+        } else {
+          response.text().then(errorMessage => {
+            alert(`오류 발생: ${errorMessage}`);
+          });
+        }
+      })
+      .catch(error => {
+        console.error("Error during item registration:", error);
+        alert("서버 오류로 인해 카테고리 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      });
+  }
+
+  function handlesonCategorySubmit(e) {
+    e.preventDefault();
+
+    // 부모 카테고리와 하위 카테고리 이름 가져오기
+    const parentCategory1 = document.getElementById("parentCategory1").value;
+    const subCategoryName = document.getElementById("subCategoryName").value;
+
+    console.log("선택된 부모 카테고리:", parentCategory1);
+    console.log("입력된 하위 카테고리 이름:", subCategoryName);
+
+    if (!parentCategory1) {
+      alert("부모 카테고리를 선택해주세요.");
+      return;
+    }
+
+    if (!subCategoryName) {
+      alert("하위 카테고리 이름을 입력해주세요.");
+      return;
+    }
+
+    if (!image) {
+      alert("이미지를 선택해주세요.");
+      return;
+    }
+
+    // 카테고리 객체 생성
+    const category = {
+      name: subCategoryName,
+      parentCategory: parentCategory1  // 상위 카테고리 ID 또는 이름 전달
+    };
+
+    // FormData 객체 생성
+    const formData = new FormData();
+    formData.append(
+      "itemCategory",
+      new Blob([JSON.stringify(category)], { type: "application/json" })
+    );
+    formData.append("file", image); // 선택된 이미지 추가
+
+    // 로컬 스토리지에서 인증 토큰 가져오기
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    // 서버로 데이터 전송
+    fetch("http://localhost:8080/api/v1/item-categories", {
+      method: "POST",
+      headers: {
+        Authorization: accessToken,
+        "Refresh-Token": refreshToken,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("카테고리 등록이 완료되었습니다.");
+
+          // 폼 초기화
+          e.target.reset();
+          setImage(null); // 선택된 이미지 초기화
+          window.location.href = "/AdminPage/categorymaker";
+        } else {
+          response.text().then((errorMessage) => {
+            alert(`오류 발생: ${errorMessage}`);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error during category registration:", error);
+        alert("서버 오류로 인해 카테고리 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
+      });
+  }
+
+
+
+
+  useEffect(() => {
+    const fetchTopCategories = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/item-categories");
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data); // 기존 categories 상태에 데이터 저장
+        } else {
+          console.error("Failed to fetch top categories.");
+        }
+      } catch (error) {
+        console.error("Error fetching top categories:", error);
+      }
+    };
+
+    fetchTopCategories();
+  }, []);
+
+  const generateCategoryList = (categories) => {
+    return categories.map((category) => {
+      if (category.parentCategory && category.subCategoryName) {
+        return `${category.parentCategory}-${category.subCategoryName}`;
+      }
+      return category.name;
+    });
+};
 
 
   return (
@@ -62,56 +238,76 @@ const Categorymaker = () => {
         <hr />
         <div className="content">
           <div className="makecategory">
-            <span>카테고리 만들기 (만들 카테고리 체크하세요)</span>
+            <span>카테고리 만들기</span>
             <div className="upcategory">
-              <input type="checkbox" />
+
               <span>상위 카테고리</span>
-              <input type="text" style={{ width: 300, height: 20 }} />
+              <form id="updateCategoryForm" action="" method="post" onSubmit={handleparentCategorySubmit}>
+                <input
+                  type="text"
+                  id="parentCategory"
+                  value={categoryName}
+                  onChange={(e) => setCategoryName(e.target.value)} // 카테고리 이름 입력
+                  style={{ width: 300, height: 20 }}
+                />
+
+                <button type="submit" style={{ width: 100 }}>
+                  제출
+                </button>
+              </form>
             </div>
+
             <div className="downcategory">
-              <input type="checkbox" />
+
               <span>하위 카테고리</span>
-              <div>
-                <select name="orderstatus" id="orderstatus" className="fSelect">
-                  <option value="all">선택</option>
-                  <option value="shippedbefore">해축</option>
-                  <option value="shippedstandby">국축</option>
-                  <option value="shippedbegin">야구</option>
-                  <option value="shipcomplate">배구</option>
-                  <option value="ordercancel">ee</option>
-                </select>
-              </div>
-              <input type="text" style={{ width: 300, height: 20 }} />
-              <div>파일선택</div>
+              <form id="handlesonCategorySubmit" action="" method="post" onSubmit={handlesonCategorySubmit}>
+                <div>
+                  <select id="parentCategory1" name="parentCategory1" required>
+                    <option value="">카테고리를 선택하세요</option>
+                    {categories.map((category) => (
+                      <option key={category.parentCategoryId} value={category.parentCategory}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <input type="text" style={{ width: 300, height: 20 }} id="subCategoryName" name="subCategoryName" />
+                <div>
+                  파일선택
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
+                  {image && <div>선택된 파일: {image.name}</div>}
+                </div>
+
+                <button type="submit" style={{ width: 100 }}>
+                  제출
+                </button>
+              </form>
+
             </div>
-            <button style={{ width: 100 }}>제출</button>
+
           </div>
+
           <div className="categorylist">
             <span>카테고리 리스트</span>
-            <button>삭제</button>
+            <button onClick={() => alert("삭제 기능 구현 필요")}>삭제</button>
             <div className="categoryli">
-              <div>
-                <input type="checkbox" />
-                해외축구
-              </div>
-              <div>
-                <input type="checkbox" />
-                해외축구-맨유
-              </div>
-              <div>
-                <input type="checkbox" />
-                해외축구-맨시티
-              </div>
-              <div>
-                <input type="checkbox" />
-                해외축구-레알
-              </div>
+              {generateCategoryList(categories).map((categoryName, index) => (
+                <div key={index}>
+                  <input type="checkbox" />
+                  {categoryName}
+                </div>
+              ))}
             </div>
           </div>
+
+
         </div>
       </div>
-    </section>
-
+    </section >
   );
 };
 
