@@ -1,0 +1,405 @@
+
+
+.reportusersection{
+  width: 1280px;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  justify-content: space-between;
+  font-family: 'SpoqaHanSansNeo-Regular';
+}
+
+.reportusersection .list {
+  width: 182px;
+  margin: 64px 0 0 20px;
+  border: 1px solid #111;
+}
+
+
+.reportusersection .name {
+  padding-left: 5px;
+  height: 52px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(248, 248, 248);
+  border-bottom: 1px solid #111;
+  background-repeat: no-repeat;
+  background-size: 36% 0.5em;
+  background-position: 13% 69%;
+}
+
+.reportusersection .detail-list {
+  padding: 14px 16px 15px 0px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+
+.reportusersection .detail-select {
+  padding: 14px 16px 15px;
+  border-bottom: 1px solid #111;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.reportusersection .order .member .item {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+
+.reportusersection .detail-noselect {
+  padding: 14px 16px 15px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid #111;
+}
+
+.reportusersection .detail div:hover {
+  background-color: #F3F5F7;
+}
+
+.reportusersection .info {
+  width: 1024px;
+  margin: 64px 10px 0 0;
+}
+
+.reportusersection .home {
+  color: white;
+  background-color: #e9302d;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  width: 150px;
+  margin-right: 4px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reportusersection .content-name {
+  color: rgb(24, 26, 28);
+  height: 44px;
+  letter-spacing: -0.4px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.reportusersection hr {
+  border-color: rgb(231, 231, 231, 0.3);
+  background: rgb(231, 231, 231, 0.3);
+  height: 1px;
+}
+
+.reportusersection .content {
+  height: 430px;
+  background-color: #e1e1e1;
+  margin: 20px 0 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.reportusersection .reportbox {
+  width: 800px;
+  align-content: center;
+  margin-top: 10px;
+
+}
+
+.reportusersection .reportboxheader {
+  width: 800px;
+
+  margin-bottom: 5px
+}
+
+.reportusersection .reportboxdetail {
+  border: 1px solid #111;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 7px;
+}
+
+.reportusersection #reportcomment {
+  width: 550px;
+}
+
+.reportusersection .justice {
+  margin: 0 auto;
+}
+
+.reportusersection .profile {
+  width: 650px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+}
+
+
+.reportusersection .profile_img {
+  margin: 15px 0 0 5px;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+
+
+}
+
+.reportusersection .profile_img img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 100px;
+}
+
+.reportusersection .profile_text {
+  display: flex;
+  padding-top: 10px;
+  width: 535px;
+  height: 100%;
+  justify-content: space-evenly;
+  flex-direction: column;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.reportusersection .profile-button div {
+  border: 1px solid #000;
+  height: 36px;
+  line-height: 34px;
+  margin-bottom: 5px;
+  font-weight: 800;
+  width: 80px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.reportusersection .profile-button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+}
+
+
+
+
+/* 모달 스타일 */
+.reportusersection .modal {
+  display: none; /* 처음에는 숨겨짐 */
+  position: fixed; /* 고정된 위치 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  justify-content: center; /* 세로로 중앙 정렬 */
+  align-items: center; /* 가로로 중앙 정렬 */
+  display: flex; /* flexbox 활성화 */
+  z-index: 1000; /* 다른 요소들 위에 표시 */
+}
+
+/* 모달 내용 */
+.reportusersection .modal-content {
+  background-color: #fff;
+  width: 50%; /* 너비를 50%로 설정 (원하는 크기로 조절 가능) */
+  max-width: 600px; /* 최대 너비를 설정 (너무 넓지 않게) */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+/* 탭 스타일 */
+.reportusersection .tabs {
+  display: flex;
+  border-bottom: 2px solid #ddd;
+}
+
+.reportusersection .tab-link {
+  width: 300px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.reportusersection .tab-link.active {
+  background-color: #ddd;
+}
+
+/* 페이지 스타일 */
+.reportusersection .page {
+  display: none;
+}
+
+.reportusersection .page.active {
+  display: block;
+}
+
+
+.reportusersection article  {
+  width: 550px;
+  display: block;
+  height: auto;
+
+}
+
+/* ----------------------------social_title---------------------------- */
+.reportusersection .social_title {
+  width: 600px;
+}
+
+/* ----------------------social_head----------------- */
+.reportusersection .social_head {
+  width: 100%;
+  height: 68px;
+  margin: 12px 0 12px 0;
+  display: flex;
+  align-items: center;
+}
+.reportusersection .profile_img {
+   width: 10%;
+  height: 50px;
+  display: flex;
+  text-align: center;
+
+  
+}
+.reportusersection .profile_img img {
+  border-radius: 50px;
+  justify-content: center;
+  object-fit: cover;
+}
+.reportusersection .profile_text {
+  width: 80%;
+  display: block;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.reportusersection .follow_btn{
+  background-color: black;
+  color: white;
+  font-size: 13px;
+  width: 65px;
+  height: 35px;
+  margin-left: 10px;
+  border-radius: 10px;
+
+}
+
+/* ----------------------social_body----------------- */
+.reportusersection .social_body {
+  width: 550px;
+  height: 550px;
+  padding: 10px 0 10px 0;
+}
+.reportusersection .main_img img {
+  width: 550px;
+  height: 550px;
+  object-fit: cover;
+}
+.reportusersection .main_img_list {
+  width: 500px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 10px 0;
+}
+
+/* ---------------------interest-----------------  */
+.reportusersection .interest{
+  padding: 10px 0 10px 0;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.reportusersection .interest_like {
+  width: 100px;
+  height: 100%;
+}
+.reportusersection .interest_attention {
+  width: 100px;
+  height: 100%;
+}
+.reportusersection .interest_comment {
+  width: 100px;
+  height: 100%;
+}
+/* ---------------------social_text----------------- */
+.reportusersection .social_text{
+  width: 100%;
+  height: 100px;
+
+
+}
+
+.reportusersection .text_title {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.reportusersection .text_tag {
+  font-size: 15px;
+  width: 550px;
+}
+
+/* ----------------------------social_container---------------------------- */
+.reportusersection .social_container{
+  width: 640px;
+  height: 300px;
+
+  border-top: 1px solid #B5B6B5;
+  display: block;
+  
+  padding-bottom: 20px;
+}
+.reportusersection .container_title{
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 640px;
+  font-size: 20px;
+  font-weight: bold;
+
+}
+.reportusersection .container_img{
+  width: 640px;
+  height: 200px;
+  display: flex;
+  list-style-position: initial;
+  gap: 10px;
+
+
+}
+.reportusersection .container_img li {
+  list-style: none;
+}
+.reportusersection .container_img img {
+  height: 200px;
+  width: 150px;
+  object-fit: cover;
+}

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import './StyleDetail.css';
 import './StyleComment/StyleComment'
 import { Link, useLocation } from "react-router-dom";
+import StyleComment from "./StyleComment/StyleComment";
 
 const StyleDetail = () => {
     const [articleData, setArticleData] = useState(null); // 첫 번째 API 데이터
     const [memberArticles, setMemberArticles] = useState([]); // 두 번째 API 데이터
     const [currentIndex, setCurrentIndex] = useState(0); // 슬라이드 상태
     const [isCommentVisible, setIsCommentVisible] = useState(false); // 댓글 창 표시 상태
+    const [comments, setComments] = useState([]); // 댓글 데이터
+    const [currentUser, setCurrentUser] = useState(null); // 현재 사용자 설정 (예시)
     const location = useLocation();
 
     // URL에서 articleId 추출
@@ -85,8 +88,35 @@ const StyleDetail = () => {
         setIsCommentVisible((prev) => !prev);
     };
 
+    // 로그인한 사용자 정보 가져오기
+    const fetchCurrentUser = async () => {
+        const headers = await getHeaders();
+        if (!headers) return;
+
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/members", {
+                method: "GET",
+                headers: headers
+            });
+
+            console.log(response);
+            if (response.status === 200) {
+                const data = await response.json();
+                setCurrentUser(data.nickname); // 로그인한 사용자 이름 설정
+            } else {
+                setCurrentUser(null);
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+            setCurrentUser(null);
+        }
+    };
+
 
     useEffect(() => {
+        fetchCurrentUser();
+        console.log(currentUser);
+
         if (articleId) {
             const fetchData = async () => {
                 const headers = await getHeaders(); // 비동기적으로 헤더를 가져옴
@@ -344,13 +374,13 @@ const StyleDetail = () => {
             </div>
 
             {/* 댓글 창 */}
-            {/* <StyleComment
+            <StyleComment
                 isVisible={isCommentVisible}
                 onClose={toggleComments}
                 comments={comments}
                 setComments={setComments}
                 currentUser={currentUser}
-            /> */}
+            />
         </>
     );
 };

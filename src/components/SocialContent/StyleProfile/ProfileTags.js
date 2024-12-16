@@ -6,8 +6,7 @@ import { useLocation } from "react-router-dom";
 const ProfileTags = ({ headers, profile }) => {
     const [item, setItem] = useState(null);
 
-    // 비공개 계정 여부 판단
-    const isPrivateAccount = profile.memberStatus === "PRIVATE" && profile.followerId === null;
+    const isPrivateAccount = profile.memberStatus === "PRIVATE" && profile.follow === "Not Follow";
 
     useEffect(() => {
         if (!isPrivateAccount) {

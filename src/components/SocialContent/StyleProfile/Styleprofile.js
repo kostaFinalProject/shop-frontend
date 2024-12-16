@@ -5,10 +5,6 @@ import ProfileDiv from "./ProfileDiv.js";
 import ProfilePosts from './ProfilePosts.js';
 import ProfileTags from './ProfileTags.js';
 
-//data 가져오기
-import { postsData } from "../PostsData/PostsData.js";
-import { tagsData } from "../PostsData/TagsData.js";
-
 const Styleprofile = () => {
     const [activeTab, setActiveTab] = useState('posts');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -87,12 +83,14 @@ const Styleprofile = () => {
                           )
                         : "https://fakeimg.pl/150x150/",
                     memberStatus: data.memberStatus,
-                    followerId: data.followerId || null,
+                    followerId: data.followId || null,
                     articleCount: data.articleCount,
                     followeeCount: data.followeeCount,
                     followerCount: data.followerCount,
+                    follow: data.follow,
                 };
 
+                console.log(processedData);
                 setProfile(processedData);
             } else {
                 console.error("Error fetching profile:", response.statusText);
@@ -128,7 +126,7 @@ const Styleprofile = () => {
         <>
             <div className="Styleprofile_full_screen">
                 {/* 프로필 컴포넌트로 데이터 전달 */}
-                <ProfileDiv headers={headers} profile={profile} />
+                <ProfileDiv headers={headers} profile={profile} setProfile={setProfile}/>
 
                 {/* 게시글, 태그상품 탭 */}
                 <div className="Styleprofile_post_tag">
@@ -150,7 +148,7 @@ const Styleprofile = () => {
                 {/* 탭에 따라 컴포넌트 렌더링 */}
                 <div className="Styleprofile_sns_container">
                     {activeTab === 'posts' ? (
-                        <ProfilePosts headers={headers} profile={profile} />
+                        <ProfilePosts headers={headers} profile={profile}/>
                     ) : (
                         <ProfileTags headers={headers} profile={profile} />
                     )}
