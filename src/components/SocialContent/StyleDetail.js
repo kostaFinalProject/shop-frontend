@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import './StyleDetail.css';
+import './StyleComment/StyleComment'
 import { Link, useLocation } from "react-router-dom";
 
 const StyleDetail = () => {
     const [articleData, setArticleData] = useState(null); // 첫 번째 API 데이터
     const [memberArticles, setMemberArticles] = useState([]); // 두 번째 API 데이터
     const [currentIndex, setCurrentIndex] = useState(0); // 슬라이드 상태
+    const [isCommentVisible, setIsCommentVisible] = useState(false); // 댓글 창 표시 상태
     const location = useLocation();
 
     // URL에서 articleId 추출
@@ -18,7 +20,7 @@ const StyleDetail = () => {
 
     const getHeaders = async () => {
         const headers = { "Content-Type": "application/json" };
-    
+
         if (accessToken && refreshToken) {
             try {
                 // refreshToken으로 accessToken 갱신 시도
@@ -40,10 +42,10 @@ const StyleDetail = () => {
                 return null; // headers가 없는 경우 처리
             }
         }
-    
+
         return headers;
     };
-    
+
     // refreshToken을 사용해 새로운 accessToken을 발급받는 함수
     const refreshAccessToken = async (refreshToken) => {
         try {
@@ -53,7 +55,7 @@ const StyleDetail = () => {
                     "Refresh-Token": refreshToken
                 }
             });
-    
+
             if (response.status === 200) {
                 const data = await response.json();
                 return data.newToken; // 새로운 accessToken 반환
@@ -65,7 +67,7 @@ const StyleDetail = () => {
             return null; // 갱신 실패
         }
     };
-    
+
     const handleEdit = () => {
         // 수정 로직 추가
         console.log("수정 버튼 클릭");
@@ -78,19 +80,25 @@ const StyleDetail = () => {
         }
     };
 
+    // 댓글 창 토글
+    const toggleComments = () => {
+        setIsCommentVisible((prev) => !prev);
+    };
+
+
     useEffect(() => {
         if (articleId) {
             const fetchData = async () => {
                 const headers = await getHeaders(); // 비동기적으로 헤더를 가져옴
                 if (!headers) return; // 헤더가 없으면 요청하지 않음
-    
+
                 try {
                     const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
                         method: "GET",
                         headers: headers,
                     });
                     const data = await response.json();
-    
+
                     const processedData = {
                         articleId: data.articleId,
                         memberId: data.memberId,
@@ -112,9 +120,9 @@ const StyleDetail = () => {
                         likeId: data.likeId,
                         createdAt: data.createdAt,
                     };
-    
+
                     setArticleData(processedData);
-    
+
                     const memberArticlesResponse = await fetch(
                         `http://localhost:8080/api/v1/members/articles/${data.memberId}?page=0&size=4`,
                         {
@@ -132,13 +140,13 @@ const StyleDetail = () => {
                             )
                             : article.imageUrl,
                     }));
-    
+
                     setMemberArticles(processedMemberArticles);
                 } catch (error) {
                     console.error("Error fetching data:", error);
                 }
             };
-    
+
             fetchData();
         }
     }, [articleId]);
@@ -159,22 +167,22 @@ const StyleDetail = () => {
             window.location.href = '/login';
             return;
         }
-    
+
         try {
             const headers = await getHeaders(); // 헤더를 비동기적으로 가져오기
-    
+
             if (articleData.likeId) {
                 // 좋아요 취소 API 호출
                 const response = await fetch(`http://localhost:8080/api/v1/likes/articles/${articleData.likeId}`, {
                     method: "DELETE",
                     headers: headers, // getHeaders()로 받은 headers 사용
                 });
-    
+
                 if (!response.ok) {
                     const errorResponse = await response.json(); // 서버에서 반환한 에러 메시지 확인
                     throw new Error(errorResponse.message || "Failed to delete like");
                 }
-    
+
                 // 좋아요 취소 성공 시 상태 업데이트 (서버와 동기화)
                 setArticleData({
                     ...articleData,
@@ -187,14 +195,14 @@ const StyleDetail = () => {
                     method: "POST",
                     headers: headers, // getHeaders()로 받은 headers 사용
                 });
-    
+
                 if (!response.ok) {
                     const errorResponse = await response.json(); // 서버에서 반환한 에러 메시지 확인
                     throw new Error(errorResponse.message || "Failed to add like");
                 }
-    
+
                 const data = await response.json(); // 서버 응답이 JSON일 경우
-    
+
                 // 좋아요 성공 시 상태 업데이트 (서버와 동기화)
                 setArticleData({
                     ...articleData,
@@ -205,7 +213,7 @@ const StyleDetail = () => {
         } catch (error) {
             console.error("Error while handling like:", error);
         }
-    };    
+    };
 
     if (!articleData) {
         return <div>Loading...</div>; // 로딩 상태 표시
@@ -217,18 +225,21 @@ const StyleDetail = () => {
                 <div className="StyleDetail_title">
                     {/* ---------------------social_head----------------- */}
                     <div className="StyleDetail_head">
-                        <div className="StyleDetail_profile_img">
-                            <img
-                                src={articleData.memberProfileImageUrl ? `/uploads/${articleData.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
-                                alt=""
-                            />
-                        </div>
-                        <div className="StyleDetail_profile_text">
-                            <p className="StyleDetail_profile_id">{articleData.memberName}</p>
-                            <p className="StyleDetail_registration_time">{new Date(articleData.createdAt).toLocaleDateString()}</p>
-                        </div>
+                        <a href={`/Styleprofile?memberId=${articleData.memberId}`}>
+                            <div className="StyleDetail_profile_img">
+                                <img
+                                    href=""
+                                    src={articleData.memberProfileImageUrl ? `/uploads/${articleData.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="StyleDetail_profile_text">
+                                <p className="StyleDetail_profile_id">{articleData.memberName}</p>
+                                <p className="StyleDetail_registration_time">{new Date(articleData.createdAt).toLocaleDateString()}</p>
+                            </div>
+                        </a>
 
-                        {articleData.isFollowing === "Me" ? null : (
+                        {/* {articleData.isFollowing === "Me" ? null : (
                             <button
                                 className="StyleDetail_follow_btn"
                                 style={{
@@ -239,7 +250,7 @@ const StyleDetail = () => {
                             >
                                 {articleData.isFollowing === "Not Follower" ? "팔로우" : "팔로잉"}
                             </button>
-                        )}
+                        )} */}
                     </div>
                     {/* ----------------------social_body----------------- */}
                     <div className="StyleDetail_body">
@@ -287,7 +298,7 @@ const StyleDetail = () => {
                         {articleData.likeCount}
                     </div>
                     <div className="StyleDetail_interest_attention">
-                        <span>댓글</span>
+                        <span onClick={toggleComments}>댓글</span>
                         {articleData.commentCount}
                     </div>
                     <div className="StyleDetail_interest_comment">
@@ -316,13 +327,13 @@ const StyleDetail = () => {
             <div className="StyleDetail_social_container" >
                 <div className="StyleDetail_container_title">
                     @{articleData.memberName}님의 다른 스타일
-                    <Link to="/Styleprofile">
+                    <Link to={`/Styleprofile?memberId=${articleData.memberId}`}>
                         <button className="more_btn">더보기</button>
                     </Link>
                 </div>
                 <div className="StyleDetail_container_img">
                     {memberArticles.map((article) => (
-                        <div key={article.articleId} style={{width: "150px"}}>
+                        <div key={article.articleId} style={{ width: "150px" }}>
                             <a href={`/StyleDetail?articleId=${article.articleId}`}>
                                 <img src={`/uploads/${article.imageUrl}`} alt={article.content} />
                             </a>
@@ -331,6 +342,15 @@ const StyleDetail = () => {
                     ))}
                 </div>
             </div>
+
+            {/* 댓글 창 */}
+            {/* <StyleComment
+                isVisible={isCommentVisible}
+                onClose={toggleComments}
+                comments={comments}
+                setComments={setComments}
+                currentUser={currentUser}
+            /> */}
         </>
     );
 };

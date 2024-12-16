@@ -9,7 +9,7 @@ const Login = ({ setIsLoggedIn }) => {
 
   useEffect(() => {
     // 카카오 SDK 초기화 (카카오 개발자 사이트에서 제공받은 JavaScript 키 사용)
-    if (window.Kakao) {
+    if (!window.Kakao.isInitialized()) {
       window.Kakao.init("43e5ae5eb19ddba3591f27d05f280f6a"); 
     }
   }, []);
@@ -61,6 +61,7 @@ const Login = ({ setIsLoggedIn }) => {
       window.Kakao.Auth.login({
         success: async function (authObj) {
           const accessToken = authObj.access_token;
+          const provider = "kakao";
   
           // 카카오 로그인 성공 후, 서버로 토큰 전송하여 DB에 사용자 정보 저장
           try {
@@ -71,6 +72,7 @@ const Login = ({ setIsLoggedIn }) => {
               },
               body: JSON.stringify({
                 accessToken, 
+                provider,
               }),
             });
   
@@ -143,17 +145,18 @@ const Login = ({ setIsLoggedIn }) => {
             </article>
           </form>
         </div>
-        <div className="login2">
+        <div></div>
+        <div className="login2" style={{ borderLeftStyle: "dashed"}}>
           <form>
             <article>
-              <div className="socialLogin">
+              <div className="socialLogin" style={{textAlign: "center", marginTop: "110px"}}>
                 <h3>간편하게 로그인하기</h3>
-                <h4>다양한 방법으로 쉽게 사이트를 이용하세요</h4>
+                <h4>카카오 로그인으로 쉽게 사이트를 이용하세요</h4>
                 <a href="#" onClick={handleKakaoLogin}>
                   <img
-                    src="/img/kakaotalk_sharing_btn_small.png"
+                    src="/img/kakao_login_medium_wide.png"
                     alt="카카오톡 로그인"
-                    width="40px"
+                    width="310px"
                     height="40px"
                   />
                 </a>

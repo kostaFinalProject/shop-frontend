@@ -272,6 +272,7 @@ const Signup = () => {
                                         value="USER"
                                         checked={userType === "USER"}
                                         onChange={handleUserTypeChange}
+                                        style={{ marginRight: "5px"}}
                                     />
                                     일반 사용자
                                 </label>
@@ -282,6 +283,7 @@ const Signup = () => {
                                         value="NO_AUTHORIZATION_ADMIN"
                                         checked={userType === "NO_AUTHORIZATION_ADMIN"}
                                         onChange={handleUserTypeChange}
+                                        style={{ marginRight: "5px"}}
                                     />
                                     관리자
                                 </label>

@@ -23,6 +23,11 @@
     display: flex;
     align-items: center;
 }
+
+.StyleDetail_head a{
+    display: contents;
+}
+
 .StyleDetail_profile_img {
      width: 10%;
     height: 50px;
