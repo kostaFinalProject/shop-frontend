@@ -55,7 +55,14 @@ const ProfilePosts = ({ headers, profile }) => {
     }, [isPrivateAccount, profile.memberId, headers]);
 
     if (isPrivateAccount) {
-        return <div className="private-account-message">비공개 계정입니다.</div>;
+        return <div className="private-account-message" style={{
+            width: "100%",
+            height: "500px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}>비공개 계정입니다.</div>;
     }
 
     if (!article) {
@@ -64,56 +71,72 @@ const ProfilePosts = ({ headers, profile }) => {
 
     return (
         <ul className="Styleprofile_detail_page_review_list_body">
-            {article.map((article) => (
-                <Link
-                    to={`/StyleDetail?articleId=${article.articleId}`}
-                    key={article.articleId}
-                    className="Styleprofile_detail_page_review_list_item"
-                >
-                    <li>
-                        {/* 게시물 이미지 */}
-                        <div className="Styleprofile_detail_page_review_list_item_img">
-                            <img
-                                src={`/uploads/${article.imageUrl}`}
-                                alt="post"
-                                className="Styleprofile_detail_page_review_list_img"
-                            />
-                        </div>
-
-                        {/* 게시물 정보 */}
-                        <div className="Styleprofile_detail_page_review_content">
-                            {/* 제목 영역 */}
-                            <div className="Styleprofile_detail_page_review_title">
-                                <img
-                                    src={
-                                        article.memberProfileImageUrl
-                                            ? `/uploads/${article.memberProfileImageUrl}`
-                                            : "https://fakeimg.pl/50x50/"
-                                    }
-                                    alt="profile"
-                                    className="Styleprofile_detail_page_review_title_img"
-                                />
-                                <span className="Styleprofile_detail_page_review_title_id">
-                                    {article.memberName}
-                                </span>
-                                <span style={{ fontSize: "15px" }}>
-                                    {article.likeId ? "❤️" : "♡"}
-                                </span>
-                                <span className="Styleprofile_detail_page_review_title_like">
-                                    {article.likeCount}
-                                </span>
-                            </div>
-
-                            {/* 해시태그 */}
-                            <p className="Styleprofile_detail_page_review_body_tag">
-                                {article.hashtags.join(", ")}
-                            </p>
-                        </div>
-                    </li>
-                </Link>
-            ))}
+          {article.length === 0 ? (
+            <div
+              className="private-account-message"
+              style={{
+                width: "100%",
+                height: "500px",
+                display: "flex",
+                justifyContent: "center", // 가로 중앙 정렬
+                alignItems: "center", // 세로 중앙 정렬
+                textAlign: "center",
+              }}
+            >
+              등록된 게시물이 없습니다.
+            </div>
+          ) : (
+            article.map((article) => (
+              <Link
+                to={`/StyleDetail?articleId=${article.articleId}`}
+                key={article.articleId}
+                className="Styleprofile_detail_page_review_list_item"
+              >
+                <li>
+                  {/* 게시물 이미지 */}
+                  <div className="Styleprofile_detail_page_review_list_item_img">
+                    <img
+                      src={`/uploads/${article.imageUrl}`}
+                      alt="post"
+                      className="Styleprofile_detail_page_review_list_img"
+                    />
+                  </div>
+      
+                  {/* 게시물 정보 */}
+                  <div className="Styleprofile_detail_page_review_content">
+                    {/* 제목 영역 */}
+                    <div className="Styleprofile_detail_page_review_title">
+                      <img
+                        src={
+                          article.memberProfileImageUrl
+                            ? `/uploads/${article.memberProfileImageUrl}`
+                            : "https://fakeimg.pl/50x50/"
+                        }
+                        alt="profile"
+                        className="Styleprofile_detail_page_review_title_img"
+                      />
+                      <span className="Styleprofile_detail_page_review_title_id">
+                        {article.memberName}
+                      </span>
+                      <span style={{ fontSize: "15px" }}>
+                        {article.likeId ? "❤️" : "♡"}
+                      </span>
+                      <span className="Styleprofile_detail_page_review_title_like">
+                        {article.likeCount}
+                      </span>
+                    </div>
+      
+                    {/* 해시태그 */}
+                    <p className="Styleprofile_detail_page_review_body_tag">
+                      {article.hashtags.join(", ")}
+                    </p>
+                  </div>
+                </li>
+              </Link>
+            ))
+          )}
         </ul>
-    );
+      );
 };
 
 export default ProfilePosts;
