@@ -41,14 +41,13 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                 );
     
                 if (response.ok) {
-                    const data = await response.json(); // 서버 응답 데이터
+                    const data = await response.json();
     
-                    // 팔로우 성공 시 상태 업데이트
                     setProfile((prevProfile) => ({
                         ...prevProfile,
-                        follow: "Followed", // 상태 변경
-                        followeeCount: prevProfile.followeeCount + 1, // 팔로워 수 증가
-                        followerId: data.followerId, // 서버에서 받은 followerId 반영
+                        follow: "Followed",
+                        followeeCount: prevProfile.followeeCount + 1,
+                        followerId: data.followerId,
                     }));
                     alert("팔로우 요청을 보냈습니다.");
                 } else {
@@ -78,7 +77,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                             backgroundColor: profile.follow === "Followed" ? "blue" : "black",
                             color: "white",
                         }}
-                        hidden={profile.follow === "Me"} // "Me"일 때 버튼 숨기기
+                        hidden={profile.follow === "Me"}
                     >
                         {profile.follow === "Followed" ? "언팔로우" : "팔로우"}
                     </button>
