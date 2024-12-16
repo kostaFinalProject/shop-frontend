@@ -18,12 +18,12 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                 );
     
                 if (response.ok) {
-                    // 언팔로우 성공 시 상태 업데이트
+                    // 언팔로우
                     setProfile((prevProfile) => ({
                         ...prevProfile,
-                        follow: "Not Follow", // 상태 변경
-                        followeeCount: prevProfile.followeeCount - 1, // 팔로워 수 감소
-                        followerId: null, // followerId 제거
+                        follow: "Not Follow",
+                        followeeCount: prevProfile.followeeCount - 1,
+                        followerId: null,
                     }));
                     alert("언팔로우 되었습니다.");
                 } else {
@@ -31,7 +31,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                     throw new Error(errorData.message || "언팔로우 요청 실패");
                 }
             } else {
-                // 팔로우 요청
+                // 팔로우
                 const response = await fetch(
                     `http://localhost:8080/api/v1/followers/${profile.memberId}`,
                     {
