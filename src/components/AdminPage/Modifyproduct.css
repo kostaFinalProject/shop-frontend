@@ -165,10 +165,7 @@
 /* 모달 내용 */
 .modifyproductsection .modal-content {
   background-color: #fff;
-  width: 50%;
-  /* 너비를 50%로 설정 (원하는 크기로 조절 가능) */
-  max-width: 600px;
-  /* 최대 너비를 설정 (너무 넓지 않게) */
+  width:607px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -179,6 +176,7 @@
 
 /* 탭 스타일 */
 .modifyproductsection .tabs {
+  width: 550px;
   background-color: #ddd;
   text-align: center;
   font-size: 32px;

@@ -111,7 +111,7 @@ const Registproduct = () => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
 
-  function handleUpadteItemSubmit(e) {
+  function handleCreateItemSubmit(e) {
     e.preventDefault();
 
     // 하위 카테고리 값 가져오기
@@ -190,7 +190,7 @@ const Registproduct = () => {
           alert("상품 등록이 완료되었습니다.");
 
           // **폼 초기화**
-          document.getElementById("updateItemForm").reset();
+          document.getElementById("createItemForm").reset();
           setImageList([{ file: null, checked: false }]); // 이미지 입력 필드 초기화
           setSelectedCategory(""); // 선택된 카테고리 초기화
           setExistingFiles(new Set()); // 기존 파일 이름 초기화
@@ -263,7 +263,7 @@ const Registproduct = () => {
           상품등록
         </div>
         <hr />
-        <form id="updateItemForm" action="" method="post" onSubmit={handleUpadteItemSubmit}>
+        <form id="createItemForm" action="" method="post" onSubmit={handleCreateItemSubmit}>
           {/* 카테고리 선택 */}
           <div className="categoryselect">
             <div className="mainselect">

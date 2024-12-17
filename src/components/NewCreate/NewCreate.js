@@ -311,7 +311,6 @@ const NewCreate = () => {
                     required
                     onChange={(e) => handleFileChange(index, e)}
                   />
-                  <span>{item.fileName}</span>
                 </li>
               ))}
             </ul>

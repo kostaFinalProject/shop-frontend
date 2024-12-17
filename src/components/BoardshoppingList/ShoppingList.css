@@ -5,25 +5,26 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    max-width: calc(325px *4);
+    width: 1250px;
     margin: 0 auto;
-    gap: 0;
-    padding: 0 15px 0 15px;
+    padding: 0;
+    margin-top: 10px;
+    gap: 10px;
+
     justify-content: left;
 
 }
-.BoardshoppingLi_board_list_body .BoardshoppingLi_item {
+.BoardshoppingLi_item {
 
     margin: 0 0 40px 0;
     padding: 0 5px 0 5px;
-    width: 325px;
+    width: 305px;
     height: 480px;
     font-size: 0;
     /* border: 2px solid #eee; */
-
     box-sizing: border-box;
 }
-.BoardshoppingLi_board_list_body .BoardshoppingLi_item:hover {
+.BoardshoppingLi_item:hover {
     /* 배경색 변화 */
     background-color: rgba(0, 0, 0, 0.1);
     /* 살짝 어두운 배경색 */
@@ -43,14 +44,14 @@
 
 
 
-.BoardshoppingLi_board_list_body .BoardshoppingLi_item>div {
+.BoardshoppingLi_item>div {
     display: inline-block;
     text-align: center;
     font-size: 14px;
 }
 
-.BoardshoppingLi_board_list_body .BoardshoppingLi_item .BoardshoppingLi_board_img {
-    width: 325px;
+.BoardshoppingLi_board_img {
+    width: 305px;
     height: 350px;
     margin: 0 auto;
     padding: 0;

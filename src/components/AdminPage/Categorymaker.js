@@ -6,6 +6,7 @@ const Categorymaker = () => {
   const [existingFiles, setExistingFiles] = useState(new Set()); // 이미 선택한 파일을 추적
   const [categoryName, setCategoryName] = useState(""); // 카테고리 이름을 관리
   const [categories, setCategories] = useState([]); // 상위 카테고리 상태
+    const [subCategories, setSubCategories] = useState({}); // 하위 카테고리 상태
 
 
   const handleFileChange = (event) => {
@@ -172,10 +173,37 @@ const Categorymaker = () => {
     fetchTopCategories();
   }, []);
 
+    // 특정 상위 카테고리의 하위 카테고리 데이터 가져오기
+    const fetchChildrenCategories = async (categoryId) => {
+      if (subCategories[categoryId]) {
+        return; // 이미 하위 카테고리가 로드된 경우 API 호출 생략
+      }
+  
+      try {
+        const response = await fetch(`http://localhost:8080/api/v1/item-categories/${categoryId}`);
+        if (response.ok) {
+          const data = await response.json();
+          const updatedData = data.map(item => ({
+            categoryId: item.categoryId,
+            categoryName: item.categoryName,
+            imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
+          }));
+          setSubCategories((prev) => ({
+            ...prev,
+            [categoryId]: updatedData, // 해당 상위 카테고리 ID에 하위 카테고리 저장
+          }));
+        } else {
+          console.error("Failed to fetch children categories.");
+        }
+      } catch (error) {
+        console.error("Error fetching children categories:", error);
+      }
+    };
+
   const generateCategoryList = (categories) => {
-    return categories.map((category) => {
-      if (category.parentCategory && category.subCategoryName) {
-        return `${category.parentCategory}-${category.subCategoryName}`;
+    return categories.map((category, item) => {
+      if (category.name && item.categoryName) {
+        return `${category.name}-${category.categoryName}`;
       }
       return category.name;
     });
