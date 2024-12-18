@@ -13,6 +13,7 @@
     z-index: 1000;
 }
 
+
 .CommentsPanel.visible {
     transform: translateX(-400px); /* 화면 안으로 슬라이드 */
 }
@@ -77,7 +78,7 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: white;
 
     padding-bottom: -50px;
 
@@ -86,12 +87,15 @@
 }
 
 .CommentsPanel_list {
-    list-style-type: none;
+    flex: 1;
+    /* list-style-type: none; */
     padding: 0;
     margin: 0;
+    max-height: 80%; /* 댓글 패널 최대 높이 */
+    overflow-y: auto; /* 스크롤바 표시 */
+    margin-bottom: 10px;
+
 }
-
-
 
 /* 댓글 아이템 정보 */
 .CommentsPanel_item {
@@ -106,8 +110,7 @@
     display: flex;
 }
 .CommentsPanel_User_Img{
-
-    padding-right: 10px;
+    margin-right: 10px;
 }
 .CommentsPanel_User_Img img{
     width: 50PX;
@@ -161,7 +164,24 @@
     border-radius: 20px;
 }
 
-.CommentsPanel_ReplyInput{
+/* .CommentsPanel_ReplyInput{
+    display: flex;
+} */
+
+.CommentsPanel_Reply_User{
+    margin-right: 70px;
+    width: 100%;
+    height: 50%;
     display: flex;
 }
-
+.CommentsPanel_Reply_User_Img{
+    margin-right: 70px;
+    width: 50PX;
+    height: 50PX;
+    border-radius: 100px;
+}
+/* .CommentsPanel_Reply_User img{
+    width: 50PX;
+    height: 50PX;
+    border-radius: 100px;
+} */

@@ -11,6 +11,7 @@ const StyleDetail = () => {
     const [isCommentVisible, setIsCommentVisible] = useState(false); // 댓글 창 표시 상태
     const [comments, setComments] = useState([]); // 댓글 데이터
     const [currentUser, setCurrentUser] = useState(null); // 현재 사용자 설정 (예시)
+    const [header, setHeader] = useState(null);
     const location = useLocation();
 
     // URL에서 articleId 추출
@@ -102,7 +103,7 @@ const StyleDetail = () => {
             console.log(response);
             if (response.status === 200) {
                 const data = await response.json();
-                setCurrentUser(data.nickname); // 로그인한 사용자 이름 설정
+                setCurrentUser(data);
             } else {
                 setCurrentUser(null);
             }
@@ -114,8 +115,14 @@ const StyleDetail = () => {
 
 
     useEffect(() => {
+        const initializeHeader = async () => {
+            const headers = await getHeaders();
+            if (headers) setHeader(headers); // 헤더 상태 업데이트
+        };
+
+        initializeHeader();
+
         fetchCurrentUser();
-        console.log(currentUser);
 
         if (articleId) {
             const fetchData = async () => {
@@ -380,6 +387,7 @@ const StyleDetail = () => {
                 comments={comments}
                 setComments={setComments}
                 currentUser={currentUser}
+                header={header}
             />
         </>
     );

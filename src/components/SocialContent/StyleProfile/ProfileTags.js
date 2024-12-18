@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ProfileTags.css';
 import { Link } from 'react-router-dom';
-import { useLocation } from "react-router-dom";
 
 const ProfileTags = ({ headers, profile }) => {
     const [item, setItem] = useState(null);
@@ -63,8 +62,8 @@ const ProfileTags = ({ headers, profile }) => {
                     width: "100%",
                     height: "500px",
                     display: "flex",
-                    justifyContent: "center", // 가로 중앙 정렬
-                    alignItems: "center", // 세로 중앙 정렬
+                    justifyContent: "center",
+                    alignItems: "center",
                     textAlign: "center",
                   }}
                 >
