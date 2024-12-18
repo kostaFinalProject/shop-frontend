@@ -28,6 +28,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
     const replyFileInputRef = useRef(null); // 답글 파일 입력창 참조
     const scrollContainerRef = useRef(null); // 스크롤 컨테이너 참조
     const replyScrollContainerRef = useRef(null);
+    const replyScrollRefs = useRef({}); // 댓글 ID별로 ref 저장
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -80,7 +81,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
     const fetchReplies = async (commentId, pageNumber = 0) => {
         if (!header || replyLoading) return;
         setReplyLoading(true);
-
+    
         try {
             const response = await fetch(
                 `http://localhost:8080/api/v1/comments/${commentId}?page=${pageNumber}&size=5`,
@@ -89,11 +90,12 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                     headers: header,
                 }
             );
-
+    
             if (!response.ok) throw new Error("대댓글 조회 실패");
-
+    
             const data = await response.json();
-
+    
+            // 데이터 포맷팅 및 상태 업데이트
             const formattedReplies = data.content.map((reply) => ({
                 ...reply,
                 imageUrl: reply.imageUrl
@@ -103,7 +105,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                     ? `/uploads/${reply.memberProfileImageUrl}`
                     : "https://via.placeholder.com/50",
             }));
-
+    
             setReplies((prevReplies) => ({
                 ...prevReplies,
                 [commentId]: [
@@ -113,14 +115,16 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                     ),
                 ],
             }));
+    
+            // `replyHasMore`와 `replyPage` 업데이트
             setReplyHasMore(!data.last);
-            setReplyPage(pageNumber);
+            setReplyPage(pageNumber + 1); // 다음 페이지를 요청할 준비
         } catch (error) {
             console.error("대댓글 조회 에러:", error);
         } finally {
             setReplyLoading(false);
         }
-    };
+    };    
 
     const handleScroll = () => {
         const container = scrollContainerRef.current;
@@ -132,12 +136,12 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
         }
     };
 
-    const handleReplyScroll = () => {
-        const container = replyScrollContainerRef.current;
+    const handleReplyScroll = (commentId) => {
+        const container = replyScrollRefs.current[commentId]?.current;
         if (container) {
-            const isAtBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
+            const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 1; // 부드러운 감지
             if (isAtBottom && replyHasMore && !replyLoading) {
-                fetchReplies(replyPage);
+                fetchReplies(commentId, replyPage);
             }
         }
     };
@@ -177,7 +181,10 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
             if (response.ok) {
                 fetchComments(0);
                 setNewComment("");
-                setImage(null);
+                setSelectedImage(null);
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
             } else {
                 const errorResponse = await response.text();
                 throw new Error(`댓글 추가 실패: ${errorResponse}`);
@@ -335,16 +342,17 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
 
 
     const toggleRepliesVisibility = async (commentId) => {
+        setReplyPage(0);
         setRepliesVisible((prev) => ({
             ...prev,
             [commentId]: !prev[commentId],
         }));
 
         if (!replies[commentId] && !repliesVisible[commentId]) {
-            await fetchReplies(commentId);
+            replyScrollRefs.current[commentId] = React.createRef(); // 동적으로 ref 생성
+            await fetchReplies(commentId, 0);
         }
     };
-
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -398,11 +406,13 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
         if (replyObserver.current) replyObserver.current.disconnect();
         replyObserver.current = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && replyHasMore) {
-                fetchReplies(replyPage + 1);
+                fetchReplies(replyIndex, replyPage + 1);
             }
         });
-        if (replyLastCommentRef.current) observer.current.observe(replyLastCommentRef.current);
-    }, [comments, replyHasMore]);
+        const lastReplyElement = replyLastCommentRef.current;
+        if (lastReplyElement) replyObserver.current.observe(lastReplyElement);
+    }, [replies, replyHasMore, replyIndex, replyPage]);
+
 
     const isSubmitDisabled = !newComment && !selectedImage;
     const isSubmitReplyDisabled = !newReply && !replyImages;
@@ -583,16 +593,19 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                             )}
                         </li>
 
-                        <div>
+                        <div className="CommentsPanel_reply_content">
                             {/* 대댓글 표시 */}
                             {repliesVisible[comment.commentId] && replies[comment.commentId] && (
                                 <ul
                                     className="CommentsPanel_reply_list"
-                                    ref={replyScrollContainerRef}
-                                    onScroll={handleReplyScroll}
+                                    ref={replyScrollRefs.current[comment.commentId]}
+                                    onScroll={() => handleReplyScroll(comment.commentId)}
                                 >
-                                    {replies[comment.commentId].map((reply) => (
-                                        <li key={reply.commentId} ref={index === replies.length - 1 ? replyLastCommentRef : null}>
+                                    {replies[comment.commentId].map((reply, replyIndex) => (
+                                        <li
+                                            key={reply.commentId}
+                                            ref={replyIndex === replies[comment.commentId].length - 1 ? replyLastCommentRef : null}
+                                        >
                                             <div className="CommentsPanel_Reply_User">
                                                 <div className="CommentsPanel_Reply_User_Img">
                                                     {/* 프로필 이미지 */}
