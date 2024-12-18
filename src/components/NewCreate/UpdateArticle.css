@@ -1,0 +1,249 @@
+.UpdateArticle_full_screen {
+    margin-top: 215px;
+
+}
+
+
+/* 전체적인 폼 크기 */
+.UpdateArticle_Form {
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    max-width: 1280px;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+}  
+
+/* 게시글 작성 */
+.UpdateArticle_TitleText {
+    width: 100%;
+    max-width: 1280px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/* 선택 폼 */
+.UpdateArticle_option_form {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    color: #B5B6B5;
+    justify-content: center;
+    gap: 20px;
+}
+
+.UpdateArticle_option_form_select {
+    width: 35%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.UpdateArticle_select_list {
+    text-align: left;
+    width: 100%;
+    max-width: 640px;
+    height: 40px;
+
+}
+.UpdateArticle_select_list:focus {
+    border: 2px solid #007bff;
+}
+
+.UpdateArticle_select_list option:hover {
+    background-color: #007bff;
+}
+
+
+
+/* ------- 텍스트 양식 전체 크기지정------------ */
+.UpdateArticle_BoxLine{
+    width: 1280px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.UpdateArticle_text_cover_file{
+    display: flex;
+    width: 80%;
+    height: auto;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.UpdateArticle_hashTagsContainer{
+    width: 60%;
+    transform: translateX(82px);
+}
+
+.UpdateArticle_hashTagsContainer .hashTagItem{
+    border: 1px solid rebeccapurple;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 0 5px 10px 0;
+    display: inline-block;
+}
+
+.UpdateArticle_Name_file{
+    height: auto;
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+/* 이미지 입력 */
+.UpdateArticle_text_cover {
+    display: flex;
+    width: 80%;
+    height: 60px;
+    font-size: 15px;
+
+}
+.UpdateArticle_Name{
+    height: 60px;
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+}
+.UpdateArticle_RepresentativeTag{
+    font-size: 12px;
+    padding-right: 150px;
+
+}
+.UpdateArticle_img_checkbox{
+    height: auto;
+    font-size: 15px;
+    
+}
+.UpdateArticle_file_name{
+    width: 100%;
+
+}
+.UpdateArticle_image_list_file {
+
+    width: 495px;
+    list-style-type: none;
+    padding: 0;
+    height: auto;
+}
+.UpdateArticle_image_list_file input{
+    padding-left: 10px;
+    
+}
+.UpdateArticle_Btn_add{
+    padding-left: 30px !important;
+}
+.UpdateArticle_Btn_add,
+.UpdateArticle_Btn_remove {
+        all: unset;
+        padding-right: 15px;
+       
+
+}
+.UpdateArticle_Btn_add:hover,
+.UpdateArticle_Btn_remove:hover {
+        cursor: pointer;
+
+}
+
+/* ------------------------------- */
+
+.UpdateArticle_Input_cover{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+
+}
+.UpdateArticle_Text_input {
+    height: 30px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.UpdateArticle_Text_input:focus {
+    border: 2px solid blue;
+    background-color: #f0f8ff;
+    caret-color: black;
+}
+.cover_form_TextArea {
+    display: flex;
+    width: 80%;
+    height: auto;
+    font-size: 15px;
+
+}
+.UpdateArticle_Name_TextArea{
+    height: auto;
+    width: 20%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+}
+.cover_form_TextArea textarea:focus {
+    border: 2px solid blue;
+    background-color: #f0f8ff;
+    caret-color: black;
+    padding: 5px;
+}
+.cover_form_TextArea textarea {
+    margin-left: 15px;
+    height: 300px;
+    width: 71%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    resize: none;  /* 크기 조절을 비활성화 */
+
+}
+
+
+.UpdateArticle_text_cover_Btn {
+    display: flex;
+    width: 80%;
+    height: 60px;
+    justify-content: center;
+    font-size: 15px;
+}
+.UpdateArticle_listBtn,
+.UpdateArticle_primaryBtn,
+.UpdateArticle_dangerBtn,
+.UpdateArticle_deleteBtn {
+ width: 100px;
+ height: 40px;
+ border-radius: 10px;
+ margin-right: 20px;
+ margin-top: 20px;
+ justify-content: center;
+}
+.UpdateArticle_listBtn:hover,
+.UpdateArticle_primaryBtn:hover,
+.UpdateArticle_dangerBtn:hover,
+.UpdateArticle_deleteBtn:hover {
+ cursor: pointer;
+}
+.UpdateArticle_f {
+    display: flex;
+    align-items: center; /* 세로로 가운데 정렬 */
+    margin-bottom: 10px; /* 각 항목 간 간격을 위해 추가 */
+  }
+  
+  .UpdateArticle_img_checkbox {
+    margin-left: 10px; /* 체크박스와 이미지 간 간격 */
+  }

@@ -51,13 +51,13 @@ const Styleprofile = () => {
 
                 {/* 탭에 따라 컴포넌트 렌더링 */}
                 <div className="Styleprofile_sns_container">
-                    {activeTab === 'posts' ? (
+                    {/* {activeTab === 'posts' ? (
                         <ProfilePosts posts={postsData} />
                     ) : activeTab === 'tags' ? (
                         <ProfileTags tags={tagsData} />
                     ) : (
                         <ProfileMyInterests myInterests={myInterestsData} />  // 내 관심상품 렌더링
-                    )}
+                    )} */}
                 </div>
             </div>
         </>

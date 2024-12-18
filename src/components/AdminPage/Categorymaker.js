@@ -6,7 +6,7 @@ const Categorymaker = () => {
   const [existingFiles, setExistingFiles] = useState(new Set()); // 이미 선택한 파일을 추적
   const [categoryName, setCategoryName] = useState(""); // 카테고리 이름을 관리
   const [categories, setCategories] = useState([]); // 상위 카테고리 상태
-    const [subCategories, setSubCategories] = useState({}); // 하위 카테고리 상태
+
 
 
   const handleFileChange = (event) => {
@@ -39,7 +39,6 @@ const Categorymaker = () => {
     const category = {
       name: parentCategory,
       parentCategory: "",
-      file,
     };
 
     // FormData 객체 생성
@@ -151,64 +150,6 @@ const Categorymaker = () => {
         alert("서버 오류로 인해 카테고리 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
       });
   }
-
-
-
-
-  useEffect(() => {
-    const fetchTopCategories = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/v1/item-categories");
-        if (response.ok) {
-          const data = await response.json();
-          setCategories(data); // 기존 categories 상태에 데이터 저장
-        } else {
-          console.error("Failed to fetch top categories.");
-        }
-      } catch (error) {
-        console.error("Error fetching top categories:", error);
-      }
-    };
-
-    fetchTopCategories();
-  }, []);
-
-    // 특정 상위 카테고리의 하위 카테고리 데이터 가져오기
-    const fetchChildrenCategories = async (categoryId) => {
-      if (subCategories[categoryId]) {
-        return; // 이미 하위 카테고리가 로드된 경우 API 호출 생략
-      }
-  
-      try {
-        const response = await fetch(`http://localhost:8080/api/v1/item-categories/${categoryId}`);
-        if (response.ok) {
-          const data = await response.json();
-          const updatedData = data.map(item => ({
-            categoryId: item.categoryId,
-            categoryName: item.categoryName,
-            imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
-          }));
-          setSubCategories((prev) => ({
-            ...prev,
-            [categoryId]: updatedData, // 해당 상위 카테고리 ID에 하위 카테고리 저장
-          }));
-        } else {
-          console.error("Failed to fetch children categories.");
-        }
-      } catch (error) {
-        console.error("Error fetching children categories:", error);
-      }
-    };
-
-  const generateCategoryList = (categories) => {
-    return categories.map((category, item) => {
-      if (category.name && item.categoryName) {
-        return `${category.name}-${category.categoryName}`;
-      }
-      return category.name;
-    });
-};
-
 
   return (
     <section className="categorymakersection">
@@ -322,14 +263,14 @@ const Categorymaker = () => {
           <div className="categorylist">
             <span>카테고리 리스트</span>
             <button onClick={() => alert("삭제 기능 구현 필요")}>삭제</button>
-            <div className="categoryli">
+            {/* <div className="categoryli">
               {generateCategoryList(categories).map((categoryName, index) => (
                 <div key={index}>
                   <input type="checkbox" />
                   {categoryName}
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
 

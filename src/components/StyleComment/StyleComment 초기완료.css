@@ -1,0 +1,132 @@
+.CommentsPanel {
+    position: fixed;
+    top: 0;
+    right: -400px; 
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    border-left: 1px solid #ddd;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(0);
+    z-index: 1000;
+}
+
+.CommentsPanel.visible {
+    transform: translateX(-400px); /* 화면 안으로 슬라이드 */
+}
+
+.CommentsPanel_close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+
+
+/* 댓글 입력창 */
+.CommentsPanel_input {
+    margin-bottom: 20px;
+}
+
+.CommentsPanel_input label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.CommentsPanel_input input {
+    width: calc(100% - 100px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.CommentsPanel_input button {
+    padding: 10px 20px;
+    background-color: ;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.CommentsPanel_input button:hover {
+    background-color: #0056b3;
+}
+
+
+
+/* 댓글 목록 출력창 */
+
+.CommentsPanel_content {
+    margin-top: 20px;
+
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+    padding-bottom: -50px;
+
+}
+
+.CommentsPanel_list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+/* 댓글 아이템 정보 */
+.CommentsPanel_item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.CommentsPanel_User{
+    width: 100%;
+    height: 50%;
+    display: flex;
+}
+.CommentsPanel_User_Img{
+
+    padding-right: 10px;
+}
+.CommentsPanel_User_Img img{
+    width: 50PX;
+    height: 50PX;
+    border-radius: 100px;
+}
+.CommentsPanel_Author_Time{
+    display: flex;
+    flex-direction: column;
+
+}
+.CommentsPanel_Author{
+    display: flex;
+}
+.CommentsPanel_Text{
+    padding-left: 15px;
+}
+
+.CommentsPanel_Time{
+    display: flex;
+}
+
+.CommentsPanel_ReComment{
+    padding-left: 15px;
+}

@@ -41,7 +41,7 @@ import Styleprofile from "./components/SocialContent/StyleProfile/Styleprofile.j
 import StyleprofileMyInterestProduct from "./components/SocialContent/StyleProfile/StyleprofileMyInterestProduct.js";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage.js";
 
-
+import UpdateArticle from "./components/NewCreate/UpdateArticle.js";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -103,6 +103,11 @@ function App() {
         <Route path="/Styleprofile" element={<Styleprofile />} />
         <Route path="/StyleprofileMyInterestProduct" element={<StyleprofileMyInterestProduct />} />
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
+        <Route path="/UpdateArticle" element={<UpdateArticle />} />
+        <Route path="/UpdateArticle/:articleId" element={<UpdateArticle />} />
+
+        <Route path="/StyleDetail/:articleId" element={<StyleDetail />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -13,6 +13,7 @@ const Modifyproduct = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   const [items, setItems] = useState([]); // 상태에 데이터를 저장할 배열
   const [selectedItem, setSelectedItem] = useState(null); // 선택된 아이템 데이터 저장
+  const [itemid, setitemid] = useState(null);;
 
 
 
@@ -307,14 +308,14 @@ const Modifyproduct = () => {
             <tbody className="data">
               {items.map(item => (
                 <tr key={item.id}>
-                  <th scope="col">{item.name}</th>
-                  <th scope="col">{item.price}</th>
-                  <th scope="col">{item.discountPercent}</th>
-                  <th scope="col">{item.itemStatus}</th>
-                  <th scope="col">
+                  <td scope="col">{item.name}</td>
+                  <td scope="col">{item.price}</td>
+                  <td scope="col">{item.discountPercent}</td>
+                  <td scope="col">{item.itemStatus}</td>
+                  <td scope="col">
                     <button id="modal-open" onClick={() => openModal(item)}>수정</button>
                     <button id="delete">삭제</button>
-                  </th>
+                  </td>
                 </tr>
               ))}
             </tbody>
