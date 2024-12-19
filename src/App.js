@@ -40,7 +40,6 @@ import StyleMain from "./components/SocialContent//StyleMain/StyleMain.js";
 import Styleprofile from "./components/SocialContent/StyleProfile/Styleprofile.js";
 import StyleprofileMyInterestProduct from "./components/SocialContent/StyleProfile/StyleprofileMyInterestProduct.js";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage.js";
-
 import UpdateArticle from "./components/NewCreate/UpdateArticle.js";
 
 function App() {

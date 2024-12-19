@@ -44,7 +44,7 @@ const StyleMain = () => {
             const updatedArticles = result.content.map((item) => ({
                 ...item,
                 // replace 는 앞 ""으로 변환하여 상대 경로로 수정
-                itemImage: item.imageUrl.replace("C:\\Users\\dusrb\\FinalTotalProject\\frontend\\frontend-jhs-Ingu\\frontend-jhs-Ingu\\public\\uploads\\", ""),
+                itemImage: item.imageUrl.replace("C:\\kostafinalfrontend\\frontend-jhs\\public\\uploads\\", ""),
 
             }));
 
@@ -89,53 +89,12 @@ const StyleMain = () => {
         loadArticles(`#${team}`, "itemCategory"); // 예시로 태그와 item 값을 넘겨줌
     };
 
-        // 선택된 팀에 맞는 게시글 필터링 함수
-        const filteredArticles = selectedTeam
-        ? articles.filter((article) => article.hashtag && article.hashtag.includes(`#${selectedTeam}`))
-        : articles;  // selectedTeam이 있으면 필터링, 없으면 전체 게시글 반환
 
 
     useEffect(() => {
         loadArticles(); // 초기 페이지 로드 시 전체 게시글 조회
     }, []);
 
-    // // 선택된 팀에 맞는 게시글 필터링 (예시: selectedTeam이 울산 HD FC라면 울산 관련 게시글만 표시)
-    // const filteredPosts = selectedTeam
-    //     ? articles.filter(post => 
-
-    //         post.hashtags && post.hashtags.some(tag => tag.includes(selectedTeam))
-    //     )
-    //     : articles;  // 선택된 팀이 있으면 해당 팀의 게시글만 필터링
-
-    // 선택된 팀에 맞는 게시글 필터링
-    // const filteredPosts = selectedTeam
-    //     ? articles.filter(post => {
-    //         // 선택된 팀의 해시태그 배열 가져오기
-    //         console.log('DB에서 넘어온 데이터:', articles);
-    //         const team = Object.values(TeamLogo)
-    //             .flat()
-    //             // .find(t => t.name === selectedTeam);
-    //             // .find(t => t.hashtags.includes(selectedTeam));
-    //             .find(t => t.hashtags && t.hashtags.some(tag => tag === selectedTeam)); // selectedTeam과 일치하는 해시태그 찾기
-    //         console.log('선택된 팀의 로고 및 해시태그:', Object.values(TeamLogo));
-    //         if (!Object.values(TeamLogo) || !Object.values(TeamLogo).hashtags) return false; // 팀이나 해시태그가 없으면 제외
-
-    //         // 게시글의 hashtags 중 팀의 hashtags 배열과 일치하는 태그가 있는지 확인
-    //         return post.hashtags && post.hashtags.some(tag =>
-    //             Object.values(TeamLogo).hashtags.includes(tag) // 팀의 해시태그 배열에 현재 태그가 포함되는지 확인
-    //         );
-    //     })
-    //     : articles; // selectedTeam이 없으면 모든 게시글 반환
-    // console.log('필터링된 게시글:', filteredPosts);
-
-//     const filteredPosts = selectedTeam
-//     ? articles.filter(post => 
-//         // 게시글의 hashtags 배열에 selectedTeam이 포함되어 있으면 해당 게시글을 반환
-//         post.hashtags && post.hashtags.includes(selectedTeam)
-//     )
-//     : articles; // selectedTeam이 없으면 모든 게시글 반환
-
-// console.log('필터링된 게시글:', filteredPosts);
 
 
 
@@ -186,38 +145,16 @@ const StyleMain = () => {
             <div className="StyleMain_sns_container">
                 {loading && <p>로딩 중...</p>}
                 {error && <p>{error}</p>}
-                {/* <ul className="StyleMain_detail_page_review_list_body">
-                    {articles.length > 0 ? (
-                        <ProfilePosts posts={filteredPosts} />
 
-                    ) : (
-                        <p>게시글이 없습니다.</p>
-                    )}
-                </ul> */}
-
-{/* <ul className="StyleMain_detail_page_review_list_body">
-    {filteredPosts && filteredPosts.length > 0 ? (
-        <ProfilePosts posts={filteredPosts} />
-    ) : (
-        <p>게시글이 없습니다.</p>
-    )}
-</ul> */}
-{/* 
-<ul className="StyleMain_detail_page_review_list_body">
-    {articles && articles.length > 0 ? (
-        <ProfilePosts posts={articles} />
-    ) : (
-        <p>게시글이 없습니다.</p>
-    )}
-</ul> */}
-
-<ul className="StyleMain_detail_page_review_list_body">
-                    {filteredArticles.length > 0 ? (
-                        <ProfilePosts posts={filteredArticles} />
+                <ul className="StyleMain_detail_page_review_list_body">
+                    {articles && articles.length > 0 ? (
+                        <ProfilePosts posts={articles} />
                     ) : (
                         <p>게시글이 없습니다.</p>
                     )}
                 </ul>
+
+
             </div>
         </>
     );

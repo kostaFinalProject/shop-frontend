@@ -8,7 +8,7 @@ const Signup = () => {
     const [phoneLast, setPhoneLast] = useState("");
     const [phoneMiddleChk, setPhoneMiddleChk] = useState(false);
     const [phoneLastChk, setPhoneLastChk] = useState(false);
-    const [userType, setUserType] = useState("USER");
+    const [userType, setUserType] = useState('user');
     const [useridChk, setUseridChk] = useState(false);
     const [pwChk, setPwChk] = useState(false);
     const [pwMatchChk, setPwMatchChk] = useState(false);
@@ -218,7 +218,7 @@ const Signup = () => {
 
     return (
         <div className="form-wrap">
-            {/* <form>
+            <form>
                 <div className="firstmenu">
                     <div style={{ display: "flex", justifyContent: "center", borderBottom: "1px solid black" }}>
                         <h2 id="join" style={{ margin: "10px 0" }}>간편 로그인</h2>
@@ -226,7 +226,7 @@ const Signup = () => {
                     <div id="menu1" style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
                         <h3 style={{ textAlign: "center" }}>간편하게 로그인하기</h3>
                     </div>
-                    <div id="form1" style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+                    <div id="form1" style={{ display: "flex", justifyContent: "center" }}>
                         <h5 style={{ color: "#757575" }}>
                             간편한 회원가입으로 쉽게 본 사이트를 이용할 수 있습니다.
                             <br />
@@ -239,7 +239,7 @@ const Signup = () => {
                         </a>
                     </div>
                 </div>
-            </form> */}
+            </form>
 
             <form onSubmit={handleSignupSubmit} action="" method="POST">
                 <div className="secondmenu">
@@ -257,14 +257,11 @@ const Signup = () => {
                         </p>
                     </div>
 
-                    <div className="form">
+                    <div className="form" style={{ marginLeft: "390px" }}>
                         {/* 사용자 유형 체크박스 */}
                         <div className="form-section">
                             <div className="form-row" style={{ marginTop: "10px" }}>
-                                <label>사용자 유형
-                                    <span style={{ color: "#ed4848" }}>*</span>
-                                </label>
-                                
+                                <label>사용자 유형</label>
                                 <label>
                                     <input
                                         type="radio"
@@ -272,7 +269,6 @@ const Signup = () => {
                                         value="USER"
                                         checked={userType === "USER"}
                                         onChange={handleUserTypeChange}
-                                        style={{ marginRight: "5px"}}
                                     />
                                     일반 사용자
                                 </label>
@@ -283,7 +279,6 @@ const Signup = () => {
                                         value="NO_AUTHORIZATION_ADMIN"
                                         checked={userType === "NO_AUTHORIZATION_ADMIN"}
                                         onChange={handleUserTypeChange}
-                                        style={{ marginRight: "5px"}}
                                     />
                                     관리자
                                 </label>

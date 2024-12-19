@@ -52,7 +52,7 @@ const Styleprofile = () => {
                 {/* 탭에 따라 컴포넌트 렌더링 */}
                 <div className="Styleprofile_sns_container">
                     {/* {activeTab === 'posts' ? (
-                        <ProfilePosts posts={postsData} />
+                        <ProfilePosts posts={articles} />
                     ) : activeTab === 'tags' ? (
                         <ProfileTags tags={tagsData} />
                     ) : (

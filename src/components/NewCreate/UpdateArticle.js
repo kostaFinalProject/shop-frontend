@@ -74,15 +74,28 @@ const UpdateArticle = () => {
     const refreshToken = localStorage.getItem("refreshToken");
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("article", JSON.stringify(formData));
-
+      const article = {
+        hashtags: hashTags, 
+        content: formData.form_content,
+        itemIds: formData.itemIds,
+      };
+      // FormData 객체 생성
+  const UpdateArticle = new FormData();
+  UpdateArticle.append(
+    "article",
+    new Blob([JSON.stringify(article)], { type: "application/json" })
+  );
       // 이미지 파일 추가
-      images.forEach((img, index) => {
-        if (img.file) {
-          formDataToSend.append(`image_${index}`, img.file);
+      images.forEach((image) => {
+        if (image.file) {
+          UpdateArticle.append("files", image.file);  // "files" 필드명으로 파일을 여러 개 추가
         }
       });
+      // FormData 객체의 내용을 출력
+  for (let [key, value] of UpdateArticle.entries()) {
+    console.log(`${key}:`, value);
+  }
+
 
       const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
         method: "PUT",
@@ -90,10 +103,10 @@ const UpdateArticle = () => {
           Authorization: accessToken,
           "Refresh-Token": refreshToken,
         },
-        body: formDataToSend,
+        body: UpdateArticle,
       });
 
-      console.log("fetch 후 formDataToSend ", formDataToSend);
+      console.log("fetch 후 UpdateArticle ", UpdateArticle);
 
       if (!response.ok) throw new Error("수정 실패");
 

@@ -313,6 +313,10 @@ const Registproduct = () => {
             <label htmlFor="manufacturer">제조사</label>
             <input type="text" id="manufacturer" name="manufacturer" required />
           </div>
+          <div className="form-group">
+            <label htmlFor="seller">판매자</label>
+            <input type="text" id="seller" name="seller" required />
+          </div>
 
           {/* 사이즈별 재고 입력 */}
           <div className="form-group">
