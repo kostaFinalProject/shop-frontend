@@ -1,41 +1,55 @@
 import React from "react";
 import './DetailInformation.css';
 
-const DetailInformation = () => {
-    // 단일 데이터 정의
-    const product = {
-        productName: "에버튼 'BAR SCARF' 스카프 (머플러) - 오피셜",
-        productSeller: 'Official Licensed Product',
-        productPrice: 60000,
-        rewardRate: 0.01,
-        ProductDeliveryFee: 5000
-    };
+const DetailInformation = ({ product }) => {
+    const {
+        productName,
+        productSeller,
+        productPrice,
+        rewardRate,
+        productDeliveryFee,
+        discountPercent,
+        discountPrice,
+    } = product;
 
-    // 테이블 데이터 준비
+    // 적립금 계산을 위한 실제 가격
+    const appliedPrice = discountPercent > 0 ? discountPrice : productPrice;
+
     const tableData = [
         {
             label: "적립금",
-            value: `${Math.floor(product.productPrice * product.rewardRate).toLocaleString()}원 (${product.rewardRate * 100}%)`
+            value: `${Math.floor(appliedPrice * rewardRate).toLocaleString()}원 (${(rewardRate * 100).toFixed(1)}%)`
         },
         {
             label: "배송비",
-            value: `${product.ProductDeliveryFee.toLocaleString()}원`
+            value: `${productDeliveryFee.toLocaleString()}원`
         }
     ];
 
     return (
         <>
-            {/* ---------------- 상세페이지 설명글 ---------------- */}
             <div className="DetailInformation_productName">
-                <h2 id="detail_name">{product.productName}</h2>
+                <h2 id="detail_name">{productName}</h2>
             </div>
             <div className="DetailInformation_productSeller">
-                <p id="detail_seller">{product.productSeller}</p>
+                <p id="detail_seller">{productSeller}</p>
             </div>
             <div className="DetailInformation_productPrice">
-                <strong id="prdCount_price">{product.productPrice.toLocaleString()}원</strong>
+                {discountPercent > 0 ? (
+                    <>
+                        {/* 기존 가격에 취소선 */}
+                        <span className="DetailInformation_original_price">
+                            {productPrice.toLocaleString()}원
+                        </span>
+                        {/* 할인 가격 및 할인율 */}
+                        <span className="DetailInformation_discount_price">
+                            {discountPrice.toLocaleString()}원 ({discountPercent}% 할인)
+                        </span>
+                    </>
+                ) : (
+                    <strong id="prdCount_price">{productPrice.toLocaleString()}원</strong>
+                )}
             </div>
-
             <div className="DetailInformation_reward_delivery">
                 {tableData.map((item, index) => (
                     <div className="DetailInformation_tableRow" key={index}>
