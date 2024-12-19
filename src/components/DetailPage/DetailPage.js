@@ -10,6 +10,9 @@ const DetailPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [relatedArticles, setRelatedArticles] = useState([]);
+    const [articlesLoading, setArticlesLoading] = useState(true);
+    const [articlesError, setArticlesError] = useState(null);
 
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -21,6 +24,16 @@ const DetailPage = () => {
                 const response = await fetch(`http://localhost:8080/api/v1/items/${itemId}`);
                 if (!response.ok) throw new Error("Failed to fetch item data");
                 const data = await response.json();
+    
+                // 이미지 경로 직접 수정
+                data.imageUrls = data.imageUrls.map((url) =>
+                    url.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
+                );
+                data.itemDetailImageUrl = data.itemDetailImageUrl.replace(
+                    "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                    ""
+                );
+    
                 setItemData(data);
             } catch (err) {
                 setError(err.message);
@@ -28,10 +41,38 @@ const DetailPage = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchData();
     }, [itemId]);
+    
 
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/v1/articles?itemId=${itemId}&size=4`);
+                if (!response.ok) throw new Error("Failed to fetch related articles");
+                const data = await response.json();
+    
+                // 이미지 경로 직접 수정
+                const formattedArticles = data.content.map((article) => ({
+                    ...article,
+                    imageUrl: article.imageUrl.replace(
+                        "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                        ""
+                    ),
+                }));
+    
+                setRelatedArticles(formattedArticles);
+            } catch (err) {
+                setArticlesError(err.message);
+            } finally {
+                setArticlesLoading(false);
+            }
+        };
+    
+        if (itemId) fetchArticles();
+    }, [itemId]);    
+    
     if (loading) return <div>로딩 중...</div>;
     if (error) return <div>에러가 발생했습니다: {error}</div>;
 
@@ -50,6 +91,37 @@ const DetailPage = () => {
         );
     };
 
+    const renderRelatedArticles = () => {
+        if (articlesLoading) return <div>스타일 정보를 로딩 중...</div>;
+        if (articlesError) return <div>스타일 데이터를 불러오지 못했습니다: {articlesError}</div>;
+
+        return relatedArticles.length > 0 ? (
+            <div className="DetailPage_related_articles">
+                <h3>관련 스타일</h3>
+                <ul className="DetailPage_related_articles_list">
+                    {relatedArticles.map((article) => (
+                        <li key={article.articleId} className="DetailPage_related_article_item">
+                            <img src={`/uploads/${article.imageUrl}`} alt="스타일 이미지" className="DetailPage_related_article_image" />
+                            <div className="DetailPage_related_article_content">
+                                <p>{article.content}</p>
+                                <div className="DetailPage_related_article_hashtags">
+                                    {article.hashtags.map((tag, index) => (
+                                        <span key={index} className="DetailPage_related_article_tag">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ) : (
+            <div>관련된 스타일이 없습니다.</div>
+        );
+    };
+
+
     return (
         <div className="DetailPage_full_screen">
             <div className="DetailPage_detail_page">
@@ -58,7 +130,7 @@ const DetailPage = () => {
                     {/* 이미지 슬라이더 */}
                     <div className="DetailPage_detail_img">
                         <img
-                            src={itemData.imageUrls[currentImageIndex]}
+                            src={`/uploads/${itemData.imageUrls[currentImageIndex]}`}
                             alt={`상품 이미지 ${currentImageIndex + 1}`}
                             className="DetailPage_slider_image"
                         />
@@ -119,32 +191,11 @@ const DetailPage = () => {
                 </div>
                 <div className="DetailPage_text_product_detail_description" id="product_detail_description">
                     <div className="DetailPage_text_product_detail_description_img">
-                        <img src={itemData.itemDetailImageUrl} alt="상세 이미지" />
+                        <img src={`/uploads/${itemData.itemDetailImageUrl}`} alt="상세 이미지" />
                     </div>
                 </div>
-                {/* 리뷰 리스트 */}
-                <div className="DetailPage_sns_style">
-                    <div className="DetailPage_sns_style_title"><a href="#" id="review">스타일</a></div>
-                </div>
-                <div className="DetailPage_detail_page_review_list">
-                    <ul className="DetailPage_detail_page_review_list_body">
-                        <li className="DetailPage_detail_page_review_list_item">
-                            <div className="DetailPage_detail_page_review_list_item_img">
-                                <img src="https://fakeimg.pl/262x262/" alt="리뷰 이미지" />
-                            </div>
-                            <div className="DetailPage_detail_page_review_content">
-                                <div className="DetailPage_detail_page_review_title">
-                                    <img src="https://fakeimg.pl/26x26/" alt="" className="DetailPage_detail_page_review_title_img" />
-                                    <span className="DetailPage_detail_page_review_title_id">아이디</span>
-                                    <span className="DetailPage_detail_page_review_title_like">♡4</span>
-                                </div>
-                                <p className="DetailPage_detail_page_review_body_tag">
-                                    #겨울코디추천 #아우터추천
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                {/* 관련 스타일 */}
+                {renderRelatedArticles()}
                 <ScrollUp />
             </div>
         </div>
