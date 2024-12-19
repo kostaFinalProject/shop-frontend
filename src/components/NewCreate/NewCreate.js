@@ -170,13 +170,7 @@ const NewCreate = () => {
     const article = {
       hashtags: hashTags, //배열로 가야하나 여기는 배열이 아닌듯 확인하기기
       content: formData.form_content,
-      itemIds: selectedItems.map((item) => item.itemId), // 선택된 상품 ID
-      selectedItems: selectedItems.map((item) => ({
-        itemId: item.itemId,
-        imgUrl: item.imgUrl,
-        name: item.name,
-        price: item.price,
-      })), // 선택된 상품 정보 추가
+      itemIds: formData.itemIds,
     };
     // FormData 객체 생성
     const formDataToSend = new FormData();
@@ -240,11 +234,11 @@ const NewCreate = () => {
 
 
   //상품검색
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어
+  const [searchResults, setSearchResults] = useState([]); // 검색 결과
+  const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부
+  const [items, setItems] = useState([]); // 상태에 데이터를 저장할 배열
+  const [selectedItems, setSelectedItems] = useState([]); // 선택된 상품 데이터 저장
 
   // 실시간 검색 함수
   const handleSearch = async (query) => {
@@ -259,18 +253,20 @@ const NewCreate = () => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
 
+      // data.content가 배열인지 확인
       if (Array.isArray(data.content)) {
-        const filteredResults = data.content.filter((product) =>
+        // 검색어에 따라 필터링
+        const filteredResults = data.content.filter(product =>
           product.name.toLowerCase().includes(query.toLowerCase())
         );
-        setSearchResults(filteredResults); // 필터링된 결과 설정
+        setSearchResults(filteredResults); // 필터링된 결과를 searchResults에 설정
       } else {
         console.error("검색 결과가 배열이 아닙니다:", data);
-        setSearchResults([]);
+        setSearchResults([]); // 배열이 아닐 경우 빈 배열로 설정
       }
     } catch (error) {
       console.error("상품 검색 오류:", error);
-      setSearchResults([]);
+      setSearchResults([]); // 오류 발생 시 빈 배열로 설정
     } finally {
       setIsSearching(false); // 검색 완료 상태
     }
@@ -285,42 +281,29 @@ const NewCreate = () => {
 
   // 검색 결과에서 상품 선택
   const handleProductSelect = (product) => {
-    if (selectedItems.find((item) => item.itemId === product.itemId)) {
-      // 중복 선택 시 경고 메시지
-      alert("이미 선택된 상품입니다. 중복 선택이 불가능합니다.");
-      return;
+    if (!products.includes(product.name)) {
+      setProducts((prev) => [...prev, product.name]);
+      setSelectedItems((prev) => [...prev, product]); // 선택된 상품 데이터 추가
+      setSearchQuery(""); // 검색어 초기화
+      setSearchResults([]); // 검색 결과 초기화
     }
-
-    if (selectedItems.length >= 4) {
-      // 최대 4개 제한 초과 시 경고 메시지
-      alert("최대 4개의 상품만 선택 가능합니다.");
-      return;
-    }
-    setSelectedItems((prev) => [...prev, product]); // 선택된 상품 추가
-    setSearchQuery(""); // 검색어 초기화
-    setSearchResults([]); // 검색 결과 초기화
   };
 
   // 데이터 가져오기
   useEffect(() => {
-    fetch("http://localhost:8080/api/v1/items")
-      .then((response) => {
+    fetch('http://localhost:8080/api/v1/items')
+      .then(response => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         console.log(data); // 전체 데이터 구조 확인
         setItems(data.content); // content 배열만 상태에 저장
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
-
-  // 아이템 삭제 함수
-  const removeItem = (itemId) => {
-    setSelectedItems((prevItems) => prevItems.filter((item) => item.itemId !== itemId));
-  };
 
   //여기까지
 
@@ -332,9 +315,9 @@ const NewCreate = () => {
       <form ref={formRef} className="NewCreate_Form" method="post" onSubmit={handleFormSubmit} >
         <h2 className="NewCreate_TitleText">SNS STYLE 글 작성</h2>
 
-        <div className="NewCreate_BoxLine">
-          {/* 이미지 입력 */}
 
+        {/* 이미지 입력 */}
+        <div className="NewCreate_full_screen">
           <div className="NewCreate_text_cover">
             <label className="NewCreate_Name" htmlFor="tag_product">
               상품 검색
@@ -350,47 +333,38 @@ const NewCreate = () => {
                 placeholder="상품명을 입력하세요"
               />
               <ul className="search-results">
-                {Array.isArray(searchResults) &&
-                  searchResults.map((product) => (
-                    <li
-                      key={product.itemId}
-                      onClick={() => handleProductSelect(product)}
-                      className="search-result-item"
-                    >
-                      {product.name}
-                    </li>
-                  ))}
+                {Array.isArray(searchResults) && searchResults.map((product) => (
+                  <li
+                    key={product.itemId} // itemId를 key로 사용
+                    onClick={() => handleProductSelect(product)}
+                    className="search-result-item"
+                  >
+                    {product.name}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
           {/* 선택된 상품만 표시 */}
           <div className="flex_direction_row">
-            {selectedItems.map((item) => (
-              <div key={item.itemId} className="NewCreate_selected_products">
-                <div className="NewCreate_products">
-                  <div className="StyleDetail_Lookup_List_Img">
-                    <img src={`/uploads/${item.imgUrl}`} alt={item.name} />
-                  </div>
+          {selectedItems.map((item) => (
+            <div className="NewCreate_selected_products">
+              <div key={item.itemId} className="NewCreate_products">
+                <div className='StyleDetail_Lookup_List_Img'>
+                  <img src={`/uploads/${item.imgUrl}`} alt={item.name} />
+                </div>
 
-                  <div className="StyleDetail_Lookup_List_Content">
-                    <p>{item.name}</p>
-                  </div>
-
-                  <div className="StyleDetail_Lookup_List_Price">
-                    <p>￦ {item.price}원</p>
-                  </div>
-
-                  {/* 삭제 버튼 */}
-                  <button
-                    className="NewCreate_remove_button"
-                    onClick={() => removeItem(item.itemId)}
-                  >
-                    삭제
-                  </button>
+                <div className='StyleDetail_Lookup_List_Content'>
+                  <p>{item.name}</p>
+                </div>
+                <div className='StyleDetail_Lookup_List_Price'>
+                  <p>{item.price}</p>
                 </div>
               </div>
-            ))}
+
+            </div>
+          ))}
           </div>
 
           <div className="NewCreate_text_cover">

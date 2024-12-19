@@ -75,16 +75,16 @@ const UpdateArticle = () => {
 
     try {
       const article = {
-        hashtags: hashTags,
+        hashtags: hashTags, 
         content: formData.form_content,
         itemIds: formData.itemIds,
       };
       // FormData 객체 생성
-      const UpdateArticle = new FormData();
-      UpdateArticle.append(
-        "article",
-        new Blob([JSON.stringify(article)], { type: "application/json" })
-      );
+  const UpdateArticle = new FormData();
+  UpdateArticle.append(
+    "article",
+    new Blob([JSON.stringify(article)], { type: "application/json" })
+  );
       // 이미지 파일 추가
       images.forEach((image) => {
         if (image.file) {
@@ -92,9 +92,9 @@ const UpdateArticle = () => {
         }
       });
       // FormData 객체의 내용을 출력
-      for (let [key, value] of UpdateArticle.entries()) {
-        console.log(`${key}:`, value);
-      }
+  for (let [key, value] of UpdateArticle.entries()) {
+    console.log(`${key}:`, value);
+  }
 
 
       const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
@@ -278,85 +278,6 @@ const UpdateArticle = () => {
   };
 
 
-  //상품검색
-  const [searchQuery, setSearchQuery] = useState(""); // 검색어
-  const [searchResults, setSearchResults] = useState([]); // 검색 결과
-  const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부
-  const [items, setItems] = useState([]); // 상태에 데이터를 저장할 배열
-  const [selectedItems, setSelectedItems] = useState([]); // 선택된 상품 데이터 저장
-
-  // 실시간 검색 함수
-  const handleSearch = async (query) => {
-    if (!query.trim()) {
-      setSearchResults([]);
-      return;
-    }
-
-    setIsSearching(true); // 검색 중 상태
-    try {
-      const response = await fetch(`http://localhost:8080/api/v1/items`);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const data = await response.json();
-
-      // data.content가 배열인지 확인
-      if (Array.isArray(data.content)) {
-        // 검색어에 따라 필터링
-        const filteredResults = data.content.filter(product =>
-          product.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setSearchResults(filteredResults); // 필터링된 결과를 searchResults에 설정
-      } else {
-        console.error("검색 결과가 배열이 아닙니다:", data);
-        setSearchResults([]); // 배열이 아닐 경우 빈 배열로 설정
-      }
-    } catch (error) {
-      console.error("상품 검색 오류:", error);
-      setSearchResults([]); // 오류 발생 시 빈 배열로 설정
-    } finally {
-      setIsSearching(false); // 검색 완료 상태
-    }
-  };
-
-  // 검색어 변경 처리
-  const handleSearchChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    handleSearch(query); // 실시간 검색 호출
-  };
-
-  // 검색 결과에서 상품 선택
-  const handleProductSelect = (product) => {
-    if (!products.includes(product.name)) {
-      setProducts((prev) => [...prev, product.name]);
-      setSelectedItems((prev) => [...prev, product]); // 선택된 상품 데이터 추가
-      setSearchQuery(""); // 검색어 초기화
-      setSearchResults([]); // 검색 결과 초기화
-    }
-  };
-
-  // 데이터 가져오기
-  useEffect(() => {
-    fetch('http://localhost:8080/api/v1/items')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data); // 전체 데이터 구조 확인
-        setItems(data.content); // content 배열만 상태에 저장
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
-  // 아이템 삭제 함수
-  const removeItem = (itemId) => {
-    setSelectedItems((prevItems) => prevItems.filter((item) => item.itemId !== itemId));
-  };
-  //여기까지
-
-
   return (
     <div className="UpdateArticle_full_screen">
       <form ref={formRef} className="UpdateArticle_Form" method="put" onSubmit={handleFormSubmit} >
@@ -367,7 +288,7 @@ const UpdateArticle = () => {
           {/* 상품 */}
           <div className="UpdateArticle_text_cover">
             <label className="UpdateArticle_Name" htmlFor="tag_product">
-              상품 검색
+              상품
             </label>
             <div className="UpdateArticle_Input_cover">
               <input
@@ -375,51 +296,13 @@ const UpdateArticle = () => {
                 id="tag_product"
                 name="tag_product"
                 className="UpdateArticle_Text_input"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                placeholder="상품명을 입력하세요"
+                value={formData.tag_product}
+                onChange={handleInputChange}
+                onKeyDown={(e) => e.key === "Enter" && handleProductChange(e)}
+                onFocus={(e) => { if (e.target.value === "@상품") e.target.value = ""; }}
+                onBlur={(e) => { if (e.target.value === "") e.target.value = "@상품"; }}
               />
-              <ul className="search-results">
-                {Array.isArray(searchResults) && searchResults.map((product) => (
-                  <li
-                    key={product.itemId} // itemId를 key로 사용
-                    onClick={() => handleProductSelect(product)}
-                    className="search-result-item"
-                  >
-                    {product.name}
-                  </li>
-                ))}
-              </ul>
             </div>
-          </div>
-
-          {/* 선택된 상품만 표시 */}
-          <div className="flex_direction_row">
-            {selectedItems.map((item) => (
-              <div key={item.itemId} className="NewCreate_selected_products">
-                <div className="NewCreate_products">
-                  <div className="StyleDetail_Lookup_List_Img">
-                    <img src={`/uploads/${item.imgUrl}`} alt={item.name} />
-                  </div>
-
-                  <div className="StyleDetail_Lookup_List_Content">
-                    <p>{item.name}</p>
-                  </div>
-
-                  <div className="StyleDetail_Lookup_List_Price">
-                    <p>￦ {item.price}원</p>
-                  </div>
-
-                  {/* 삭제 버튼 추가 */}
-                  <button
-                    className="NewCreate_remove_button"
-                    onClick={() => removeItem(item.itemId)}
-                  >
-                    삭제
-                  </button>
-                </div>
-              </div>
-            ))}
           </div>
           {/* 키워드 */}
           <div className="UpdateArticle_text_cover">
