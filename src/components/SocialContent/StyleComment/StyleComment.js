@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import "./StyleComment.css";
 
-const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, header }) => {
+const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comments, setComments, currentUser, header }) => {
     const [image, setImage] = useState(null);
     const [page, setPage] = useState(0); // 현재 페이지
     const [replyPage, setReplyPage] = useState(0);
@@ -182,6 +182,10 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
 
             if (response.ok) {
                 fetchComments(0);
+                setArticleData(prevArticleData => ({
+                    ...prevArticleData,
+                    commentCount: prevArticleData.commentCount + 1
+                }));
                 setNewComment("");
                 setSelectedImage(null);
                 if (fileInputRef.current) {
@@ -231,6 +235,10 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
             if (!response.ok) throw new Error("답글 작성 실패");
 
             fetchReplies(parentCommentId, 0);
+            setArticleData(prevArticleData => ({
+                ...prevArticleData,
+                commentCount: prevArticleData.commentCount + 1
+            }));
             setReplyImages(null);
             setNewReply(null);
             setReplyIndex(null);
@@ -337,6 +345,11 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
             if (!response.ok) {
                 throw new Error("댓글 삭제 실패");
             }
+
+            setArticleData(prevArticleData => ({
+                ...prevArticleData,
+                commentCount: prevArticleData.commentCount - 1
+            }));
     
             if (isReply) {
                 // 대댓글 상태에서 삭제
@@ -621,10 +634,10 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                                 <div>
                                     <div>{comment.memberName}</div>
                                     <div>{formatDateToKST(comment.time)}</div>
-                                    <div>{comment.content}</div>
                                     {comment.imageUrl && (
-                                        <img src={`/uploads/${comment.imageUrl}`} alt="댓글 이미지" width="100" />
+                                        <img src={`/uploads/${comment.imageUrl}`} alt="댓글 이미지" width="135" />
                                     )}
+                                    <div>{comment.content}</div>
                                     <div>
                                         <span onClick={() => handleLikeToggle(comment.commentId, comment.likeId)}>
                                             {comment.likeId ? "❤️" : "♡"}
@@ -744,10 +757,9 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                                                     />
                                                 </div>
 
-                                                <div>
+                                                <div style={{marginLeft: "25px"}}>
                                                     <div>{reply.memberName}</div>
                                                     <div>{formatDateToKST(reply.time)}</div>
-                                                    <div>{reply.content}</div>
 
                                                     {/* 좋아요 버튼 */}
                                                     <div>
@@ -757,9 +769,12 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                                                         {reply.likeCount}
                                                     </div>
 
+                                                    <div>{reply.content}</div>
+
+
                                                     {/* 답글 이미지 */}
                                                     {reply.imageUrl && (
-                                                        <img src={`/uploads/${reply.imageUrl}`} alt="답글 이미지" width="100" />
+                                                        <img src={`/uploads/${reply.imageUrl}`} alt="답글 이미지" width="135" />
                                                     )}
 
                                                     {reply.isMe === "Me" && (

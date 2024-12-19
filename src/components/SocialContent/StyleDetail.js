@@ -384,6 +384,8 @@ const StyleDetail = () => {
             <StyleComment
                 isVisible={isCommentVisible}
                 onClose={toggleComments}
+                articleData={articleData}
+                setArticleData={setArticleData}
                 comments={comments}
                 setComments={setComments}
                 currentUser={currentUser}

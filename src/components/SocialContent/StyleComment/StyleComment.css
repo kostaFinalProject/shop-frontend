@@ -195,13 +195,14 @@
 } */
 
 .CommentsPanel_Reply_User{
-    margin-right: 70px;
-    width: 100%;
+    /* margin-right: 70px; */
+    margin-left: 20px;
+    width: 240px;
     height: 50%;
     display: flex;
 }
 .CommentsPanel_Reply_User_Img{
-    margin-right: 70px;
+    margin-left: 20px;
     width: 50PX;
     height: 50PX;
     border-radius: 100px;
