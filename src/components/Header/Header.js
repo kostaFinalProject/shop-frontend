@@ -351,7 +351,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           </nav>
           <div className="communitysection">
             <ul>
-              <a href="/StyleMain">STYLE</a>
+              <a href="/SearchStyle">STYLE</a>
             </ul>
           </div>
         </div>

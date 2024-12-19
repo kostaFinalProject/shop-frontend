@@ -11,17 +11,16 @@ import Signup from "./components/Login/signup";
 import QnA from './components/QnA/QnA.js';
 import QnAcreate from "./components/QnA/QnAcreate.js"
 //마이페이지
+import MyPageAddress from "./components/MyPage/MyPageAddress";
 import MyPageIntro from "./components/MyPage/MyPageIntro";
 import MyPageOrder from "./components/MyPage/MyPageOrder";
 import MyPageBasket from "./components/MyPage/MyPageBasket";
 import MyPageInterest from "./components/MyPage/MyPageInterest";
-import MyPageResentview from "./components/MyPage/MyPageResentview";
 import MyPageMileage from "./components/MyPage/MyPageMileage";
-import MyPageAddress from "./components/MyPage/MyPageAddress";
 import Membermodify from "./components/MyPage/membermodify";
-//관리자페이지
-import AddressRegisterForm from "./components/MyPage/AddressRegisterForm";
 import StyleModify from "./components/MyPage/StyleModify";
+import AddressRegisterForm from "./components/MyPage/AddressRegisterForm";
+//관리자페이지
 import Adminright from "./components/AdminPage/Adminright";
 import Categorymaker from "./components/AdminPage/Categorymaker";
 import Reportuser from "./components/AdminPage/Reportuser";
@@ -38,7 +37,7 @@ import SearchStyle from "./components/SearchPages/SearchStyle.js";
 //스타일페이지
 import NewCreate from './components/NewCreate/NewCreate.js';
 import StyleDetail from "./components/SocialContent/StyleDetail.js";
-import StyleMain from "./components/SocialContent//StyleMain/StyleMain.js";
+import StyleMain from "./components/SocialContent/StyleMain/StyleMain.js";
 import Styleprofile from "./components/SocialContent/StyleProfile/Styleprofile.js";
 import StyleprofileMyInterestProduct from "./components/SocialContent/StyleProfile/StyleprofileMyInterestProduct.js";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage.js";
@@ -47,6 +46,7 @@ import UpdateArticle from "./components/NewCreate/UpdateArticle.js";
 //필요없는거
 import BoardshoppingSearch from './components/BoardshoppingSearch/BoardshoppingSearch.js';
 import MyPageCoupon from "./components/MyPage/MyPageCoupon";
+import MyPageResentview from "./components/MyPage/MyPageResentview";
 
 //테스트 react
 import Test from "./components/test.js";
@@ -79,7 +79,6 @@ function App() {
         <Route path="/MyPage/order" element={<MyPageOrder />} />
         <Route path="/MyPage/basket" element={<MyPageBasket />} />
         <Route path="/MyPage/interest" element={<MyPageInterest />} />
-        <Route path="/MyPage/resentview" element={<MyPageResentview />} />
         <Route path="/MyPage/mileage" element={<MyPageMileage />} />
         <Route path="/MyPage/address" element={<MyPageAddress />} />
         <Route path="/MyPage/address/addressregist" element={<AddressRegisterForm />} />
