@@ -14,6 +14,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
     const [newReply, setNewReply] = useState("");
     const [selectedImage, setSelectedImage] = useState(null); // 업로드 이미지
     const [replyIndex, setReplyIndex] = useState(null); // 답글창 활성화 인덱스
+    const [editIndex, setEditIndex] = useState(null); // 수정창 활성화 인덱스
     const [replies, setReplies] = useState({}); // 대댓글 저장
     const [repliesVisible, setRepliesVisible] = useState({});
     const [editingCommentId, setEditingCommentId] = useState(null); // 수정 중인 댓글 ID
@@ -26,8 +27,9 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
     const replyLastCommentRef = useRef();
     const fileInputRef = useRef(null);
     const replyFileInputRef = useRef(null); // 답글 파일 입력창 참조
+    const editFileInputRef = useRef(null);
     const scrollContainerRef = useRef(null); // 스크롤 컨테이너 참조
-    const replyScrollContainerRef = useRef(null);
+    // const replyScrollContainerRef = useRef(null);
     const replyScrollRefs = useRef({}); // 댓글 ID별로 ref 저장
 
     const location = useLocation();
@@ -81,7 +83,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
     const fetchReplies = async (commentId, pageNumber = 0) => {
         if (!header || replyLoading) return;
         setReplyLoading(true);
-    
+
         try {
             const response = await fetch(
                 `http://localhost:8080/api/v1/comments/${commentId}?page=${pageNumber}&size=5`,
@@ -90,11 +92,11 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                     headers: header,
                 }
             );
-    
+
             if (!response.ok) throw new Error("대댓글 조회 실패");
-    
+
             const data = await response.json();
-    
+
             // 데이터 포맷팅 및 상태 업데이트
             const formattedReplies = data.content.map((reply) => ({
                 ...reply,
@@ -105,7 +107,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                     ? `/uploads/${reply.memberProfileImageUrl}`
                     : "https://via.placeholder.com/50",
             }));
-    
+
             setReplies((prevReplies) => ({
                 ...prevReplies,
                 [commentId]: [
@@ -115,7 +117,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                     ),
                 ],
             }));
-    
+
             // `replyHasMore`와 `replyPage` 업데이트
             setReplyHasMore(!data.last);
             setReplyPage(pageNumber + 1); // 다음 페이지를 요청할 준비
@@ -124,7 +126,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
         } finally {
             setReplyLoading(false);
         }
-    };    
+    };
 
     const handleScroll = () => {
         const container = scrollContainerRef.current;
@@ -238,7 +240,7 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
         }
     };
 
-    const handleEditComment = async (commentId) => {
+    const handleEditComment = async (commentId, isReply, parentCommentId = null) => {
         if (!accessToken && !refreshToken) {
             alert("로그인이 필요한 기능입니다.");
             window.location.href = '/login';
@@ -246,9 +248,9 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
         }
 
         const formData = new FormData();
-        const comment = { content: editingContent };
+        const comment = { content: editingContent }; // 수정된 텍스트
         formData.append("comment", new Blob([JSON.stringify(comment)], { type: "application/json" }));
-        const file = editingImage || new File([], "");
+        const file = editingImage || new File([], ""); // 수정된 이미지
         formData.append("file", file);
 
         const multipartHeader = { ...header };
@@ -263,14 +265,100 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
 
             if (!response.ok) throw new Error("댓글 수정 실패");
 
-            fetchComments(0);
+            const updatedImageUrl = await response.text();
+
+            const updatedFormatImageUrl =
+                updatedImageUrl ?
+                    updatedImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "") : null;
+
+            if (isReply) {
+                // 대댓글 상태 업데이트
+                setReplies((prevReplies) => ({
+                    ...prevReplies,
+                    [parentCommentId]: prevReplies[parentCommentId].map((reply) =>
+                        reply.commentId === commentId
+                            ? {
+                                ...reply,
+                                time: formatDateToKST(new Date().toISOString()),
+                                content: editingContent ? editingContent : null, // 수정된 텍스트 반영
+                                imageUrl: updatedImageUrl
+                                    ? updatedFormatImageUrl // 이미지 URL 생성
+                                    : null,
+                            }
+                            : reply
+                    ),
+                }));
+            } else {
+                // 댓글 상태 업데이트
+                setComments((prevComments) =>
+                    prevComments.map((comment) =>
+                        comment.commentId === commentId
+                            ? {
+                                ...comment,
+                                time: formatDateToKST(new Date().toISOString()),
+                                content: editingContent ? editingContent : null, // 수정된 텍스트 반영
+                                imageUrl: editingImage
+                                    ? updatedFormatImageUrl // 이미지 URL 생성
+                                    : null,
+                            }
+                            : comment
+                    )
+                );
+            }
+
+            // 입력 상태 초기화
             setEditingCommentId(null);
             setEditingContent("");
             setEditingImage(null);
+            setEditIndex(null);
         } catch (error) {
             console.error("댓글 수정 에러:", error);
         }
     };
+
+    const handleDeleteComment = async (commentId, isReply, parentCommentId = null) => {
+        if (!accessToken && !refreshToken) {
+            alert("로그인이 필요한 기능입니다.");
+            window.location.href = '/login';
+            return;
+        }
+    
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/v1/comments/${commentId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        ...header,
+                    }
+                }
+            );
+    
+            if (!response.ok) {
+                throw new Error("댓글 삭제 실패");
+            }
+    
+            if (isReply) {
+                // 대댓글 상태에서 삭제
+                setReplies((prevReplies) => ({
+                    ...prevReplies,
+                    [parentCommentId]: prevReplies[parentCommentId].filter((reply) => reply.commentId !== commentId)
+                }));
+            } else {
+                // 댓글 상태에서 삭제
+                setComments((prevComments) =>
+                    prevComments.filter((comment) => comment.commentId !== commentId)
+                );
+            }
+    
+            alert("댓글이 삭제되었습니다.");
+        } catch (error) {
+            console.error("댓글 삭제 에러:", error);
+            alert("댓글 삭제에 실패했습니다. 다시 시도해 주세요.");
+        }
+    };
+    
+    
 
     const handleLikeToggle = async (commentId, likeId, isReply = false) => {
         if (!accessToken && !refreshToken) {
@@ -384,6 +472,25 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
         setReplyImages(null);
         if (replyFileInputRef.current) {
             replyFileInputRef.current.value = "";
+        }
+    };
+
+    const handleEditCommetToggle = (index) => {
+        setEditingImage(null);
+        setEditIndex(editIndex === index ? null : index);
+    }
+
+    const handleEditCommentImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setEditingImage(file);
+        }
+    }
+
+    const handleEditCommentImageDelete = () => {
+        setEditingImage(null);
+        if (editFileInputRef.current) {
+            editFileInputRef.current.value = "";
         }
     };
 
@@ -531,8 +638,8 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
 
                                         {comment.isMe === "Me" && (
                                             <>
-                                                <button>수정</button>
-                                                <button>삭제</button>
+                                                <button onClick={() => handleEditCommetToggle(comment.commentId)}>수정</button>
+                                                <button onClick={() => handleDeleteComment(comment.commentId, false)}>삭제</button>
                                             </>
                                         )}
                                         <button onClick={() => handleReplyToggle(index)}>답글달기</button>
@@ -541,16 +648,35 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                             </div>
 
                             {/* 수정 입력창 */}
-                            {editingCommentId === comment.commentId && (
+                            {editIndex === comment.commentId && (
                                 <div>
                                     <input
+                                        id={`edit-${comment.commentId}`}
                                         type="text"
                                         value={editingContent}
                                         onChange={(e) => setEditingContent(e.target.value)}
                                         placeholder="수정할 내용을 입력하세요"
+                                        style={{ marginBottom: "10px" }}
                                     />
-                                    <input type="file" onChange={(e) => setEditingImage(e.target.files[0])} />
-                                    <button onClick={() => handleEditComment(comment.commentId)}>수정 완료</button>
+                                    <input
+                                        type="file"
+                                        ref={editFileInputRef}
+                                        id={`edit-file-${comment.commentId}`}
+                                        accept="image/*"
+                                        onChange={handleEditCommentImageChange}
+                                        style={{ marginBottom: "10px" }}
+                                    />
+                                    {editingImage && (
+                                        <div>
+                                            <img
+                                                src={URL.createObjectURL(editingImage)}
+                                                alt="이미지 미리보기"
+                                                width="100"
+                                            />
+                                            <button onClick={handleEditCommentImageDelete}>✖</button>
+                                        </div>
+                                    )}
+                                    <button onClick={() => handleEditComment(comment.commentId, false)}>수정 완료</button>
                                 </div>
                             )}
 
@@ -635,8 +761,47 @@ const StyleComment = ({ isVisible, onClose, comments, setComments, currentUser, 
                                                     {reply.imageUrl && (
                                                         <img src={`/uploads/${reply.imageUrl}`} alt="답글 이미지" width="100" />
                                                     )}
+
+                                                    {reply.isMe === "Me" && (
+                                                        <>
+                                                            <button onClick={() => handleEditCommetToggle(reply.commentId)}>수정</button>
+                                                            <button onClick={() => handleDeleteComment(reply.commentId, true, comment.commentId)}>삭제</button>
+                                                        </>
+                                                    )}
                                                 </div>
                                             </div>
+                                            {/* 수정 입력창 */}
+                                            {editIndex === reply.commentId && (
+                                                <div>
+                                                    <input
+                                                        id={`edit-${reply.commentId}`}
+                                                        type="text"
+                                                        value={editingContent}
+                                                        onChange={(e) => setEditingContent(e.target.value)}
+                                                        placeholder="수정할 내용을 입력하세요"
+                                                        style={{ marginBottom: "10px" }}
+                                                    />
+                                                    <input
+                                                        type="file"
+                                                        ref={editFileInputRef}
+                                                        id={`edit-file-${reply.commentId}`}
+                                                        accept="image/*"
+                                                        onChange={handleEditCommentImageChange}
+                                                        style={{ marginBottom: "10px" }}
+                                                    />
+                                                    {editingImage && (
+                                                        <div>
+                                                            <img
+                                                                src={URL.createObjectURL(editingImage)}
+                                                                alt="이미지 미리보기"
+                                                                width="100"
+                                                            />
+                                                            <button onClick={handleEditCommentImageDelete}>✖</button>
+                                                        </div>
+                                                    )}
+                                                    <button onClick={() => handleEditComment(reply.commentId, true, comment.commentId)}>수정 완료</button>
+                                                </div>
+                                            )}
                                         </li>
                                     ))}
                                     {replyLoading && <p>로딩 중...</p>}
