@@ -371,15 +371,16 @@ const StyleDetail = () => {
                     {/* ---------------------수정, 삭제 버튼----------------- */}
                     {articleData.isFollowing === "Me" && (
                         <div className="StyleDetail_edit_buttons">
-                            <button className="StyleDetail_edit_btn" onClick={handleEdit}>수정</button>
-                            <button className="StyleDetail_delete_btn" onClick={handleDelete}>삭제</button>
+                            <Link to={`/UpdateArticle/${articleId}`} >
+                                <button className="StyleDetail_edit_btn">수정</button>
+                            </Link>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* ----------------------------social_container---------------------------- */}
-            <div className="StyleDetail_social_container" >
+            {/* ----------------------------social_container---------------------------- */ }
+                    < div className = "StyleDetail_social_container" >
                 <div className="StyleDetail_container_title">
                     @{articleData.memberName}님의 다른 스타일
                     <Link to={`/Styleprofile?memberId=${articleData.memberId}`}>

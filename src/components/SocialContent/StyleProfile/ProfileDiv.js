@@ -81,6 +81,11 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                     >
                         {profile.follow === "Followed" ? "언팔로우" : "팔로우"}
                     </button>
+                    <button
+                        className="Styleprofile_follow_btn"
+                        hidden={profile.follow === "Me"}>
+                        차단
+                    </button>
                 </div>
 
                 <div className="Styleprofile_follow_following">

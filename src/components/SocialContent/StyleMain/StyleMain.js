@@ -150,7 +150,7 @@ const StyleMain = () => {
 
                 {/* ------------------------ sorting ------------------------ */}
                 <div className="StyleMain_sorting">
-                    <span><a href="#">인기순</a></span>
+                    <span><a href="#">좋아요순</a></span>
                     <span><a href="#">최신순</a></span>
                 </div>
             </div>

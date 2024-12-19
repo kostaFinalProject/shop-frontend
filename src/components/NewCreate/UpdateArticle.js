@@ -1,13 +1,133 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./NewCreate.css";
+import "./UpdateArticle.css";
+import { useParams, useNavigate } from 'react-router-dom';
 
-const NewCreate = () => {
+const UpdateArticle = () => {
   const [images, setImages] = useState([{ id: Date.now(), file: null, checked: false }]); // 이미지 리스트
   const [existingFiles, setExistingFiles] = useState(new Set()); // 중복된 이미지를 막기 위한 Set
   const [products, setProducts] = useState([]); // 상품 배열
   const [keywords, setKeywords] = useState([]); // 키워드 배열
+  const [formData, setFormData] = useState({
+    tag_product: "@상품",
+    tag_keyword: "#",
+    form_content: "",
+  });  // 폼 데이터
+
+  const [hashTags, setHashTags] = useState([]);  // 해시태그 목록
+  const formRef = useRef(null);
+  const { articleId } = useParams(); // URL에서 articleId 가져오기
+  const navigate = useNavigate();    // 수정 완료 후 이동을 위해 사용
+
+    // 데이터 불러오기 함수
+    const fetchArticleData = async () => {
+        try {
+          const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`);
+          if (!response.ok) throw new Error("게시글 데이터를 가져오지 못했습니다.");
+    
+          const data = await response.json();
+          setFormData({
+            tag_product: data.tag_product || "",
+            tag_keyword: data.hashtags || "",
+            form_content: data.content || "",
+          });
+    
+          const formattedImages = Array.isArray(data.images)
+          ? data.images.map(imageUrl =>
+              imageUrl.replace(
+                "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                "/"
+              )
+            )
+          : [];
+        setImages(formattedImages);
+    
+        } catch (error) {
+          console.error("데이터 불러오기 실패:", error);
+        }
+      };
+    
+
+  useEffect(() => {
+    if (articleId) {
+      fetchArticleData();
+    }
+  }, [articleId]);
+
+  // 유효성 검사 함수
+  const validateForm = () => {
+    const requiredFields = [{ name: "form_content", label: "내용" }];
+
+    // 필수 필드 체크
+    for (let field of requiredFields) {
+      const value = formData[field.name]?.trim();
+      if (!value) {
+        alert(`${field.label}을(를) 입력해주세요.`);
+        return false;
+      }
+    }
+
+    // 이미지 첨부 체크
+    if (images.length === 0 || images.every((image) => !image.file)) {
+      alert("적어도 하나의 이미지를 업로드해야 합니다.");
+      return false;
+    }
+
+    return true; // 모든 유효성 검사 통과
+  };
+
+  // 폼 제출 함수
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return; // 유효성 검사 실패 시 종료
+
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    try {
+      const article = {
+        hashtags: hashTags,
+        content: formData.form_content,
+        itemIds: formData.itemIds,
+      };
+      // FormData 객체 생성
+      const UpdateArticle = new FormData();
+      UpdateArticle.append(
+        "article",
+        new Blob([JSON.stringify(article)], { type: "application/json" })
+      );
+      // 이미지 파일 추가
+      images.forEach((image) => {
+        if (image.file) {
+          UpdateArticle.append("files", image.file);  // "files" 필드명으로 파일을 여러 개 추가
+        }
+      });
+      // FormData 객체의 내용을 출력
+      for (let [key, value] of UpdateArticle.entries()) {
+        console.log(`${key}:`, value);
+      }
 
 
+      const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: accessToken,
+          "Refresh-Token": refreshToken,
+        },
+        body: UpdateArticle,
+      });
+
+      console.log("fetch 후 UpdateArticle ", UpdateArticle);
+
+      if (!response.ok) throw new Error("수정 실패");
+
+      alert("게시글 수정 완료!");
+      navigate(`/StyleDetail?articleId=${articleId}`);
+    } catch (error) {
+      console.error("수정 실패:", error);
+      alert("수정 중 오류가 발생했습니다.");
+    }
+  };
 
   // 이미지 추가 함수
   const addImageInput = () => {
@@ -20,13 +140,20 @@ const NewCreate = () => {
       ...prevImages,
       { id: Date.now(), file: null, fileName: '', checked: false },
     ]);
+
+
   };
 
   // 파일 선택 시 처리
   const handleFileChange = (index, event) => {
     const file = event.target.files[0];
     const newImages = [...images];
-    const previousFileName = newImages[index].fileName;
+    const previousFileName = newImages[index]?.fileName || ''; // 기존 파일 이름 확인
+
+    // 방어 코드: 객체 구조가 아닌 경우 초기화
+    if (typeof newImages[index] !== 'object') {
+      newImages[index] = { file: null, fileName: '', id: index };
+    }
 
     if (file) {
       if (existingFiles.has(file.name) && file.name !== previousFileName) {
@@ -35,20 +162,23 @@ const NewCreate = () => {
         return;
       }
 
-      // 중복이 아닐 경우, Set에 추가하고 파일 이름 업데이트
+      // 기존 파일 이름 제거
       if (previousFileName) {
         setExistingFiles((prevFiles) => {
           const newFiles = new Set(prevFiles);
-          newFiles.delete(previousFileName); // 이전 파일 이름 제거
+          newFiles.delete(previousFileName);
           return newFiles;
         });
       }
+      // 새 파일 이름 추가
       setExistingFiles((prevFiles) => new Set(prevFiles).add(file.name));
 
+      // 이미지 업데이트
       newImages[index].file = file;
       newImages[index].fileName = file.name;
       setImages(newImages);
     } else {
+      // 파일이 제거된 경우 처리
       if (previousFileName) {
         setExistingFiles((prevFiles) => {
           const newFiles = new Set(prevFiles);
@@ -61,6 +191,7 @@ const NewCreate = () => {
       setImages(newImages);
     }
   };
+
 
   // 체크박스 상태 변경
   const handleCheckboxChange = (index) => {
@@ -78,6 +209,7 @@ const NewCreate = () => {
     const newExistingFiles = new Set(newImages.map((image) => image.fileName));
     setExistingFiles(newExistingFiles);
   };
+
   // 대표 이미지 레이블 업데이트
   const updateRepresentativeLabel = () => {
     const items = images;
@@ -92,14 +224,6 @@ const NewCreate = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const [formData, setFormData] = useState({
-    tag_product: "@상품",
-    tag_keyword: "#",
-    form_content: "",
-  });
-
-  const [hashTags, setHashTags] = useState([]);  // 해시태그 목록
 
   // 상품 배열 추가
   const handleProductChange = (e) => {
@@ -133,118 +257,44 @@ const NewCreate = () => {
       setHashTags([]);
     }
 
+
     // formData 업데이트
     setFormData((prev) => ({ ...prev, tag_keyword: value }));
   };
 
+  // --------------------------게시글 삭제 fetch-----------
+  const handleDeleteArticle = async () => {
+    if (!window.confirm("게시글을 삭제하시겠습니까?")) return; // 확인창 표시
 
-  const formRef = useRef(null);
-
-
-  // 폼 제출 시 추가적인 검증 및 처리
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    // 유효성 검사: 필수 항목 체크
-    const requiredFields = [
-      { name: "form_content", label: "내용" },
-    ];
-
-    // 입력 필드 체크
-    for (let field of requiredFields) {
-      const value = formData[field.name]?.trim();
-
-      // 빈 필드 확인
-      if (!value || value === "") {
-        alert(`${field.label}을(를) 입력해주세요.`);
-        return;
-      }
-    }
-
-    // 이미지 첨부 체크
-    if (images.length === 0 || images.every((image) => !image.file)) {
-      alert('적어도 하나의 이미지를 업로드해야 합니다.');
-      return;
-    }
-
-    const article = {
-      hashtags: hashTags, //배열로 가야하나 여기는 배열이 아닌듯 확인하기기
-      content: formData.form_content,
-      itemIds: selectedItems.map((item) => item.itemId), // 선택된 상품 ID
-      selectedItems: selectedItems.map((item) => ({
-        itemId: item.itemId,
-        imgUrl: item.imgUrl,
-        name: item.name,
-        price: item.price,
-      })), // 선택된 상품 정보 추가
-    };
-    // FormData 객체 생성
-    const formDataToSend = new FormData();
-    formDataToSend.append(
-      "article",
-      new Blob([JSON.stringify(article)], { type: "application/json" })
-    );
-
-    // 이미지 파일들을 FormData에 추가
-    images.forEach((image) => {
-      if (image.file) {
-        formDataToSend.append("files", image.file);  // "files" 필드명으로 파일을 여러 개 추가
-      }
-    });
-
-
-    // FormData 객체의 내용을 출력
-    for (let [key, value] of formDataToSend.entries()) {
-      console.log(`${key}:`, value);
-    }
-    console.log("article : " + article);
-    // 로컬 스토리지에서 인증 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
 
-    // 서버로 데이터 전송
     try {
-      const response = await fetch("http://localhost:8080/api/v1/articles", {
-        method: "POST",
+      const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`, {
+        method: "DELETE",
         headers: {
           Authorization: accessToken,
           "Refresh-Token": refreshToken,
         },
-        body: formDataToSend,
       });
 
-      console.log("formDataToSend", formDataToSend);
+      if (!response.ok) throw new Error("삭제 실패");
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const result = await response.text();
-      console.log("서버 응답:", result);
-
-      alert("게시글이 성공적으로 업로드되었습니다!");
-      setFormData({
-        tag_product: "@상품",
-        tag_keyword: "#",
-        form_content: "",
-      });
-      setImages([]);
-      setExistingFiles(new Set());
+      alert("게시글이 삭제되었습니다.");
+      navigate("/StyleMain"); // 삭제 후 메인 페이지 또는 다른 경로로 이동
     } catch (error) {
-      console.error("게시글 업로드 실패:", error);
-      alert("게시글 업로드 중 오류가 발생했습니다.");
+      console.error("게시글 삭제 실패:", error);
+      alert("삭제 중 오류가 발생했습니다.");
     }
   };
 
 
-
-
   //상품검색
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-  const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // 검색어
+  const [searchResults, setSearchResults] = useState([]); // 검색 결과
+  const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부
+  const [items, setItems] = useState([]); // 상태에 데이터를 저장할 배열
+  const [selectedItems, setSelectedItems] = useState([]); // 선택된 상품 데이터 저장
 
   // 실시간 검색 함수
   const handleSearch = async (query) => {
@@ -259,18 +309,20 @@ const NewCreate = () => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
 
+      // data.content가 배열인지 확인
       if (Array.isArray(data.content)) {
-        const filteredResults = data.content.filter((product) =>
+        // 검색어에 따라 필터링
+        const filteredResults = data.content.filter(product =>
           product.name.toLowerCase().includes(query.toLowerCase())
         );
-        setSearchResults(filteredResults); // 필터링된 결과 설정
+        setSearchResults(filteredResults); // 필터링된 결과를 searchResults에 설정
       } else {
         console.error("검색 결과가 배열이 아닙니다:", data);
-        setSearchResults([]);
+        setSearchResults([]); // 배열이 아닐 경우 빈 배열로 설정
       }
     } catch (error) {
       console.error("상품 검색 오류:", error);
-      setSearchResults([]);
+      setSearchResults([]); // 오류 발생 시 빈 배열로 설정
     } finally {
       setIsSearching(false); // 검색 완료 상태
     }
@@ -285,81 +337,69 @@ const NewCreate = () => {
 
   // 검색 결과에서 상품 선택
   const handleProductSelect = (product) => {
-    if (selectedItems.find((item) => item.itemId === product.itemId)) {
-      // 중복 선택 시 경고 메시지
-      alert("이미 선택된 상품입니다. 중복 선택이 불가능합니다.");
-      return;
+    if (!products.includes(product.name)) {
+      setProducts((prev) => [...prev, product.name]);
+      setSelectedItems((prev) => [...prev, product]); // 선택된 상품 데이터 추가
+      setSearchQuery(""); // 검색어 초기화
+      setSearchResults([]); // 검색 결과 초기화
     }
-
-    if (selectedItems.length >= 4) {
-      // 최대 4개 제한 초과 시 경고 메시지
-      alert("최대 4개의 상품만 선택 가능합니다.");
-      return;
-    }
-    setSelectedItems((prev) => [...prev, product]); // 선택된 상품 추가
-    setSearchQuery(""); // 검색어 초기화
-    setSearchResults([]); // 검색 결과 초기화
   };
 
   // 데이터 가져오기
   useEffect(() => {
-    fetch("http://localhost:8080/api/v1/items")
-      .then((response) => {
+    fetch('http://localhost:8080/api/v1/items')
+      .then(response => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         console.log(data); // 전체 데이터 구조 확인
         setItems(data.content); // content 배열만 상태에 저장
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   // 아이템 삭제 함수
   const removeItem = (itemId) => {
     setSelectedItems((prevItems) => prevItems.filter((item) => item.itemId !== itemId));
   };
-
   //여기까지
 
 
-
-
   return (
-    <div className="NewCreate_full_screen">
-      <form ref={formRef} className="NewCreate_Form" method="post" onSubmit={handleFormSubmit} >
-        <h2 className="NewCreate_TitleText">SNS STYLE 글 작성</h2>
+    <div className="UpdateArticle_full_screen">
+      <form ref={formRef} className="UpdateArticle_Form" method="put" onSubmit={handleFormSubmit} >
+        <h2 className="UpdateArticle_TitleText">SNS STYLE 글 수정</h2>
 
-        <div className="NewCreate_BoxLine">
-          {/* 이미지 입력 */}
 
-          <div className="NewCreate_text_cover">
-            <label className="NewCreate_Name" htmlFor="tag_product">
+        <div className="UpdateArticle_BoxLine">
+          {/* 상품 */}
+          <div className="UpdateArticle_text_cover">
+            <label className="UpdateArticle_Name" htmlFor="tag_product">
               상품 검색
             </label>
-            <div className="NewCreate_Input_cover">
+            <div className="UpdateArticle_Input_cover">
               <input
                 type="text"
                 id="tag_product"
                 name="tag_product"
-                className="NewCreate_Text_input"
+                className="UpdateArticle_Text_input"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="상품명을 입력하세요"
               />
               <ul className="search-results">
-                {Array.isArray(searchResults) &&
-                  searchResults.map((product) => (
-                    <li
-                      key={product.itemId}
-                      onClick={() => handleProductSelect(product)}
-                      className="search-result-item"
-                    >
-                      {product.name}
-                    </li>
-                  ))}
+                {Array.isArray(searchResults) && searchResults.map((product) => (
+                  <li
+                    key={product.itemId} // itemId를 key로 사용
+                    onClick={() => handleProductSelect(product)}
+                    className="search-result-item"
+                  >
+                    {product.name}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -381,7 +421,7 @@ const NewCreate = () => {
                     <p>￦ {item.price}원</p>
                   </div>
 
-                  {/* 삭제 버튼 */}
+                  {/* 삭제 버튼 추가 */}
                   <button
                     className="NewCreate_remove_button"
                     onClick={() => removeItem(item.itemId)}
@@ -392,17 +432,17 @@ const NewCreate = () => {
               </div>
             ))}
           </div>
-
-          <div className="NewCreate_text_cover">
-            <label className="NewCreate_Name" htmlFor="tag_keyword">
+          {/* 키워드 */}
+          <div className="UpdateArticle_text_cover">
+            <label className="UpdateArticle_Name" htmlFor="tag_keyword">
               키워드
             </label>
-            <div className="NewCreate_Input_cover">
+            <div className="UpdateArticle_Input_cover">
               <input
                 type="text"
                 id="tag_keyword"
                 name="tag_keyword"
-                className="NewCreate_Text_input"
+                className="UpdateArticle_Text_input"
                 value={formData.tag_keyword}
                 onChange={handleKeywordChange}  // 키워드 변경 시 해시태그 처리
                 onKeyDown={(e) => e.key === "Enter" && handleKeywordChange(e)}
@@ -413,16 +453,16 @@ const NewCreate = () => {
           </div>
 
           {/* 해시태그 목록 표시 */}
-          <div className="NewCreate_hashTagsContainer">
+          <div className="UpdateArticle_hashTagsContainer">
             {hashTags.map((tag, index) => (
               <span key={index} className="hashTagItem">
                 {tag}
               </span>
             ))}
           </div>
-
+          {/* 내용  */}
           <div className="cover_form_TextArea">
-            <label className="NewCreate_Name_TextArea" htmlFor="form_content">
+            <label className="UpdateArticle_Name_TextArea" htmlFor="form_content">
               내용
             </label>
             <textarea
@@ -433,18 +473,22 @@ const NewCreate = () => {
               onChange={handleInputChange}
             />
           </div>
-
-          <div className="NewCreate_text_cover_file">
-            <label className="NewCreate_Name_file">이미지 등록</label>
-            <ul className="NewCreate_image_list_file">
+          {/* 이미지 등록 */}
+          <div className="UpdateArticle_text_cover_file">
+            <label className="UpdateArticle_Name_file">이미지 등록</label>
+            <ul className="UpdateArticle_image_list_file">
               {images.map((item, index) => (
-                <li key={item.id} className="NewCreate_f">
+                <li key={item.id} className="UpdateArticle_f">
                   {index === 0 && updateRepresentativeLabel()}
                   {index !== 0 && (
                     <input
                       type="checkbox"
                       className="img-checkbox"
                       checked={item.checked}
+                      // value={formData.imageUrl}
+                      value={formData.formattedImages}
+                      
+                      
                       onChange={() => handleCheckboxChange(index)}
                     />
                   )}
@@ -453,19 +497,20 @@ const NewCreate = () => {
                     id="files"
                     accept="image/*"
                     required
+                    
                     onChange={(e) => handleFileChange(index, e)}
                   />
                   <span>{item.fileName}</span>
                 </li>
               ))}
             </ul>
-            <button type="button" className="NewCreate_Btn_add" onClick={addImageInput}>
+            <button type="button" className="UpdateArticle_Btn_add" onClick={addImageInput}>
               + 이미지 추가
             </button>
 
             <button
               type="button"
-              className="NewCreate_Btn_remove"
+              className="UpdateArticle_Btn_remove"
               onClick={removeCheckedImages}
               disabled={images.length <= 1}
             >
@@ -473,22 +518,31 @@ const NewCreate = () => {
             </button>
 
           </div>
-
-          <div className="NewCreate_text_cover_Btn">
-            <button type="button" className="NewCreate_listBtn">
+          {/* 버튼 */}
+          <div className="UpdateArticle_text_cover_Btn">
+            <button type="button" className="UpdateArticle_listBtn">
               목록
             </button>
-            <button type="submit" className="NewCreate_primaryBtn">
-              작성완료
+            <button type="submit" className="UpdateArticle_primaryBtn">
+              수정 완료
             </button>
-            <button type="button" className="NewCreate_dangerBtn">
+            <button type="button" className="UpdateArticle_dangerBtn">
               취소
             </button>
+            <button
+              type="button"
+              className="UpdateArticle_deleteBtn"
+              style={{ background: "red" }}
+              onClick={handleDeleteArticle} // 삭제 핸들러 연결
+            >
+              삭제
+            </button>
           </div>
+
         </div>
       </form>
     </div>
   );
 };
 
-export default NewCreate;
+export default UpdateArticle;

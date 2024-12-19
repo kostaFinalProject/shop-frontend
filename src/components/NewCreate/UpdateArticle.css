@@ -1,11 +1,11 @@
-.NewCreate_full_screen {
+.UpdateArticle_full_screen {
     margin-top: 215px;
 
 }
 
 
 /* 전체적인 폼 크기 */
-.NewCreate_Form {
+.UpdateArticle_Form {
     margin: 0 auto;
     display: block;
     width: 100%;
@@ -16,7 +16,7 @@
 }  
 
 /* 게시글 작성 */
-.NewCreate_TitleText {
+.UpdateArticle_TitleText {
     width: 100%;
     max-width: 1280px;
     height: 40px;
@@ -27,7 +27,7 @@
 }
 
 /* 선택 폼 */
-.NewCreate_option_form {
+.UpdateArticle_option_form {
     width: 100%;
     height: 50px;
     display: flex;
@@ -36,7 +36,7 @@
     gap: 20px;
 }
 
-.NewCreate_option_form_select {
+.UpdateArticle_option_form_select {
     width: 35%;
     height: 40px;
     display: flex;
@@ -44,25 +44,25 @@
     border-radius: 20px;
 }
 
-.NewCreate_select_list {
+.UpdateArticle_select_list {
     text-align: left;
     width: 100%;
     max-width: 640px;
     height: 40px;
 
 }
-.NewCreate_select_list:focus {
+.UpdateArticle_select_list:focus {
     border: 2px solid #007bff;
 }
 
-.NewCreate_select_list option:hover {
+.UpdateArticle_select_list option:hover {
     background-color: #007bff;
 }
 
 
 
 /* ------- 텍스트 양식 전체 크기지정------------ */
-.NewCreate_BoxLine{
+.UpdateArticle_BoxLine{
     width: 1280px;
     height: auto;
     display: flex;
@@ -70,7 +70,7 @@
     align-items: center;
 
 }
-.NewCreate_text_cover_file{
+.UpdateArticle_text_cover_file{
     display: flex;
     width: 80%;
     height: auto;
@@ -78,12 +78,12 @@
     margin-top: 10px;
 }
 
-.NewCreate_hashTagsContainer{
+.UpdateArticle_hashTagsContainer{
     width: 60%;
     transform: translateX(82px);
 }
 
-.NewCreate_hashTagsContainer .hashTagItem{
+.UpdateArticle_hashTagsContainer .hashTagItem{
     border: 1px solid rebeccapurple;
     border-radius: 10px;
     padding: 5px;
@@ -91,7 +91,7 @@
     display: inline-block;
 }
 
-.NewCreate_Name_file{
+.UpdateArticle_Name_file{
     height: auto;
     width: 20%;
     display: flex;
@@ -100,14 +100,14 @@
     justify-content: center;
 }
 /* 이미지 입력 */
-.NewCreate_text_cover {
+.UpdateArticle_text_cover {
     display: flex;
     width: 80%;
-    /* height: 60px; */
+    height: 60px;
     font-size: 15px;
 
 }
-.NewCreate_Name{
+.UpdateArticle_Name{
     height: 60px;
     width: 20%;
     display: flex;
@@ -116,57 +116,50 @@
     justify-content: center;
 
 }
-.NewCreate_RepresentativeTag{
+.UpdateArticle_RepresentativeTag{
     font-size: 12px;
     padding-right: 150px;
 
 }
-.NewCreate_img_checkbox{
+.UpdateArticle_img_checkbox{
     height: auto;
     font-size: 15px;
     
 }
-.NewCreate_file_name{
+.UpdateArticle_file_name{
     width: 100%;
 
 }
-.NewCreate_image_list_file {
+.UpdateArticle_image_list_file {
 
     width: 495px;
     list-style-type: none;
     padding: 0;
     height: auto;
 }
-.NewCreate_image_list_file input{
+.UpdateArticle_image_list_file input{
     padding-left: 10px;
     
 }
-.NewCreate_Btn_add{
+.UpdateArticle_Btn_add{
     padding-left: 30px !important;
 }
-.NewCreate_Btn_add,
-.NewCreate_Btn_remove {
+.UpdateArticle_Btn_add,
+.UpdateArticle_Btn_remove {
         all: unset;
         padding-right: 15px;
        
 
 }
-.NewCreate_Btn_add:hover,
-.NewCreate_Btn_remove:hover {
+.UpdateArticle_Btn_add:hover,
+.UpdateArticle_Btn_remove:hover {
         cursor: pointer;
 
 }
 
 /* ------------------------------- */
-.NewCreate_BoxLine{
-    width: 1280px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-.NewCreate_Input_cover{
+.UpdateArticle_Input_cover{
     width: 80%;
     height: 100%;
     display: flex;
@@ -175,15 +168,16 @@
     flex-direction: column;
     transform: translateX(-40.3px);
     justify-content: center;
+
 }
-.NewCreate_Text_input {
+.UpdateArticle_Text_input {
     height: 30px;
     width: 91%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.NewCreate_Text_input:focus {
+.UpdateArticle_Text_input:focus {
     border: 2px solid blue;
     background-color: #f0f8ff;
     caret-color: black;
@@ -195,7 +189,7 @@
     font-size: 15px;
 
 }
-.NewCreate_Name_TextArea{
+.UpdateArticle_Name_TextArea{
     height: auto;
     width: 20%;
     display: flex;
@@ -223,16 +217,17 @@
 }
 
 
-.NewCreate_text_cover_Btn {
+.UpdateArticle_text_cover_Btn {
     display: flex;
     width: 80%;
     height: 60px;
     justify-content: center;
     font-size: 15px;
 }
-.NewCreate_listBtn,
-.NewCreate_primaryBtn,
-.NewCreate_dangerBtn {
+.UpdateArticle_listBtn,
+.UpdateArticle_primaryBtn,
+.UpdateArticle_dangerBtn,
+.UpdateArticle_deleteBtn {
  width: 100px;
  height: 40px;
  border-radius: 10px;
@@ -240,20 +235,28 @@
  margin-top: 20px;
  justify-content: center;
 }
-
-.NewCreate_f {
+.UpdateArticle_listBtn:hover,
+.UpdateArticle_primaryBtn:hover,
+.UpdateArticle_dangerBtn:hover,
+.UpdateArticle_deleteBtn:hover {
+ cursor: pointer;
+}
+.UpdateArticle_f {
     display: flex;
     align-items: center; /* 세로로 가운데 정렬 */
     margin-bottom: 10px; /* 각 항목 간 간격을 위해 추가 */
   }
   
-  .NewCreate_img_checkbox {
+  .UpdateArticle_img_checkbox {
     margin-left: 10px; /* 체크박스와 이미지 간 간격 */
   }
 
 
-/*상품검색*/
-.NewCreate_search_cover {
+
+
+
+  /*상품검색*/
+.Update_search_cover {
     position: relative;
     /* 검색창 컨테이너를 기준으로 검색 결과 배치 */
     flex-direction: column;
@@ -295,7 +298,7 @@
   
   
   
-  .NewCreate_selected_products {
+  .UpdateArticle_selected_products {
     width: 140px;
     height: 210px;
     display: flex;
@@ -337,9 +340,8 @@
   .flex_direction_row{
     display: flex;
     flex-direction: row;
-    margin-bottom: 15px;
-    z-index: 1;
   }
+
   .NewCreate_remove_button{
     background-color: #ffffff;
     border: 1px solid #000;

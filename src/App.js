@@ -38,6 +38,7 @@ import StyleDetail from "./components/SocialContent/StyleDetail.js";
 import StyleMain from "./components/SocialContent//StyleMain/StyleMain.js";
 import Styleprofile from "./components/SocialContent/StyleProfile/Styleprofile.js";
 import StyleprofileMyInterestProduct from "./components/SocialContent/StyleProfile/StyleprofileMyInterestProduct.js";
+import UpdateArticle from "./components/NewCreate/UpdateArticle.js";
 
 
 
@@ -90,6 +91,7 @@ function App() {
         <Route path="/boardshoppingsearch" element={<BoardshoppingSearch />} />
         <Route path="/detailpage" element={<DetailPage />} />
         <Route path="/NewCreate" element={<NewCreate />} />
+        <Route path="/UpdateArticle/:articleId" element={<UpdateArticle />} />
         <Route path="/QnA" element={<QnA />} />
         <Route path="/SearchProduct" element={<SearchProduct />} />
         <Route path="/SearchProfile" element={<SearchProfile />} />
