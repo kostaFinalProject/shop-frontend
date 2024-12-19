@@ -144,22 +144,23 @@
 .StyleDetail_interest{
     padding: 10px 0 10px 0;
     width: 100%;
-    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 .StyleDetail_interest_like {
-    width: 100px;
+    /* width: 100px; */
+    margin-right: 20px;
     height: 100%;
 }
 .StyleDetail_interest_attention {
-    width: 100px;
+    /* width: 100px; */
+    margin-right: 20px;
     height: 100%;
 }
 .StyleDetail_interest_comment {
-    width: 100px;
+    /* width: 100px; */
     height: 100%;
 }
 /* ---------------------social_text----------------- */

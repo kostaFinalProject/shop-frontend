@@ -256,6 +256,35 @@ const StyleDetail = () => {
         return <div>Loading...</div>; // 로딩 상태 표시
     }
 
+    // 게시물 저장 로직 추가
+    const handleSaveArticle = async () => {
+        if (!accessToken && !refreshToken) {
+            alert("로그인이 필요한 기능입니다.");
+            window.location.href = '/login';
+            return;
+        }
+
+        try {
+            const headers = await getHeaders(); // 인증 헤더 가져오기
+            if (!headers) return; // 헤더가 없으면 실행 중단
+
+            const response = await fetch(`http://localhost:8080/api/v1/article-collections/${articleId}`, {
+                method: "POST",
+                headers: headers,
+            });
+
+            if (response.status === 200) {
+                alert("게시물이 저장되었습니다.");
+            } else {
+                const errorData = await response.json();
+                alert(`저장 실패: ${errorData.message || "오류 발생"}`);
+            }
+        } catch (error) {
+            console.error("Error saving article:", error);
+            alert("게시물을 저장하는 도중 오류가 발생했습니다.");
+        }
+    };
+
     return (
         <>
             <div className="StyleDetail_fullScreen">
@@ -276,18 +305,6 @@ const StyleDetail = () => {
                             </div>
                         </a>
 
-                        {/* {articleData.isFollowing === "Me" ? null : (
-                            <button
-                                className="StyleDetail_follow_btn"
-                                style={{
-                                    backgroundColor: articleData.isFollowing === "Follower" ? "blue" : "black",
-                                    // color: articleData.isFollowing === "Follower" ? "white" : "black",
-                                    color: "white"
-                                }}
-                            >
-                                {articleData.isFollowing === "Not Follower" ? "팔로우" : "팔로잉"}
-                            </button>
-                        )} */}
                     </div>
                     {/* ----------------------social_body----------------- */}
                     <div className="StyleDetail_body">
@@ -335,14 +352,15 @@ const StyleDetail = () => {
                         {articleData.likeCount}
                     </div>
                     <div className="StyleDetail_interest_attention">
-                        <span onClick={toggleComments}>댓글</span>
+                        <span onClick={toggleComments}>💬</span>
                         {articleData.commentCount}
                     </div>
-                    <div className="StyleDetail_interest_comment">
-                        <span>관심</span>
+                    <div className="StyleDetail_interest_comment" onClick={handleSaveArticle}>
+                        <div className="capture-button">
+                            <span className="capture-icon">📷</span> {/* 카메라 이모지 또는 아이콘 */}
+                        </div>
                     </div>
                 </div>
-
 
                 {/* ---------------------social_text----------------- */}
                 <div className="StyleDetail_social_text">
