@@ -165,11 +165,14 @@
     display: flex;
     align-items: center;
     padding-left: 20px;
+    flex-direction: column;
+    transform: translateX(-40.3px);
+    justify-content: center;
 
 }
 .UpdateArticle_Text_input {
     height: 30px;
-    width: 90%;
+    width: 91%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,4 +249,102 @@
   
   .UpdateArticle_img_checkbox {
     margin-left: 10px; /* 체크박스와 이미지 간 간격 */
+  }
+
+
+
+
+
+  /*상품검색*/
+.Update_search_cover {
+    position: relative;
+    /* 검색창 컨테이너를 기준으로 검색 결과 배치 */
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+  
+  .search-results {
+    width: 90%;
+    /* 검색창과 같은 너비로 설정 */
+    background-color: white;
+    /* 검색 결과 배경색 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* 그림자 추가 */
+    z-index: 10;
+    /* 다른 요소 위로 나오도록 설정 */
+    list-style: none;
+    /* 기본 리스트 스타일 제거 */
+    margin: 0;
+    /* 외부 여백 제거 */
+    padding: 0;
+    /* 내부 여백 제거 */
+  }
+  
+  .search-result-item {
+    padding: 8px 12px;
+    /* 아이템 내부 여백 */
+    cursor: pointer;
+    /* 클릭 가능한 스타일 */
+  }
+  
+  .search-result-item:hover {
+    background-color: #f0f0f0;
+    /* 호버 시 배경색 */
+  }
+  
+  
+  
+  .UpdateArticle_selected_products {
+    width: 140px;
+    height: 210px;
+    display: flex;
+    flex-direction: row;
+    transform: translateX(-200px);
+  }
+  
+  .StyleDetail_Lookup_List_Item:hover {
+    cursor: pointer;
+  }
+  
+  .StyleDetail_Lookup_List_Img {
+    object-fit: cover;
+    width: 140px;
+    height: 140px;
+    padding-bottom: 5px;
+  }
+  
+  .StyleDetail_Lookup_List_Img img {
+    width: 140px;
+    height: 140px;
+    border-radius: 10px;
+  
+  }
+  
+  .StyleDetail_Lookup_List_Content {
+  
+    height: 30px;
+    font-size: 10px;
+  
+  }
+  
+  .StyleDetail_Lookup_List_Price {
+    height: 20px;
+    font-size: 10px;
+  
+  }
+
+  .flex_direction_row{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .NewCreate_remove_button{
+    background-color: #ffffff;
+    border: 1px solid #000;
+    width: 50px;
+    height: 30px;
   }

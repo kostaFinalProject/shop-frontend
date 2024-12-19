@@ -158,6 +158,13 @@
 }
 
 /* ------------------------------- */
+.NewCreate_BoxLine{
+    width: 1280px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .NewCreate_Input_cover{
     width: 80%;
@@ -166,10 +173,12 @@
     align-items: center;
     padding-left: 20px;
     flex-direction: column;
+    transform: translateX(-40.3px);
+    justify-content: center;
 }
 .NewCreate_Text_input {
     height: 30px;
-    width: 90%;
+    width: 91%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -291,7 +300,7 @@
     height: 210px;
     display: flex;
     flex-direction: row;
-  
+    transform: translateX(-200px);
   }
   
   .StyleDetail_Lookup_List_Item:hover {
@@ -328,4 +337,11 @@
   .flex_direction_row{
     display: flex;
     flex-direction: row;
+    margin-bottom: 15px;
+  }
+  .NewCreate_remove_button{
+    background-color: #ffffff;
+    border: 1px solid #000;
+    width: 50px;
+    height: 30px;
   }

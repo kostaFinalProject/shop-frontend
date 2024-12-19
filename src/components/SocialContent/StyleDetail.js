@@ -134,27 +134,32 @@ const StyleDetail = () => {
                 {/* ---------------------착용유니폼 쇼핑몰로 이동----------------- */}
                 <div className='StyleDetail_Lookup'>
                     <div className='StyleDetail_Lookup_Title'>
-                        <p>유니폼 구매하러 가기</p>
+                        <p>테그된 상품</p>
                     </div>
-                    <div className='StyleDetail_Lookup_List'>
-                        {/* 유니폼 추천 쇼핑핑 아이템 */}
+                    <div className="StyleDetail_Lookup_List">
+                        {article.articleItems && article.articleItems.map((item) => (
+                            <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
+                                <div className="StyleDetail_Lookup_List_Img">
+                                    {/* 이미지 렌더링 */}
+                                    <img
+                                        src={item.imageUrl.replace("C:\\kostafinalfrontend\\frontend-jhs\\public\\", "/")}
+                                        alt={item.itemName}
+                                    />
+                                </div>
 
-                        <div className='StyleDetail_Lookup_List_Item'>
-                            <div className='StyleDetail_Lookup_List_Img'>
-                            <img src='https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202410/52ed697370f9b91cc6d778c027833f75.jpg' />
+                                <div className="StyleDetail_Lookup_List_Content">
+                                    {/* 아이템 이름 */}
+                                    <p>{item.itemName}</p>
+                                </div>
 
-                             </div>
-
-                            <div className='StyleDetail_Lookup_List_Content'>
-                                <p>CDG Logo</p>
+                                <div className="StyleDetail_Lookup_List_Price">
+                                    {/* 가격 */}
+                                    <p>￦ {item.price}원</p>
+                                </div>
                             </div>
-                            <div className='StyleDetail_Lookup_List_Price'>
-                                <p>86,000원</p>
-                            </div>
-                        </div>
-
+                        ))}
                     </div>
-               </div>
+                </div>
 
                 {/* ---------------------interest-----------------  */}
                 <div className="StyleDetail_interest">
