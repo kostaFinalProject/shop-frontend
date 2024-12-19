@@ -23,6 +23,11 @@
     display: flex;
     align-items: center;
 }
+
+.StyleDetail_head a{
+    display: contents;
+}
+
 .StyleDetail_profile_img {
      width: 10%;
     height: 50px;
@@ -34,13 +39,12 @@
 .StyleDetail_profile_img img {
     border-radius: 50px;
     justify-content: center;
-    object-fit: cover;
+    object-fit: contain;
 }
 .StyleDetail_profile_text {
     width: 80%;
     display: block;
     text-align: left;
-    margin-left: 20px;
 }
 
 .StyleDetail_follow_btn{
@@ -53,40 +57,32 @@
     border-radius: 10px;
 
 }
-.StyleDetail_UpdateArticle_btn{
-    background-color: black;
-    color: white;
-    font-size: 13px;
-    width: 65px;
-    height: 35px;
-    margin-left: 10px;
-    border-radius: 10px;
-}
-.StyleDetail_UpdateArticle_btn:hover{
-    cursor: pointer;
-}
-/* ----------------------social_body----------------- */
 
+/* ----------------------social_body----------------- */
+.StyleDetail_body {
+    width: 100%;
+
+    padding: 10px 0 10px 0;
+}
 .StyleDetail_main_img {
     width: 100%;
     height: auto;
 }
 .StyleDetail_main_img img {
-    display: flex;
     width: 640px;
     height: 640px;
     object-fit: cover;
 }
-
+.StyleDetail_main_img_list {
+    width: 100%;
+    max-width: 640px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+}
 
 /* 이미지 슬라이드 스타일링 */
-.StyleDetail_ImageBox{
-    display: flex;
-    width: 660px;
-    height: 640px;
-    align-items: center;
-
-}
   
   .StyleDetail_image_slider {
     width: 100%;
@@ -94,46 +90,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
   }
   
   .StyleDetail_image_sliderImage {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
-
   }
   
-  .StyleDetail_prev {
-
-    height: 50px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  .StyleDetail_next {
-    
-    height: 50px;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    
-  }
   .StyleDetail_pagination {
-
     text-align: center;
 
   }
   
   .StyleDetail_dot {
-
     font-size: 40px;
     margin: 0 5px;
     cursor: pointer;
@@ -144,69 +114,32 @@
     color: #333;
   }
   
-/* ---------------------착용유니폼 쇼핑몰로 이동------------------  */
-.StyleDetail_Lookup{
-    width: 100%;
-    max-width: 640px;
-    height: 250px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-
-
-}
-.StyleDetail_Lookup_Title{
-    width: 100%;
-    height: 40px;
-    margin: 0 auto;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-.StyleDetail_Lookup_List{
-    width: 100%;
-    height: 210px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-
-}
-.StyleDetail_Lookup_List_Item{
-    width: 140px;
-    height: 210px;
-    display: flex;
-    flex-direction: column;
-   
-}
-.StyleDetail_Lookup_List_Item:hover{
+  .StyleDetail_prev {
+    position: absolute;
+    top: 80%;
+    right: 70%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
     cursor: pointer;
-}
-.StyleDetail_Lookup_List_Img{
-    object-fit: cover;
-    width: 140px;
-    height: 140px;
-    padding-bottom: 5px;
-}
-.StyleDetail_Lookup_List_Img img {
-    width: 140px;
-    height: 140px;
-    border-radius: 10px;
+    font-size: 20px;
+  }
+  .StyleDetail_next {
+    position: absolute;
+    top: 80%;
+    left: 70%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    
+  }
 
-}
-
-.StyleDetail_Lookup_List_Content{
-
-    height: 30px;
-    font-size: 10px;
-
-}
-.StyleDetail_Lookup_List_Price{
-    height: 20px;
-    font-size: 10px;
-
-}
 /* ---------------------interest-----------------  */
 .StyleDetail_interest{
     padding: 10px 0 10px 0;
@@ -233,8 +166,7 @@
 .StyleDetail_social_text{
     width: 100%;
     height: 100px;
-
-  
+    margin-top: 30px;
 }
 
 .StyleDetail_text_title {
@@ -248,7 +180,7 @@
 
 /* ----------------------------social_container---------------------------- */
 .StyleDetail_social_container{
-    margin: 0 auto;
+    margin: 60px auto;
     padding: 0;
     width: 640px;
     height: 300px;
@@ -257,4 +189,66 @@
     display: block;
     
     padding-bottom: 20px;
+}
+.StyleDetail_container_title{
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 640px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.more_btn{
+    all: unset;
+    font-size: 16px;
+    color: #B5B6B5;
+    
+}
+.more_Btn:hover{
+    cursor: pointer;
+}
+.StyleDetail_container_img{
+    width: 640px;
+    height: 200px;
+    display: flex;
+    list-style-position: initial;
+    gap: 10px;
+
+
+}
+.StyleDetail_container_img li {
+    list-style: none;
+}
+.StyleDetail_container_img img {
+    height: 200px;
+    width: 150px;
+    object-fit: cover;
+}
+
+.StyleDetail_edit_buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.StyleDetail_edit_btn,
+.StyleDetail_delete_btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.StyleDetail_edit_btn {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+}
+
+.StyleDetail_delete_btn {
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
 }

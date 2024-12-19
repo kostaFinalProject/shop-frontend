@@ -27,9 +27,6 @@ const Styleprofile = () => {
                     >
                         게시글
                         <span>465</span>
-                        <a href="/NewCreate">
-                            <button>게시글 작성</button>
-                        </a>
                     </span>
 
                     <span
@@ -51,13 +48,13 @@ const Styleprofile = () => {
 
                 {/* 탭에 따라 컴포넌트 렌더링 */}
                 <div className="Styleprofile_sns_container">
-                    {/* {activeTab === 'posts' ? (
-                        <ProfilePosts posts={articles} />
+                    {activeTab === 'posts' ? (
+                        <ProfilePosts posts={postsData} />
                     ) : activeTab === 'tags' ? (
                         <ProfileTags tags={tagsData} />
                     ) : (
                         <ProfileMyInterests myInterests={myInterestsData} />  // 내 관심상품 렌더링
-                    )} */}
+                    )}
                 </div>
             </div>
         </>
