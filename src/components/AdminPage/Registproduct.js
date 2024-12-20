@@ -7,6 +7,7 @@ const Registproduct = () => {
   const [categories, setCategories] = useState([]); // 상위 카테고리 상태
   const [subCategories, setSubCategories] = useState({}); // 하위 카테고리 상태
   const [selectedCategory, setSelectedCategory] = useState(""); // 선택된 상위 카테고리
+  const [itemDetailImage, setItemDetailImage] = useState(null);
 
   const addImageInput = () => {
     setImageList(prevList => [...prevList, { file: null, checked: false }]);
@@ -111,7 +112,7 @@ const Registproduct = () => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
 
-  function handleUpadteItemSubmit(e) {
+  function handleCreateItemSubmit(e) {
     e.preventDefault();
 
     // 하위 카테고리 값 가져오기
@@ -122,41 +123,44 @@ const Registproduct = () => {
     const price = parseFloat(document.getElementById("price").value);
     const manufacturer = document.getElementById("manufacturer").value;
 
-
     // 사이즈별 수량 값 가져오기
     const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
     const stockQuantities = sizes.map(size => {
-      const input = document.querySelector(`input[name='stockQuantity-${size}']`)
+      const input = document.querySelector(`input[name='stockQuantity-${size}']`);
 
-      // input이 null인지 확인
       if (input) {
         return { size, stockQuantity: parseInt(input.value, 10) || 0 };
       } else {
         console.warn(`Input for size ${size} not found.`);
-        return { size, stockQuantity: 0 }; // 기본값으로 0 설정
+        return { size, stockQuantity: 0 };
       }
     });
 
-    // **유효성 검사 추가** - 가격은 음수가 될 수 없습니다.
+    // **유효성 검사 추가**
     if (price < 0 || sizes < 0) {
       alert("가격은 음수가 될 수 없습니다. 올바른 값을 입력하세요.");
-      return; // 유효하지 않으면 제출 중단
+      return;
     }
 
-    console.log(stockQuantities);
-
     // 이미지 파일 리스트 처리
-    const images = [];
     const imageInputs = document.querySelectorAll(".image-list input[type='file']");
-    imageInputs.forEach(input => {
-      if (input.files[0]) {
-        images.push(input.files[0]);
-      }
-    });
+    const itemImages = Array.from(imageInputs)
+      .map(input => input.files[0])
+      .filter(file => file !== undefined); // 파일이 있는 경우만 추가
+
+    // 상세 이미지 파일 가져오기
+    const itemDetailImageInput = document.getElementById("itemDetailImage");
+    const itemDetailImage = itemDetailImageInput.files[0];
+
+    if (!itemDetailImage) {
+      alert("상세 이미지를 추가해주세요.");
+      return;
+    }
 
     // FormData 객체 생성
     const formData = new FormData();
 
+    // `item` 객체 추가
     const item = {
       itemCategory,
       name,
@@ -165,15 +169,14 @@ const Registproduct = () => {
       itemSizes: stockQuantities,
     };
     formData.append("item", new Blob([JSON.stringify(item)], { type: 'application/json' }));
-    console.log(item);
 
-
-    // 이미지 파일들 추가
-    images.forEach(image => {
-      formData.append('files', image);
+    // 여러 이미지 파일 추가
+    itemImages.forEach(image => {
+      formData.append("itemImages", image);
     });
 
-
+    // 상세 이미지 파일 추가
+    formData.append("itemDetailImage", itemDetailImage);
 
     // Fetch로 데이터 전송
     fetch('http://localhost:8080/api/v1/items', {
@@ -181,7 +184,6 @@ const Registproduct = () => {
       headers: {
         'Authorization': accessToken,
         'Refresh-Token': refreshToken,
-        // 'Content-Type': 'application/json',
       },
       body: formData,
     })
@@ -189,11 +191,8 @@ const Registproduct = () => {
         if (response.ok) {
           alert("상품 등록이 완료되었습니다.");
 
-          // **폼 초기화**
-          document.getElementById("updateItemForm").reset();
-          setImageList([{ file: null, checked: false }]); // 이미지 입력 필드 초기화
-          setSelectedCategory(""); // 선택된 카테고리 초기화
-          setExistingFiles(new Set()); // 기존 파일 이름 초기화
+          // 폼 초기화
+          document.getElementById("createItemForm").reset();
           window.location.href = '/AdminPage/registproduct';
         } else {
           response.text().then(errorMessage => {
@@ -263,7 +262,7 @@ const Registproduct = () => {
           상품등록
         </div>
         <hr />
-        <form id="updateItemForm" action="" method="post" onSubmit={handleUpadteItemSubmit}>
+        <form id="createItemForm" action="" method="post" onSubmit={handleCreateItemSubmit}>
           {/* 카테고리 선택 */}
           <div className="categoryselect">
             <div className="mainselect">
@@ -313,6 +312,10 @@ const Registproduct = () => {
             <label htmlFor="manufacturer">제조사</label>
             <input type="text" id="manufacturer" name="manufacturer" required />
           </div>
+          <div className="form-group">
+            <label htmlFor="seller">판매자</label>
+            <input type="text" id="seller" name="seller" required />
+          </div>
 
           {/* 사이즈별 재고 입력 */}
           <div className="form-group">
@@ -334,7 +337,7 @@ const Registproduct = () => {
 
           {/* 이미지 업로드 */}
           <div className="form-group">
-            <label>이미지 등록</label>
+            <label>제품이미지 등록</label>
             <ul className="image-list" id="imageList">
               {imageList.map((item, index) => (
                 <li key={index}>
@@ -362,6 +365,18 @@ const Registproduct = () => {
             <button type="button" className="remove-image-btn" onClick={removeCheckedImages} disabled={imageList.length <= 1}>
               선택 이미지 삭제
             </button>
+          </div>
+
+
+          {/* 이미지 업로드 */}
+          <div className="form-group">
+            <label>상세이미지 등록</label>
+            <input
+              type="file"
+              id="itemDetailImage"
+              accept="image/*"
+              required
+            />
           </div>
 
           {/* 제출 버튼 */}

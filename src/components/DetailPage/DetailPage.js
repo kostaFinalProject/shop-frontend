@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import './DetailPage.css';
 import DetailInformation from "./DetailPageLement/DetailInformation.js";
 import ProductSelector from "./DetailPageLement/DetailSelect.js";
@@ -13,7 +13,7 @@ const DetailPage = () => {
     const [relatedArticles, setRelatedArticles] = useState([]);
     const [articlesLoading, setArticlesLoading] = useState(true);
     const [articlesError, setArticlesError] = useState(null);
-
+    const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const itemId = queryParams.get("itemId");
@@ -78,6 +78,10 @@ const DetailPage = () => {
 
     const isAdmin = itemData?.memberGrade === "SUPER_ADMIN" || itemData?.memberGrade === "ADMIN";
 
+    const handleArticleClick = (articleId) => {
+        navigate(`/StyleDetail?articleId=${articleId}`);
+    };
+
     // 슬라이더 이미지 이동 핸들러
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) =>
@@ -100,7 +104,8 @@ const DetailPage = () => {
                 <h3>관련 스타일</h3>
                 <ul className="DetailPage_related_articles_list">
                     {relatedArticles.map((article) => (
-                        <li key={article.articleId} className="DetailPage_related_article_item">
+                        <li key={article.articleId} className="DetailPage_related_article_item" 
+                        onClick={() => handleArticleClick(article.articleId)}>
                             <img src={`/uploads/${article.imageUrl}`} alt="스타일 이미지" className="DetailPage_related_article_image" />
                             <div className="DetailPage_related_article_content">
                                 <p>{article.content}</p>

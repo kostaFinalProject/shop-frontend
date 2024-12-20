@@ -261,9 +261,14 @@ const NewCreate = () => {
 
       if (Array.isArray(data.content)) {
         const filteredResults = data.content.filter((product) =>
-          product.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setSearchResults(filteredResults); // 필터링된 결과 설정
+          product.name.toLowerCase().includes(query.toLowerCase(),
+      ));
+
+        const dataFormat = filteredResults.map((product) => ({
+          ...product,
+          imageUrl: product.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', '')
+        }));
+        setSearchResults(dataFormat); // 필터링된 결과 설정
       } else {
         console.error("검색 결과가 배열이 아닙니다:", data);
         setSearchResults([]);

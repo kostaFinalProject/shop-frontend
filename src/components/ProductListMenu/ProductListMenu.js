@@ -1,15 +1,14 @@
 import React from "react"
 import './ProductListMenu.css';
 
-const ProductListMenu = () => {
+const ProductListMenu = ({totalElements}) => {
+    console.log(totalElements);
     return (
         <>
             {/* ------------------상품 조회수 및 상품 조회------------------ */}
             <div className="ProductListMenu_Product_ListMenu">
                 <div className="ProductListMenu_prdCount">
-                    total 
-                    {/* <strong>{currentItems.length}</strong> */}
-                     items
+                    <h3>Total {totalElements} items</h3>
                 </div>
                 <div className="ProductListMenu_selectArray">
                     <div className="ProductListMenu_sort">
