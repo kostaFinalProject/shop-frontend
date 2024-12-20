@@ -97,6 +97,12 @@
   align-items: center;
 }
 
+.adminrightsection select{
+  height: 35px;
+  width: 80px;
+  margin: 5px 0;
+}
+
 .adminrightsection .contentlist {
   width: 824px;
   display: flex;
@@ -121,7 +127,7 @@
 
 .adminrightsection .profile {
   width: 810px;
-  height: 130px;
+  height: 80px;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;

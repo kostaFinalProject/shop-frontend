@@ -23,6 +23,8 @@ import Admindelivery from "./components/AdminPage/Admindelivery.js";
 
 //태온님이 하신거
 import Signup from "./components/Login/signup";
+import QnAcreate from "./components/QnA/QnACreate.js";
+import QnAdetail from "./components/QnA/QnAdetail.js";
 
 //연규님이 하신거
 import BoardshoppingLi from './components/BoardshoppingList/BoardshoppingLi.js';
@@ -86,6 +88,8 @@ function App() {
 
         {/* 태온님이 하신거 */}
         <Route path="/signup" element={<Signup />} />
+        <Route path="/QnAcreate" element={<QnAcreate />} />
+        <Route path="/QnAdetail" element={<QnAdetail />} />
         {/* 연규님이 하신거 */}
         <Route path="/BoardshoppingLi" element={<BoardshoppingLi />} />
         <Route path="/boardshoppingsearch" element={<BoardshoppingSearch />} />

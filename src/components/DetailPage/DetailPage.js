@@ -24,7 +24,7 @@ const DetailPage = () => {
                 const response = await fetch(`http://localhost:8080/api/v1/items/${itemId}`);
                 if (!response.ok) throw new Error("Failed to fetch item data");
                 const data = await response.json();
-    
+
                 // 이미지 경로 직접 수정
                 data.imageUrls = data.imageUrls.map((url) =>
                     url.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
@@ -33,7 +33,7 @@ const DetailPage = () => {
                     "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
                     ""
                 );
-    
+
                 setItemData(data);
             } catch (err) {
                 setError(err.message);
@@ -41,10 +41,10 @@ const DetailPage = () => {
                 setLoading(false);
             }
         };
-    
+
         fetchData();
     }, [itemId]);
-    
+
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -52,7 +52,7 @@ const DetailPage = () => {
                 const response = await fetch(`http://localhost:8080/api/v1/articles?itemId=${itemId}&size=4`);
                 if (!response.ok) throw new Error("Failed to fetch related articles");
                 const data = await response.json();
-    
+
                 // 이미지 경로 직접 수정
                 const formattedArticles = data.content.map((article) => ({
                     ...article,
@@ -61,7 +61,7 @@ const DetailPage = () => {
                         ""
                     ),
                 }));
-    
+
                 setRelatedArticles(formattedArticles);
             } catch (err) {
                 setArticlesError(err.message);
@@ -69,10 +69,10 @@ const DetailPage = () => {
                 setArticlesLoading(false);
             }
         };
-    
+
         if (itemId) fetchArticles();
-    }, [itemId]);    
-    
+    }, [itemId]);
+
     if (loading) return <div>로딩 중...</div>;
     if (error) return <div>에러가 발생했습니다: {error}</div>;
 
@@ -95,6 +95,14 @@ const DetailPage = () => {
         );
     };
 
+    const handleGoToQnA = () => {
+        // if (isAdmin) {
+        //     alert("관리자는 상품 질문할 수 없습니다.");
+        //     return; // 이동을 막음
+        // }
+        navigate('/QnAcreate', { state: { itemData } }); // QnAcreate 페이지로 이동하면서 itemData 전달
+    };
+
     const renderRelatedArticles = () => {
         if (articlesLoading) return <div>스타일 정보를 로딩 중...</div>;
         if (articlesError) return <div>스타일 데이터를 불러오지 못했습니다: {articlesError}</div>;
@@ -104,8 +112,8 @@ const DetailPage = () => {
                 <h3>관련 스타일</h3>
                 <ul className="DetailPage_related_articles_list">
                     {relatedArticles.map((article) => (
-                        <li key={article.articleId} className="DetailPage_related_article_item" 
-                        onClick={() => handleArticleClick(article.articleId)}>
+                        <li key={article.articleId} className="DetailPage_related_article_item"
+                            onClick={() => handleArticleClick(article.articleId)}>
                             <img src={`/uploads/${article.imageUrl}`} alt="스타일 이미지" className="DetailPage_related_article_image" />
                             <div className="DetailPage_related_article_content">
                                 <p>{article.content}</p>
@@ -202,7 +210,14 @@ const DetailPage = () => {
                 {/* 관련 스타일 */}
                 {renderRelatedArticles()}
                 <ScrollUp />
+
+
+                {!isAdmin && (
+                    <button onClick={handleGoToQnA}>상품 문의</button>
+                )}
             </div>
+
+
         </div>
     );
 };
