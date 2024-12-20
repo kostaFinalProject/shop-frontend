@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from "react";
 import './BoardshoppingLi.css';
-import ClubSelect from "./ClubSelect.js";
 import Pagination from '../Pagination/Pagination.js';
 import ProductListMenu from '../ProductListMenu/ProductListMenu.js';
 import ShoppingList from './ShoppingList';  // ShoppingList 컴포넌트를 가져옵니다.
@@ -11,6 +10,7 @@ const BoardshoppingLi = () => {
     const [items, setItems] = useState([]); // 전체 아이템 상태
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [loading, setLoading] = useState(true); // 로딩 상태
+    const [totalElements, setTotalElements] = useState(0);
 
     // 데이터 가져오기
     useEffect(() => {
@@ -26,9 +26,10 @@ const BoardshoppingLi = () => {
                 // setItems(Object.values(data)); // 데이터 상태 업데이트
                 const updatedArticles = data.content.map((item) => ({
                     ...item,
-                    itemImage: item.repImgUrl.replace("C:\\uploads\\", "")
+                    itemImage: item.repImgUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
                 }));
                 setItems(updatedArticles); // 데이터 상태 업데이트
+                setTotalElements(data.totalElements);
             } catch (error) {
                 console.error("Error fetching items:", error.message);
             } finally {
@@ -67,7 +68,7 @@ const BoardshoppingLi = () => {
 
             {/* ------------------상품 조회수 및 상품 조회------------------ */}
             <div>
-                <ProductListMenu />
+                <ProductListMenu totalElements={totalElements}/>
             </div>
 
             <div className="BoardshoppingLi_container">

@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 const ShoppingList = ({ items }) => {
 
-
-
     return (
         <>
             {/* ------------------아이템 카드------------------  */}
@@ -24,7 +22,7 @@ const ShoppingList = ({ items }) => {
                             </div>
                             <Link to="/detailPage">
                                 <img
-                                    src={item.soldOut ? item.soldOutImage : item.imageUrl}
+                                    src={item.soldOut ? item.soldOutImage : `/uploads/${item.itemImage}`}
                                     alt={item.name}
                                     className="BoardshoppingLi_product_img"
                                 />
