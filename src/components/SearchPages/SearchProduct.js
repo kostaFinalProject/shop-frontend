@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./SearchProduct.css";
 import TotalSearchHead from "./TotalSearchHead.js";
 
@@ -10,6 +11,12 @@ const SearchProduct = () => {
     const [keyword, setKeyword] = useState(""); // 검색 키워드
     const [category, setCategory] = useState(""); // 카테고리 필터
     const pageSize = 20; // 한 페이지에 표시할 상품 수
+    const navigate = useNavigate();
+    const location = useLocation(); // 현재 URL 정보 가져오기
+
+    const handleItemClick = (itemId) => {
+        navigate(`/DetailPage?itemId=${itemId}`);
+    };
 
     // API 호출
     const fetchProducts = async (page) => {
@@ -73,7 +80,8 @@ const SearchProduct = () => {
                     <div className="SearchProduct_board_list" style={{ marginTop: "20px" }}>
                         <ul className="SearchProduct_board_list_body">
                             {products.map((product) => (
-                                <li className="SearchProduct_item" key={product.itemId} style={{ textAlign: "center" }}>
+                                <li className="SearchProduct_item" key={product.itemId} style={{ textAlign: "center" }}
+                                onClick={() => handleItemClick(product.itemId)}>
                                     <div className="SearchProduct_board_img">
                                         {product.itemStatus === "SOLD_OUT" && (
                                             <div className="SearchProduct_board_icon">

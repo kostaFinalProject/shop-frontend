@@ -96,10 +96,6 @@ const DetailPage = () => {
     };
 
     const handleGoToQnA = () => {
-        // if (isAdmin) {
-        //     alert("관리자는 상품 질문할 수 없습니다.");
-        //     return; // 이동을 막음
-        // }
         navigate('/QnAcreate', { state: { itemData } }); // QnAcreate 페이지로 이동하면서 itemData 전달
     };
 
