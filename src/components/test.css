@@ -1,80 +1,211 @@
-.NewCreate_search_cover {
-  position: relative;
-  /* 검색창 컨테이너를 기준으로 검색 결과 배치 */
-  flex-direction: column;
-  width: 80%;
+/* 모달 스타일 */
+.modal {
+  display: none; /* 처음에는 숨겨짐 */
+  position: fixed; /* 고정된 위치 */
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  justify-content: center; /* 세로로 중앙 정렬 */
+  align-items: center; /* 가로로 중앙 정렬 */
+  display: flex; /* flexbox 활성화 */
+  z-index: 1000; /* 다른 요소들 위에 표시 */
+}
+
+/* 모달 내용 */
+.modal-content {
+  background-color: #fff;
+  width: 700px;
+  height: 800px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+/* 탭 스타일 */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #ddd;
+}
+
+.tab-link {
+  width: 350px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.tab-link.active {
+  background-color: #ddd;
+}
+
+/* 페이지 스타일 */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+
+article  {
+  width: 600px;
+  display: block;
+  height: auto;
+
+}
+
+/* ----------------------------social_title---------------------------- */
+.social_title {
+  width: 600px;
+}
+
+/* ----------------------social_head----------------- */
+.social_head {
+  width: 100%;
+  height: 68px;
+  margin: 12px 0 12px 0;
   display: flex;
   align-items: center;
-  padding-left: 20px;
 }
-
-.search-results {
-  width: 90%;
-  /* 검색창과 같은 너비로 설정 */
-  background-color: white;
-  /* 검색 결과 배경색 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* 그림자 추가 */
-  z-index: 10;
-  /* 다른 요소 위로 나오도록 설정 */
-  list-style: none;
-  /* 기본 리스트 스타일 제거 */
-  margin: 0;
-  /* 외부 여백 제거 */
-  padding: 0;
-  /* 내부 여백 제거 */
-}
-
-.search-result-item {
-  padding: 8px 12px;
-  /* 아이템 내부 여백 */
-  cursor: pointer;
-  /* 클릭 가능한 스타일 */
-}
-
-.search-result-item:hover {
-  background-color: #f0f0f0;
-  /* 호버 시 배경색 */
-}
-
-
-
-.NewCreate_selected_products {
-  width: 140px;
-  height: 210px;
+.profile_img {
+   width: 10%;
+  height: 50px;
   display: flex;
-  flex-direction: column;
+  text-align: center;
 
+  
 }
-
-.StyleDetail_Lookup_List_Item:hover {
-  cursor: pointer;
-}
-
-.StyleDetail_Lookup_List_Img {
+.profile_img img {
+  border-radius: 50px;
+  justify-content: center;
   object-fit: cover;
-  width: 140px;
-  height: 140px;
-  padding-bottom: 5px;
+}
+.profile_text {
+  width: 80%;
+  display: block;
+  text-align: left;
+  margin-left: 20px;
 }
 
-.StyleDetail_Lookup_List_Img img {
-  width: 140px;
-  height: 140px;
+.follow_btn{
+  background-color: black;
+  color: white;
+  font-size: 13px;
+  width: 65px;
+  height: 35px;
+  margin-left: 10px;
   border-radius: 10px;
 
 }
 
-.StyleDetail_Lookup_List_Content {
-
+/* ----------------------social_body----------------- */
+.social_body {
+  width: 600px;
+  padding: 10px 0 10px 0;
+}
+.main_img img {
+  width: 550px;
+  height: 550px;
+  object-fit: cover;
+}
+.main_img_list {
+  width: 500px;
   height: 30px;
-  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 10px 0;
+}
+
+/* ---------------------interest-----------------  */
+.interest{
+  padding: 10px 0 10px 0;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.interest_like {
+  width: 100px;
+  height: 100%;
+}
+.interest_attention {
+  width: 100px;
+  height: 100%;
+}
+.interest_comment {
+  width: 100px;
+  height: 100%;
+}
+/* ---------------------social_text----------------- */
+.social_text{
+  width: 100%;
+  height: 100px;
+
 
 }
 
-.StyleDetail_Lookup_List_Price {
-  height: 20px;
-  font-size: 10px;
+.text_title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
 
+.text_tag {
+  font-size: 15px;
+}
+
+/* ----------------------------social_container---------------------------- */
+.social_container{
+  width: 640px;
+  height: 300px;
+
+  border-top: 1px solid #B5B6B5;
+  display: block;
+  
+  padding-bottom: 20px;
+}
+.container_title{
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 640px;
+  font-size: 20px;
+  font-weight: bold;
+
+}
+.container_img{
+  width: 640px;
+  height: 200px;
+  display: flex;
+  list-style-position: initial;
+  gap: 10px;
+
+
+}
+.container_img li {
+  list-style: none;
+}
+.container_img img {
+  height: 200px;
+  width: 150px;
+  object-fit: cover;
+}
+
+.modal-content .SearchProfile_full {
+  margin: 0 auto;
+  padding: 0;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
 }
