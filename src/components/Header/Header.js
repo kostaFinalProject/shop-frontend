@@ -8,6 +8,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [visibleSubmenu, setVisibleSubmenu] = useState(null); // 현재 보이는 하위 카테고리
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태
+  const [memberId, setMemberId] = useState(null);
   const refreshAccessToken = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
@@ -48,7 +49,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
       if (!accessToken || !refreshToken) {
         setIsLoggedIn(false);
-        return;
+        return null;
       }
 
       try {
@@ -64,7 +65,10 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
         if (userResponse.ok) {
           // 회원 정보 조회 성공
+          const userData = await userResponse.json();
           setIsLoggedIn(true);
+          setMemberId(userData.memberId);
+          return userData.memberId;
         } else {
           // AccessToken 만료로 인한 실패 시
           const refreshResponse = await fetch("http://localhost:8080/api/v1/members/refresh-token", {
@@ -92,7 +96,9 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
             });
 
             if (retryResponse.ok) {
+              const retryData = await retryResponse.json();
               setIsLoggedIn(true);
+              return retryData.memberId;
             } else {
               throw new Error("회원 정보 조회 실패");
             }
@@ -106,10 +112,21 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         setIsLoggedIn(false);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        return null;
       }
     };
 
-    initializeLoginState();
+    const fetchMemberId = async () =>{
+      const memberId = await initializeLoginState();
+      if(memberId){
+        console.log("현재 사용자 memberId",memberId);
+        //여기서 memberId로 필요한 작업 수행
+      }else{
+        console.warn("로그인 상태가 아니거나memberId를가져오지 못했습니다.")
+      }
+    }
+
+    fetchMemberId();
   }, [setIsLoggedIn]);
 
   // 카테고리 클릭 시 처리
