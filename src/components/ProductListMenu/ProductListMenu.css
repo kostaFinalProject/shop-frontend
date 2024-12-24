@@ -3,7 +3,7 @@
 
 .ProductListMenu_Product_ListMenu {
 
-    height: 50px;
+    height: 70px;
     width: 1330px;
     display: flex;
     justify-content: space-between;
@@ -12,7 +12,6 @@
     align-items: center;
     margin: 0 auto;
     /* 가로 중앙 정렬 */
-
 }
 
 .ProductListMenu_prdCount {
@@ -29,20 +28,22 @@
 }
 
 .ProductListMenu_selectArray{
-
     padding-right: 30px;
     
+  
 }
 
 .ProductListMenu_selArray {
+
   
     background: none;
     /* 배경 초기화 */
     border: 1px solid #ccc;
     /* 필요 시 추가 */
-    height: 40px;
+    height: 35px;
     font-size: 14px;
-
+    width: 120px;
+    border-radius: 5px;
 }
 
 .ProductListMenu_selArray_displaynone {

@@ -1,99 +1,149 @@
 
 /* -------------------sns_container---------------- */
 .SearchStyle_sns_container{
-    margin: 20px auto;
+    margin: 0 auto;
     padding: 0;
     height: auto;
     width: 1280px;   
     display: flex;
-   
+    
+
 }
 
-
-.SearchStyle_detail_page_review_list_body {
-    margin: 0 20px;
+.SearchStyle_sns_list_body {
+    margin: 0 auto;
     width: 100%;
     max-width: 1280px;
+    padding-left: 10px;
     height: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;  
+
+}
+.SearchStyle_No_item{
+    font-size: 15px;
 }
 
-.SearchStyle_detail_page_review_list_item {
-    flex: 1 1 calc(25% - 20px);
-    max-width: calc(25% - 20px);
-    padding: 0;
-    height: 400px;
+/* 아이템 시작 */
+.SearchStyle_sns_list_item {
+
+    width: 300px;
+    height: 430px;
     text-align: center;
     list-style: none;
-    border-style: solid;
+    border: 1px solid #999;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
+.SearchStyle_sns_list_item:hover{
+    cursor: pointer;
 }
 
-.SearchStyle_detail_page_review_list_item_img img {
-    width: 280 px;
+/* 프로필 이미지 */
+.SearchStyle_sns_profile{
+    width: 100%;
+    height: 40px;
+    display: flex;
+
+    margin: 5px;
+}
+.SearchStyle_sns_profile_img_box{
+    width: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.SearchStyle_sns_profile_img {
+    justify-content: center;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+
+}
+.SearchStyle_sns_profile_id_box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.SearchStyle_sns_profile_id {
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+/* -------아이템 이미지--------------- */
+
+
+.SearchStyle_sns_list_item_img_box {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 290px;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+}
+.SearchStyle_sns_list_item_img{
+    width: 280px;
     height: 280px;
-    margin-top: 10px;
     object-fit: contain;
     background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: 20px;
-    
+ 
 }
 
-/* -------------------리뷰 리스트 --------------- */
+/* -------------------아이템 정보 리스트 --------------- */
 
+.SearchStyle_sns_content {
 
-
-.SearchStyle_detail_page_review_content {
-    width: 270px;
-    height: 50px;
+    width: 280px;
+    height: 70px;
     margin: 0 auto;
     padding: 0;
     display: block;
     justify-content: center;
 
+    padding-top: 5px;
 }
 
-.SearchStyle_detail_page_review_title {
+.SearchStyle_sns_title {
     width: 100%;
     padding: 0;
-    height: 28px;
-    margin-top: 5px;
+    height: 50px;
     display: flex;
     justify-content: flex-start;
-    text-align: center;
-    align-items: center;    
+    text-align: left;
+    align-items: center;  
+
+    overflow: hidden;  
+    text-overflow: ellipsis;
 
 }
 
-.SearchStyle_detail_page_review_title_img {
-    justify-content: center;
-    border-radius: 100px;
-    width: 28px;
-    height: 28px;
+.SearchStyle_sns_body_text{
+    width: 82%;
+}
+
+.SearchStyle_sns_title_like {
+    width: 15%;
+    padding-left: 5px;
 
 }
 
-.SearchStyle_detail_page_review_title_id {
-    width: 75%;
-    margin-left: 5px;
-    text-align: justify;
-}
-
-.SearchStyle_detail_page_review_title_like {
-
-    /* 만약 좋아요 script 기능 한 후 아이콘 벗어날 시 
-    위의 아이디와 라이크 width 조정하거나 다시 정렬 */
-
-}
-
-.SearchStyle_detail_page_review_body_tag {
+.SearchStyle_sns_body_tag {
     width: 100%;
     font-size: 13px;
-    margin-top: 10px;
-    height: 40px;
+    height: 20px;
     text-align: left;
+
+    overflow: hidden;  
+    text-overflow: ellipsis;
+
 }

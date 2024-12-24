@@ -154,55 +154,48 @@ const StyleMain = () => {
                     <span><a href="#">최신순</a></span>
                 </div>
             </div>
-
-            {/* ---------------------- SNS 형식 후기글 ------------------ */}
-            {/* <div className="StyleMain_sns_container">
-                <ul className="StyleMain_detail_page_review_list_body">
-                    {selectedTeam ? (
-                        <ProfilePosts />
-                    ) : (
-                        <p>팀을 선택해주세요.</p>
-                    )}
-                </ul>
-            </div> */}
-
-<div className="SearchStyle_sns_container">
-                <ul className="SearchStyle_detail_page_review_list_body">
+            {/* -------------------sns_container---------------- */}
+            <div className="StyleMain_sns_container">
+                <ul className="StyleMain_sns_list_body">
                     {articles.map((article) => (
                         <li
                             key={article.articleId}
-                            className="SearchStyle_detail_page_review_list_item"
+                            className="StyleMain_sns_list_item"
                             onClick={() => handleArticleClick(article.articleId)}
                         >
-                            <div className="SearchStyle_detail_page_review_title" style={{ margin: "5px" }}>
-                                <img
-                                    src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
-                                    alt={article.memberName}
-                                    className="SearchStyle_detail_page_review_title_img"
-                                />
-                                <span className="SearchStyle_detail_page_review_title_id">{article.memberName}</span>
+                            <div className="StyleMain_sns_profile" >
+                                <div className="StyleMain_sns_img_box">
+                                    <img
+                                        src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
+                                        alt={article.memberName}
+                                        className="StyleMain_sns_profile_img"
+                                    />
+                                </div>
+                                <div className="StyleMain_sns_profile_id_box">
+                                    <span className="StyleMain_sns_profile_id">{article.memberName}</span>
+                                </div>
                             </div>
-                            <div className="SearchStyle_detail_page_review_list_item_img">
+
+                            <div className="StyleMain_sns_item_img_box">
                                 <img
-                                    style={{ borderStyle: "solid", borderRadius: "0", width: "280px", height: "280px" }}
                                     src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://fakeimg.pl/150x150/"}
                                     alt={article.content}
-                                    className="SearchStyle_detail_page_review_list_item_img_img"
+                                    className="StyleMain_sns_item_img"
                                 />
                             </div>
-                            <div className="SearchStyle_detail_page_review_content">
-                                <div className="SearchStyle_detail_page_review_title">
-                                    <p className="SearchStyle_detail_page_review_body_text" style={{ paddingRight: "165px" }}>
+                            <div className="StyleMain_sns_content">
+                                <div className="StyleMain_sns_title">
+                                    <p className="StyleMain_sns_body_text" >
                                         {article.content}
                                     </p>
-                                    <span className="SearchStyle_detail_page_review_title_like">
+                                    <span className="StyleMain_sns_title_like">
                                         {article.likeId ? "❤️" : "♡"} {article.likeCount}
                                     </span>
                                 </div>
 
-                                <p className="SearchStyle_detail_page_review_body_tag">
+                                <p className="StyleMain_sns_body_tag">
                                     {article.hashtags.map((hashtag, index) => (
-                                        <span key={index} className="SearchStyle_card_hashtag">
+                                        <span key={index} className="StyleMain_sns_card_hashtag">
                                             {`${hashtag} `}
                                         </span>
                                     ))}

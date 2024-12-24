@@ -28,7 +28,6 @@ import QnAdetail from "./components/QnA/QnAdetail.js";
 
 //연규님이 하신거
 import BoardshoppingLi from './components/BoardshoppingList/BoardshoppingLi.js';
-import BoardshoppingSearch from './components/BoardshoppingSearch/BoardshoppingSearch.js';
 import DetailPage from './components/DetailPage/DetailPage.js';
 import NewCreate from './components/NewCreate/NewCreate.js';
 import QnA from './components/QnA/QnA.js';
@@ -92,14 +91,13 @@ function App() {
         <Route path="/QnAdetail" element={<QnAdetail />} />
         {/* 연규님이 하신거 */}
         <Route path="/BoardshoppingLi" element={<BoardshoppingLi />} />
-        <Route path="/boardshoppingsearch" element={<BoardshoppingSearch />} />
         <Route path="/detailpage" element={<DetailPage />} />
         <Route path="/NewCreate" element={<NewCreate />} />
         <Route path="/UpdateArticle/:articleId" element={<UpdateArticle />} />
         <Route path="/QnA" element={<QnA />} />
         <Route path="/SearchProduct" element={<SearchProduct />} />
         <Route path="/SearchProfile" element={<SearchProfile />} />
-        <Route path="/SearchStyle" element={<SearchStyle />} ㅎ />
+        <Route path="/SearchStyle" element={<SearchStyle />} />
         <Route path="/TotalSearchHead" element={<TotalSearchHead />} />
         <Route path="/StyleDetail" element={<StyleDetail />} />
         <Route path="/StyleMain" element={<StyleMain />} />

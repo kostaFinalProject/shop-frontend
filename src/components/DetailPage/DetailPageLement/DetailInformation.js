@@ -11,6 +11,8 @@ const DetailInformation = ({ product }) => {
         discountPercent,
         discountPrice,
     } = product;
+    
+    // console.log("상품 정보에서 받은 product",product)
 
     // 적립금 계산을 위한 실제 가격
     const appliedPrice = discountPercent > 0 ? discountPrice : productPrice;
@@ -29,10 +31,10 @@ const DetailInformation = ({ product }) => {
     return (
         <>
             <div className="DetailInformation_productName">
-                <h2 id="detail_name">{productName}</h2>
+                <h2 >{productName}</h2>
             </div>
             <div className="DetailInformation_productSeller">
-                <p id="detail_seller">{productSeller}</p>
+                <p >{productSeller}</p>
             </div>
             <div className="DetailInformation_productPrice">
                 {discountPercent > 0 ? (

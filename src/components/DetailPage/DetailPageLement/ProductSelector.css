@@ -1,0 +1,173 @@
+.ProductSelector_inner {
+    width: 100%;
+    max-width: 640px;
+    height: 100px;
+}
+
+.ProductSelector_option {
+    text-align: left;
+    width: 100%;
+    max-width: 640px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.ProductSelector_Size_Title {
+    width: 100%;
+    height: 50%;
+    font-size: 20px;
+    padding: 10px 0;
+
+}
+
+.ProductSelector_select {
+    width: 100%;
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+
+
+/* ------------------------------------------------------------------------- */
+
+.ProductSelector_list {
+    height: 120px;
+    font-size: 10px;
+    width: 100%;
+    max-width: 640px;
+    padding-top: 10px;
+
+    border-top: 1px solid #B5B6B5;
+
+}
+
+.ProductSelector_NewOption {
+    width: 100%;
+    height: 100px;
+    display: flex;
+}
+
+.ProductSelector_name {
+    width: 65%;
+    height: 100px;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.ProductSelector_title {
+    font-size: 16px;
+}
+
+.ProductSelector_size {
+    font-size: 12px;
+    color: #B5B6B5;
+}
+
+/* --------------------옵션 버튼-------------- */
+
+.ProductSelector_list_quantity {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.ProductSelector_quantityInput {
+    width: 30px !important;
+    height: 25px;
+    font-size: 14px !important;
+    text-align: center !important;
+    margin-left: 10px !important;
+    all: unset;
+}
+
+.ProductSelector_increaseBtn,
+.ProductSelector_decreaseBtn {
+    font-size: 11px !important;
+    all: unset;
+}
+
+.ProductSelector_increaseBtn {
+    margin-right: 10px;
+}
+
+.ProductSelector_increaseBtn:hover,
+.ProductSelector_decreaseBtn:hover {
+    cursor: pointer;
+    transform: scale(1.5);
+}
+
+.ProductSelector_remove {
+    text-align: right;
+    width: 20px;
+    height: 20px;
+    font-size: 15px;
+    background-color: inherit;
+    border: none;
+    color: #B5B6B5;
+
+
+}
+
+.ProductSelector_remove:hover {
+    cursor: pointer;
+    transform: scale(1.5);
+}
+
+.ProductSelector_total_count {
+    width: 20%;
+    font-size: 14px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.ProductSelector_total_price {
+    font-size: 18px;
+
+}
+
+.ProductSelector_total_rewardRate {
+    margin-top: 3px;
+    font-size: 9px;
+}
+
+
+
+.ProductSelector_summary {
+    width: 100%;
+    max-width: 640px;
+    text-align: end;
+
+}
+
+.ProductSelector_summary_Total_head {
+    width: 100%;
+    max-width: 640px;
+    height: 25px;
+    font-size: 12px;
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+}
+
+.ProductSelector_summary_Quantity {}
+
+.ProductSelector_summary_Price {
+    width: 100%;
+    max-width: 640px;
+    height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+
+}

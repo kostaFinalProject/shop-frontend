@@ -1,15 +1,149 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, data } from "react-router-dom";
 import "./MyPageIntro.css";
 
 const MyPageIntro = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [header, setHeader] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  // headers를 가져오는 함수
+  const getHeaders = async () => {
+    const headers = { "Content-Type": "application/json" };
+
+    if (accessToken && refreshToken) {
+      try {
+        // refreshToken으로 accessToken 갱신 시도
+        const newAccessToken = await refreshAccessToken(refreshToken);
+        if (newAccessToken) {
+          localStorage.setItem("accessToken", newAccessToken);
+          headers["Authorization"] = newAccessToken;
+          headers["Refresh-Token"] = refreshToken;
+        } else {
+          // 갱신 실패 시 로그아웃 처리
+          localStorage.clear();
+          window.location.href = "/login";
+          return null;
+        }
+      } catch (error) {
+        console.error("Error handling tokens:", error);
+        localStorage.clear();
+        window.location.href = "/login";
+        return null;
+      }
+    }
+
+    return headers;
+  };
+
+  const refreshAccessToken = async (refreshToken) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/members/refresh-token", {
+        method: "POST",
+        headers: {
+          "Refresh-Token": refreshToken
+        }
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        return data.newToken;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error refreshing access token:", error);
+      return null;
+    }
+  };
+
+  // 사용자 정보를 가져오는 함수
+  const fetchCurrentUser = async () => {
+    const headers = await getHeaders();
+    if (!headers) return;
+
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/members", {
+        method: "GET",
+        headers: headers
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setCurrentUser(data);
+      } else {
+        setCurrentUser(null);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setCurrentUser(null);
+    }
+  };
+
+  useEffect(() => {
+    const initializePage = async () => {
+      const headers = await getHeaders();
+      if (!headers) return;
+
+      setHeader(headers);
+
+      // 현재 사용자 정보 가져오기
+      await fetchCurrentUser();
+
+      const targetId = extractTargetId();
+
+      // 특정 targetId에 대한 데이터 가져오기
+      function extractTargetId() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('targetId');
+      }
+
+      if (targetId) {
+        try {
+          const response = await fetch(`http://localhost:8080/api/v1/members/profile/${targetId}`, {
+            method: "GET",
+            headers: headers,
+          });
+          const mypagedata = await response.json();
+          setCurrentUser((prev) => ({
+            ...prev,
+            ...mypagedata, // 기존 currentUser에 mypagedata 병합
+          }));
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    initializePage();
+  }, []);
+
+  // 데이터가 로드된 후 렌더링
+  if (!currentUser) return <div>Loading...</div>;
+
+  const profileImageUrl = currentUser.memberProfileImageUrl
+    ? currentUser.memberProfileImageUrl.replace(
+      "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+      ""
+    )
+    : "https://fakeimg.pl/150x150/";
+
+  if (!currentUser) {
+    return <div>Loading...</div>;
+  }
+
+  console.log("currentUser", currentUser);
 
 
   return (
     <div className="MyPageIntrocontainer">
       <div id="content" className="-frame">
         <section className="manuwrap">
-          <h3>마이페이지</h3>
+          <h3>마이 페이지</h3>
           <article className="myshopmain">
             <h4>나의 쇼핑활동</h4>
             <ul>
@@ -68,18 +202,19 @@ const MyPageIntro = () => {
           <article>
             <div className="profile">
               <div className="profile_img">
-                <img src="https://fakeimg.pl/150x150/" alt="" />
+                <img src={profileImageUrl} alt="Profile" />
               </div>
 
-              <div class="profile_text">
-
+              <div className="profile_text">
                 <div className="profile_head">
-                  <span className="profile_nickname" id="nickname">j___c_y</span>
+                  <span className="profile_name" id="name">
+                    {currentUser.name}
+                  </span>
                 </div>
 
                 <div className="profile_information">
-                  <p id="id">jco0807</p>
-                  <p id="comment">@j___c_y</p>
+                  <p>{currentUser.nickname}</p>
+                  <p>{currentUser.introduction}</p>
                 </div>
               </div>
 
@@ -101,9 +236,9 @@ const MyPageIntro = () => {
 
             <div>
               <p>
-                <b className="mambername">나 </b>
-                님은
-                <span className="membergrade">[normal] </span>
+                <b className="mambername">{currentUser.name}&nbsp;</b>
+                님은&nbsp;
+                <span className="membergrade">{currentUser.pointGrade}&nbsp;</span>
                 등급입니다.
               </p>
               <ul className="displaynone">
@@ -118,26 +253,13 @@ const MyPageIntro = () => {
                 <li>
                   <a href="">
                     <span className="tit">총주문</span>
-                    <span>
-                      <span className="orderprice">0원</span>(
-                      <span className="ordercount">0</span>
-                      회)
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a href="">
-                    <span className="tit">쿠폰</span>
-                    <span>
-                      <span>0</span>
-                      <em>개</em>
-                    </span>
+                      <span className="orderprice">{currentUser.payment}&nbsp;원</span>
                   </a>
                 </li>
                 <li>
                   <a href="">
                     <span className="tit">적립금</span>
-                    <span className="mileage">3,000원</span>
+                    <span className="mileage">{currentUser.point}&nbsp;원</span>
                   </a>
                 </li>
               </ul>
@@ -239,39 +361,6 @@ const MyPageIntro = () => {
               </div>
             </div>
           </article>
-          {/* <article>
-            <div className="title">
-              내가 쓴 게시글
-              <span className="desc">최근 게시글 5개 출력 </span>
-              <span className="desc" />
-              <a href="">+ more</a>
-            </div>
-            <div className="listwrap">
-              <div className="ec-base-table typelist">
-                <table border={0} summary="">
-                  <colgroup>
-                    <col style={{ width: "10%" }} />
-                    <col style={{ width: "15%" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "15%" }} />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th scope="col">번호</th>
-                      <th scope="col">분류</th>
-                      <th scope="col">제목</th>
-                      <th scope="col">작성일</th>
-                    </tr>
-                  </thead>
-                  <tbody className="data" />
-                </table>
-                <p className="loading" style={{ display: "none" }}>
-                  <i className="xi-spinner-3 xi spin" />
-                </p>
-                <p className="empty">게시물이 없습니다.</p>
-              </div>
-            </div>
-          </article> */}
         </section>
       </div>
     </div>

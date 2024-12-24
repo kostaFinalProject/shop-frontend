@@ -123,6 +123,8 @@ const Registproduct = () => {
     const price = parseFloat(document.getElementById("price").value);
     const manufacturer = document.getElementById("manufacturer").value;
 
+    //판매자 seller 가져오기
+    const seller = document.getElementById("seller").value;
     // 사이즈별 수량 값 가져오기
     const sizes = ["XS", "S", "M", "L", "XL", "2XL"];
     const stockQuantities = sizes.map(size => {
@@ -166,6 +168,7 @@ const Registproduct = () => {
       name,
       price,
       manufacturer,
+      seller,
       itemSizes: stockQuantities,
     };
     formData.append("item", new Blob([JSON.stringify(item)], { type: 'application/json' }));

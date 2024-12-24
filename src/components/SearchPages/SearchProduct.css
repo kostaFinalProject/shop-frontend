@@ -7,19 +7,26 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+.SearchProduct_summary{
+    margin-bottom: 10px;
+
+}
+.SearchProduct_board_list_wrap{
+    margin-bottom: 20px;
+}
+.SearchProduct_board_list{
+    margin-top: 20px;
+    
+}
+
+.SearchProduct_No_item{
+
+    font-size: 15px;
 
 }
 
 /* board */
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.SearchProduct_board_list_body .SearchProduct_item:hover {
-    cursor: pointer;
-}
-
 .SearchProduct_board_list_body {
     display: flex;
     flex-wrap: wrap;
@@ -30,27 +37,24 @@ a {
     justify-content: left;
 
 }
-
 /* -----------------아이템 카드------------------  */
-.SearchProduct_board_list_body .SearchProduct_item {
+.SearchProduct_item {
 
     margin: 0 0 40px 0;
     padding: 0 5px 0 5px;
     width: 230px;
-    height: 370px;
+    height: 330px;
     font-size: 0;
-    /* border: 2px solid #eee; */
-
+   text-align: center;
     box-sizing: border-box;
+
 }
 
-.SearchProduct_board_list_body .SearchProduct_item>div {
-    display: inline-block;
-    text-align: center;
-    font-size: 14px;
+.SearchProduct_item:hover {
+    cursor: pointer;
 }
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_img {
+.SearchProduct_board_box {
     width: 230px;
     height: 230px;
     margin: 0 auto;
@@ -64,8 +68,7 @@ a {
 
 }
 
-
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_icon .SearchProduct_sold_out_icon {
+.SearchProduct_sold_out_icon {
 
     width: 30%;
     /* align-items: center; */
@@ -81,7 +84,7 @@ a {
     filter: blur(3px);
 }
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_img .SearchProduct_product_img {
+.SearchProduct_product_img {
     max-width: 100%;
     /* 최대 너비를 100%로 설정하여 부모 요소의 크기에 맞게 확장 */
     max-height: 100%;
@@ -94,76 +97,76 @@ a {
     /* 이미지 반복하지 않도록 설정 */
     background-position: center;
     /* 이미지를 요소 중앙에 배치 */
+            
+
 }
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_content {
+.SearchProduct_board_content {
     display: flex;
     flex-direction: column;
     font-size: 15px;
-    height: 105px;
-    width: 230px;
+    height: 100px;
+    width: 220px;
     line-height: 18px;
     margin: 0 auto;
     margin-top: 13px;
     padding: 0;
-    row-gap: 10px;
+    row-gap: 5px;
 
 }
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_title {
+.SearchProduct_board_title {
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
-    height: 40px;
+    height: 38px;
     width: 100%;
     line-height: 18px;
     margin: 0;
     padding: 0;
     text-align: left;
 
+    /* white-space: nowrap; */
+    /* white-space 는 줄을 ...으로 보여주긴 하나 그럼 상품정보가 너무 안보임 나중에 결정 */
+    overflow: hidden;  
+    text-overflow: ellipsis;
 }
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price {
+.SearchProduct_board_price {
     display: flex;
     flex-wrap: wrap;
     font-size: 13px;
-    height: 18px;
+    height: auto;
     width: 100%;
     margin: 0;
     padding: 0;
     position: relative;
-    row-gap: 5px;
     text-align: left;
 
 }
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price>span {
-    padding-left: 10px;
-}
-
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price>span:first-child {
-    padding-left: 0;
+.SearchProduct_original_price{
     text-decoration: line-through;
+    color: #aaa;
 }
-
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_name {
+.SearchProduct_discount_info{
+    padding-left: 10px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+.SearchProduct_discount_final{
+    font-size: 14px;
+    font-weight: bold;
+}
+.SearchProduct_board_name {
+    color: #B5B6B5;
     font-size: 13px;
     height: 18px;
     width: 100%;
     margin: 0;
     padding: 0;
     text-align: left;
-
 }
 
-/* 할인 정보 */
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price > span:first-child {
-    text-decoration: line-through;
-    color: #aaa;
-}
 
-.SearchProduct_board_list_body .SearchProduct_item .SearchProduct_board_price > span.discount_info {
-    color: #e74c3c;
-    font-weight: bold;
-    margin-left: 8px;
-}
+

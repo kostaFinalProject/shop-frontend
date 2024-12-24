@@ -7,7 +7,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [subCategories, setSubCategories] = useState({}); // 하위 카테고리
   const [visibleSubmenu, setVisibleSubmenu] = useState(null); // 현재 보이는 하위 카테고리
   const navigate = useNavigate();
-  const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태
+
   const refreshAccessToken = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
@@ -118,18 +118,9 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     if (!subCategories[categoryId]) {
       fetchChildrenCategories(categoryId); // 하위 카테고리 가져오기
     }
-
+    
   };
-
-  // 하위 카테고리 
-  const handleSubCategoryClick = (categoryName) => {
-    setVisibleSubmenu((prev) => (prev === categoryName ? null : categoryName)); // 토글
-    if (!subCategories[categoryName]) {
-      fetchChildrenCategories(categoryName); // 하위 카테고리 가져오기
-    }
-    navigate(`/BoardshoppingLi?categoryId=${categoryName}`);
-  };
-
+ 
   document.addEventListener("DOMContentLoaded", () => {
     const categoryLinks = document.querySelectorAll(".category-link");
 
@@ -186,7 +177,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           categoryName: item.categoryName,
           imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
         }));
-        console.log("updatedData", updatedData);
+        console.log(updatedData);
         setSubCategories((prev) => ({
           ...prev,
           [categoryId]: updatedData, // 해당 상위 카테고리 ID에 하위 카테고리 저장
@@ -238,13 +229,6 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   };
 
-  {/* 통합검색 핸들러 */}
-  const handleSearch  = (event) => {
-    event.preventDefault();
-    if (searchKeyword.trim()) {
-      navigate(`/SearchProduct?keyword=${searchKeyword}`); // 검색 페이지로 이동
-    }
-  };
   return (
     <header>
       <div className="headerContainer">
@@ -254,17 +238,13 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
               <img src="https://fakeimg.pl/150x35/" alt="logo" />
             </a>
           </div>
-
-    {/* 통합검색 */}
           <div className="TotalSearchHead_search">
-            <form onSubmit={handleSearch}>
+            <form action="">
               <div className="TotalSearchHead_search_container">
                 <input
                   className="TotalSearchHead_search_input"
                   type="text"
                   placeholder="Search"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)} // 검색어 업데이트
                 />
               </div>
             </form>
@@ -317,7 +297,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
               <li id="aaa">
                 <a href="#" id="category">
                   <img src="/img/list.svg" alt="카테고리 아이콘" />
-                  <span style={{ marginRight: "20px" }}>ALL</span>
+                  <span style={{ marginRight: "20px" }}>카테고리</span>
                 </a>
               </li>
               <li style={{ color: "#e2e2e2", transform: "translateX(18px)" }}>
@@ -348,7 +328,6 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                     >
                       {(subCategories[category.parentCategoryId] || []).map((sub) => (
                         <li key={sub.categoryId}
-                          onClick={() => handleSubCategoryClick(sub.categoryName)} // 이렇게 수정해야 합니다
                           className="subcategory"
                           style={{
                             width: "100px",
@@ -359,10 +338,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                         >
                           <a href="#">
                             <div className="categorycircle">
-                              <img
-                                src={`/uploads/${sub.imageUrl}`}
-                                alt={sub.categoryName}
-                              />
+                              <img src={`/uploads/${sub.imageUrl}`} alt={sub.imageUrl} />
                             </div>
                             <div>{sub.categoryName}</div>
                           </a>
@@ -374,11 +350,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
               ))}
             </ul>
           </nav>
-       
+          <div>
+            <a href="/BoardshoppingLi" >쇼핑리스트</a>
+          </div>
           <div className="communitysection">
             <ul>
-            <a href="/" >HOME</a>
-            <a href="/BoardshoppingLi" >SHOP</a>
               <a href="/StyleMain">STYLE</a>
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ScrollUp.css";
+import { FaArrowUp } from "react-icons/fa";
 
 const ScrollUp = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,7 +36,7 @@ const ScrollUp = () => {
       onClick={scrollToTop}
       style={{ display: isVisible ? "block" : "none" }} // 버튼 표시 여부
     >
-      UP
+      <FaArrowUp />
     </button>
   );
 };

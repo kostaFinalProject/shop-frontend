@@ -10,9 +10,23 @@ const SearchStyle = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation(); // 현재 URL 정보 가져오기
+    const [keyword, setKeyword] = useState("");
+
+    const queryParams = new URLSearchParams(location.search); // queryParams 먼저 선언
+    const keywordFromUrl = queryParams.get("keyword");
+
+    console.log("URLSearchParams", URLSearchParams);
+    console.log("queryParams", queryParams);
+    console.log("keywordFromUrl", keywordFromUrl);
+    // URL에서 쿼리 파라미터로 받은 keyword 값 처리
+    useEffect(() => {
+        if (keywordFromUrl) {
+            setKeyword(keywordFromUrl); // URL에서 받은 검색어를 상태에 설정
+        }
+    }, [location.search]); // location.search가 바뀔 때마다 실행
+
 
     // URL에서 tag 또는 item 값 추출
-    const queryParams = new URLSearchParams(location.search);
     const tag = queryParams.get("tag");
     const item = queryParams.get("item");
 
@@ -80,6 +94,11 @@ const SearchStyle = () => {
                 url.searchParams.append("item", item);
             }
 
+            // 검색어(keyword)가 있을 경우, 쿼리 파라미터에 추가
+            if (keyword) {
+                url.searchParams.append("keyword", keyword);
+            }
+
             const response = await fetch(url.toString(), {
                 method: "GET",
                 headers: headers,
@@ -108,7 +127,16 @@ const SearchStyle = () => {
                     hashtags: article.hashtags || [],
                 }));
 
-                setArticles((prev) => [...prev, ...updatedArticles]);
+                let filteredProducts = updatedArticles;
+                //keyword가 있을 때만 필터링 적용
+                if (keywordFromUrl) {
+                    filteredProducts = updatedArticles.filter((updatedArticles) =>
+                        updatedArticles.content.toLowerCase().includes(keywordFromUrl.toLowerCase())
+                    );
+                }
+
+                // setArticles((prev) => [...prev, ...updatedArticles]);
+                setArticles((prev) => [...prev, ...filteredProducts]);
                 setLastPage(data.last);
                 setPage((prev) => prev + 1);
             } else if (response.status === 401) {
@@ -141,53 +169,65 @@ const SearchStyle = () => {
         fetchArticles();
     }, [tag, item]); // tag 또는 item이 변경될 때 데이터 새로 로드
 
+    useEffect(() => {
+        fetchArticles();
+    }, [keyword]); // keyword가 변경될 때마다 데이터 새로 로드
+
     return (
         <>
             <TotalSearchHead />
             <div className="SearchStyle_sns_container">
-                <ul className="SearchStyle_detail_page_review_list_body">
-                    {articles.map((article) => (
-                        <li
-                            key={article.articleId}
-                            className="SearchStyle_detail_page_review_list_item"
-                            onClick={() => handleArticleClick(article.articleId)}
-                        >
-                            <div className="SearchStyle_detail_page_review_title" style={{ margin: "5px" }}>
-                                <img
-                                    src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
-                                    alt={article.memberName}
-                                    className="SearchStyle_detail_page_review_title_img"
-                                />
-                                <span className="SearchStyle_detail_page_review_title_id">{article.memberName}</span>
-                            </div>
-                            <div className="SearchStyle_detail_page_review_list_item_img">
-                                <img
-                                    style={{ borderStyle: "solid", borderRadius: "0", width: "280px", height: "280px" }}
-                                    src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://fakeimg.pl/150x150/"}
-                                    alt={article.content}
-                                    className="SearchStyle_detail_page_review_list_item_img_img"
-                                />
-                            </div>
-                            <div className="SearchStyle_detail_page_review_content">
-                                <div className="SearchStyle_detail_page_review_title">
-                                    <p className="SearchStyle_detail_page_review_body_text" style={{ paddingRight: "165px" }}>
-                                        {article.content}
-                                    </p>
-                                    <span className="SearchStyle_detail_page_review_title_like">
-                                        {article.likeId ? "❤️" : "♡"} {article.likeCount}
-                                    </span>
+                <ul className="SearchStyle_sns_list_body">
+                    {articles.length === 0 ? (
+                        <div className="SearchStyle_No_item">{keywordFromUrl} 스타일이 없습니다.</div>
+                    ) : (
+                        articles.map((article) => (
+                            <li
+                                key={article.articleId}
+                                className="SearchStyle_sns_list_item"
+                                onClick={() => handleArticleClick(article.articleId)}
+                            >
+                                <div className="SearchStyle_sns_profile" >
+                                    <div className="SearchStyle_sns_profile_img_box">
+                                        <img
+                                            src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
+                                            alt={article.memberName}
+                                            className="SearchStyle_sns_profile_img"
+                                        />
+                                    </div>
+                                    <div className="SearchStyle_sns_profile_id_box">
+                                        <span className="SearchStyle_sns_profile_id">{article.memberName}</span>
+                                    </div>
                                 </div>
 
-                                <p className="SearchStyle_detail_page_review_body_tag">
-                                    {article.hashtags.map((hashtag, index) => (
-                                        <span key={index} className="SearchStyle_card_hashtag">
-                                            {`${hashtag} `}
+                                <div className="SearchStyle_sns_list_item_img_box">
+                                    <img
+                                        src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://fakeimg.pl/150x150/"}
+                                        alt={article.content}
+                                        className="SearchStyle_sns_list_item_img"
+                                    />
+                                </div>
+                                <div className="SearchStyle_sns_content">
+                                    <div className="SearchStyle_sns_title">
+                                        <p className="SearchStyle_sns_body_text" >
+                                            {article.content}
+                                        </p>
+                                        <span className="SearchStyle_sns_title_like">
+                                            {article.likeId ? "❤️" : "♡"} {article.likeCount}
                                         </span>
-                                    ))}
-                                </p>
-                            </div>
-                        </li>
-                    ))}
+                                    </div>
+
+                                    <p className="SearchStyle_sns_body_tag">
+                                        {article.hashtags.map((hashtag, index) => (
+                                            <span key={index} className="SearchStyle_card_hashtag">
+                                                {`${hashtag} `}
+                                            </span>
+                                        ))}
+                                    </p>
+                                </div>
+                            </li>
+                        ))
+                    )}
                 </ul>
                 {loading && <p>로딩 중...</p>}
             </div>

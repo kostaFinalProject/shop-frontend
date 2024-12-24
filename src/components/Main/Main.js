@@ -2,140 +2,131 @@ import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import './Main.css';
+import { Link } from 'react-router-dom';
+import ScrollUp from '../ScrollUp/ScrollUp.js';
 
 const Main = () => {
-  const items = [
-    {
-      id: 1,
-      image: "/img/ACuniform.jpg",
-      title: "ADIDAS 아르헨티나 1994 RETRO AWAY #10 (XS~2XL)",
-      soldCount: 120,
-      originalPrice: 209000,
-      discountedPrice: 99000,
-      discountRate: 53,
-      description: "Official Licensed Product"
-    },
-    {
-      id: 2,
-      image: "/img/ALUniform.avif",
-      title: "NIKE 브라질 2002 홈 유니폼 #9 (S~L)",
-      soldCount: 200,
-      originalPrice: 199000,
-      discountedPrice: 129000,
-      discountRate: 35,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 3,
-      image: "/img/MCUuniform.avif",
-      title: "MAN UTD 2008 HOME KIT #7 (M~XL)",
-      soldCount: 80,
-      originalPrice: 219000,
-      discountedPrice: 149000,
-      discountRate: 32,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 4,
-      image: "/img/CFCuniform.avif",
-      title: "CHELSEA 2020 AWAY KIT #10 (S~L)",
-      soldCount: 250,
-      originalPrice: 179000,
-      discountedPrice: 119000,
-      discountRate: 34,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 5,
-      image: "/img/BarcelonaUniform.jpg",
-      title: "FC BARCELONA 2021 HOME KIT #9 (M~XL)",
-      soldCount: 500,
-      originalPrice: 189000,
-      discountedPrice: 129000,
-      discountRate: 31,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 6,
-      image: "/img/PSGuniform.avif",
-      title: "PSG 2022 HOME KIT #30 (M~L)",
-      soldCount: 300,
-      originalPrice: 229000,
-      discountedPrice: 159000,
-      discountRate: 30,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 7,
-      image: "/img/RealMadridUnifom.avif",
-      title: "REAL MADRID 2020 AWAY KIT #7 (S~L)",
-      soldCount: 110,
-      originalPrice: 199000,
-      discountedPrice: 129000,
-      discountRate: 35,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 8,
-      image: "/img/Juniform.avif",
-      title: "JUVENTUS 2019 HOME KIT #10 (M~XL)",
-      soldCount: 190,
-      originalPrice: 209000,
-      discountedPrice: 139000,
-      discountRate: 34,
-      description: "Official Replica Jersey"
-    },
-    {
-      id: 9,
-      image: "/img/MCCuniform.avif",
-      title: "JUVENTUS 2009 HOME KIT #11 (M~XL)",
-      soldCount: 90,
-      originalPrice: 109000,
-      discountedPrice: 0,
-      discountRate: 0,
-      description: "Official Replica Jersey"
-    },
-    // 나머지 아이템들도 동일하게 작성...
-  ];
-
+  const [loading, setLoading] = useState(true);
   const [bestItems, setBestItems] = useState([]);
   const [newItems, setNewItems] = useState([]);
-  const [allItems, setAllItems] = useState(items); // 전체 아이템을 저장하는 상태 추가
-
+  const [allItems, setAllItems] = useState([]);
+  const [updatedArticles, setUpdatedArticles] = useState([]); // 기존 updatedArticles 상태
+  const [articleId, setArticleId] =useState([]);
+  const [data, setData] = useState([]);
+  const [articleData, setArticleData] = useState([]);
+  const [articles, setArticles] = useState([]);
+  
+  // 데이터 가져오기
   useEffect(() => {
-    const sortedBySales = [...items].sort((a, b) => b.soldCount - a.soldCount);
-    const sortedByIdDesc = [...items].sort((a, b) => b.id - a.id);
+    const fetchItems = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/items");
+        if (!response.ok) {
+          throw new Error("Failed to fetch items");
+        }
+        const data = await response.json();
+       
+        const updatedArticles = data.content.map((item) => ({
+          itemId: item.itemId,
+          itemCategory: item.itemCategory,
+          manufacturer: item.manufacturer,
+          name: item.name,
+          price: item.price,
+          itemImage: item.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
+          itemStatus: item.itemStatus,
+          seller: item.seller,
+          // discountPercent: item.discountPercent,
+          discountPercent: 10,  // 할인율 임시 설정
+          discountPrice: item.discountPrice,
+        }));
 
-    setBestItems(sortedBySales.slice(0, 8));
-    setNewItems(sortedByIdDesc.slice(0, 8));
+        // BEST ITEM: 가격 내림차순 정렬
+        const sortedByPriceDesc = [...updatedArticles].sort((a, b) => b.price - a.price);
+        // NEW ITEM: 아이디 내림차순 정렬
+        const sortedByIdDesc = [...updatedArticles].sort((a, b) => b.itemId - a.itemId);
 
-    const loadBestItems = () => {
-      setBestItems(prev => {
-        const nextItems = [...prev, ...sortedBySales.slice(prev.length, prev.length + 8)];
-        return nextItems;
-      });
+        // 초기 상태 설정 (8개씩만 보여줌)
+        setBestItems(sortedByPriceDesc.slice(0, 8));
+        setNewItems(sortedByIdDesc.slice(0, 8));
+        // 전체 데이터 저장
+        setAllItems(updatedArticles);
+      } catch (error) {
+        console.error("Error fetching items:", error.message);
+      } finally {
+        setLoading(false); // 로딩 종료
+      }
     };
+    fetchItems(); // 함수 호출
+  }, []);  // 의존성 배열
 
-    const loadNewItems = () => {
-      setNewItems(prev => {
-        const nextItems = [...prev, ...sortedByIdDesc.slice(prev.length, prev.length + 8)];
-        return nextItems;
-      });
-    };
+  // ---------------------------- 가져온 데이터 원하는대로 뿌려주기
 
-    document.getElementById("bestMoreBtn").addEventListener("click", loadBestItems);
-    document.getElementById("newMoreBtn").addEventListener("click", loadNewItems);
 
-    return () => {
-      document.getElementById("bestMoreBtn").removeEventListener("click", loadBestItems);
-      document.getElementById("newMoreBtn").removeEventListener("click", loadNewItems);
-    };
-  }, []);
+  const loadMoreBestItems = () => {
+    const sortedByPriceDesc = [...updatedArticles].sort((a, b) => b.price - a.price);
+    setBestItems((prev) => [
+      ...prev,
+      ...sortedByPriceDesc.slice(prev.length, prev.length + 8),
+    ]);
+
+  };
+
+  const loadMoreNewItems = () => {
+    const sortedByIdDesc = [...updatedArticles].sort((a, b) => b.itemId - a.itemId);
+    setNewItems((prev) => [
+      ...prev,
+      ...sortedByIdDesc.slice(prev.length, prev.length + 8),
+    ]);
+  };
 
   const isBestMoreButtonVisible = bestItems.length < allItems.length; // 전체 아이템 수와 비교
   const isNewMoreButtonVisible = newItems.length < allItems.length; // 전체 아이템 수와 비교
 
 
+  // ----------------style 데이터 가져오기-----
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/articles`, {
+        method: "GET",
+      });
+      const data = await response.json();
+       
+console.log("data 스타일 스타일",data);
+console.log("data.content 스타일 스타일",data.content);
+console.log("data.content 첫 번째 요소:", data.content[0]);
+console.log("articles:", articles);
+      // const processedData = data.content.map((article) => ({
+      //   articleId: article.articleId,
+      //   memberId: article.memberId,
+      //   memberName: article.memberName,
+      //   memberProfileImageUrl: article.memberProfileImageUrl
+      //     ? article.memberProfileImageUrl.replace(
+      //         "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+      //         ""
+      //       )
+      //     : null,
+      //     itemImage: item.repImgUrl.replacee(
+      //     "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+      //     ""
+      //   ),
+      //   hashtags: article.hashtags,
+      //   content: article.content,
+      //   likeCount: article.likeCount,
+      //   likeId: article.likeId,
+      //   viewCount: article.viewCount,
+      // }));
+      
+      // console.log("processedData:", processedData); // 여기에서 processedData 로그 찍기
+      // setArticleData(processedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, [articleId]);
 
   return (
     <main className="mainContainer">
@@ -153,77 +144,86 @@ const Main = () => {
           <SwiperSlide><img src="/img/realmadrid.png" alt="Image 2" /></SwiperSlide>
         </Swiper>
       </article>
-
+      {/* Brand Leader */}
       <article className="mainArticle itemProduct">
         <div className="best">
           <h2 className="ProductTitle">BEST ITEM <span className="aaa">인기 제품을 여기서 한눈에 보세요</span></h2>
+
           <div className="board_list_body">
             {bestItems.map(item => (
-              <div className="item" key={item.id}>
-                <div className="board_img"><img src={item.image} alt={item.title} /></div>
-                <div className="board_content">
-                  <div className="board_title"><a href="#">{item.title}</a></div>
-                  <div className="board_price">
-                    {item.discountedPrice && item.discountRate !== 0 ? (
-                      <>
-                        <span className="original-price" style={{ textDecoration: 'line-through' }}>
-                          {item.originalPrice.toLocaleString()}원
-                        </span>
-                        <span className="discounted-price">
-                          {item.discountedPrice.toLocaleString()}원
-                        </span>
-                        <span className="discount-rate">{item.discountRate}%</span>
-                      </>
-                    ) : (
-                      <span className="original-price">{item.originalPrice.toLocaleString()}원</span>
-                    )}
+              <Link to={`/DetailPage?itemId=${item.itemId}`}>
+                <div className="item" key={item.itemId}>
+                  <div className="board_img"><img src={`uploads/${item.itemImage}`} alt={item.name} /></div>
+                  <div className="board_content">
+                    <div className="board_title"><a href="#">{item.name}</a></div>
+                    <div className="board_price">
+                      {item.discountPrice && item.discountPercent !== 0 ? (
+                        <>
+                          <span className="original-price" style={{ textDecoration: 'line-through' }}>
+                            {item.price.toLocaleString()}원
+                          </span>
+                          <span className="discounted-price">
+                            {item.discountPrice.toLocaleString()}원
+                          </span>
+                          <span className="discount-rate">{item.discountPercent}%</span>
+                        </>
+                      ) : (
+                        <span className="original-price">{item.price.toLocaleString()}원</span>
+                      )}
+                    </div>
+                    <div className="board_name">{item.seller}</div>
                   </div>
-                  <div className="board_name">{item.description}</div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
+
           <div className="more">
-            {isBestMoreButtonVisible && <button className="moreBtn" id="bestMoreBtn">더보기</button>}
+            {isBestMoreButtonVisible && <button className="moreBtn" onClick={loadMoreBestItems}>더보기</button>}
           </div>
         </div>
       </article>
-
+      {/* New Itekm */}
       <article className="mainArticle itemProduct">
         <div className="best">
           <h2 className="ProductTitle">NEW ITEM <span className="aaa">새 제품을 여기서 한눈에 보세요</span></h2>
           <div className="board_list_body">
             {newItems.map(item => (
-              <div className="item" key={item.id}>
-                <div className="board_img"><img src={item.image} alt={item.title} /></div>
-                <div className="board_content">
-                  <div className="board_title"><a href="#">{item.title}</a></div>
-                  <div className="board_price">
-                    {item.discountedPrice && item.discountRate !== 0 ? (
-                      <>
-                        <span className="original-price" style={{ textDecoration: 'line-through' }}>
-                          {item.originalPrice.toLocaleString()}원
-                        </span>
-                        <span className="discounted-price">
-                          {item.discountedPrice.toLocaleString()}원
-                        </span>
-                        <span className="discount-rate">{item.discountRate}%</span>
-                      </>
-                    ) : (
-                      <span className="original-price">{item.originalPrice.toLocaleString()}원</span>
-                    )}
+              <Link to={`/DetailPage?itemId=${item.itemId}`}>
+                <div className="item" key={item.itemId}>
+                  <div className="board_img"><img src={`uploads/${item.itemImage}`} alt={item.name} /></div>
+                  <div className="board_content">
+                    <div className="board_title"><a href="#">{item.name}</a></div>
+                    <div className="board_price">
+                      {item.discountPrice && item.discountPercent !== 0 ? (
+                        <>
+                          <span className="original-price" style={{ textDecoration: 'line-through' }}>
+                            {item.price.toLocaleString()}원
+                          </span>
+                          <span className="discounted-price">
+                            {item.discountPrice.toLocaleString()}원
+                          </span>
+                          <span className="discount-rate">{item.discountPercent}%</span>
+                        </>
+                      ) : (
+                        <span className="original-price">{item.price.toLocaleString()}원</span>
+                      )}
+                    </div>
+                    <div className="board_name">{item.seller}</div>
                   </div>
-                  <div className="board_name">{item.description}</div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
+
           <div className="more">
-            {isNewMoreButtonVisible && <button className="moreBtn" id="newMoreBtn">더보기</button>}
+            {isNewMoreButtonVisible && <button className="moreBtn" onClick={loadMoreNewItems}>더보기</button>}
           </div>
         </div>
       </article>
 
+
+      {/* style  */}
       <article className="mainArticle teamProduct">
         <div className="styleflame">
           <div className="stylehead">
@@ -232,211 +232,58 @@ const Main = () => {
               <span className="aaa">다양한 착용샷을 한눈에 보세요</span>
             </h2>
             <div className="flame-controls">
-              <button id="prevSlide">◀</button>
-              <button id="nextSlide">▶</button>
+              <button className='prevSlide_button' id="prevSlide">◀</button>
+              <button className='nextSlide_button' id="nextSlide">▶</button>
             </div>
           </div>
           <div className="flame-swiper-container">
             <ul className="flameWrapper" id="swiper-wrapper">
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
+              {/* Style List */}
+              {articles.map((article) => (
+                <li
+                  key={article.articleId}
+                  className="swiperSlideItem"
+                 
+                >
+                  <div className="detail_page_review_list_item_img">
                     <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
+                      src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://default-image-url.com"}
+                      alt={article.content || "Article Image"}
                     />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
                   </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
+                  <div className="detail_page_review_content">
+                    <div className="detail_page_review_title">
+                      <img
+                        src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
+                        alt={article.memberName}
+                        className="detail_page_review_title_img"
+                      />
+                      <span className="detail_page_review_title_id">{article.memberName}</span>
+                      <span className="detail_page_review_title_like">
+                        {article.likeId ? "❤️" : "♡"} {article.likeCount}
+                      </span>
+                    </div>
+                    <p className="detail_page_review_body_tag">
+                      {article.hashtags.map((hashtag, index) => (
+                        <span key={index} className="StyleMain_sns_card_hashtag">
+                          {`${hashtag} `}
+                        </span>
+                      ))}
+                    </p>
                   </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
-                  </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
-                  </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
-                  </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
-                  </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
-                  </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
-              <li className="swiperSlideItem">
-                <div className="detail_page_review_list_item_img">
-                  <img
-                    src="https://cafe24.poxo.com/ec01/enemy0000/fYw07Q+e08011Z5Qzbz300jECh5aaMmmDMQ7QH7NAQ9NK2EXhqgvmfbzfda0mDNO/Jp2ZgYE1irrrDpzeiP8fA==/_/web/product/big/202411/7d090c9573a58fe7fb7553e5cc8ea5b2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="detail_page_review_content">
-                  <div className="detail_page_review_title">
-                    <img
-                      src="https://fakeimg.pl/26x26/"
-                      alt=""
-                      className="detail_page_review_title_img"
-                    />
-                    <span className="detail_page_review_title_id">아이디</span>
-                    <span className="detail_page_review_title_like">♡4</span>
-                    {/* 하트 이미지 다시 넣기  */}
-                  </div>
-                  <p className="detail_page_review_body_tag">
-                    #겨울코디추천 #겨울코디추천 #아우터추천 #연말선물 #연말룩
-                    #사이즈팁 #KICKS
-                  </p>
-                </div>
-              </li>
+                </li>
+              ))}
+
+
             </ul>
           </div>
         </div>
+        <ScrollUp />
       </article>
 
 
     </main>
+
   );
 };
 

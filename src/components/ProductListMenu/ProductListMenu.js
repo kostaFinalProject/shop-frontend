@@ -1,8 +1,9 @@
 import React from "react"
 import './ProductListMenu.css';
 
-const ProductListMenu = ({totalElements}) => {
-    console.log(totalElements);
+const ProductListMenu = ({ totalElements }) => {
+
+
     return (
         <>
             {/* ------------------상품 조회수 및 상품 조회------------------ */}
@@ -12,13 +13,13 @@ const ProductListMenu = ({totalElements}) => {
                 </div>
                 <div className="ProductListMenu_selectArray">
                     <div className="ProductListMenu_sort">
-                        <select id="selArray" name="selArray" className="ProductListMenu_selArray">
-                            <option value="" className="ProductListMenu_selArray_list">신상품</option>
-                            <option value="" className="ProductListMenu_selArray_list">상품명</option>
-                            <option value="" className="ProductListMenu_selArray_list">낮은가격</option>
-                            <option value="" className="ProductListMenu_selArray_list">높은가격</option>
-                            <option value="" className="ProductListMenu_selArray_list">제조사</option>
-                            <option value="" className="ProductListMenu_selArray_list">사용후기</option>
+                        <select id="selArray" 
+                                name="selArray" 
+                                className="ProductListMenu_selArray" >
+                            <option value="latest" className="ProductListMenu_selArray_list">신상품</option>
+                            <option value="priceLow" className="ProductListMenu_selArray_list">낮은가격</option>
+                            <option value="priceHigh" className="ProductListMenu_selArray_list">높은가격</option>
+                            <option value="discountHigh" className="ProductListMenu_selArray_list">할인율 높은순</option>
                         </select>
                     </div>
                     <span className="ProductListMenu_selArray_displaynone">

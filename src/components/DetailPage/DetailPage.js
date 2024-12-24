@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import './DetailPage.css';
 import DetailInformation from "./DetailPageLement/DetailInformation.js";
-import ProductSelector from "./DetailPageLement/DetailSelect.js";
+import ProductSelector from "./DetailPageLement/ProductSelector.js";
 import ScrollUp from '../ScrollUp/ScrollUp.js';
 
 const DetailPage = () => {
@@ -34,6 +34,8 @@ const DetailPage = () => {
                     ""
                 );
 
+                // console.log("처음받은 데이터", data);
+
                 setItemData(data);
             } catch (err) {
                 setError(err.message);
@@ -44,6 +46,7 @@ const DetailPage = () => {
 
         fetchData();
     }, [itemId]);
+
 
 
     useEffect(() => {
@@ -96,7 +99,7 @@ const DetailPage = () => {
     };
 
     const handleGoToQnA = () => {
-        navigate('/QnAcreate', { state: { itemData } }); // QnAcreate 페이지로 이동하면서 itemData 전달
+        navigate('/QnACreate', { state: { itemData } }); // QnAcreate 페이지로 이동하면서 itemData 전달
     };
 
     const renderRelatedArticles = () => {
@@ -104,18 +107,18 @@ const DetailPage = () => {
         if (articlesError) return <div>스타일 데이터를 불러오지 못했습니다: {articlesError}</div>;
 
         return relatedArticles.length > 0 ? (
-            <div className="DetailPage_related_articles">
-                <h3>관련 스타일</h3>
-                <ul className="DetailPage_related_articles_list">
+            <div className="DetailPage_Style_More">
+                <div className="DetailPage_Style_More_h3"><h3 >관련 스타일</h3></div>
+                <ul className="DetailPage_Style_More_list">
                     {relatedArticles.map((article) => (
-                        <li key={article.articleId} className="DetailPage_related_article_item"
+                        <li key={article.articleId} className="DetailPage_Style_More_item"
                             onClick={() => handleArticleClick(article.articleId)}>
-                            <img src={`/uploads/${article.imageUrl}`} alt="스타일 이미지" className="DetailPage_related_article_image" />
-                            <div className="DetailPage_related_article_content">
-                                <p>{article.content}</p>
-                                <div className="DetailPage_related_article_hashtags">
+                            <img src={`/uploads/${article.imageUrl}`} alt="스타일 이미지" className="DetailPage_Style_More_img" />
+                            <div className="DetailPage_Style_More_content">
+                               <div className="DetailPage_Style_More_p_box"><p>{article.content}</p></div> 
+                                <div className="DetailPage_Style_More_hashtags">
                                     {article.hashtags.map((tag, index) => (
-                                        <span key={index} className="DetailPage_related_article_tag">
+                                        <span key={index} className="DetailPage_Style_More_tag">
                                             {tag}
                                         </span>
                                     ))}
@@ -126,7 +129,7 @@ const DetailPage = () => {
                 </ul>
             </div>
         ) : (
-            <div>관련된 스타일이 없습니다.</div>
+            <div>관련된 상품이 없습니다.</div>
         );
     };
 
@@ -138,17 +141,32 @@ const DetailPage = () => {
                 <div className="DetailPage_product_detail">
                     {/* 이미지 슬라이더 */}
                     <div className="DetailPage_detail_img">
-                        <img
-                            src={`/uploads/${itemData.imageUrls[currentImageIndex]}`}
-                            alt={`상품 이미지 ${currentImageIndex + 1}`}
-                            className="DetailPage_slider_image"
-                        />
+
                         <button className="DetailPage_prev_button" onClick={handlePrevImage}>
                             ◀
                         </button>
+                        <div className="DetailPage_image_dot_box">
+                            <img
+                                src={`/uploads/${itemData.imageUrls[currentImageIndex]}`}
+                                alt={`상품 이미지 ${currentImageIndex + 1}`}
+                                className="DetailPage_slider_image"
+                            />
+                            {/* 페이지 표시 */}
+                            <div className="DetailPage_pagination">
+                                {itemData.imageUrls.map((_, index) => (
+                                    <span
+                                        key={index}
+                                        className={`DetailPage_dot ${index === currentImageIndex ? "active" : ""}`}
+                                    >
+                                        .
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
                         <button className="DetailPage_next_button" onClick={handleNextImage}>
                             ▶
                         </button>
+
                     </div>
                     <div className="DetailPage_detail_text">
                         {/* 상세 정보 */}
@@ -174,11 +192,16 @@ const DetailPage = () => {
                                 discountPrice: itemData.discountPrice,
                             }}
                         />
+                        {/* 바로 구매 버튼 추후에 서밋으로 결제창으로 넘겨야함함*/}
+                        <button type="" className="BuyInformation_buyBtn">
+                            <p>바로구매</p>
+                        </button>
+
                         {/* 버튼 메뉴 */}
                         <div className="DetailPage_sub_button_menu">
-                            <button className="DetailPage_like_button"><a href="#">좋아요</a></button>
+                            <button className="DetailPage_like_button"><a href="#">❤️</a></button>
                             <button className="DetailPage_basket_button"><a href="#">장바구니</a></button>
-                            <button className="DetailPage_interest_product_button"><a href="#">관심상품</a></button>
+                            <button className="DetailPage_interest_product_button"><a href="#">📷</a></button>
                         </div>
                         {/* 관리자 권한 버튼 */}
                         {isAdmin && (
@@ -195,22 +218,31 @@ const DetailPage = () => {
                         <a href="#product_detail_description">상품상세설명</a>
                     </div>
                     <div className="DetailPage_button_review">
-                        <a href="#review">후기</a>
+                        <a href="#DetailPage_Join_Style">SNS</a>
+                    </div>
+                    <div className="DetailPage_button_Question">
+                        {!isAdmin && (
+                            <button id="review" onClick={handleGoToQnA}>상품 문의</button>
+                        )}
                     </div>
                 </div>
+
                 <div className="DetailPage_text_product_detail_description" id="product_detail_description">
                     <div className="DetailPage_text_product_detail_description_img">
                         <img src={`/uploads/${itemData.itemDetailImageUrl}`} alt="상세 이미지" />
                     </div>
                 </div>
+
+
                 {/* 관련 스타일 */}
+                <div className="DetailPage_Join_Style" id="DetailPage_Join_Style">
                 {renderRelatedArticles()}
+                </div>
+                
                 <ScrollUp />
 
 
-                {!isAdmin && (
-                    <button onClick={handleGoToQnA}>상품 문의</button>
-                )}
+
             </div>
 
 

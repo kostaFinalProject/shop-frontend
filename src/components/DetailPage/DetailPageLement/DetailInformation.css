@@ -3,44 +3,57 @@
 
 .DetailInformation_productName,
 .DetailInformation_productName h2 {
-    width: 610px;
-    height: 45px;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
     text-align: left;
     margin-top: 0;
     margin-bottom: 10px;
     padding: 0;
 
-
 }
 
-.DetailInformation_productSeller,
-.DetailInformation_productSeller p {
-    width: 610px;
-    height: 25px;
-    margin-top: 0;
-    margin-bottom: 10px;
+.DetailInformation_productSeller{
+    width: 100%;
+    max-width: 640px;
+    height: 30px;
     padding: 0;
 
 }
 
 .DetailInformation_productPrice {
-    width: 610px;
-    height: 25px;
-    padding: 10px 0 10px 0;
+    width: 100%;
+    max-width: 640px;
+    height: 50px;
+    font-size: 25px;   
 
-
-   
 }
 
 .DetailInformation_reward_delivery {
     width: 100%;
+    max-width: 640px;
 
     border-collapse: collapse;
-    font-size: 12px;
+    font-size: 15px;
     color: #B5B6B5;
 
     margin-bottom: 20px;
     display: flex;
     gap: 50px;
+
 }
 
+
+.DetailInformation_original_price{
+    text-decoration: line-through;
+    color: #aaa;
+}
+.DetailInformation_discount_price{
+    padding-left: 10px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+.prdCount_price{
+    font-size: 14px;
+    font-weight: bold;
+}

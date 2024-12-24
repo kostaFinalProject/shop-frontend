@@ -58,6 +58,7 @@
     flex-direction: column; /* 세로로 정렬 */
     justify-content: flex-end; /* 하단으로 정렬 */
 }
+
 .SearchProfile_user_message {
     margin: 0;
     padding: 0;
@@ -66,6 +67,7 @@
     color: #999;
 
 }
+
 .SearchProfile_btn {
     display: flex;
     justify-content: center;

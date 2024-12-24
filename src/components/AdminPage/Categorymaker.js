@@ -31,6 +31,12 @@ const Categorymaker = () => {
 
     const parentCategory = document.getElementById("parentCategory").value;
 
+    // 중복 확인
+    if (categories.some((category) => category.name === parentCategory)) {
+      alert("이미 존재하는 카테고리 이름입니다.");
+      return;
+    }
+
     // 선택된 이미지가 없으면 빈 파일로 설정
     const file = image ? image : new File([], "");
 
@@ -82,12 +88,8 @@ const Categorymaker = () => {
   function handlesonCategorySubmit(e) {
     e.preventDefault();
 
-    // 부모 카테고리와 하위 카테고리 이름 가져오기
     const parentCategory1 = document.getElementById("parentCategory1").value;
     const subCategoryName = document.getElementById("subCategoryName").value;
-
-    console.log("선택된 부모 카테고리:", parentCategory1);
-    console.log("입력된 하위 카테고리 이름:", subCategoryName);
 
     if (!parentCategory1) {
       alert("부모 카테고리를 선택해주세요.");
@@ -104,25 +106,32 @@ const Categorymaker = () => {
       return;
     }
 
+    // 중복 검사: 이미 존재하는 하위 카테고리 이름인지 확인 일단 안됨
+    const parentCategory = categories.find(category => category.categoryId === parseInt(parentCategory1));
+    if (parentCategory && parentCategory.subCategories) {
+      const isDuplicate = parentCategory.subCategories.some(subCategory =>
+        subCategory.categoryName.trim().toLowerCase() === subCategoryName.trim().toLowerCase()
+      );
+      if (isDuplicate) {
+        alert("이미 존재하는 하위 카테고리 이름입니다.");
+        return;
+      }
+    }
+
+
     // 카테고리 객체 생성
     const category = {
       name: subCategoryName,
-      parentCategory: parentCategory1  // 상위 카테고리 ID 또는 이름 전달
+      parentCategory: parentCategory1,
     };
 
-    // FormData 객체 생성
     const formData = new FormData();
-    formData.append(
-      "itemCategory",
-      new Blob([JSON.stringify(category)], { type: "application/json" })
-    );
-    formData.append("file", image); // 선택된 이미지 추가
+    formData.append("itemCategory", new Blob([JSON.stringify(category)], { type: "application/json" }));
+    formData.append("file", image);
 
-    // 로컬 스토리지에서 인증 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
 
-    // 서버로 데이터 전송
     fetch("http://localhost:8080/api/v1/item-categories", {
       method: "POST",
       headers: {
@@ -134,10 +143,8 @@ const Categorymaker = () => {
       .then((response) => {
         if (response.ok) {
           alert("카테고리 등록이 완료되었습니다.");
-
-          // 폼 초기화
           e.target.reset();
-          setImage(null); // 선택된 이미지 초기화
+          setImage(null);
           window.location.href = "/AdminPage/categorymaker";
         } else {
           response.text().then((errorMessage) => {
@@ -151,9 +158,6 @@ const Categorymaker = () => {
       });
   }
 
-
-
-
   useEffect(() => {
     const fetchTopCategories = async () => {
       try {
@@ -161,6 +165,22 @@ const Categorymaker = () => {
         if (response.ok) {
           const data = await response.json();
           setCategories(data); // 기존 categories 상태에 데이터 저장
+          console.log("data", data);
+
+          // 각 itemCategoryId에 대해 GET 요청 보내기
+          for (const category of data) {
+            const itemCategoryId = category.parentCategoryId; // itemCategoryId 추출
+            const categoryResponse = await fetch(`http://localhost:8080/api/v1/item-categories/${itemCategoryId}`);
+            if (categoryResponse.ok) {
+              const categoryData = await categoryResponse.json();
+              console.log(`Data for category ${itemCategoryId}:`, categoryData);
+              // 필요한 경우 categoryData를 상태에 저장하거나 추가 작업 수행
+              // 예: category.subCategories = categoryData.subCategories;
+              category.subCategories = categoryData.subCategories; // 하위 카테고리 추가
+            } else {
+              console.error(`Failed to fetch category with ID ${itemCategoryId}.`);
+            }
+          }
         } else {
           console.error("Failed to fetch top categories.");
         }
@@ -179,7 +199,7 @@ const Categorymaker = () => {
       }
       return category.name;
     });
-};
+  };
 
 
   return (
@@ -295,10 +315,19 @@ const Categorymaker = () => {
             <span>카테고리 리스트</span>
             <button onClick={() => alert("삭제 기능 구현 필요")}>삭제</button>
             <div className="categoryli">
-              {generateCategoryList(categories).map((categoryName, index) => (
-                <div key={index}>
+              {categories.map((category) => (
+                <div key={category.categoryId}>
                   <input type="checkbox" />
-                  {categoryName}
+                  {category.name}
+                  {category.subCategories && category.subCategories.length > 0 && (
+                    <ul>
+                      {category.subCategories.map((subCategory) => (
+                        <li key={subCategory.categoryId}>
+                          {subCategory.categoryName}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               ))}
             </div>

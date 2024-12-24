@@ -2,13 +2,14 @@
 .DetailPage_full_screen  {
     margin: 0 auto;
     padding: 0;
-
-    margin-top: 215px;
+    margin-top: 225px;
     list-style: none;
+
 }
 
 .DetailPage_detail_page {
     margin: 0 auto;
+    padding: 0;
     display: block;
     width: 100%;
     max-width: 1360px;
@@ -16,7 +17,7 @@
     justify-content: center;
     align-items: center;
 
-}
+}   
 
 /*---------------- 상세페이지 전체 설정 ----------------*/
 .DetailPage_product_detail {
@@ -24,57 +25,113 @@
     max-width: 1360px;
     height: auto;
     display: flex;
+    padding-bottom: 70px;
+
 }
 
 /* ----------------상세페이지 이미지---------------- */
 .DetailPage_detail_img {
 
-    width: 680px;
-    height: auto;
+    width: 100%;
+    max-width: 680px;
+    height: 100%;
     max-height: 680px;
 
+    display: flex;
+
+
 }
 
-.DetailPage_detail_img img {
+.DetailPage_slider_image {
+    width: 100%;
+    max-width: 680px;
+    height: 100%;
+    max-height: 680px;
+
+    object-fit: contain;/* 비율을 유지하면서 자르지 않도록 설정 */
+    background-size: auto; /* 원본 크기 그대로 유지 */
+    background-repeat: no-repeat;   /* 이미지 반복하지 않도록 설정 */
+    background-position: center; /* 이미지를 요소 중앙에 배치 */
+}
+
+.DetailPage_prev_button,
+.DetailPage_next_button{
+    all: unset;
+}
+.DetailPage_prev_button:hover,
+.DetailPage_next_button:hover{
+    cursor: pointer;
+    transform: scale(1.5);
+    
+}
+
+
+/* 이미지 슬라이드 스타일링 */
+.DetailPage_image_dot_box{
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    /* 비율을 유지하면서 자르지 않도록 설정 */
-    background-size: auto;
-    /* 원본 크기 그대로 유지 */
-    background-repeat: no-repeat;
-    /* 이미지 반복하지 않도록 설정 */
-    background-position: center;
-    /* 이미지를 요소 중앙에 배치 */
+    display: block;
 }
+.DetailPage_slider_image {
+    transition: transform 0.5s ease-in-out;
+}
+  .DetailPage_pagination {
+    text-align: center;
 
-
-
+  }
+  
+  .DetailPage_dot {
+    font-size: 40px;
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    color: #ccc;
+    font-weight: 1000;
+   
+  }
+  
+  .DetailPage_dot.active {
+    color: #333;
+  }
+  
 /* ---------------- 상세페이지 설명글 ----------------*/
  .DetailPage_detail_text {
     width: 680px;
-    height: 100%;
-    margin-left: 80px;
-
-
+    height: auto;
+    margin-left: 40px;
 }
 
+/* 바로 구매 버튼--------- */
+.BuyInformation_buyBtn {
+    margin-top: 20px;
+    background-color: #000;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 640px;
+    height: 48px;
+    color: white;
+    font-size: 16px;
+}
+
+.BuyInformation_buyBtn:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 3;
+}
+
+
+
 /* --------------------------좋아요 장바구니 관심상품_--------------- */
-
-
 
 .DetailPage_sub_button_menu {
     padding-top: 20px;
     height: 50px;
-    width: 610px;
-
+    width: 100%;
+    max-width: 640px;
     display: flex;
     justify-content: space-between;
-    /* 버튼 간 간격 조정 (옵션) */
     align-items: center;
-    /* 수직 정렬 */
-    gap: 10px;
-    /* 버튼 간 간격 */
+    gap: 5px;
 }
 
 .DetailPage_like_button,
@@ -94,13 +151,14 @@
 }
 
 .DetailPage_like_button {
-    width: 100px;
+    width: 10%;
     background-color: white;
 }
 
 .DetailPage_basket_button,
 .DetailPage_interest_product_button {
-    width: 250px;
+    width: 45%;
+    font-size: larger;
     background-color: white;
 }
 
@@ -137,29 +195,47 @@
 
 /* ----------------------상품상세설명 후기 버튼------------------ */
 .DetailPage_product_detail_description {
-    width: 1360px;
+    width: 100%;
+    max-width: 1360px;
     height: 60px;
-
-    padding-top: 30px;
+    padding-top: 40px;
     padding-bottom: 30px;
-
+    margin: 0 auto;
+    padding: 0;
     color: #B5B6B5;
     display: flex;
-
-    /* border-bottom: 2px solid #B5B6B5; */
 }
 
 .DetailPage_button_product_detail_description {
     width: 50%;
-    height: 100%;
-
+    height:60px;
+    
 }
 
 .DetailPage_button_review {
     width: 50%;
-    height: 100%;
-}
+    height:60px;
 
+}
+.DetailPage_button_Question{
+    width: 50%;
+    height:60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+}
+.DetailPage_button_Question button {
+    all: unset;
+
+}
+.DetailPage_button_product_detail_description:hover,
+.DetailPage_button_review:hover,
+.DetailPage_button_Question:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
 .DetailPage_button_product_detail_description a,
 .DetailPage_button_review a {
     display: block;
@@ -206,96 +282,67 @@
 }
 
 
-/* ----------------------SNS 형식 후기글------------------  */
-.DetailPage_sns_style {
+.DetailPage_Join_Style{
     width: 100%;
-    max-width: 1360px;
-    margin-bottom: 20px;
-    height: 40px;
-
-    font-size: 20px;
-    /* border-top: 1px solid #B5B6B5; */
-    color: black;
-    text-align: left;
-
-}
-
-.DetailPage_sns_style a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.DetailPage_detail_page_review_list {
-
-    width: calc(272x5);
+    max-width: 1280px;
     height: auto;
-    gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-
-}
-
-.DetailPage_detail_page_review_list_body {
-    width: 100%;
-    max-width: 262px;
-    height: 400px;
-}
-
-.DetailPage_detail_page_review_list a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.DetailPage_detail_page_review_list_item_img img {
-    width: 262px;
-    height: 262px;
-    object-fit: contain;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 20px;
-
-}
-
-.DetailPage_detail_page_review_content {
-    width: 100%;
-
+    margin: 0 auto;
     padding: 0;
-
-}
-
-.DetailPage_detail_page_review_title {
-    width: 262px;
-    padding: 0;
-    height: 28px;
-    margin-top: 5px;
     display: flex;
-
-}
-
-.DetailPage_detail_page_review_title_img {
     justify-content: center;
-    border-radius: 100px;
-    width: 28px;
-    height: 28px;
-
+    font-size: 20px;
+    
 }
 
-.DetailPage_detail_page_review_title_id {
-    width: 75%;
-    margin-left: 5px;
 
-}
 
-.DetailPage_detail_page_review_title_like {
-
-    /* 만약 좋아요 script 기능 한 후 아이콘 벗어날 시 
-    위의 아이디와 라이크 width 조정하거나 다시 정렬 */
-
-}
-
-.DetailPage_detail_page_review_body_tag {
+/* --------------------스타일 더보기 */
+.DetailPage_Style_More{
     width: 100%;
+    max-width: 840px;
+    height: 300px;
+
+}
+.DetailPage_Style_More_h3{
+    width: 100%;
+    height: 40px;
+}
+.DetailPage_Style_More_list{
+    width: 100%;
+    height: 260px;
+    display: flex;
+}
+.DetailPage_Style_More_item{
+    width: 200px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    list-style-position: initial;
+    gap: 10px;
+    margin: 0 5px;
+
+}
+.DetailPage_Style_More_item:hover{
+    cursor: pointer;
+}
+.DetailPage_Style_More_img {
+    height: 200px;
+    width: 200px;
+    object-fit: contain;
+
+}
+.DetailPage_Style_More_content{
+    height: 40px;
+    margin: 5px;
+}
+.DetailPage_Style_More_p_box{
+    height: 20px;
     font-size: 13px;
-    margin-top: 10px;
+    padding-bottom: 10px;
+
+}
+.DetailPage_Style_More_hashtags{
+    height: 20px;
+    font-size: 8px;
+
 }

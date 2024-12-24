@@ -1,22 +1,13 @@
 /*_-------------------- 페이징 처리 ----------------------- */
-.Pagination_paging {
-    width: 1300px;
-    height: 50px;
-    font-size: 14px;
 
-    padding: 50px 0 50px 0;
-    justify-content: center;
-    /* 가로 중앙 */
-    align-items: center;
-    /* 세로 중앙 */
-    display: flex;
-
-}
 
 #Pagination_paging_ul {
+    height: 30px;
     display: flex;
+    justify-content: center;
+    align-items: center;
     list-style: none;
-    
+
 }
 
 .Pagination_paging_li {
@@ -29,20 +20,14 @@
 .Pagination_paging_li:hover {
     font-weight: bold;
     font-size: large;
+    transform: scale(1.3);
     cursor: pointer;
 }
 
 .Pagination_paging_btn{
     all: unset;
 }
+.Pagination_paging_li button:hover{
+    cursor: pointer;
+}
 
-
-/* .paging_ul a.active {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-} */
-/* .Pagination_paging_a .disabled {
-    color: #ccc;
-    pointer-events: none;
-} */

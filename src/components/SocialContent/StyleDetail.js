@@ -72,17 +72,6 @@ const StyleDetail = () => {
         }
     };
 
-    const handleEdit = () => {
-        // 수정 로직 추가
-        console.log("수정 버튼 클릭");
-    };
-
-    const handleDelete = () => {
-        if (window.confirm("정말 삭제하시겠습니까?")) {
-            // 삭제 API 호출 로직 추가
-            console.log("삭제 버튼 클릭");
-        }
-    };
 
     // 댓글 창 토글
     const toggleComments = () => {
@@ -135,7 +124,6 @@ const StyleDetail = () => {
                         headers: headers,
                     });
                     const data = await response.json();
-
                     const processedData = {
                         articleId: data.articleId,
                         memberId: data.memberId,
@@ -309,7 +297,7 @@ const StyleDetail = () => {
                     {/* ----------------------social_body----------------- */}
                     <div className="StyleDetail_body">
                         {/* 슬라이드 컨테이너 */}
-                        <div className="StyleDetail_main_img">
+                        <div className="StyleDetail_main_img_box">
                             <div className="StyleDetail_image_slider">
                                 <img
                                     src={`/uploads/${articleData.images[currentIndex]}`}
@@ -346,9 +334,8 @@ const StyleDetail = () => {
                     <div
                         className="StyleDetail_interest_like"
                         onClick={handleLikeToggle}
-                        style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "5px" }}
                     >
-                        <span style={{ fontSize: "15px" }}>{articleData.likeId ? "❤️" : "♡"}</span>
+                        <span >{articleData.likeId ? "❤️" : "♡"}</span>
                         {articleData.likeCount}
                     </div>
                     <div className="StyleDetail_interest_attention">
@@ -384,7 +371,7 @@ const StyleDetail = () => {
                 <div className="StyleDetail_container_title">
                     @{articleData.memberName}님의 다른 스타일
                     <Link to={`/Styleprofile?memberId=${articleData.memberId}`}>
-                        <button className="more_btn">더보기</button>
+                        <button className="StyleDetail_more_btn">더보기</button>
                     </Link>
                 </div>
                 <div className="StyleDetail_container_img">
