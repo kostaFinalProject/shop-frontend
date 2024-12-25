@@ -1,0 +1,474 @@
+.CheckoutPage_fullScreen {
+
+    margin: 0 auto;
+    padding: 0;
+    width: 900px;
+    height: auto;
+
+    list-style: none;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+
+
+}
+
+.CheckoutPage_header {
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+
+    /* position: fixed;
+    margin: 0 auto;
+    padding: 0;
+    top: 0;
+    z-index: 9999;
+    width: 100%; */
+
+}
+
+.CheckoutPage_header_01 {
+    width: 900px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+
+}
+
+.CheckoutPage_Basket_MyPage {
+    display: flex;
+}
+
+.CheckoutPage_header_02 {
+    width: 900px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+.CheckoutPage_Title {
+    color: #ffffff;
+
+    font-size: 20px;
+}
+
+
+/* 서로 카테고리 경계선  */
+.CheckoutPage_BoundaryLine {
+    width: 100%;
+    height: 5px;
+    background-color: #B5B6B5;
+    color: inherit;
+}
+
+/* 업다운버튼 */
+.CheckoutPage_UpDownBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    height: 40px;
+    text-align: center;
+    align-items: center;
+    background-color: inherit;
+    border: none;
+    border-bottom: 1px solid #B5B6B5;
+    color: #B5B6B5;
+}
+
+
+
+/* 배송지 선택--------최근,직접-------------------- */
+.CheckoutPage_Address_select_address {
+    width: 100%;
+    height: 40px;
+    display: flex;
+
+
+}
+
+.CheckoutPage_Address_select_01 {
+    width: 50%;
+    height: 40px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.CheckoutPage_Address_select_01:hover {
+    cursor: pointer;
+}
+
+/* 주문자와 동일 + 새로운배송지  */
+.CheckoutPage_Address_Final_select {
+    width: 50%;
+    display: flex;
+    gap: 20px;
+}
+
+.CheckoutPage_Address_Final_select label:hover {
+
+    cursor: pointer;
+}
+
+/* -------------------- 배송기사메세지------- */
+.CheckoutPage_Delivery {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+
+}
+
+.CheckoutPage_Delivery_select {
+
+    width: 99%;
+    height: 40px;
+}
+
+
+/* -----------------주문상품 섹션----------------- */
+.CheckoutPage_Ordered_Items_ItemBox {
+    width: 900px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 0;
+    
+
+}
+
+.CheckoutPage_Ordered_Items_CheckBox {
+    height: 10px;
+    width: 850px;
+    text-align: left;
+    padding-left: 15px;
+
+
+}
+
+.CheckoutPage_Ordered_Items_TextBox {
+    width: 850px;
+    height: 135px;
+    display: flex;
+
+    padding: 10px;
+
+}
+
+/* .CheckoutPage_Ordered_Items_Iemag{
+    width: 90px;
+    height: 115px;
+} */
+.CheckoutPage_Ordered_Items_Iemag img {
+    width: 110px;
+    height: 125px;
+    object-fit: cover;
+}
+
+/* 텍스트 박스------------ */
+.CheckoutPage_Ordered_Items_content {
+    width: 850px;
+    height: 125px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.CheckoutPage_Ordered_Items_Title {
+    width: 730px;
+    height: 40px;
+    padding-left: 15px;
+
+}
+
+.CheckoutPage_Ordered_Items_Body {
+    margin: 0 auto;
+    padding: 0;
+    width: 730px;
+    height: 90px;
+    padding-left: 15px;
+
+}
+
+.CheckoutPage_Ordered_Items_Body li {
+    list-style: none;
+}
+
+.CheckoutPage_Ordered_Items_Quantity {
+    width: 730px;
+    font-size: 13px;
+
+}
+
+.CheckoutPage_Ordered_Items_Sale {
+    width: 730px;
+    font-size: 13px;
+
+}
+
+.CheckoutPage_Ordered_Items_TotalPrice {
+    width: 730px;
+    font-size: 20px;
+    padding-left: 15px;
+
+
+}
+.CheckoutPage_Ordered_Items_Total{
+    width: 850px;
+    padding-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: end;
+
+}
+
+/* ------------삭제버튼----------- */
+.CheckoutPage_Ordered_Items_BtnRemove {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #B5B6B5;
+    font: inherit;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+
+
+/* 할인쿠폰 */
+.CheckoutPage_Discount_Box {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.CheckoutPage_Discount_Select {
+    width: 850px;
+    height: 50px;
+
+}
+
+
+
+/* 보유적립금------------------- */
+
+.CheckoutPage_Payment_Information_point {
+    width: 870px;
+    margin: 15px 0 15px 15px;
+    display: block;
+    gap: 3px;
+
+}
+
+.CheckoutPage_Payment_Information_point_Flex {
+    display: flex;
+
+}
+
+.CheckoutPage_Payment_Information_point_Title {
+    width: 200px;
+    height: 20px;
+    display: flex;
+
+    align-items: center;
+
+
+}
+
+.CheckoutPage_Payment_Information_point_Content {
+    width: 100%;
+    height: 30px;
+    text-align: end;
+
+
+}
+
+.CheckoutPage_Payment_Information_point_Flex_Final {
+    display: flex;
+    padding-top: 10px;
+    border-top: 1px solid #B5B6B5;
+
+}
+
+.CheckoutPage_Payment_Points_Input::-webkit-inner-spin-button,
+.CheckoutPage_Payment_Points_Input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.CheckoutPage_Payment_Points_Input {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
+
+.CheckoutPage_Payment_Information_point_Content_BtnBox {
+    width: 100%;
+    height: 30px;
+    text-align: end;
+
+    margin-bottom: 10px;
+}
+
+.CheckoutPage_Payment_Information_Apply_Points button {
+    width: 50px;
+    height: 30px;
+    margin-left: 10px;
+
+
+
+}
+
+
+
+/* 결제정보------------------- */
+
+.CheckoutPage_Payment_payment {
+
+    margin: 15px;
+    display: block;
+    gap: 3px;
+}
+
+.CheckoutPage_Payment_payment_Flex {
+    display: flex;
+
+}
+
+.CheckoutPage_Payment_payment_Title {
+    width: 200px;
+    height: 20px;
+    display: flex;
+
+    align-items: center;
+
+
+}
+
+.CheckoutPage_Payment_payment_Content {
+    width: 100%;
+    height: 30px;
+    text-align: end;
+
+
+}
+
+.CheckoutPage_Payment_payment_Flex_Final {
+    display: flex;
+
+    border-top: 1px solid #B5B6B5;
+
+}
+
+/* ---적립혜택--------------- */
+.CheckoutPage_Rewards_Flex {
+    display: flex;
+    margin: 15px;
+
+}
+
+.CheckoutPage_Rewards_Title {
+    width: 200px;
+    height: 20px;
+    display: flex;
+
+    align-items: center;
+
+
+}
+
+.CheckoutPage_Rewards_Content {
+    width: 100%;
+    height: 30px;
+    text-align: end;
+
+
+}
+
+/* 결제버튼  */
+.CheckoutPage_BuyBtnBox {
+    width: 100%;
+    height: 60px;
+    background-color: #000;
+
+    display: flex;
+    justify-content: space-between;
+    
+}
+.CheckoutPage_BackBtn{
+    width: 20%;
+    height: 60px;
+    background-color: inherit;
+    color: #ffffff;
+    font-size: 20px;
+}
+.CheckoutPage_BackBtn:hover {
+    cursor: pointer;
+}
+.CheckoutPage_BuyBtn {
+    width: 80%;
+    height: 60px;
+    background-color: inherit;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.CheckoutPage_BuyBtn:hover {
+    cursor: pointer;
+}
+
+/* 동의문구 */
+.CheckoutPage_Agree_Title_01 {
+    width: 100%;
+    height: 90px;
+}
+
+.CheckoutPage_Agree_01 {
+    margin-left: 15px;
+}
+
+.CheckoutPage_Agree_02 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.CheckoutPage_Agree_Title_02 {
+    width: 100%;
+    height: 90px;
+
+}
+
+.CheckoutPage_Agree_03 {
+
+    width: 850px;
+    margin-left: 15px;
+    font-size: 12px;
+    color: #999;
+    margin-top: 30px;
+}
+
+.CheckoutPage_Agree_04 {
+    width: 850px;
+    margin-left: 15px;
+    font-size: 12px;
+    color: #999;
+}

@@ -1,0 +1,41 @@
+.CheakoutPage_fullScreen{
+
+    margin: 0 auto;
+    padding: 0;
+    width: 900px;
+    height: auto;
+
+    list-style: none;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    
+}
+
+
+.CheakoutPage_header{
+    width: 100%;
+    height: 50px;
+    display: inline-flex;
+    justifㅂㅂy-content: center;
+
+    align-items: center;
+}
+.CheakoutPage_Title{
+    background-color: cadetblue;
+    display: flex;
+}
+.CheakoutPage_Basket{
+background-color: darkblue;
+}
+.CheakoutPage_MyPage{
+
+    background-color: saddlebrown;
+}
+/* 업다운버튼 */
+.CheakoutPage_UpDownBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+
+}

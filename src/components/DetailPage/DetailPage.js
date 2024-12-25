@@ -13,6 +13,7 @@ const DetailPage = () => {
     const [relatedArticles, setRelatedArticles] = useState([]);
     const [articlesLoading, setArticlesLoading] = useState(true);
     const [articlesError, setArticlesError] = useState(null);
+    const [selectedItems, setSelectedItems] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -34,8 +35,6 @@ const DetailPage = () => {
                     ""
                 );
 
-                // console.log("처음받은 데이터", data);
-
                 setItemData(data);
             } catch (err) {
                 setError(err.message);
@@ -46,8 +45,6 @@ const DetailPage = () => {
 
         fetchData();
     }, [itemId]);
-
-
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -101,6 +98,94 @@ const DetailPage = () => {
     const handleGoToQnA = () => {
         navigate('/QnACreate', { state: { itemData } }); // QnAcreate 페이지로 이동하면서 itemData 전달
     };
+
+    // 주문 API 호출을 위한 함수 추가
+    const handleOrderSubmit = async () => {
+        const orderItems = selectedItems.map(item => ({
+            itemSizeId: item.id,
+            count: item.quantity,
+        }));
+
+        const orderRequest = {
+            orderItems: orderItems,
+        };
+
+        const accesstoken = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        if (!accesstoken || !refreshToken) {
+            alert("로그인이 필요한 기능입니다.")
+            navigate("/login")
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': accesstoken,
+                    'Refresh-Token': refreshToken
+                },
+                body: JSON.stringify(orderRequest)
+            });
+
+            if (!response.ok) throw new Error('Failed to create order');
+
+            alert("결제창으로 넘어갑니다.");
+
+            const { orderId, amount } = await response.json(); 
+            
+            const IMP = window.IMP;
+            IMP.init('imp81860065');
+
+            IMP.request_pay(
+                {
+                    pg: "html5_inicis", // PG사 선택 (KG이니시스)
+                    pay_method: "card", // 결제 수단
+                    merchant_uid: `order_${orderId}`, // 주문 고유번호
+                    name: "주문 상품명", // 상품명
+                    amount: amount, // 결제 금액
+                    buyer_email: "test@test.com", // 테스트용 이메일
+                    buyer_name: "홍길동", // 테스트용 이름
+                    buyer_tel: "010-1234-5678", // 테스트용 전화번호
+                    buyer_addr: "서울특별시 강남구 삼성동", // 테스트용 주소
+                    buyer_postcode: "123-456" // 테스트용 우편번호
+                },
+                async (response) => {
+                    if (response.success) {
+                        // 4. 결제 성공 시 서버로 결제 정보 전달
+                        await fetch('http://localhost:8080/api/v1/payments', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': accesstoken,
+                                'Refresh-Token': refreshToken
+                            },
+                            body: JSON.stringify({
+                                orderId: orderId,
+                                impUid: response.imp_uid,
+                                orderPrice: amount
+                            })
+                        });
+    
+                        alert("결제가 완료되었습니다!");
+                        navigate(`/detailPage?itemId=${itemId}`); // 결제 완료 페이지로 이동
+                    } else {
+                        // 결제 실패 처리
+                        alert(`결제 실패: ${response.error_msg}`);
+                    }
+                }
+            );
+
+        } catch (error) {
+            console.error('Order creation error:', error);
+        }
+    };
+
+    const handleItemsChange = (items) => {
+        setSelectedItems(items); // 선택된 아이템 저장
+      };
 
     const renderRelatedArticles = () => {
         if (articlesLoading) return <div>스타일 정보를 로딩 중...</div>;
@@ -191,9 +276,10 @@ const DetailPage = () => {
                                 discountPercent: itemData.discountPercent,
                                 discountPrice: itemData.discountPrice,
                             }}
+                            onItemsChange={handleItemsChange}
                         />
                         {/* 바로 구매 버튼 추후에 서밋으로 결제창으로 넘겨야함함*/}
-                        <button type="" className="BuyInformation_buyBtn">
+                        <button type="" className="BuyInformation_buyBtn" onClick={handleOrderSubmit}>
                             <p>바로구매</p>
                         </button>
 
@@ -240,12 +326,7 @@ const DetailPage = () => {
                 </div>
                 
                 <ScrollUp />
-
-
-
             </div>
-
-
         </div>
     );
 };

@@ -79,7 +79,6 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
         }
     };
 
-    // 대댓글 조회
     const fetchReplies = async (commentId, pageNumber = 0) => {
         if (!header || replyLoading) return;
         setReplyLoading(true);
@@ -118,9 +117,13 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                 ],
             }));
 
-            // `replyHasMore`와 `replyPage` 업데이트
-            setReplyHasMore(!data.last);
-            setReplyPage(pageNumber + 1); // 다음 페이지를 요청할 준비
+            // 데이터가 더 있으면 페이지를 계속 요청하도록 설정
+            if (!data.last) {
+                setReplyPage(pageNumber + 1);
+                fetchReplies(commentId, pageNumber + 1);  // 다음 페이지를 계속 요청
+            } else {
+                setReplyHasMore(false); // 더 이상 데이터가 없으면 종료
+            }
         } catch (error) {
             console.error("대댓글 조회 에러:", error);
         } finally {
@@ -128,25 +131,15 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
         }
     };
 
-    const handleScroll = () => {
-        const container = scrollContainerRef.current;
-        if (container) {
-            const isAtBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
-            if (isAtBottom && hasMore && !loading) {
-                fetchComments(page);
-            }
-        }
-    };
-
-    const handleReplyScroll = (commentId) => {
-        const container = replyScrollRefs.current[commentId]?.current;
-        if (container) {
-            const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 1; // 부드러운 감지
-            if (isAtBottom && replyHasMore && !replyLoading) {
-                fetchReplies(commentId, replyPage);
-            }
-        }
-    };
+    // const handleScroll = () => {
+    //     const container = scrollContainerRef.current;
+    //     if (container) {
+    //         const isAtBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
+    //         if (isAtBottom && hasMore && !loading) {
+    //             fetchComments(page);
+    //         }
+    //     }
+    // };
 
     const handleAddComment = async () => {
         if (!accessToken && !refreshToken) {
@@ -330,7 +323,7 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
             window.location.href = '/login';
             return;
         }
-    
+
         try {
             const response = await fetch(
                 `http://localhost:8080/api/v1/comments/${commentId}`,
@@ -341,7 +334,7 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                     }
                 }
             );
-    
+
             if (!response.ok) {
                 throw new Error("댓글 삭제 실패");
             }
@@ -350,7 +343,7 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                 ...prevArticleData,
                 commentCount: prevArticleData.commentCount - 1
             }));
-    
+
             if (isReply) {
                 // 대댓글 상태에서 삭제
                 setReplies((prevReplies) => ({
@@ -363,15 +356,15 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                     prevComments.filter((comment) => comment.commentId !== commentId)
                 );
             }
-    
+
             alert("댓글이 삭제되었습니다.");
         } catch (error) {
             console.error("댓글 삭제 에러:", error);
             alert("댓글 삭제에 실패했습니다. 다시 시도해 주세요.");
         }
     };
-    
-    
+
+
 
     const handleLikeToggle = async (commentId, likeId, isReply = false) => {
         if (!accessToken && !refreshToken) {
@@ -615,7 +608,7 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
             {/* 댓글 목록 */}
             <ul className="CommentsPanel_list"
                 ref={scrollContainerRef}
-                onScroll={handleScroll}>
+                >
                 {comments.map((comment, index) => (
                     <div className="CommentsPanel_content">
                         <li key={comment.commentId} ref={index === comments.length - 1 ? lastCommentRef : null}>
@@ -631,31 +624,39 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                                         className="CommentsPanel_User_Img"
                                     />
                                 </div>
-                                <div>
+                                <div className="comment">
                                     <div>{comment.memberName}</div>
-                                    <div>{formatDateToKST(comment.time)}</div>
+                                    <div className="flex_spacebetween">
+                                        <div>{formatDateToKST(comment.time)}</div>
+                                        <div>
+                                            <span className="commentlike" onClick={() => handleLikeToggle(comment.commentId, comment.likeId)}>
+                                                {comment.likeId ? "❤️" : "♡"}
+                                            </span>
+                                            {comment.likeCount}
+                                        </div>
+                                    </div>
+
                                     {comment.imageUrl && (
                                         <img src={`/uploads/${comment.imageUrl}`} alt="댓글 이미지" width="135" />
                                     )}
-                                    <div>{comment.content}</div>
+                                    <div className="comment_content">{comment.content}</div>
                                     <div>
-                                        <span onClick={() => handleLikeToggle(comment.commentId, comment.likeId)}>
-                                            {comment.likeId ? "❤️" : "♡"}
-                                        </span>
-                                        {comment.likeCount}
 
-                                        {/* 답글 보기/닫기 버튼 */}
-                                        <button onClick={() => toggleRepliesVisibility(comment.commentId)}>
-                                            {repliesVisible[comment.commentId] ? "답글 닫기" : "답글 보기"}
-                                        </button>
 
-                                        {comment.isMe === "Me" && (
-                                            <>
-                                                <button onClick={() => handleEditCommetToggle(comment.commentId)}>수정</button>
-                                                <button onClick={() => handleDeleteComment(comment.commentId, false)}>삭제</button>
-                                            </>
-                                        )}
-                                        <button onClick={() => handleReplyToggle(index)}>답글달기</button>
+                                        <div>
+                                            {/* 답글 보기/닫기 버튼 */}
+                                            <button className="comment-action-btn toggle-reply" onClick={() => toggleRepliesVisibility(comment.commentId)}>
+                                                {repliesVisible[comment.commentId] ? "답글 닫기" : "답글 보기"}
+                                            </button>
+
+                                            {comment.isMe === "Me" && (
+                                                <>
+                                                    <button className="comment-action-btn edit" onClick={() => handleEditCommetToggle(comment.commentId)}>수정</button>
+                                                    <button className="comment-action-btn delete" onClick={() => handleDeleteComment(comment.commentId, false)}>삭제</button>
+                                                </>
+                                            )}
+                                            <button className="comment-action-btn reply" onClick={() => handleReplyToggle(index)}>답글달기</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -738,7 +739,6 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                                 <ul
                                     className="CommentsPanel_reply_list"
                                     ref={replyScrollRefs.current[comment.commentId]}
-                                    onScroll={() => handleReplyScroll(comment.commentId)}
                                 >
                                     {replies[comment.commentId].map((reply, replyIndex) => (
                                         <li
@@ -757,13 +757,13 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                                                     />
                                                 </div>
 
-                                                <div style={{marginLeft: "25px"}}>
+                                                <div style={{ marginLeft: "25px" }}>
                                                     <div>{reply.memberName}</div>
                                                     <div>{formatDateToKST(reply.time)}</div>
 
                                                     {/* 좋아요 버튼 */}
-                                                    <div>
-                                                        <span onClick={() => handleLikeToggle(reply.commentId, reply.likeId)}>
+                                                    <div className="replylikeall">
+                                                        <span className="replylike" onClick={() => handleLikeToggle(reply.commentId, reply.likeId)}>
                                                             {reply.likeId ? "❤️" : "♡"}
                                                         </span>
                                                         {reply.likeCount}
@@ -779,8 +779,8 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
 
                                                     {reply.isMe === "Me" && (
                                                         <>
-                                                            <button onClick={() => handleEditCommetToggle(reply.commentId)}>수정</button>
-                                                            <button onClick={() => handleDeleteComment(reply.commentId, true, comment.commentId)}>삭제</button>
+                                                            <button className="comment-action-btn edit" onClick={() => handleEditCommetToggle(reply.commentId)}>수정</button>
+                                                            <button className="comment-action-btn delete" onClick={() => handleDeleteComment(reply.commentId, true, comment.commentId)}>삭제</button>
                                                         </>
                                                     )}
                                                 </div>
@@ -831,5 +831,6 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
         </div>
     );
 };
+
 
 export default StyleComment;

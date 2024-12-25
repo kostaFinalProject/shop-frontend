@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from "react";
 import "./ProductSelector.css";
 
-const ProductSelector = ({ sizes, product }) => {
-  // 데이터 확인용 콘솔로그
-  // console.log("product:", product);
-  // useEffect(() => {
-  //   console.log('Sizes:', sizes); // sizes 배열 확인
-  // }, [sizes]);
-  const [items, setItems] = useState([]);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [totalRewardRate, setTotalRewardRate] = useState(0); // 총 적립금 상태 추가
+const ProductSelector = ({ sizes, product, onItemsChange }) => {
+  const [items, setItems] = useState([]); // 선택된 상품들
+  const [totalQuantity, setTotalQuantity] = useState(0); // 총 수량
+  const [totalAmount, setTotalAmount] = useState(0); // 총 금액
+  const [totalRewardRate, setTotalRewardRate] = useState(0); // 총 적립금
 
-  // 실제 적용 가격 (할인이 있으면 discountPrice, 없으면 productPrice)
+  // 실제 적용 가격 (할인이 있으면 할인 가격, 아니면 원래 가격)
   const appliedPrice = product.discountPercent > 0 ? product.discountPrice : product.productPrice;
 
-
+  // items가 변경될 때 총 수량, 총 금액, 적립금 계산 및 부모 컴포넌트로 전달
   useEffect(() => {
     const newTotalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
     const newTotalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const newTotalRewardRate = items.reduce((sum, item) => sum + item.quantity * item.price * product.rewardRate, 0);
+
     setTotalQuantity(newTotalQuantity);
     setTotalAmount(newTotalAmount);
     setTotalRewardRate(newTotalRewardRate);
-  }, [items]);
 
+    // 부모 컴포넌트로 선택된 아이템 전달
+    if (onItemsChange) {
+      onItemsChange(items);
+    }
+  }, [items, onItemsChange, product.rewardRate]);
 
-  
+  // 옵션 선택
   const handleSizeSelect = (event) => {
     const selectedOption = event.target.options[event.target.selectedIndex];
     const sizeId = selectedOption.value;
@@ -47,7 +47,7 @@ const ProductSelector = ({ sizes, product }) => {
     const newItem = {
       id: sizeId,
       name: sizeName,
-      price: appliedPrice, // 적용된 가격 사용
+      price: appliedPrice,
       quantity: 1,
     };
 
@@ -55,37 +55,31 @@ const ProductSelector = ({ sizes, product }) => {
     event.target.value = "*";
   };
 
+  // 수량 업데이트
   const updateItemQuantity = (itemId, qtyChange) => {
     setItems((prevItems) =>
       prevItems.map((item) => {
         if (item.id === itemId) {
-          // 사이즈에 맞는 stockQuantity 찾기
-          const selectedSize = sizes.find(size => size.itemSizeId.toString() === item.id.toString());
-  
+          const selectedSize = sizes.find((size) => size.itemSizeId.toString() === item.id.toString());
           if (!selectedSize) {
             console.error("선택된 사이즈 정보가 없습니다.");
-            return item; // 수량 변경하지 않고 그대로 반환
+            return item;
           }
-  
+
           const newQuantity = item.quantity + qtyChange;
-  
-          // 수량이 재고보다 많으면 alert 띄우고 변경하지 않음
           if (newQuantity > selectedSize.stockQuantity) {
-            alert("재고가 부족합니다. 수량을 재고 이하로 설정해주세요.");
-            return item; // 수량 변경을 하지 않고 그대로 반환
+            alert("재고가 부족합니다.");
+            return item;
           }
-  
-          // 수량이 1보다 작으면 1로 제한
+
           return { ...item, quantity: Math.max(1, newQuantity) };
         }
         return item;
       })
     );
   };
-  
-  
 
-
+  // 옵션 삭제
   const removeItem = (itemId) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
@@ -111,17 +105,15 @@ const ProductSelector = ({ sizes, product }) => {
         </div>
       </div>
 
-
+      {/* 선택된 상품 옵션 */}
       {items.map((item) => (
         <div key={item.id} className="ProductSelector_list">
           <div className="ProductSelector_NewOption">
             <div className="ProductSelector_name">
-              <div className="ProductSelector_title">
-                {product.productName}
-              </div>
+              <div className="ProductSelector_title">{product.productName}</div>
               <div className="ProductSelector_size">{item.name}</div>
             </div>
-            {/* --------------------옵션 버튼--------------  */}
+
             <div className="ProductSelector_list_quantity">
               <button
                 className="ProductSelector_decreaseBtn"
@@ -133,14 +125,20 @@ const ProductSelector = ({ sizes, product }) => {
                 type="number"
                 className="ProductSelector_quantityInput"
                 value={item.quantity}
-                min="1"
                 readOnly
               />
-              <button className="ProductSelector_increaseBtn"
-                onClick={() => updateItemQuantity(item.id, 1)}
-              >▲</button>
               <button
-                className="ProductSelector_remove" onClick={() => removeItem(item.id)}> x</button>
+                className="ProductSelector_increaseBtn"
+                onClick={() => updateItemQuantity(item.id, 1)}
+              >
+                ▲
+              </button>
+              <button
+                className="ProductSelector_remove"
+                onClick={() => removeItem(item.id)}
+              >
+                x
+              </button>
             </div>
 
             <div className="ProductSelector_total_count">
@@ -148,13 +146,14 @@ const ProductSelector = ({ sizes, product }) => {
                 {(item.quantity * item.price).toLocaleString()} 원
               </div>
               <div className="ProductSelector_total_rewardRate">
-                적립금 ( {Math.floor(item.quantity * item.price * product.rewardRate)} 원)
+                적립금 ({Math.floor(item.quantity * item.price * product.rewardRate).toLocaleString()} 원)
               </div>
             </div>
           </div>
         </div>
       ))}
 
+      {/* 총합 */}
       <div className="ProductSelector_summary">
         <div className="ProductSelector_summary_Total_head">
           <div className="ProductSelector_summary_Quantity">총 수량: {totalQuantity} 개</div>
