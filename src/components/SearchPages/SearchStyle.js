@@ -84,7 +84,7 @@ const SearchStyle = () => {
             } else if (item) {
                 url.searchParams.append("itemId", item);
             } else if (keywordFromUrl) {
-                url.searchParams.append("keyword", keywordFromUrl);
+                url.searchParams.append("tag", keywordFromUrl);
             }
 
             const response = await fetch(url.toString(), {
