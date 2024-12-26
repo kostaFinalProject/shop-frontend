@@ -1,9 +1,221 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
 import "./MyPageBasket.css";
 
 const MyPageBasket = () => {
+  const [userBasket, setUserBasket] = useState(null);
+  const [header, setHeader] = useState(null);
+  const [quantities, setQuantities] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]); // 선택된 항목
+  const [selectedTotalPrice, setSelectedTotalPrice] = useState(0); // 선택된 상품의 총 금액
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
+
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  const getHeaders = async () => {
+    const headers = { "Content-Type": "application/json" };
+
+    if (accessToken && refreshToken) {
+      try {
+        const newAccessToken = await refreshAccessToken(refreshToken);
+        if (newAccessToken) {
+          localStorage.setItem("accessToken", newAccessToken);
+          headers["Authorization"] = newAccessToken;
+          headers["Refresh-Token"] = refreshToken;
+        } else {
+          localStorage.clear();
+          window.location.href = "/login";
+          return null;
+        }
+      } catch (error) {
+        console.error("Error handling tokens:", error);
+        localStorage.clear();
+        window.location.href = "/login";
+        return null;
+      }
+    }
+
+    return headers;
+  };
+
+  const refreshAccessToken = async (refreshToken) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/members/refresh-token", {
+        method: "POST",
+        headers: {
+          "Refresh-Token": refreshToken
+        }
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        return data.newToken;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error refreshing access token:", error);
+      return null;
+    }
+  };
+
+  const extractTargetId = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('targetId');
+  };
+
+  const fetchCurrentUser = async () => {
+    const headers = await getHeaders();
+    if (!headers) return;
+
+    try {
+      const response = await fetch("http://localhost:8080/api/v1/carts", {
+        method: "GET",
+        headers: headers
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setUserBasket(data);
+        console.log("data", data);
+      } else {
+        setUserBasket(null);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setUserBasket(null);
+    }
+  };
+
+  useEffect(() => {
+    const initializePage = async () => {
+      const headers = await getHeaders();
+      if (!headers) return;
+
+      setHeader(headers);
+      await fetchCurrentUser();
+
+      const targetId = extractTargetId();
+
+      if (targetId) {
+        try {
+          const response = await fetch(`http://localhost:8080/api/v1/items`, {
+            method: "GET",
+            headers: headers,
+          });
+          const basketdata = await response.json();
+          setUserBasket((prev) => ({
+            ...prev,
+            ...basketdata,
+          }));
+          console.log("basketdata", basketdata);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    initializePage();
+  }, []); // 빈 배열로 설정하여 컴포넌트가 처음 마운트될 때만 실행
+
+  //수량
+
+  useEffect(() => {
+    if (userBasket) {
+      const initialQuantities = userBasket.reduce((acc, item) => {
+        acc[item.cartId] = item.count;
+        return acc;
+      }, {});
+      setQuantities(initialQuantities);
+    }
+
+  }, [userBasket]);
+
+  const updateQuantity = async (cartId, newCount) => {
+    if (newCount < 1) {
+      alert("최소 수량은 1개입니다.");
+      return;
+    }
+
+    const headers = await getHeaders();
+    if (!headers) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/carts/${cartId}?count=${newCount}`, {
+        method: "PUT",
+        headers: headers,
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        body: JSON.stringify({ count: newCount }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const message = await response.text();
+      alert(message);
+
+      // 상태 업데이트
+      setQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [cartId]: newCount,
+      }));
+    } catch (error) {
+      console.error(error);
+      alert("수량 업데이트에 실패했습니다.");
+    }
+  };
+
+  // 체크박스 클릭 시 선택된 항목 업데이트
+  const handleCheckboxChange = (cartId, price) => {
+    setSelectedItems((prevSelectedItems) => {
+      if (prevSelectedItems.includes(cartId)) {
+        // 항목이 이미 선택되었으면 제거
+        setSelectedTotalPrice(prevPrice => prevPrice - price);
+        return prevSelectedItems.filter((id) => id !== cartId);
+      } else {
+        // 항목이 선택되지 않았으면 추가
+        setSelectedTotalPrice(prevPrice => prevPrice + price);
+        return [...prevSelectedItems, cartId];
+      }
+    });
+  };
+
+  // 상품 삭제 처리
+  const handleDelete = async (cartId) => {
+    const headers = await getHeaders();
+    if (!headers) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/carts?cartIds=${cartId}`, {
+        method: "DELETE",
+        headers: headers,
+      });
+
+      if (response.ok) {
+        const updatedBasket = userBasket.filter(item => item.cartId !== cartId);
+        setUserBasket(updatedBasket);
+        alert("상품이 삭제되었습니다.");
+        window.location.reload(); // 페이지 새로 고침
+      } else {
+        alert("상품 삭제에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("삭제 오류:", error);
+      alert("상품 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
+
+  // 데이터가 로드된 후 렌더링
+  if (!userBasket) return <div>Loading...</div>;
+
+
 
   return (
     <div className="MyPageBasketcontainer">
@@ -78,267 +290,128 @@ const MyPageBasket = () => {
           <div className="basketfield">
             <div className="basket1">
               <div className="basketitem">
-                <div className="prdBox">
-                  <input type="checkbox" className="check" />
-                  &nbsp;
-                  <div className="thumbnail">
-                    <a href="">
-                      <img src="" alt="" width={140} height={140} />
-                    </a>
-                  </div>
-                  <div className="description">
-                    <strong className="manufacturer" title="제조사">
-                      [제조사]
-                    </strong>
-                    <strong className="itemname" title="상품명">
-                      레알마드리드
-                    </strong>
-                    <ul className="price">
-                      <li>
-                        <strong>150000</strong>원
-                      </li>
-                    </ul>
-                    <ul className="info">
-                      <li>
-                        배송 :<span className="delivery">3000원</span>
-                      </li>
-                      <li>
-                        적립금 :<span className="mileage">300원</span>
-                      </li>
-                    </ul>
-                    <ul className="optional">
-                      <li>옵션1</li>
-                    </ul>
-                  </div>
-                  <div className="sumprice">
-                    <strong>0</strong>원
-                  </div>
-                  <a href="">
-                    <img src="/img/x-lg.svg" />
-                  </a>
-                  <div className="quentity">
-                    <span className="qtyBtnTotal">
-                      <button className="up">+</button>
-                      <input
-                        id="quentity_id_0"
-                        name="quentity_name_0"
-                        size={2}
-                        defaultValue={1}
-                        type="text"
-                      />
-                      <button className="down">-</button>
-                    </span>
-                    <button type="button">변경</button>
-                  </div>
-                  <div className="buttonGroup">
-                    <a href="#none" className="btnSubmit sizeS">
-                      주문하기
-                    </a>
-                  </div>
+
+
+                <div className="basketContainer">
+                  {userBasket.length === 0 ? (
+                    <p className="none">장바구니 내역이 없습니다.</p>
+                  ) : (
+                    // 장바구니 아이템을 표시하는 코드
+                    userBasket.map((userBasket, index) => (
+                      <div className="prdBox" key={userBasket.cartId}>
+                        <input
+                          type="checkbox"
+                          className="check"
+                          onChange={() => handleCheckboxChange(userBasket.cartId, userBasket.currentPrice * userBasket.count)}
+                        />
+                        &nbsp;
+                        <div className="thumbnail">
+                          <a href="">
+                            <img
+                              src={userBasket.repImgUrl.replace(
+                                "C:\\kostafinalfrontend\\frontend-jhs\\public\\",
+                                "/"
+                              )}
+                              alt={userBasket.name}
+                              width={140}
+                              height={140}
+                            />
+                          </a>
+                        </div>
+                        <div className="description">
+                          <span className="itemid">{userBasket.cartId}</span>
+                          <strong className="itemname" title="상품명">
+                            {userBasket.name}
+                          </strong>
+                          <ul className="price">
+                            <li>
+                              <strong>{userBasket.price}</strong>원
+                            </li>
+                          </ul>
+                          <ul className="info">
+                            <li>
+                              적립금 :<span className="mileage">{Math.floor(userBasket.price * 0.01)}원</span>
+                            </li>
+                          </ul>
+                          <ul className="optional">
+                            <li>{userBasket.itemSizeId}</li>
+                          </ul>
+                        </div>
+                        <div className="sumprice">
+                          <strong>
+                            {userBasket.price * (quantities[userBasket.cartId] || userBasket.count)}
+                          </strong>원
+                        </div>
+                        <a href="#" onClick={() => handleDelete(userBasket.cartId)}>
+                          <img src="/img/x-lg.svg" alt="삭제" />
+                        </a>
+                        <div className="quentity">
+                          <span className="qtyBtnTotal">
+                            <button
+                              className="up"
+                              onClick={async () => {
+                                const newCount = quantities[userBasket.cartId] + 1;
+                                await updateQuantity(userBasket.cartId, newCount);
+                              }}
+                            >
+                              +
+                            </button>
+                            <input
+                              id={`quentity_id_${index}`}
+                              name={`quentity_name_${index}`}
+                              size={2}
+                              value={quantities[userBasket.cartId] !== undefined ? quantities[userBasket.cartId] : 0}
+                              type="text"
+                              readOnly
+                            />
+                            <button
+                              className="down"
+                              onClick={async () => {
+                                const newCount = quantities[userBasket.cartId] - 1;
+                                if (newCount > 0) {
+                                  await updateQuantity(userBasket.cartId, newCount);
+                                }
+                              }}
+                            >
+                              -
+                            </button>
+                          </span>
+                        </div>
+                        <div className="buttonGroup">
+                          <a href="#none" className="btnSubmit sizeS">
+                            주문하기
+                          </a>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
-                <div className="prdBox">
-                  <input type="checkbox" className="check" />
-                  &nbsp;
-                  <div className="thumbnail">
-                    <a href="">
-                      <img src="" alt="" width={140} height={140} />
-                    </a>
-                  </div>
-                  <div className="description">
-                    <strong className="manufacturer" title="제조사">
-                      [제조사]
-                    </strong>
-                    <strong className="itemname" title="상품명">
-                      레알마드리드
-                    </strong>
-                    <ul className="price">
-                      <li>
-                        <strong>150000</strong>원
-                      </li>
-                    </ul>
-                    <ul className="info">
-                      <li>
-                        배송 :<span className="delivery">3000원</span>
-                      </li>
-                      <li>
-                        적립금 :<span className="mileage">300원</span>
-                      </li>
-                    </ul>
-                    <ul className="optional">
-                      <li>옵션1</li>
-                    </ul>
-                  </div>
-                  <div className="sumprice">
-                    <strong>0</strong>원
-                  </div>
-                  <a href="">
-                    <img src="/img/x-lg.svg" />
-                  </a>
-                  <div className="quentity">
-                    <span className="qtyBtnTotal">
-                      <button className="up">+</button>
-                      <input
-                        id="quentity_id_0"
-                        name="quentity_name_0"
-                        size={2}
-                        defaultValue={1}
-                        type="text"
-                      />
-                      <button className="down">-</button>
-                    </span>
-                    <button type="button">변경</button>
-                  </div>
-                  <div className="buttonGroup">
-                    <a href="#none" className="btnSubmit sizeS">
-                      주문하기
-                    </a>
-                  </div>
-                </div>
-                <div className="prdBox">
-                  <input type="checkbox" className="check" />
-                  &nbsp;
-                  <div className="thumbnail">
-                    <a href="">
-                      <img src="" alt="" width={140} height={140} />
-                    </a>
-                  </div>
-                  <div className="description">
-                    <strong className="manufacturer" title="제조사">
-                      [제조사]
-                    </strong>
-                    <strong className="itemname" title="상품명">
-                      레알마드리드
-                    </strong>
-                    <ul className="price">
-                      <li>
-                        <strong>150000</strong>원
-                      </li>
-                    </ul>
-                    <ul className="info">
-                      <li>
-                        배송 :<span className="delivery">3000원</span>
-                      </li>
-                      <li>
-                        적립금 :<span className="mileage">300원</span>
-                      </li>
-                    </ul>
-                    <ul className="optional">
-                      <li>옵션1</li>
-                    </ul>
-                  </div>
-                  <div className="sumprice">
-                    <strong>0</strong>원
-                  </div>
-                  <a href="">
-                    <img src="/img/x-lg.svg" />
-                  </a>
-                  <div className="quentity">
-                    <span className="qtyBtnTotal">
-                      <button className="up">+</button>
-                      <input
-                        id="quentity_id_0"
-                        name="quentity_name_0"
-                        size={2}
-                        defaultValue={1}
-                        type="text"
-                      />
-                      <button className="down">-</button>
-                    </span>
-                    <button type="button">변경</button>
-                  </div>
-                  <div className="buttonGroup">
-                    <a href="#none" className="btnSubmit sizeS">
-                      주문하기
-                    </a>
-                  </div>
-                </div>
-                <div className="prdBox">
-                  <input type="checkbox" className="check" />
-                  &nbsp;
-                  <div className="thumbnail">
-                    <a href="">
-                      <img src="" alt="" width={140} height={140} />
-                    </a>
-                  </div>
-                  <div className="description">
-                    <strong className="manufacturer" title="제조사">
-                      [제조사]
-                    </strong>
-                    <strong className="itemname" title="상품명">
-                      레알마드리드
-                    </strong>
-                    <ul className="price">
-                      <li>
-                        <strong>150000</strong>원
-                      </li>
-                    </ul>
-                    <ul className="info">
-                      <li>
-                        배송 :<span className="delivery">3000원</span>
-                      </li>
-                      <li>
-                        적립금 :<span className="mileage">300원</span>
-                      </li>
-                    </ul>
-                    <ul className="optional">
-                      <li>옵션1</li>
-                    </ul>
-                  </div>
-                  <div className="sumprice">
-                    <strong>0</strong>원
-                  </div>
-                  <a href="">
-                    <img src="/img/x-lg.svg" />
-                  </a>
-                  <div className="quentity">
-                    <span className="qtyBtnTotal">
-                      <button className="up">+</button>
-                      <input
-                        id="quentity_id_0"
-                        name="quentity_name_0"
-                        size={2}
-                        defaultValue={1}
-                        type="text"
-                      />
-                      <button className="down">-</button>
-                    </span>
-                    <button type="button">변경</button>
-                  </div>
-                  <div className="buttonGroup">
-                    <a href="#none" className="btnSubmit sizeS">
-                      주문하기
-                    </a>
-                  </div>
-                </div>
+
               </div>
-              <p className="none">장바구니 내역이 없습니다.</p>
             </div>
             <div className="basket2">
               <div className="totalSummary">
                 <h3 className="totalSummaryTitle">주문상품</h3>
                 <div className="Price">
-                  <h4>총 상품금액</h4>
+                  <h4>선택 상품금액</h4>
                   <span>
-                    <strong>0</strong>원
+                    <strong>{selectedTotalPrice}</strong>원
                   </span>
                 </div>
                 <div className="Price">
-                  <h4>총 배송비</h4>
+                  <h4>택배비</h4>
                   <span>
-                    <strong>0</strong>원
+                    <strong>{selectedTotalPrice === 0 ? 0 : 4000}</strong>원
                   </span>
                 </div>
                 <div className="totalPrice">
-                  <h4>총 배송비</h4>
+                  <h4>총 가격</h4>
                   <span>
-                    <strong>0</strong>원
+                    <strong>    {selectedTotalPrice === 0 ? 0 : Math.floor(selectedTotalPrice + 4000)}</strong>원
                   </span>
                 </div>
               </div>
               <button type="button" className="submitBtn">
-                전체상품주문
-              </button>
-              <button type="button" className="selectSubmitBtn">
                 선택상품주문
               </button>
             </div>

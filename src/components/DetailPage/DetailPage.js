@@ -13,7 +13,7 @@ const DetailPage = () => {
     const [relatedArticles, setRelatedArticles] = useState([]);
     const [articlesLoading, setArticlesLoading] = useState(true);
     const [articlesError, setArticlesError] = useState(null);
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState([]); // 선택된 아이템
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -26,7 +26,7 @@ const DetailPage = () => {
                 if (!response.ok) throw new Error("Failed to fetch item data");
                 const data = await response.json();
 
-                // 이미지 경로 직접 수정
+                // 이미지 경로 수정
                 data.imageUrls = data.imageUrls.map((url) =>
                     url.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
                 );
@@ -53,7 +53,6 @@ const DetailPage = () => {
                 if (!response.ok) throw new Error("Failed to fetch related articles");
                 const data = await response.json();
 
-                // 이미지 경로 직접 수정
                 const formattedArticles = data.content.map((article) => ({
                     ...article,
                     imageUrl: article.imageUrl.replace(
@@ -82,7 +81,6 @@ const DetailPage = () => {
         navigate(`/StyleDetail?articleId=${articleId}`);
     };
 
-    // 슬라이더 이미지 이동 핸들러
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) =>
             (prevIndex + 1) % itemData.imageUrls.length
@@ -96,96 +94,51 @@ const DetailPage = () => {
     };
 
     const handleGoToQnA = () => {
-        navigate('/QnACreate', { state: { itemData } }); // QnAcreate 페이지로 이동하면서 itemData 전달
+        navigate('/QnACreate', { state: { itemData } });
     };
 
-    // 주문 API 호출을 위한 함수 추가
-    const handleOrderSubmit = async () => {
-        const orderItems = selectedItems.map(item => ({
-            itemSizeId: item.id,
-            count: item.quantity,
-        }));
-
-        const orderRequest = {
-            orderItems: orderItems,
-        };
-
+    const handleOrderSubmit = () => {
         const accesstoken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
-
+    
         if (!accesstoken || !refreshToken) {
-            alert("로그인이 필요한 기능입니다.")
-            navigate("/login")
+            alert("로그인이 필요한 기능입니다.");
+            navigate("/login");
             return;
         }
-
-        try {
-            const response = await fetch('http://localhost:8080/api/v1/orders', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': accesstoken,
-                    'Refresh-Token': refreshToken
-                },
-                body: JSON.stringify(orderRequest)
-            });
-
-            if (!response.ok) throw new Error('Failed to create order');
-
-            alert("결제창으로 넘어갑니다.");
-
-            const { orderId, amount } = await response.json(); 
-            
-            const IMP = window.IMP;
-            IMP.init('imp81860065');
-
-            IMP.request_pay(
-                {
-                    pg: "html5_inicis", // PG사 선택 (KG이니시스)
-                    pay_method: "card", // 결제 수단
-                    merchant_uid: `order_${orderId}`, // 주문 고유번호
-                    name: "주문 상품명", // 상품명
-                    amount: amount, // 결제 금액
-                    buyer_email: "test@test.com", // 테스트용 이메일
-                    buyer_name: "홍길동", // 테스트용 이름
-                    buyer_tel: "010-1234-5678", // 테스트용 전화번호
-                    buyer_addr: "서울특별시 강남구 삼성동", // 테스트용 주소
-                    buyer_postcode: "123-456" // 테스트용 우편번호
-                },
-                async (response) => {
-                    if (response.success) {
-                        // 4. 결제 성공 시 서버로 결제 정보 전달
-                        await fetch('http://localhost:8080/api/v1/payments', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': accesstoken,
-                                'Refresh-Token': refreshToken
-                            },
-                            body: JSON.stringify({
-                                orderId: orderId,
-                                impUid: response.imp_uid,
-                                orderPrice: amount
-                            })
-                        });
     
-                        alert("결제가 완료되었습니다!");
-                        navigate(`/detailPage?itemId=${itemId}`); // 결제 완료 페이지로 이동
-                    } else {
-                        // 결제 실패 처리
-                        alert(`결제 실패: ${response.error_msg}`);
-                    }
-                }
-            );
-
-        } catch (error) {
-            console.error('Order creation error:', error);
+        if (selectedItems.length === 0) {
+            alert("상품을 선택해주세요.");
+            return;
         }
+    
+        const totalAmount = selectedItems.reduce(
+            (acc, item) => acc + item.quantity * itemData.discountPrice,
+            0
+        );
+    
+        const orderData = {
+            imgUrl: itemData.itemDetailImageUrl,
+            itemName: itemData.name,
+            manufacturer: itemData.manufacturer,
+            seller: itemData.seller,
+            totalAmount,
+            items: selectedItems.map((item) => ({
+                itemSizeId: item.id,
+                size: item.name,
+                quantity: item.quantity,
+                price: itemData.discountPrice,
+            })),
+            shippingFee: 5000,
+        };
+    
+        navigate('/CheckoutPage', { state: orderData }); // CheckoutPage로 데이터 전달
     };
+    
 
     const handleItemsChange = (items) => {
         setSelectedItems(items); // 선택된 아이템 저장
-      };
+    };
 
     const renderRelatedArticles = () => {
         if (articlesLoading) return <div>스타일 정보를 로딩 중...</div>;

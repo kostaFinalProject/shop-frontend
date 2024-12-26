@@ -267,6 +267,9 @@ body{
     font-weight: 400;
 }
 
+.itemid{
+  display: none;
+}
 
 .MyPageBasketcontainer .description .price li strong {
   font-size: 12px;
@@ -302,7 +305,7 @@ body{
 .MyPageBasketcontainer .quentity {
   display: flex;
   align-items: center;
-  margin: 0 347px 15px 188px;
+  margin: 0 380px 15px 188px;
 }
 
 .MyPageBasketcontainer .quentity .qtyBtnTotal {

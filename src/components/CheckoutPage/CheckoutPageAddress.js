@@ -1,262 +1,197 @@
-import React, { useRef } from "react";
-import './CheckoutPageAddress.css';
+import React, { useEffect, useState, useRef } from "react";
+import "./CheckoutPageAddress.css";
 
-const CheckoutPageAddress = () => {
+const CheckoutPageAddress = ({ onAddressChange }) => {
+    const [addressList, setAddressList] = useState([]);
+    const [selectedAddressId, setSelectedAddressId] = useState(null);
+    const [mode, setMode] = useState("view");
 
-    const addressNameRef = useRef(null);
-    const userNameRef = useRef(null);
-    const userEmailRef = useRef(null);
-    const addressNumberRef = useRef(null);
-    const addressRef = useRef(null);
+    const postCodeRef = useRef(null);
+    const roadAddressRef = useRef(null);
     const detailAddressRef = useRef(null);
-    const phonenumber2Ref = useRef(null);
-    const phonenumber3Ref = useRef(null);
+
+    // API 요청 관련 설정
+    const fetchOptions = {
+        headers: {
+            Authorization: localStorage.getItem("accessToken"),
+            "Refresh-Token": localStorage.getItem("refreshToken"),
+        },
+    };
+
+    // 주소 목록 가져오기
+    useEffect(() => {
+        const fetchAddressList = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/api/v1/delivery-address", fetchOptions);
+                if (!response.ok) throw new Error("주소 목록을 불러오지 못했습니다.");
+                const data = await response.json();
+                setAddressList(data);
+            } catch (error) {
+                console.error(error.message);
+                alert("주소 목록을 불러오지 못했습니다.");
+            }
+        };
+
+        fetchAddressList();
+    }, []);
+
+    // 선택된 주소 상위 컴포넌트로 전달
+    const updateSelectedAddress = (selectedId) => {
+        const selectedAddress = addressList.find((addr) => addr.deliveryAddressId === selectedId);
+        if (selectedAddress && onAddressChange) {
+            onAddressChange({
+                postCode: selectedAddress.postCode,
+                roadAddress: selectedAddress.roadAddress,
+                detailAddress: selectedAddress.detailAddress,
+            });
+        }
+    };
+
+    const handleModeChange = (newMode) => setMode(newMode);
 
     const handleSearchAddress = () => {
-        if (!window.daum || !window.daum.Postcode) {
-            console.error("Daum Postcode script is not loaded!");
+        if (!window.daum?.Postcode) {
+            alert("주소 검색 모듈이 로드되지 않았습니다.");
             return;
         }
 
         new window.daum.Postcode({
             oncomplete: (data) => {
-                let addr = "";
-                let extraAddr = "";
+                const addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
 
-                if (data.userSelectedType === "R") {
-                    addr = data.roadAddress;
-                } else {
-                    addr = data.jibunAddress;
-                }
-
-                if (data.userSelectedType === "R") {
-                    if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-                        extraAddr += data.bname;
-                    }
-                    if (data.buildingName !== "" && data.apartment === "Y") {
-                        extraAddr += extraAddr !== "" ? `, ${data.buildingName}` : data.buildingName;
-                    }
-                    if (extraAddr !== "") {
-                        extraAddr = ` (${extraAddr})`;
-                    }
-                }
-
-                if (addressNumberRef.current) {
-                    addressNumberRef.current.value = data.zonecode;
-                }
-                if (addressRef.current) {
-                    addressRef.current.value = addr + extraAddr;
-                }
+                if (postCodeRef.current) postCodeRef.current.value = data.zonecode;
+                if (roadAddressRef.current) roadAddressRef.current.value = addr;
             },
         }).open();
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault(); // 기본 폼 제출 방지
+    const handleAddNewAddress = async () => {
+        const newAddress = {
+            postCode: postCodeRef.current.value.trim(),
+            roadAddress: roadAddressRef.current.value.trim(),
+            detailAddress: detailAddressRef.current.value.trim(),
+        };
 
-        // 필수 입력 필드 확인
-        if (
-            !addressNameRef.current.value.trim() ||
-            !userNameRef.current.value.trim() ||
-            !userEmailRef.current.value.trim() ||
-            !addressNumberRef.current.value.trim() ||
-            !addressRef.current.value.trim() ||
-            !phonenumber2Ref.current.value.trim() ||
-            !phonenumber3Ref.current.value.trim()
-        ) {
-            alert("모든 필수 입력 항목을 채워주세요.");
+        if (!newAddress.postCode || !newAddress.roadAddress || !newAddress.detailAddress) {
+            alert("모든 필드를 채워주세요.");
             return;
         }
 
-        // 전화번호 유효성 검사
-        const phoneRegex = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/delivery-address", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", ...fetchOptions.headers },
+                body: JSON.stringify(newAddress),
+            });
 
-        const phone1 = document.getElementById("phone1").value; // 선택된 지역번호
-        const phone2 = phonenumber2Ref.current.value; // 두 번째 입력값
-        const phone3 = phonenumber3Ref.current.value; // 세 번째 입력값
+            if (!response.ok) throw new Error("주소 등록에 실패했습니다.");
+            alert("주소가 성공적으로 등록되었습니다.");
+            setAddressList((prev) => [...prev, newAddress]);
+            setMode("view");
 
-        const fullPhoneNumber = `${phone1}-${phone2}-${phone3}`;
-
-        if (!phoneRegex.test(fullPhoneNumber)) {
-            alert("올바른 휴대전화 번호를 입력해주세요.");
-            return;
+            postCodeRef.current.value = "";
+            roadAddressRef.current.value = "";
+            detailAddressRef.current.value = "";
+        } catch (error) {
+            console.error(error.message);
+            alert("주소 등록 중 오류가 발생했습니다.");
         }
-
-        // 폼 데이터를 처리하는 로직 추가
-        alert("폼이 성공적으로 제출되었습니다!");
     };
+
+    const handleDeleteAddress = async (id) => {
+        if (!window.confirm("정말 이 주소를 삭제하시겠습니까?")) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/delivery-address/${id}`, {
+                method: "DELETE",
+                headers: fetchOptions.headers,
+            });
+
+            if (!response.ok) throw new Error("주소 삭제에 실패했습니다.");
+            alert("주소가 삭제되었습니다.");
+            setAddressList((prev) => prev.filter((addr) => addr.deliveryAddressId !== id));
+        } catch (error) {
+            console.error(error.message);
+            alert("주소 삭제 중 오류가 발생했습니다.");
+        }
+    };
+
     return (
-        <>
-            <div className="CheckoutPageAddress_Form">
-                <form action="" method="post" target="_self" >
-                    <div className="CheckoutPageAddress_body">
-
-                        {/* 배송지명 칸--------------------- */}
-                        <div className="CheckoutPageAddress_Address_Name">
-                            <div className="CheckoutPageAddress_Address_Name_Title">
-                                <label htmlFor="orderer" className="">배송지명</label>
-                            </div>
-                            <input type="text" className="CheckoutPageAddress_Address_Name_Body" placeholder="" ref={addressNameRef} />
-                        </div>
-
-                        {/* 주문자 성명 칸--------------------- */}
-                        <div className='CheckoutPageAddress_Buyer_Name'>
-                            <div className="CheckoutPageAddress_Buyer_Name_Title">
-                                <label htmlFor="name">주문자 성명</label>
-                            </div>
-                            <input type="text" className="CheckoutPageAddress_Buyer_Name_Body" placeholder="" ref={userNameRef} />
-                        </div>
-
-                        {/* 이메일 칸--------------------- */}
-                        <div className='CheckoutPageAddress_Email'>
-                            <div className="CheckoutPageAddress_Email_Title">
-                                <label htmlFor="email">이메일</label>
-                            </div>
-                            <input type="text" className="CheckoutPageAddress_Email_Body" placeholder="" ref={userEmailRef} />
-                            <p className="CheckoutPageAddress_Email_Body_p">@</p>
-                            <select id="oemail3" fw-filter="isFill" fw-label="주문자 이메일" fw-alone="N" fw-msg="" className="CheckoutPageAddress_Email_Body">
-                                <option value="">-이메일 선택-</option>
-                                <option value="naver.com">naver.com</option>
-                                <option value="daum.net">daum.net</option>
-                                <option value="nate.com">nate.com</option>
-                                <option value="hotmail.com">hotmail.com</option>
-                                <option value="yahoo.com">yahoo.com</option>
-                                <option value="empas.com">empas.com</option>
-                                <option value="korea.com">korea.com</option>
-                                <option value="dreamwiz.com">dreamwiz.com</option>
-                                <option value="gmail.com">gmail.com</option>
-                                <option value="etc">직접입력</option>
-                            </select>
-                        </div>
-
-                        {/* 주소 칸------------------------- */}
-                        <div className='CheckoutPageAddress_Address_address'>
-                            <div className="CheckoutPageAddress_Address_address_Form">
-                                <div className="CheckoutPageAddress_Address_address_label">
-                                    <label htmlFor="address">주소</label>
-                                </div>
-
-                                <div className="CheckoutPageAddress_Address_address_inpuit">
-                                    <input
-                                        type="text"
-                                        id="addressnumber"
-                                        className="CheckoutPageAddress_AddressNumber"
-                                        placeholder="우편번호"
-                                        readOnly=""
-                                        ref={addressNumberRef}
-                                    />
-                                    <button
-                                        id="SearchAddress"
-                                        className="CheckoutPageAddress_SearchBtn"
-                                        type="button"
-                                        style={{ cursor: "pointer" }}
-                                        onClick={handleSearchAddress}
-                                    >
-                                        주소검색
-                                    </button>
-                                    <div>
-                                        <input
-                                            type="text"
-                                            className="CheckoutPageAddress_AddressBox"
-                                            id="address"
-                                            placeholder="기본주소"
-                                            readOnly=""
-                                            ref={addressRef}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <input
-                                            type="text"
-                                            className="CheckoutPageAddress_AddressBox"
-                                            id="detailaddress"
-                                            placeholder="상세주소"
-                                            ref={detailAddressRef}
-                                        />
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                        {/* 일반전화 --------------------- */}
-
-
-                        <div className='CheckoutPageAddress_callNumber'>
-                            <div className="CheckoutPageAddress_callNumber_label">
-                                <label htmlFor="address">일반전화</label>
-                            </div>
-                            <select name="" id="homeNumber1" className="CheckoutPageAddress_callNumber_callbox">
-                                <option value="02">02</option>
-                                <option value="031">031</option>
-                                <option value="032">032</option>
-                                <option value="033">033</option>
-                                <option value="041">041</option>
-                                <option value="042">042</option>
-                                <option value="043">043</option>
-                                <option value="044">044</option>
-                                <option value="051">051</option>
-                                <option value="052">052</option>
-                                <option value="053">053</option>
-                                <option value="054">054</option>
-                                <option value="055">055</option>
-                                <option value="061">061</option>
-                                <option value="062">062</option>
-                                <option value="063">063</option>
-                                <option value="064">064</option>
-                                <option value="0502">0502</option>
-                                <option value="0503">0503</option>
-                                <option value="0504">0504</option>
-                                <option value="0505">0505</option>
-                                <option value="0506">0506</option>
-                                <option value="0507">0507</option>
-                                <option value="070">070</option>
-                            </select>
-                            <p className="p">-</p>
-                            <input type="text" id="homeNumber2" className="CheckoutPageAddress_callNumber_callbox" />
-                            <p className="p">-</p>
-                            <input type="text" id="homeNumber3" className="CheckoutPageAddress_callNumber_callbox" />
-                        </div>
-
-                        <div className='CheckoutPageAddress_callNumber'>
-                            <div className="CheckoutPageAddress_callNumber_label">
-                                <label htmlFor="address">휴대전화</label>
-                            </div>
-                            <select name="" id="phone1" className="CheckoutPageAddress_callNumber_callbox">
-                                <option value="010">010</option>
-                                <option value="011">011</option>
-                                <option value="016">016</option>
-                                <option value="017">017</option>
-                                <option value="018">018</option>
-                                <option value="019">019</option>
-                            </select>
-                            <p className="p">-</p>
-                            <input type="text" id="phone2" className="CheckoutPageAddress_callNumber_callbox" ref={phonenumber2Ref} />
-                            <p className="p">-</p>
-                            <input type="text" id="phone3" className="CheckoutPageAddress_callNumber_callbox" ref={phonenumber3Ref} />
-                        </div>
-
-                    </div>
-
-                    <div className="CheckoutPageAddress_Save_Btn">
-                        <div className="CheckoutPageAddress_Save_Btn_AddressSave">
-                            <input type="checkbox" />
-                            <label htmlFor="">기본 배송지로 저장</label>
-                        </div>
-
-                        <div className="CheckoutPageAddress_SaveBtn">
-                            <a href="#none" className="Registbtn sizeS" onClick={handleSubmit}>
-                                배송지 등록
-                            </a>
-                        </div>
-                    </div>
-
-                </form>
-
+        <div className="CheckoutPageAddress_Form">
+            <h3>배송지 관리</h3>
+            <div className="address-actions">
+                {["view", "add", "delete"].map((action) => (
+                    <button key={action} onClick={() => handleModeChange(action)}>
+                        {action === "view" ? "배송지 선택" : action === "add" ? "배송지 추가" : "배송지 삭제"}
+                    </button>
+                ))}
             </div>
 
-        </>
+            {mode === "view" && (
+                <div>
+                    <h4>등록된 주소</h4>
+                    {addressList.length === 0 ? (
+                        <p>등록된 주소가 없습니다.</p>
+                    ) : (
+                        <select
+                            value={selectedAddressId || ""}
+                            onChange={(e) => {
+                                const id = Number(e.target.value);
+                                setSelectedAddressId(id);
+                                updateSelectedAddress(id);
+                            }}
+                        >
+                            <option value="" disabled>
+                                선택해주세요
+                            </option>
+                            {addressList.map((address) => (
+                                <option key={address.deliveryAddressId} value={address.deliveryAddressId}>
+                                    {address.roadAddress} {address.detailAddress} ({address.postCode})
+                                </option>
+                            ))}
+                        </select>
+                    )}
+                </div>
+            )}
+
+            {mode === "add" && (
+                <div>
+                    <h4>새로운 주소 추가</h4>
+                    <input type="text" placeholder="우편번호" ref={postCodeRef} readOnly />
+                    <button onClick={handleSearchAddress}>주소 검색</button>
+                    <input type="text" placeholder="도로명 주소" ref={roadAddressRef} readOnly />
+                    <input type="text" placeholder="상세 주소" ref={detailAddressRef} />
+                    <button onClick={handleAddNewAddress}>등록</button>
+                    <button onClick={() => handleModeChange("view")}>취소</button>
+                </div>
+            )}
+
+            {mode === "delete" && (
+                <div>
+                    <h4>주소 삭제</h4>
+                    {addressList.length === 0 ? (
+                        <p>삭제할 주소가 없습니다.</p>
+                    ) : (
+                        <>
+                            <select
+                                value={selectedAddressId || ""}
+                                onChange={(e) => setSelectedAddressId(Number(e.target.value))}
+                            >
+                                <option value="" disabled>
+                                    선택해주세요
+                                </option>
+                                {addressList.map((address) => (
+                                    <option key={address.deliveryAddressId} value={address.deliveryAddressId}>
+                                        {address.roadAddress} {address.detailAddress} ({address.postCode})
+                                    </option>
+                                ))}
+                            </select>
+                            <button onClick={() => handleDeleteAddress(selectedAddressId)}>삭제</button>
+                        </>
+                    )}
+                </div>
+            )}
+        </div>
     );
 };
 

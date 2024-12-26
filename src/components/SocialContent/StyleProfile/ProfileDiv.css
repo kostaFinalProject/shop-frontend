@@ -103,7 +103,7 @@
   /* 모달 내용 */
   .followmodal-content {
     background-color: #fff;
-    width: 720px;
+    width: 800px;
     height: 800px;
     padding: 20px;
     border-radius: 10px;
@@ -117,7 +117,7 @@
   }
   
   .followtab-link {
-    width: 240px;
+    width: 200px;
     height: 50px;
     padding: 10px;
     cursor: pointer;
@@ -146,8 +146,8 @@
   .follow_btn{
     background-color: black;
     color: white;
-    font-size: 13px;
-    width: 65px;
+    font-size: 10px;
+    width: 100px;
     height: 35px;
     margin-left: 10px;
     border-radius: 10px;

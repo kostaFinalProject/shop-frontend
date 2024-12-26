@@ -58,6 +58,11 @@ a {
   margin-left: 10px;
 }
 
+.logo{
+  width: 150px;
+  height: 150px;
+}
+
 
 /* search 양식 */
 .headerContainer .TotalSearchHead_search {

@@ -121,6 +121,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                     <button className={`followtab-link ${activePage === 'page1' ? 'active' : ''}`} onClick={() => openPage('page1')}>팔로우</button>
                                     <button className={`followtab-link ${activePage === 'page2' ? 'active' : ''}`} onClick={() => openPage('page2')}>팔로잉</button>
                                     <button className={`followtab-link ${activePage === 'page3' ? 'active' : ''}`} onClick={() => openPage('page3')}>차단리스트</button>
+                                    <button className={`followtab-link ${activePage === 'page4' ? 'active' : ''}`} onClick={() => openPage('page4')}>맞팔로우수락</button>
                                 </div>
 
                                 {/* 페이지 내용 */}
@@ -203,6 +204,33 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                         </div>
                                     </div>
                                 </div>
+
+                                <div id="page4" className={`page ${activePage === 'page4' ? 'active' : ''}`}>
+                                    {/* Page 4 내용 */}
+                                    <div className="followProfile_full">
+                                        <div className="SearchProfile_pageline">
+                                            {[...Array(12)].map((_, index) => (
+                                                <div key={index} className="SearchProfile_feed_user">
+                                                    <div className="SearchProfile_user_img">
+                                                        <img src="https://fakeimg.pl/60x60/" alt="" />
+                                                    </div>
+                                                    <div className="SearchProfile_user_information">
+                                                        <a href="#">
+                                                            <div className="SearchProfile_user_id">아이디</div>
+                                                            <div className="SearchProfile_user_message">
+                                                                맨시티팬이다 프로필검색시 필요
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div className="SearchProfile_btn">
+                                                        <button className="SearchProfile_follow_btn">팔로우 수락</button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 {/* 모달 닫기 버튼 */}
                                 <button id="close" onClick={closeModal}>Close</button>

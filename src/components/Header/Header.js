@@ -268,7 +268,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         <div className="headerMainContainer">
           <div className="left">
             <a href="/">
-              <img src="https://fakeimg.pl/150x35/" alt="logo" />
+            <img className="logo" src="/img/shoplogo.webp" alt="logo" />
             </a>
           </div>
 

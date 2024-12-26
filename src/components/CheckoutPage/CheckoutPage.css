@@ -472,3 +472,16 @@
     font-size: 12px;
     color: #999;
 }
+
+.CheckoutPage_ItemImageWrapper {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.CheckoutPage_ItemImage {
+    max-width: 200px; /* 이미지 최대 크기 */
+    max-height: 200px;
+    object-fit: cover; /* 이미지 비율 유지 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
