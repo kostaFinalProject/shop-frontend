@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
 import "./MyPageBasket.css";
@@ -211,6 +210,76 @@ const MyPageBasket = () => {
     }
   };
 
+  const handleSingleItemOrder = (cartId) => {
+    const selectedProduct = userBasket.find((item) => item.cartId === cartId);
+
+    if (!selectedProduct) {
+      alert("상품 정보를 찾을 수 없습니다.");
+      return;
+    }
+
+    // 선택된 상품만 포함한 orderData 생성
+    const orderData = {
+      totalAmount: selectedProduct.price * (quantities[cartId] || selectedProduct.count), // 개별 상품 총 금액
+      shippingFee: 5000, // 단일 상품의 배송비
+      items: [
+        {
+          itemId: selectedProduct.itemId,
+          imgUrl: selectedProduct.repImgUrl,
+          itemName: selectedProduct.name,
+          manufacturer: selectedProduct.manufacturer,
+          seller: selectedProduct.seller,
+          itemSizeId: selectedProduct.itemSizeId,
+          size: selectedProduct.size,
+          quantity: quantities[cartId] || selectedProduct.count,
+          price: selectedProduct.price,
+        },
+      ],
+    };
+
+    console.log("Single item orderData:", orderData); // 디버깅용
+    navigate("/CartCheckoutPage", { state: orderData }); // 바로 구매용 CheckoutPage로 이동
+  };
+
+  const handleProceedToCheckout = () => {
+    if (selectedItems.length === 0) {
+      alert("결제할 상품을 선택하세요.");
+      return;
+    }
+
+    const selectedProducts = userBasket.filter((item) =>
+      selectedItems.includes(item.cartId)
+    );
+
+    const totalAmount = selectedProducts.reduce(
+      (acc, item) =>
+        acc +
+        item.price * (quantities[item.cartId] || item.count),
+      0
+    );
+
+    const orderData = {
+      totalAmount: totalAmount,
+      shippingFee: 5000,
+      items: selectedProducts.map((item) => ({
+        itemId: item.itemId, // 상품 ID
+        imgUrl: item.repImgUrl, // 상품 이미지
+        itemName: item.name, // 상품명
+        manufacturer: item.manufacturer, // 제조사
+        seller: item.seller, // 판매처
+        itemSizeId: item.itemSizeId, // 사이즈 ID
+        size: item.size, // 사이즈 이름
+        quantity: quantities[item.cartId] || item.count, // 수량
+        price: item.price, // 단가
+      })),
+    };
+
+    console.log("Navigating to CheckoutPage with orderData:", orderData); // 디버깅용
+    navigate("/CartCheckoutPage", { state: orderData });
+  };
+
+
+
 
   // 데이터가 로드된 후 렌더링
   if (!userBasket) return <div>Loading...</div>;
@@ -302,7 +371,7 @@ const MyPageBasket = () => {
                         <input
                           type="checkbox"
                           className="check"
-                          onChange={() => handleCheckboxChange(userBasket.cartId, userBasket.currentPrice * userBasket.count)}
+                          onChange={() => handleCheckboxChange(userBasket.cartId, userBasket.currentPrice)}
                         />
                         &nbsp;
                         <div className="thumbnail">
@@ -378,7 +447,11 @@ const MyPageBasket = () => {
                           </span>
                         </div>
                         <div className="buttonGroup">
-                          <a href="#none" className="btnSubmit sizeS">
+                          <a
+                            href="#none"
+                            className="btnSubmit sizeS"
+                            onClick={() => handleSingleItemOrder(userBasket.cartId)}
+                          >
                             주문하기
                           </a>
                         </div>
@@ -401,17 +474,21 @@ const MyPageBasket = () => {
                 <div className="Price">
                   <h4>택배비</h4>
                   <span>
-                    <strong>{selectedTotalPrice === 0 ? 0 : 4000}</strong>원
+                    <strong>{selectedTotalPrice === 0 ? 0 : 5000}</strong>원
                   </span>
                 </div>
                 <div className="totalPrice">
                   <h4>총 가격</h4>
                   <span>
-                    <strong>    {selectedTotalPrice === 0 ? 0 : Math.floor(selectedTotalPrice + 4000)}</strong>원
+                    <strong>    {selectedTotalPrice === 0 ? 0 : Math.floor(selectedTotalPrice + 5000)}</strong>원
                   </span>
                 </div>
               </div>
-              <button type="button" className="submitBtn">
+              <button
+                type="button"
+                className="submitBtn"
+                onClick={() => handleProceedToCheckout()}
+              >
                 선택상품주문
               </button>
             </div>

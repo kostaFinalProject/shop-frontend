@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CheckoutPageAddress from "./CheckoutPageAddress";
 import "./CheckoutPage.css";
 
-const CheckoutPage = () => {
+const CartCheckoutPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { state: orderData } = location || {};
@@ -113,7 +113,7 @@ const CheckoutPage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:8080/api/v1/orders', {
+            const response = await fetch('http://localhost:8080/api/v1/carts/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -299,4 +299,4 @@ const CheckoutPage = () => {
     );
 };
 
-export default CheckoutPage;
+export default CartCheckoutPage;

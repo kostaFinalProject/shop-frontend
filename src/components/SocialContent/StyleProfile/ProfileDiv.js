@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import './ProfileDiv.css';
 
 const ProfileDiv = ({ headers, profile, setProfile }) => {
@@ -64,6 +65,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
             alert("요청 중 문제가 발생했습니다. 다시 시도해주세요.");
         }
     };
+    
 
     //모달
     

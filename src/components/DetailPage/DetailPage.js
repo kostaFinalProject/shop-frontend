@@ -112,29 +112,28 @@ const DetailPage = () => {
             return;
         }
     
-        const totalAmount = selectedItems.reduce(
-            (acc, item) => acc + item.quantity * itemData.discountPrice,
-            0
-        );
-    
         const orderData = {
-            imgUrl: itemData.itemDetailImageUrl,
-            itemName: itemData.name,
-            manufacturer: itemData.manufacturer,
-            seller: itemData.seller,
-            totalAmount,
-            items: selectedItems.map((item) => ({
-                itemSizeId: item.id,
-                size: item.name,
-                quantity: item.quantity,
-                price: itemData.discountPrice,
-            })),
+            totalAmount: selectedItems.reduce(
+                (acc, item) => acc + item.quantity * itemData.discountPrice,
+                0
+            ),
             shippingFee: 5000,
+            items: selectedItems.map((item) => ({
+                itemId: itemData.itemId, // 상품 ID
+                imgUrl: itemData.itemDetailImageUrl, // 상품 이미지
+                itemName: itemData.name, // 상품명
+                manufacturer: itemData.manufacturer, // 제조사
+                seller: itemData.seller, // 판매처
+                itemSizeId: item.id, // 사이즈 ID
+                size: item.name, // 사이즈 이름
+                quantity: item.quantity, // 선택된 수량
+                price: itemData.discountPrice, // 단가
+            })),
         };
     
-        navigate('/CheckoutPage', { state: orderData }); // CheckoutPage로 데이터 전달
+        navigate('/CheckoutPage', { state: orderData });
     };
-    
+
 
     const handleItemsChange = (items) => {
         setSelectedItems(items); // 선택된 아이템 저장

@@ -41,6 +41,7 @@ import Styleprofile from "./components/SocialContent/StyleProfile/Styleprofile.j
 import StyleprofileMyInterestProduct from "./components/SocialContent/StyleProfile/StyleprofileMyInterestProduct.js";
 import UpdateArticle from "./components/NewCreate/UpdateArticle.js";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage.js";
+import CartCheckoutPage from "./components/CheckoutPage/CartCheckoutPage .js";
 
 
 
@@ -105,6 +106,7 @@ function App() {
         <Route path="/Styleprofile" element={<Styleprofile />} />
         <Route path="/StyleprofileMyInterestProduct" element={<StyleprofileMyInterestProduct />} />
         <Route path="/CheckoutPage" element={<CheckoutPage />} />
+        <Route path="/CartCheckoutPage" element={<CartCheckoutPage />} />
 
       </Routes>
       <Footer />
