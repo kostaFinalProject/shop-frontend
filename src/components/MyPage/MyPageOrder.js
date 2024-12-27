@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import "./MyPageOrder.css";
 
 const MyPageOrder = () => {
@@ -6,6 +7,7 @@ const MyPageOrder = () => {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
+  const navigate = useNavigate();
 
   const fetchOrders = useCallback(async () => {
     if (!hasMore) return;
@@ -70,7 +72,59 @@ const MyPageOrder = () => {
     };
   }, [fetchOrders]);
 
-  const renderButtons = (status, orderTime) => {
+  const handlePayment = (order) => {
+    const orderData = {
+      totalAmount: order.orderItems.reduce((acc, item) => acc + item.itemPrice * item.quantity, 0),
+      shippingFee: 5000, // 배송비 (고정값으로 가정)
+      items: order.orderItems.map((item) => ({
+        itemId: item.itemId,
+        imgUrl: item.itemRepImgUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", ""),
+        itemName: item.itemName,
+        manufacturer: item.itemManufacturer,
+        seller: item.itemSeller || "정보 없음",
+        itemSizeId: item.itemSizeId,
+        size: item.itemSize,
+        quantity: item.quantity,
+        price: item.itemPrice,
+      })),
+    };
+
+    navigate("/CheckoutPage", { state: orderData });
+  };
+
+  const handleCancelPayment = async (paymentsId) => {
+    try {
+      const accesstoken = localStorage.getItem("accessToken");
+      const refreshToken = localStorage.getItem("refreshToken");
+  
+      if (!accesstoken || !refreshToken) {
+        alert("로그인이 필요한 기능입니다.");
+        return;
+      }
+  
+      const response = await fetch(`http://localhost:8080/api/v1/payments/${paymentsId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: accesstoken,
+          "Refresh-Token": refreshToken,
+        },
+      });
+  
+      if (response.ok) {
+        alert("결제가 취소되었습니다.");
+        // 추가로 리스트 갱신 로직을 추가
+        window.location.reload(); // 간단한 새로고침으로 갱신
+      } else {
+        alert("결제 취소에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error) {
+      console.error("결제 취소 오류:", error);
+      alert("결제 취소 중 오류가 발생했습니다.");
+    }
+  };
+  
+
+  const renderButtons = (status, orderTime, order) => {
     // 7일 이상 차이 나는지 체크하는 함수
     const isPaymentCancelable = (orderTime) => {
       const currentTime = new Date();
@@ -79,40 +133,47 @@ const MyPageOrder = () => {
       const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
       return timeDifference <= sevenDaysInMillis;
     };
-  
+
     // 결제 취소 버튼을 표시할 조건
     if (status === "PAID" && isPaymentCancelable(orderTime)) {
       return (
-        <a href="#none" className="orderBtn sizeS">
+        <button
+          className="orderBtn sizeS"
+          onClick={() => handleCancelPayment(order.paymentsId)}
+        >
           결제 취소
-        </a>
+        </button>
       );
     }
-  
+
     // 결제하기 버튼을 표시할 조건
     if (status === "ORDERED") {
       return (
-        <a href="#none" className="orderBtn sizeS">
+        <button
+          className="orderBtn sizeS"
+          onClick={() => handlePayment(order)}
+        >
           결제하기
-        </a>
+        </button>
       );
     }
-  
+
     return null;
   };
 
+
   const formatOrderTime = (orderTime) => {
     const date = new Date(orderTime);
-  
+
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 1을 더함
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-  
+
     return `${year}. ${month}. ${day}. ${hours}:${minutes}`;
   };
-  
+
 
   return (
     <div className="MyPageOrdercontainer">
@@ -302,7 +363,7 @@ const MyPageOrder = () => {
                   <strong>
                     총 주문 금액: {(order.orderPrice + 5000).toLocaleString()}원
                   </strong>
-                  <div className="buttonGroup">{renderButtons(order.orderStatus, order.orderTime)}</div>
+                  <div className="buttonGroup">{renderButtons(order.orderStatus, order.orderTime, order)}</div>
                 </div>
               </div>
             </div>
