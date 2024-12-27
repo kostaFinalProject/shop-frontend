@@ -35,9 +35,10 @@
     text-align: center;
 }
 .StyleDetail_profile_img img {
-    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
     justify-content: center;
-    object-fit: contain;
 }
 
 .StyleDetail_profile_text {
