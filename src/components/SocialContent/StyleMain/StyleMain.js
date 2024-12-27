@@ -15,6 +15,14 @@ const StyleMain = () => {
     const queryParams = new URLSearchParams(location.search);
     const tag = queryParams.get("tag");
     const item = queryParams.get("item");
+    const [isFirstVisit, setIsFirstVisit] = useState(true);
+
+    useEffect(() => {
+        // 페이지 처음 접속할 때만 '좋아요순'을 굵게 표시
+        if (isFirstVisit) {
+            setIsFirstVisit(false);
+        }
+    }, [isFirstVisit]);
 
     const handleArticleClick = (articleId) => {
         navigate(`/StyleDetail?articleId=${articleId}`);
@@ -149,7 +157,7 @@ const StyleMain = () => {
             fetchArticles(newSort, true); // 데이터 초기화 후 새로 가져오기
         }
     };
-    
+
     useEffect(() => {
         fetchArticles();
     }, [tag, item]); // tag 또는 item이 변경될 때 데이터 새로 로드
@@ -163,12 +171,26 @@ const StyleMain = () => {
                 {/* ------------------------ sorting ------------------------ */}
                 <div className="StyleMain_sorting">
                     <span>
-                        <a onClick={() => handleSortChange("likes")} className={sort === "likes" ? "active" : ""}>
+                        <a
+                            onClick={() => handleSortChange("likes")}
+                            className={sort === "likes" || (isFirstVisit && sort === "likes") ? "active" : ""}
+                            style={{ 
+                                fontWeight: (sort === "likes" || (isFirstVisit && sort === "likes")) ? 'bold' : 'normal',
+                                cursor: 'pointer'
+                            }}
+                        >
                             좋아요순
                         </a>
                     </span>
                     <span>
-                        <a onClick={() => handleSortChange("newest")} className={sort === "newest" ? "active" : ""}>
+                        <a
+                            onClick={() => handleSortChange("newest")}
+                            className={sort === "newest" ? "active" : ""}
+                            style={{ 
+                                fontWeight: sort === "newest" ? 'bold' : 'normal',
+                                cursor: 'pointer'
+                            }}
+                        >
                             최신순
                         </a>
                     </span>
