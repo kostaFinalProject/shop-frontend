@@ -7,6 +7,7 @@ const StyleMain = () => {
     const [page, setPage] = useState(0);
     const [lastPage, setLastPage] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [sort, setSort] = useState("likes");
     const navigate = useNavigate();
     const location = useLocation(); // 현재 URL 정보 가져오기
 
@@ -51,8 +52,8 @@ const StyleMain = () => {
         }
     };
 
-    const fetchArticles = async () => {
-        if (loading || lastPage) return;
+    const fetchArticles = async (newSort, reset = false) => {
+        if (loading || (lastPage && !reset)) return;
 
         setLoading(true);
         try {
@@ -69,8 +70,9 @@ const StyleMain = () => {
 
             const baseUrl = `http://localhost:8080/api/v1/articles`;
             const url = new URL(baseUrl);
-            url.searchParams.append("page", page);
+            url.searchParams.append("page", reset ? 0 : page);
             url.searchParams.append("size", 12);
+            url.searchParams.append("sort", newSort); // 정렬 기준 추가
 
             // tag 또는 item이 존재할 경우 쿼리 파라미터 추가
             if (tag) {
@@ -138,6 +140,16 @@ const StyleMain = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [loading, lastPage]);
 
+    const handleSortChange = (newSort) => {
+        if (newSort !== sort) { // 현재 정렬 기준과 다를 때만 변경
+            setSort(newSort); // 정렬 기준 업데이트
+            setPage(0); // 페이지 초기화
+            setArticles([]); // 기존 게시글 초기화
+            setLastPage(false); // 마지막 페이지 상태 초기화
+            fetchArticles(newSort, true); // 데이터 초기화 후 새로 가져오기
+        }
+    };
+    
     useEffect(() => {
         fetchArticles();
     }, [tag, item]); // tag 또는 item이 변경될 때 데이터 새로 로드
@@ -150,8 +162,16 @@ const StyleMain = () => {
 
                 {/* ------------------------ sorting ------------------------ */}
                 <div className="StyleMain_sorting">
-                    <span><a href="#">좋아요순</a></span>
-                    <span><a href="#">최신순</a></span>
+                    <span>
+                        <a onClick={() => handleSortChange("likes")} className={sort === "likes" ? "active" : ""}>
+                            좋아요순
+                        </a>
+                    </span>
+                    <span>
+                        <a onClick={() => handleSortChange("newest")} className={sort === "newest" ? "active" : ""}>
+                            최신순
+                        </a>
+                    </span>
                 </div>
             </div>
             {/* -------------------sns_container---------------- */}
