@@ -85,10 +85,11 @@ const UpdateArticle = () => {
     const refreshToken = localStorage.getItem("refreshToken");
 
     try {
+      const itemIds = selectedItems.map(item => item.itemId);
       const article = {
         hashtags: hashTags,
         content: formData.form_content,
-        itemIds: formData.itemIds,
+        itemIds: itemIds,
       };
       // FormData 객체 생성
       const UpdateArticle = new FormData();
