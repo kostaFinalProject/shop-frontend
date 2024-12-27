@@ -88,7 +88,7 @@ const Main = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/articles?size=4`, {
+        const response = await fetch(`http://localhost:8080/api/v1/articles?size=4&sort=newest`, {
           method: "GET",
         });
         const data = await response.json();
@@ -107,7 +107,7 @@ const Main = () => {
               ""
             )
             : null,
-          itemImage: article.imageUrl.replacee(
+          itemImage: article.imageUrl.replace(
             "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
             ""
           ),
