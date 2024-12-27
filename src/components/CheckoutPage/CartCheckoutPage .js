@@ -162,7 +162,7 @@ const CartCheckoutPage = () => {
                         });
 
                         alert("결제가 완료되었습니다!");
-                        navigate(`/detailPage?itemId=${items[0].itemId}`);
+                        navigate("/MyPage/order");
                     } else {
                         alert(`결제 실패: ${response.error_msg}`);
                     }
@@ -290,7 +290,7 @@ const CartCheckoutPage = () => {
 
             {/* 결제 버튼 */}
             <div>
-                <Link to="/StyleMain">
+                <Link to="/MyPage/order">
                     <button>뒤로가기</button>
                 </Link>
                 <button onClick={handleOrderSubmit}>{finalPrice}원 결제하기</button>

@@ -290,7 +290,7 @@ const CheckoutPage = () => {
 
             {/* 결제 버튼 */}
             <div>
-                <Link to="/StyleMain">
+                <Link to="/MyPage/order">
                     <button>뒤로가기</button>
                 </Link>
                 <button onClick={handleOrderSubmit}>{finalPrice}원 결제하기</button>
