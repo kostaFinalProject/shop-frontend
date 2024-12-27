@@ -18,34 +18,34 @@ const UpdateArticle = () => {
   const { articleId } = useParams(); // URL에서 articleId 가져오기
   const navigate = useNavigate();    // 수정 완료 후 이동을 위해 사용
 
-    // 데이터 불러오기 함수
-    const fetchArticleData = async () => {
-        try {
-          const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`);
-          if (!response.ok) throw new Error("게시글 데이터를 가져오지 못했습니다.");
-    
-          const data = await response.json();
-          setFormData({
-            tag_product: data.tag_product || "",
-            tag_keyword: data.hashtags || "",
-            form_content: data.content || "",
-          });
-    
-          const formattedImages = Array.isArray(data.images)
-          ? data.images.map(imageUrl =>
-              imageUrl.replace(
-                "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
-                "/"
-              )
-            )
-          : [];
-        setImages(formattedImages);
-    
-        } catch (error) {
-          console.error("데이터 불러오기 실패:", error);
-        }
-      };
-    
+  // 데이터 불러오기 함수
+  const fetchArticleData = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/v1/articles/${articleId}`);
+      if (!response.ok) throw new Error("게시글 데이터를 가져오지 못했습니다.");
+
+      const data = await response.json();
+      setFormData({
+        tag_product: data.tag_product || "",
+        tag_keyword: data.hashtags || "",
+        form_content: data.content || "",
+      });
+
+      const formattedImages = Array.isArray(data.images)
+        ? data.images.map(imageUrl =>
+          imageUrl.replace(
+            "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+            "/"
+          )
+        )
+        : [];
+      setImages(formattedImages);
+
+    } catch (error) {
+      console.error("데이터 불러오기 실패:", error);
+    }
+  };
+
 
   useEffect(() => {
     if (articleId) {
@@ -312,9 +312,13 @@ const UpdateArticle = () => {
       // data.content가 배열인지 확인
       if (Array.isArray(data.content)) {
         // 검색어에 따라 필터링
-        const filteredResults = data.content.filter(product =>
-          product.name.toLowerCase().includes(query.toLowerCase())
-        );
+        const filteredResults = data.content
+          .filter(product => product.name.toLowerCase().includes(query.toLowerCase()))
+          .map(product => ({
+            ...product, // 기존의 다른 필드는 그대로 유지
+            repImgUrl: product.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', '') // URL을 원하는 형식으로 변경
+          }));
+
         setSearchResults(filteredResults); // 필터링된 결과를 searchResults에 설정
       } else {
         console.error("검색 결과가 배열이 아닙니다:", data);
@@ -410,7 +414,7 @@ const UpdateArticle = () => {
               <div key={item.itemId} className="NewCreate_selected_products">
                 <div className="NewCreate_products">
                   <div className="StyleDetail_Lookup_List_Img">
-                    <img src={`/uploads/${item.imgUrl}`} alt={item.name} />
+                    <img src={`/uploads/${item.repImgUrl}`} alt={item.name} />
                   </div>
 
                   <div className="StyleDetail_Lookup_List_Content">
@@ -487,8 +491,8 @@ const UpdateArticle = () => {
                       checked={item.checked}
                       // value={formData.imageUrl}
                       value={formData.formattedImages}
-                      
-                      
+
+
                       onChange={() => handleCheckboxChange(index)}
                     />
                   )}
@@ -497,7 +501,7 @@ const UpdateArticle = () => {
                     id="files"
                     accept="image/*"
                     required
-                    
+
                     onChange={(e) => handleFileChange(index, e)}
                   />
                   <span>{item.fileName}</span>
