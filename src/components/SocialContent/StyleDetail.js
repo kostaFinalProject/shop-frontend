@@ -444,12 +444,12 @@ const StyleDetail = () => {
 
                                         <div className="StyleDetail_Lookup_List_Content">
                                             {/* 아이템 이름 */}
-                                            <p>{item.itemName}</p>
+                                            <p style={{fontSize: "15px"}}>{item.itemName}</p>
                                         </div>
 
                                         <div className="StyleDetail_Lookup_List_Price">
                                             {/* 가격 */}
-                                            <p>￦ {item.price}원</p>
+                                            <p style={{fontSize: "15px"}}>￦ {item.price}원</p>
                                         </div>
                                     </Link>
                                 </div>
