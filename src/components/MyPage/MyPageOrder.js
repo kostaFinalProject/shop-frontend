@@ -96,12 +96,12 @@ const MyPageOrder = () => {
     try {
       const accesstoken = localStorage.getItem("accessToken");
       const refreshToken = localStorage.getItem("refreshToken");
-  
+
       if (!accesstoken || !refreshToken) {
         alert("로그인이 필요한 기능입니다.");
         return;
       }
-  
+
       const response = await fetch(`http://localhost:8080/api/v1/payments/${paymentsId}`, {
         method: "DELETE",
         headers: {
@@ -109,7 +109,7 @@ const MyPageOrder = () => {
           "Refresh-Token": refreshToken,
         },
       });
-  
+
       if (response.ok) {
         alert("결제가 취소되었습니다.");
         // 추가로 리스트 갱신 로직을 추가
@@ -122,7 +122,7 @@ const MyPageOrder = () => {
       alert("결제 취소 중 오류가 발생했습니다.");
     }
   };
-  
+
 
   const renderButtons = (status, orderTime, order) => {
     // 7일 이상 차이 나는지 체크하는 함수
@@ -236,95 +236,6 @@ const MyPageOrder = () => {
         </section>
         <section className="contentwrap">
           <div className="contentwraptitle">주문조회</div>
-          <form method="get" id="OrderHistoryForm" name="OrderHistoryForm">
-            <div className="history">
-              <fieldset>
-                <legend>검색기간설정</legend>
-                <div className="stateSelect">
-                  <select name="orderstatus" id="orderstatus" className="fSelect">
-                    <option className="OrderOption" value="all">
-                      전체 주문상태
-                    </option>
-                    <option className="OrderOption" value="shippedbefore">
-                      입금전
-                    </option>
-                    <option className="OrderOption" value="shippedstandby">
-                      배송준비중
-                    </option>
-                    <option className="OrderOption" value="shippedbegin">
-                      배송중
-                    </option>
-                    <option className="OrderOption" value="shipcomplate">
-                      배송완료
-                    </option>
-                    <option className="OrderOption" value="ordercancel">
-                      취소
-                    </option>
-                    <option className="OrderOption" value="orderexchange">
-                      교환
-                    </option>
-                    <option className="OrderOption" value="orderreturn">
-                      반품
-                    </option>
-                  </select>
-                </div>
-                <span className="period">
-                  <a href="" className="btnNormalSizeMselected" days={0}>
-                    오늘
-                  </a>
-                  <a href="" className="btnNormalSizeM" days={30}>
-                    1개월
-                  </a>
-                  <a href="" className="btnNormalSizeM" days={90}>
-                    3개월
-                  </a>
-                  <a href="" className="btnNormalSizeM" days={180}>
-                    6개월
-                  </a>
-                </span>
-                <div className="date">
-                  <span className="datepicker">
-                    <input
-                      type="text"
-                      id="hisrotyStartDate"
-                      name="hisrotyStartDate"
-                      className="TextDatepicker"
-                      readOnly="readonly"
-                      size={10}
-                      defaultValue="2024-08-28"
-                    />
-                    <button type="button" className="datepickertrigger">
-                      <img src="/img/ico_calendar.png" alt="date" width="20px" />
-                    </button>
-                    ~
-                    <input
-                      type="text"
-                      id="hisrotyEndDate"
-                      name="hisrotyEndDate"
-                      className="TextDatepicker"
-                      readOnly="readonly"
-                      size={10}
-                      defaultValue="2024-11-26"
-                    />
-                    <button type="button" className="datepickertrigger">
-                      <img src="/img/ico_calendar.png" alt="date" width="20px" />
-                    </button>
-                  </span>
-                  <span className="btnSubmitSizeMeDataSet">
-                    조회
-                    <input type="image" id="order_search_btn" alt="조회" />
-                  </span>
-                </div>
-              </fieldset>
-            </div>
-            <ul className="help">
-              <li>
-                기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 주문처리완료
-                후 36개월 이내의 주문내역을 조회하실 수 있습니다.
-              </li>
-              <li>취소/교환/반품 신청은 배송완료일 기준 7일까지 가능합니다.</li>
-            </ul>
-          </form>
           {orders.map((order, index) => (
             <div className="inquire" key={index}>
               <div className="inquireCard">
@@ -359,6 +270,14 @@ const MyPageOrder = () => {
                   ))}
                 </div>
                 <div className="orderSummary">
+                  <strong>
+                    결제 상태: {
+                      order.orderStatus === "ORDERED" ? "결제 미완료" :
+                        order.orderStatus === "CANCELED" ? "결제 취소" :
+                          order.orderStatus === "PAID" ? "결제 완료" :
+                            "상태 불명"
+                    }
+                  </strong>
                   <strong>배송비: 5000원</strong>
                   <strong>
                     총 주문 금액: {(order.orderPrice + 5000).toLocaleString()}원

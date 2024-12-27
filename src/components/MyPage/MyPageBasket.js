@@ -78,8 +78,17 @@ const MyPageBasket = () => {
 
       if (response.status === 200) {
         const data = await response.json();
-        setUserBasket(data);
-        console.log("data", data);
+
+        // repImgUrl을 포맷팅
+        const formattedData = data.map(item => {
+          if (item.repImgUrl) {
+            item.repImgUrl = item.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', '');
+          }
+          return item;
+        });
+
+        setUserBasket(formattedData);
+        console.log("data", formattedData);
       } else {
         setUserBasket(null);
       }
@@ -87,7 +96,8 @@ const MyPageBasket = () => {
       console.error("Error fetching user data:", error);
       setUserBasket(null);
     }
-  };
+};
+
 
   useEffect(() => {
     const initializePage = async () => {
@@ -377,10 +387,7 @@ const MyPageBasket = () => {
                         <div className="thumbnail">
                           <a href="">
                             <img
-                              src={userBasket.repImgUrl.replace(
-                                "C:\\kostafinalfrontend\\frontend-jhs\\public\\",
-                                "/"
-                              )}
+                              src={`/uploads/${userBasket.repImgUrl}`}
                               alt={userBasket.name}
                               width={140}
                               height={140}
