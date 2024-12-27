@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./StyleModify.css";
-import { type } from "@testing-library/user-event/dist/type";
 
 const StyleModify = () => {
   const [image, setImage] = useState('https://fakeimg.pl/150/');
@@ -16,26 +15,51 @@ const StyleModify = () => {
       headers: {
         Authorization: accessToken,
         'Refresh-Token': refreshToken,
-      }
+      },
     })
-      .then(response => response.json())
-      .then(data => {
-        const { memberId, memberNickname, memberIntroduction, memberProfileImageUrl, memberStatus } = data;
-        setMemberProfile({
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile data');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const {
           memberId,
           memberNickname,
           memberIntroduction,
-          memberProfileImageUrl : memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", ""),
-          memberStatus
+          memberProfileImageUrl,
+          memberStatus,
+        } = data;
+  
+        // 프로필 상태 설정
+        setMemberProfile({
+          memberId,
+          memberNickname,
+          memberIntroduction: memberIntroduction || '', // 소개글 없으면 기본값으로 빈 문자열
+          memberProfileImageUrl: memberProfileImageUrl
+            ? memberProfileImageUrl.replace(
+                'C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\',
+                '',
+              )
+            : null, // 이미지 없으면 null
+          memberStatus,
         });
-        if (memberProfile.memberProfile) {
-          setImage(`/uploads/${memberProfile.memberProfileImageUrl}`); // 데이터 기반으로 초기 이미지 설정
-        }
-        if (memberProfile.memberIntroduction) {
-          setMemberIntroduction(memberProfile.memberIntroduction);
-        }
+  
+        // 프로필 이미지와 소개글 상태 개별 설정
+        setImage(
+          memberProfileImageUrl
+            ? `/uploads/${memberProfileImageUrl.replace(
+                'C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\',
+                '',
+              )}`
+            : 'https://fakeimg.pl/150/',
+        );
+        setMemberIntroduction(memberIntroduction || ''); // 소개글 없을 때 기본값
       })
-      .catch(error => console.error('Error fetching profile:', error));
+      .catch((error) => {
+        console.error('Error fetching profile:', error);
+      });
   }, []);
 
   const handleFileChange = (event) => {
@@ -59,7 +83,7 @@ const StyleModify = () => {
     const formData = new FormData();
     const fileInput = document.getElementById("file");
 
-    formData.append("profile", new Blob([JSON.stringify({ introduction: memberProfile.memberIntroduction })], { type: "application/json" }));
+    formData.append("profile", new Blob([JSON.stringify({ introduction: memberIntroduction })], { type: "application/json" }));
 
     // 파일이 선택되었으면 추가
     if (fileInput && fileInput.files[0]) {
@@ -79,11 +103,11 @@ const StyleModify = () => {
         if (!response.ok) {
           throw new Error('프로필 수정 실패');
         }
-        return response.json(); // 서버의 응답 데이터
+        return response.text(); // 서버의 응답 데이터
       })
       .then(data => {
         alert('프로필이 성공적으로 수정되었습니다.');
-        console.log(data);
+        window.location.reload(); 
       })
       .catch(error => {
         console.error('Error updating profile:', error);

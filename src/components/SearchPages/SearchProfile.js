@@ -76,6 +76,7 @@ const SearchProfile = () => {
                                 <img
                                     src={member.profileImage ? `/uploads/${member.profileImage}` : "https://fakeimg.pl/60x60/"}
                                     alt={member.nickname}
+                                    style={{width: "60px", height: "60px"}}
                                 />
                             </div>
                             <div className="SearchProfile_user_information">
