@@ -166,7 +166,7 @@ const StyleMain = () => {
         <>
             <div className="StyleMain_full_screen">
                 {/* ------------------------- banner ------------------------ */}
-                <div className="StyleMain_banner">STYLE,banner</div>
+                <div className="StyleMain_banner">STYLE BANNER</div>
 
                 {/* ------------------------ sorting ------------------------ */}
                 <div className="StyleMain_sorting">
