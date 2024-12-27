@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ProfileDiv.css';
 
@@ -13,7 +13,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
     const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
     const [error, setError] = useState(null);  // 에러 상태
-    
+
     if (!profile) {
         return <div>Loading...</div>;
     }
@@ -87,19 +87,19 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
         try {
             // 팔로우 요청 수락 API 호출
-            const response = await fetch (`http://localhost:8080/api/v1/followers/${followId}`, {
+            const response = await fetch(`http://localhost:8080/api/v1/followers/${followId}`, {
                 method: "PUT",
                 headers: headers,
             });
-    
+
             // 요청 성공 후 상태 업데이트
             alert(response.data); // "팔로우 요청을 수락했습니다." 메시지 출력
-            
+
             // 팔로우 요청 목록에서 수락한 팔로우 제거
             setFollowRequests(prevRequests =>
                 prevRequests.filter(request => request.id !== followId)
             );
-    
+
             // 팔로우 목록에 추가 (팔로우 상태가 ACCEPTED로 변경되었으므로)
             setFollowers(prevFollowers => [
                 ...prevFollowers,
@@ -110,8 +110,8 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
             console.error("Error accepting follow request:", error);
         }
     };
-    
-    
+
+
     // 에러 메시지를 처리할 때 객체가 아닌 문자열로 렌더링 - {timestamp, status, error, path}와 같은 객체가 React child로 전달되고 있어 문제가 발생
     const renderError = () => {
         if (error) {
@@ -229,14 +229,14 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                     headers: headers,
                 }
             );
-    
+
             if (response.ok) {
                 const data = await response.json();
-    
+
                 setProfile((prevProfile) => ({
                     ...prevProfile,
-                    follow: "Followed",
-                    followeeCount: prevProfile.followeeCount + 1,
+                    followerStatus: 'ACCEPT',
+                    followerCount: prevProfile.followerCount + 1,
                     followerId: data.followerId,
                 }));
                 alert("팔로우 요청을 보냈습니다.");
@@ -249,7 +249,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
             alert("요청 중 문제가 발생했습니다. 다시 시도해주세요.");
         }
     };
-    
+
     const handleUnfollow = async (followId) => {
         try {
             const response = await fetch(
@@ -259,13 +259,13 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                     headers: headers,
                 }
             );
-    
+
             if (response.ok) {
                 // 언팔로우
                 setProfile((prevProfile) => ({
                     ...prevProfile,
-                    follow: "Not Follow",
-                    followeeCount: prevProfile.followeeCount - 1,
+                    followerStatus: 'REQUEST',
+                    followerCount: prevProfile.followerCount - 1,
                     followerId: null,
                 }));
                 alert("언팔로우 되었습니다.");
@@ -279,7 +279,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
         }
     };
 
-    
+
 
     const openPage = (pageName) => setActivePage(pageName);
 
@@ -287,7 +287,10 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
     return (
         <div className="Styleprofile_profile">
             <div className="Styleprofile_profile_img">
-                <img src={profile.memberProfileImageUrl} alt="Profile" />
+                <img
+                    src={profile.memberProfileImageUrl ? `/uploads/${profile.memberProfileImageUrl}` : 'https://fakeimg.pl/150x150/'}
+                    alt="Profile"
+                />
             </div>
 
             <div className="Styleprofile_profile_text">
@@ -324,8 +327,12 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                 <div className="followtabs">
                                     <button className={`followtab-link ${activePage === 'page1' ? 'active' : ''}`} onClick={() => openPage('page1')}>팔로워</button>
                                     <button className={`followtab-link ${activePage === 'page2' ? 'active' : ''}`} onClick={() => openPage('page2')}>팔로우</button>
-                                    <button className={`followtab-link ${activePage === 'page3' ? 'active' : ''}`} onClick={() => openPage('page3')}>차단리스트</button>
-                                    <button className={`followtab-link ${activePage === 'page4' ? 'active' : ''}`} onClick={() => openPage('page4')}>맞팔로우</button>
+                                    {profile.follow === "Me" && (
+                                        <>
+                                            <button className={`followtab-link ${activePage === 'page3' ? 'active' : ''}`} onClick={() => openPage('page3')}>차단리스트</button>
+                                            <button className={`followtab-link ${activePage === 'page4' ? 'active' : ''}`} onClick={() => openPage('page4')}>맞팔로우</button>
+                                        </>
+                                    )}
                                 </div>
 
                                 {/* 페이지 내용 */}
@@ -350,7 +357,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                                                 </a>
                                                             </div>
                                                             <div className="SearchProfile_btn">
-                                                            {followee.followStatus === "REQUEST" && (
+                                                                {followee.followStatus === "REQUEST" && profile.follow === "Me" && (
                                                                     <button className="SearchProfile_follow_btn" onClick={() => handleFollow(followee.memberId)}>
                                                                         팔로우
                                                                     </button>
@@ -385,7 +392,9 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                                             </div>
                                                             <div className="SearchProfile_btn">
                                                                 {/* 이미 맞팔로우된 사람은 버튼이 아예 표시되지 않음 */}
-                                                                <button className="SearchProfile_follow_btn" onClick={() => handleUnfollow(follower.followId)}>언팔로우</button>
+                                                                {profile.follow === "Me" && (
+                                                                    <button className="SearchProfile_follow_btn" onClick={() => handleUnfollow(follower.followId)}>언팔로우</button>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     ))}

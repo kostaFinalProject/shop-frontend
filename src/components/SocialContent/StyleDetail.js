@@ -434,10 +434,10 @@ const StyleDetail = () => {
                                         <div className="StyleDetail_Lookup_List_Img">
                                             {/* 이미지 렌더링 */}
                                             <img
-                                                src={item.imageUrl.replace(
-                                                    "C:\\kostafinalfrontend\\frontend-jhs\\public\\",
-                                                    "/"
-                                                )}
+                                                src={`uploads/${item.imageUrl.replace(
+                                                    "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                                                    ""
+                                                )}`}
                                                 alt={item.itemName}
                                             />
                                         </div>

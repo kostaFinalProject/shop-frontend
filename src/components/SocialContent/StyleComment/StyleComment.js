@@ -59,6 +59,9 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
             // 데이터 포맷팅: 이미지 URL 절대 경로 변환
             const formattedComments = data.content.map((comment) => ({
                 ...comment,
+                memberProfileImageUrl: comment.memberProfileImageUrl
+                ? comment.memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
+                :comment.memberProfileImageUrl,
                 imageUrl: comment.imageUrl
                     ? comment.imageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
                     : comment.imageUrl, // 이미지 URL 없으면 null 처리
@@ -103,7 +106,7 @@ const StyleComment = ({ isVisible, onClose, articleData, setArticleData, comment
                     ? reply.imageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
                     : null,
                 memberProfileImageUrl: reply.memberProfileImageUrl
-                    ? `/uploads/${reply.memberProfileImageUrl}`
+                    ? `/uploads/${reply.memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")}`
                     : "https://via.placeholder.com/50",
             }));
 

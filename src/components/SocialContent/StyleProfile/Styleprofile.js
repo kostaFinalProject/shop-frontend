@@ -86,7 +86,7 @@ const Styleprofile = () => {
                 const processedData = {
                     memberId: data.memberId,
                     memberNickname: data.memberNickname,
-                    memberIntroduction: data.memberIntroduction || "소개글이 없습니다.",
+                    memberIntroduction: data.introduction ? data.introduction : "소개글이 없습니다.",
                     memberProfileImageUrl: data.memberProfileImageUrl
                         ? data.memberProfileImageUrl.replace(
                             "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
