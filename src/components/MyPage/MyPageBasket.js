@@ -446,15 +446,7 @@ const MyPageBasket = () => {
                             </button>
                           </span>
                         </div>
-                        <div className="buttonGroup">
-                          <a
-                            href="#none"
-                            className="btnSubmit sizeS"
-                            onClick={() => handleSingleItemOrder(userBasket.cartId)}
-                          >
-                            주문하기
-                          </a>
-                        </div>
+                        
                       </div>
                     ))
                   )}

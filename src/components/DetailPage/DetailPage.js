@@ -21,8 +21,23 @@ const DetailPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
+
+            const accessToken = localStorage.getItem("accessToken");
+            const refreshToken = localStorage.getItem("refreshToken");
+
+            const initialHeaders = { "Content-Type": "application/json" };
+
+            if (accessToken && refreshToken) {
+                initialHeaders["Authorization"] = accessToken;
+                initialHeaders["Refresh-Token"] = refreshToken;
+            }
+
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/items/${itemId}`);
+                const response = await fetch(`http://localhost:8080/api/v1/items/${itemId}`, {
+                    method: "GET",
+                    headers: initialHeaders,
+                });
+
                 if (!response.ok) throw new Error("Failed to fetch item data");
                 const data = await response.json();
 
@@ -100,18 +115,18 @@ const DetailPage = () => {
     const handleOrderSubmit = () => {
         const accesstoken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
-    
+
         if (!accesstoken || !refreshToken) {
             alert("로그인이 필요한 기능입니다.");
             navigate("/login");
             return;
         }
-    
+
         if (selectedItems.length === 0) {
             alert("상품을 선택해주세요.");
             return;
         }
-    
+
         const orderData = {
             totalAmount: selectedItems.reduce(
                 (acc, item) => acc + item.quantity * itemData.discountPrice,
@@ -130,7 +145,7 @@ const DetailPage = () => {
                 price: itemData.discountPrice, // 단가
             })),
         };
-    
+
         navigate('/CheckoutPage', { state: orderData });
     };
 
@@ -152,7 +167,7 @@ const DetailPage = () => {
                             onClick={() => handleArticleClick(article.articleId)}>
                             <img src={`/uploads/${article.imageUrl}`} alt="스타일 이미지" className="DetailPage_Style_More_img" />
                             <div className="DetailPage_Style_More_content">
-                               <div className="DetailPage_Style_More_p_box"><p>{article.content}</p></div> 
+                                <div className="DetailPage_Style_More_p_box"><p>{article.content}</p></div>
                                 <div className="DetailPage_Style_More_hashtags">
                                     {article.hashtags.map((tag, index) => (
                                         <span key={index} className="DetailPage_Style_More_tag">
@@ -241,13 +256,6 @@ const DetailPage = () => {
                             <button className="DetailPage_basket_button"><a href="#">장바구니</a></button>
                             <button className="DetailPage_interest_product_button"><a href="#">📷</a></button>
                         </div>
-                        {/* 관리자 권한 버튼 */}
-                        {isAdmin && (
-                            <div className="DetailPage_admin_buttons">
-                                <button className="DetailPage_edit_button">수정</button>
-                                <button className="DetailPage_delete_button">삭제</button>
-                            </div>
-                        )}
                     </div>
                 </div>
                 {/* 상세 설명 및 리뷰 */}
@@ -271,12 +279,20 @@ const DetailPage = () => {
                     </div>
                 </div>
 
+                {/* 관리자 권한 버튼 */}
+                {isAdmin && (
+                    <div className="DetailPage_admin_buttons">
+                        <button className="DetailPage_edit_button">수정</button>
+                        <button className="DetailPage_delete_button">삭제</button>
+                    </div>
+                )}
+
 
                 {/* 관련 스타일 */}
                 <div className="DetailPage_Join_Style" id="DetailPage_Join_Style">
-                {renderRelatedArticles()}
+                    {renderRelatedArticles()}
                 </div>
-                
+
                 <ScrollUp />
             </div>
         </div>
