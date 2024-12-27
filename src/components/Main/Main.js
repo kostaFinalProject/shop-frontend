@@ -11,22 +11,22 @@ const Main = () => {
   const [newItems, setNewItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
   const [updatedArticles, setUpdatedArticles] = useState([]); // 기존 updatedArticles 상태
-  const [articleId, setArticleId] =useState([]);
+  const [articleId, setArticleId] = useState([]);
   const [data, setData] = useState([]);
   const [articleData, setArticleData] = useState([]);
   const [articles, setArticles] = useState([]);
-  
+
   // 데이터 가져오기
   useEffect(() => {
     const fetchItems = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/v1/items");
+        const response = await fetch("http://localhost:8080/api/v1/items?size=4");
         if (!response.ok) {
           throw new Error("Failed to fetch items");
         }
         const data = await response.json();
-       
+
         const updatedArticles = data.content.map((item) => ({
           itemId: item.itemId,
           itemCategory: item.itemCategory,
@@ -85,48 +85,48 @@ const Main = () => {
 
 
   // ----------------style 데이터 가져오기-----
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/v1/articles`, {
-        method: "GET",
-      });
-      const data = await response.json();
-       
-console.log("data 스타일 스타일",data);
-console.log("data.content 스타일 스타일",data.content);
-console.log("data.content 첫 번째 요소:", data.content[0]);
-console.log("articles:", articles);
-      // const processedData = data.content.map((article) => ({
-      //   articleId: article.articleId,
-      //   memberId: article.memberId,
-      //   memberName: article.memberName,
-      //   memberProfileImageUrl: article.memberProfileImageUrl
-      //     ? article.memberProfileImageUrl.replace(
-      //         "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
-      //         ""
-      //       )
-      //     : null,
-      //     itemImage: item.repImgUrl.replacee(
-      //     "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
-      //     ""
-      //   ),
-      //   hashtags: article.hashtags,
-      //   content: article.content,
-      //   likeCount: article.likeCount,
-      //   likeId: article.likeId,
-      //   viewCount: article.viewCount,
-      // }));
-      
-      // console.log("processedData:", processedData); // 여기에서 processedData 로그 찍기
-      // setArticleData(processedData);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/v1/articles?size=4`, {
+          method: "GET",
+        });
+        const data = await response.json();
 
-  fetchData();
-}, [articleId]);
+        console.log("data 스타일 스타일", data);
+        console.log("data.content 스타일 스타일", data.content);
+        console.log("data.content 첫 번째 요소:", data.content[0]);
+        console.log("articles:", articles);
+        const processedData = data.content.map((article) => ({
+          articleId: article.articleId,
+          memberId: article.memberId,
+          memberName: article.memberName,
+          memberProfileImageUrl: article.memberProfileImageUrl
+            ? article.memberProfileImageUrl.replace(
+              "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+              ""
+            )
+            : null,
+          itemImage: article.imageUrl.replacee(
+            "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+            ""
+          ),
+          hashtags: article.hashtags,
+          content: article.content,
+          likeCount: article.likeCount,
+          likeId: article.likeId,
+          viewCount: article.viewCount,
+        }));
+
+        console.log("processedData:", processedData); // 여기에서 processedData 로그 찍기
+        setArticleData(processedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [articleId]);
 
   return (
     <main className="mainContainer">
@@ -243,7 +243,7 @@ console.log("articles:", articles);
                 <li
                   key={article.articleId}
                   className="swiperSlideItem"
-                 
+
                 >
                   <div className="detail_page_review_list_item_img">
                     <img
