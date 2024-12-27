@@ -70,14 +70,26 @@ const MyPageOrder = () => {
     };
   }, [fetchOrders]);
 
-  const renderButtons = (status) => {
-    if (status === "PAID") {
+  const renderButtons = (status, orderTime) => {
+    // 7일 이상 차이 나는지 체크하는 함수
+    const isPaymentCancelable = (orderTime) => {
+      const currentTime = new Date();
+      const orderTimeDate = new Date(orderTime);
+      const timeDifference = currentTime - orderTimeDate;
+      const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
+      return timeDifference <= sevenDaysInMillis;
+    };
+  
+    // 결제 취소 버튼을 표시할 조건
+    if (status === "PAID" && isPaymentCancelable(orderTime)) {
       return (
         <a href="#none" className="orderBtn sizeS">
           결제 취소
         </a>
       );
     }
+  
+    // 결제하기 버튼을 표시할 조건
     if (status === "ORDERED") {
       return (
         <a href="#none" className="orderBtn sizeS">
@@ -85,8 +97,22 @@ const MyPageOrder = () => {
         </a>
       );
     }
+  
     return null;
   };
+
+  const formatOrderTime = (orderTime) => {
+    const date = new Date(orderTime);
+  
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0부터 시작하므로 1을 더함
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    return `${year}. ${month}. ${day}. ${hours}:${minutes}`;
+  };
+  
 
   return (
     <div className="MyPageOrdercontainer">
@@ -242,7 +268,8 @@ const MyPageOrder = () => {
             <div className="inquire" key={index}>
               <div className="inquireCard">
                 <div className="status">
-                  <span>{order.orderStatus || "상태 없음"}</span>
+                  {/* <span>{order.orderStatus || "상태 없음"}</span> */}
+                  <span>{formatOrderTime(order.orderTime)}</span>
                 </div>
                 <div className="prdBox">
                   {order.orderItems.map((item, itemIndex) => (
@@ -275,7 +302,7 @@ const MyPageOrder = () => {
                   <strong>
                     총 주문 금액: {(order.orderPrice + 5000).toLocaleString()}원
                   </strong>
-                  <div className="buttonGroup">{renderButtons(order.orderStatus)}</div>
+                  <div className="buttonGroup">{renderButtons(order.orderStatus, order.orderTime)}</div>
                 </div>
               </div>
             </div>
