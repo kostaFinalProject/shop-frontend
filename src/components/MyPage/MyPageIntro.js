@@ -267,67 +267,6 @@ const MyPageIntro = () => {
           </article>
           <article>
             <div className="title">
-              나의 주문처리 현황
-              <span className="desc">
-                최근
-                <em>3개월 </em>
-                기준
-              </span>
-            </div>
-            <div className="state">
-              <ul className="order">
-                <li>
-                  <strong>입금전</strong>
-                  <a href="" className="count">
-                    <span className="beforecount">0</span>
-                  </a>
-                </li>
-                <li>
-                  <strong>배송준비중</strong>
-                  <a href="" className="count">
-                    <span className="shippedstandby">0</span>
-                  </a>
-                </li>
-                <li>
-                  <strong>배송중</strong>
-                  <a href="" className="count">
-                    <span className="shippedbegin">0</span>
-                  </a>
-                </li>
-                <li>
-                  <strong>배송완료</strong>
-                  <a href="" className="count">
-                    <span className="shipcomplate">0</span>
-                  </a>
-                </li>
-              </ul>
-              <ul className="cs">
-                <li>
-                  <strong>취소주문건</strong>
-                  <a href="" className="count">
-                    <span id="ordercancel">0</span>
-                    <em>건</em>
-                  </a>
-                </li>
-                <li>
-                  <strong>교환주문건</strong>
-                  <a href="" className="count">
-                    <span id="orderexchange">0</span>
-                    <em>건</em>
-                  </a>
-                </li>
-                <li>
-                  <strong>반품주문건</strong>
-                  <a href="" className="count">
-                    <span id="orderreturn">0</span>
-                    <em>건</em>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </article>
-          <article>
-            <div className="title">
               최근 주문 내역
               <span className="desc">최근 5개 출력</span>
               <span className="desc" />

@@ -123,14 +123,12 @@ const MyPageOrder = () => {
     }
   };
 
-
   const renderButtons = (status, orderTime, order) => {
-    // 7일 이상 차이 나는지 체크하는 함수
     const isPaymentCancelable = (orderTime) => {
       const currentTime = new Date();
       const orderTimeDate = new Date(orderTime);
       const timeDifference = currentTime - orderTimeDate;
-      const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
+      const sevenDaysInMillis = 1 * 24 * 60 * 60 * 1000;
       return timeDifference <= sevenDaysInMillis;
     };
 

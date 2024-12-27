@@ -1,8 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StyleModify.css";
+import { type } from "@testing-library/user-event/dist/type";
 
 const StyleModify = () => {
   const [image, setImage] = useState('https://fakeimg.pl/150/');
+  const [memberProfile, setMemberProfile] = useState(null);
+  const [memberIntroduction, setMemberIntroduction] = useState('');
+
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  useEffect(() => {
+    // GET /profile API 호출
+    fetch('http://localhost:8080/api/v1/members/profile', {
+      headers: {
+        Authorization: accessToken,
+        'Refresh-Token': refreshToken,
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const { memberId, memberNickname, memberIntroduction, memberProfileImageUrl, memberStatus } = data;
+        setMemberProfile({
+          memberId,
+          memberNickname,
+          memberIntroduction,
+          memberProfileImageUrl : memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", ""),
+          memberStatus
+        });
+        if (memberProfile.memberProfile) {
+          setImage(`/uploads/${memberProfile.memberProfileImageUrl}`); // 데이터 기반으로 초기 이미지 설정
+        }
+        if (memberProfile.memberIntroduction) {
+          setMemberIntroduction(memberProfile.memberIntroduction);
+        }
+      })
+      .catch(error => console.error('Error fetching profile:', error));
+  }, []);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -11,14 +45,79 @@ const StyleModify = () => {
       reader.onload = (e) => {
         setImage(e.target.result); // 업로드된 이미지를 미리보기 이미지로 설정
       };
-      reader.readAsDataURL(file); // 파일을 읽고 Base64로 변환
+      reader.readAsDataURL(file);
     }
   };
 
-  // 이미지 삭제 이벤트
   const handleDeleteImage = () => {
     setImage('https://fakeimg.pl/150/'); // 기본 이미지로 되돌리기
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 기본 폼 제출 동작 방지
+
+    const formData = new FormData();
+    const fileInput = document.getElementById("file");
+
+    formData.append("profile", new Blob([JSON.stringify({ introduction: memberProfile.memberIntroduction })], { type: "application/json" }));
+
+    // 파일이 선택되었으면 추가
+    if (fileInput && fileInput.files[0]) {
+      formData.append("file", fileInput.files[0]);
+    }
+
+    // 둘 다 입력하지 않더라도 비어있는 FormData를 전송
+    fetch('http://localhost:8080/api/v1/members/profile', {
+      method: 'PUT',
+      headers: {
+        Authorization: accessToken,
+        'Refresh-Token': refreshToken,
+      },
+      body: formData,
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('프로필 수정 실패');
+        }
+        return response.json(); // 서버의 응답 데이터
+      })
+      .then(data => {
+        alert('프로필이 성공적으로 수정되었습니다.');
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error updating profile:', error);
+        alert('프로필 수정 중 오류가 발생했습니다.');
+      });
+  };
+
+  const handleStatusChange = (event) => {
+    const status = event.target.value; // 선택된 status 값 가져오기
+  
+    fetch('http://localhost:8080/api/v1/members/account-status', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: accessToken, // accessToken 사용
+        'Refresh-Token': refreshToken, // refreshToken 사용
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to update status');
+        }
+        return response.json(); // 응답에서 데이터를 JSON으로 파싱
+      })
+      .then(data => {
+        console.log('Status updated:', data);
+        setMemberProfile(prevState => ({
+          ...prevState,
+          memberStatus: status, // 로컬 상태를 변경된 status 값으로 업데이트
+        }));
+      })
+      .catch(error => console.error('Error updating status:', error));
+  };
+  
 
   return (
     <div className="stylemodifycontainer">
@@ -84,7 +183,7 @@ const StyleModify = () => {
           <div className="typeNav">
             <ul className="menu" />
           </div>
-          <form action="" method="post" target="_self">
+          <form onSubmit={handleSubmit}>
             <div className="profile">
               <div className="wrapper">
                 <img
@@ -115,30 +214,14 @@ const StyleModify = () => {
             </div>
             <div>
               <div className="profilecontent">
-                프로필 이름
-                <input
-                  type="text"
-                  className="profilename"
-                  id="profilename"
-                  placeholder="프로필 이름"
-                />
-              </div>
-              <div className="profilecontent">
-                이름
-                <input
-                  type="text"
-                  className="namebox"
-                  id="namebox"
-                  placeholder="이름"
-                />
-              </div>
-              <div className="profilecontent">
                 소개
                 <input
                   type="text"
                   className="introducebox"
                   id="introducebox"
-                  placeholder="소개"
+                  placeholder="소개를 작성해보세요"
+                  value={memberIntroduction}
+                  onChange={(e) => setMemberIntroduction(e.target.value)} // 입력값 반영
                 />
               </div>
             </div>
@@ -146,6 +229,29 @@ const StyleModify = () => {
               <button type="submit" className="submit">저장</button>
             </div>
           </form>
+          <div className="privacy-toggle">
+            <label>
+              <input
+                type="radio"
+                name="privacy"
+                value="PUBLIC"
+                checked={memberProfile && memberProfile.memberStatus === 'PUBLIC'}
+                onChange={handleStatusChange}
+              />
+              공개
+            </label>
+            &nbsp;
+            <label>
+              <input
+                type="radio"
+                name="privacy"
+                value="PRIVATE"
+                checked={memberProfile && memberProfile.memberStatus === 'PRIVATE'}
+                onChange={handleStatusChange}
+              />
+              비공개
+            </label>
+          </div>
         </section>
       </div>
     </div>

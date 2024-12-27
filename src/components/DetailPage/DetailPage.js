@@ -154,6 +154,71 @@ const DetailPage = () => {
         setSelectedItems(items); // 선택된 아이템 저장
     };
 
+    const handleSizeChange = (items) => {
+        setSelectedItems(items);
+    };
+
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    // 장바구니에 아이템 추가
+    const handleAddToCart = () => {
+        const cartData = {
+            itemId: itemId,
+            size: selectedItems[0]?.id, // 선택된 사이즈 (첫 번째 아이템의 사이즈)
+            quantity: selectedItems[0]?.quantity, // 선택된 수량 (첫 번째 아이템의 수량)
+        };
+
+        fetch(`http://localhost:8080/api/v1/carts`, {
+            method: 'POST',
+            headers: {
+                'Authorization': accessToken,
+                'Refresh-Token': refreshToken,
+                'Content-Type': 'application/json',  // 헤더에 Content-Type 추가
+            },
+            body: JSON.stringify(cartData),
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("장바구니에 추가되었습니다.");
+                } else {
+                    alert("장바구니에 추가하는데 실패했습니다.");
+                }
+            })
+            .catch(error => {
+                console.error("Error adding item to cart:", error);
+                alert("장바구니 추가 중 오류가 발생했습니다.");
+            });
+    };
+
+
+    function handlewishlist(itemId) {
+        // Fetch로 데이터 전송
+        fetch(`http://localhost:8080/api/v1/wish-lists/${itemId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': accessToken,
+                'Refresh-Token': refreshToken,
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("관심상품 등록이 완료되었습니다.");
+                } else if (response.status === 409) {
+                    // 이미 등록된 경우
+                    alert("이미 등록된 관심상품입니다.");
+                } else {
+                    response.text().then(errorMessage => {
+                        alert(`오류 발생: ${errorMessage}`);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error during item registration:", error);
+                alert("서버 오류로 인해 상품 등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
+            });
+    }
+
     const renderRelatedArticles = () => {
         if (articlesLoading) return <div>스타일 정보를 로딩 중...</div>;
         if (articlesError) return <div>스타일 데이터를 불러오지 못했습니다: {articlesError}</div>;
@@ -254,7 +319,9 @@ const DetailPage = () => {
                         <div className="DetailPage_sub_button_menu">
                             <button className="DetailPage_like_button"><a href="#">❤️</a></button>
                             <button className="DetailPage_basket_button"><a href="#">장바구니</a></button>
-                            <button className="DetailPage_interest_product_button"><a href="#">📷</a></button>
+                            <button className="DetailPage_interest_product_button" onClick={() => handlewishlist(itemData.itemId)}>
+                                📷 관심상품 등록
+                            </button>
                         </div>
                     </div>
                 </div>

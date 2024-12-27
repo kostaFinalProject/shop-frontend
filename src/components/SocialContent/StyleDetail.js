@@ -13,6 +13,8 @@ const StyleDetail = () => {
     const [currentUser, setCurrentUser] = useState(null); // 현재 사용자 설정 (예시)
     const [header, setHeader] = useState(null);
     const location = useLocation();
+    const [articleCollections, setArticleCollections] = useState([]);
+    const [isSaved, setIsSaved] = useState(false);
 
     // URL에서 articleId 추출
     const queryParams = new URLSearchParams(location.search);
@@ -71,7 +73,6 @@ const StyleDetail = () => {
             return null; // 갱신 실패
         }
     };
-
 
     // 댓글 창 토글
     const toggleComments = () => {
@@ -138,7 +139,7 @@ const StyleDetail = () => {
                             )
                         ),
                         hashtags: data.hashtags,
-                        articleItems:data.articleItems,
+                        articleItems: data.articleItems,
                         content: data.content,
                         isFollowing: data.isFollowing,
                         likeCount: data.likeCount,
@@ -177,6 +178,33 @@ const StyleDetail = () => {
             fetchData();
         }
     }, [articleId]);
+
+    // 게시글 collections 아이디 조회
+    useEffect(() => {
+        const fetchArticleCollections = async () => {
+            try {
+                const headers = await getHeaders(); // 인증 헤더 가져오기
+                if (!headers) return;
+
+                const response = await fetch(`http://localhost:8080/api/v1/members/article-collections`, {
+                    method: "GET",
+                    headers: headers,
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Article Collections:", data);
+                    setArticleCollections(data); // articleCollections 배열로 설정
+                } else {
+                    console.error("Error fetching article collections:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching article collections:", error);
+            }
+        };
+
+        fetchArticleCollections();
+    }, [articleId]); // articleId가 바뀔 때마다 articleCollections을 다시 가져오도록 의존성 추가
 
 
     // 이미지 슬라이드 제어
@@ -263,17 +291,79 @@ const StyleDetail = () => {
                 headers: headers,
             });
 
+            const responseData = await response.text(); // JSON이 아닌 텍스트로 받아오기
+
+            // 응답이 JSON일 경우 처리
+            let data;
+            try {
+                data = JSON.parse(responseData);
+            } catch (e) {
+                // JSON이 아닌 경우, 응답을 직접 처리
+                alert(responseData); // 응답 메시지 그대로 알림으로 표시
+                return;
+            }
+
             if (response.status === 200) {
-                alert("게시물이 저장되었습니다.");
+                // 저장 후 상태를 업데이트 (articleCollections에 새로 추가된 게시글 반영)
+                setArticleCollections((prev) => {
+                    const updatedArticleCollections = [...prev, data];
+                    return updatedArticleCollections;
+                });
+
+
+                alert("내 관심상품으로 등록되었습니다.");
             } else {
-                const errorData = await response.json();
-                alert(`저장 실패: ${errorData.message || "오류 발생"}`);
+                alert(`저장 실패: ${data.message || "오류 발생"}`);
             }
         } catch (error) {
             console.error("Error saving article:", error);
             alert("게시물을 저장하는 도중 오류가 발생했습니다.");
         }
     };
+
+    const handleDeleteArticle = async () => {
+        if (!accessToken && !refreshToken) {
+            alert("로그인이 필요한 기능입니다.");
+            window.location.href = '/login';
+            return;
+        }
+        const articleCollectionId = Array.isArray(articleCollections.content)
+            ? articleCollections.content.find(collection => String(collection.articleId) === String(articleId))?.articleCollectionId
+            : null;
+
+        if (articleCollectionId) {
+            try {
+                const headers = await getHeaders();
+                if (!headers) return;
+
+                const response = await fetch(`http://localhost:8080/api/v1/article-collections/${articleCollectionId}`, {
+                    method: "DELETE",
+                    headers: headers,
+                });
+
+                if (response.status === 200) {
+                    // 삭제 후 상태 갱신 (삭제된 게시글을 상태에서 제거)
+                    setArticleCollections((prevState) => ({
+                        ...prevState,
+                        content: prevState.content.filter(collection => collection.articleCollectionId !== articleCollectionId)
+                    }));
+                    alert("내 관심상품에서 삭제되었습니다.");
+                } else {
+                    const errorData = await response.json();
+                    alert(`삭제 실패: ${errorData.message || "오류 발생"}`);
+                }
+            } catch (error) {
+                console.error("Error deleting article:", error);
+                alert("게시물을 삭제하는 도중 오류가 발생했습니다.");
+            }
+        } else {
+            alert("삭제할 게시글이 존재하지 않습니다.");
+        }
+    };
+    // 게시글이 이미 내 관심상품에 등록되었는지 확인하는 함수
+    const isArticleSaved = articleCollections.content.some(
+        (collection) => String(collection.articleId) === String(articleId)
+    );
 
     return (
         <>
@@ -334,30 +424,36 @@ const StyleDetail = () => {
 
                 <div className='StyleDetail_Lookup'>
                     <div className='StyleDetail_Lookup_Title'>
-                        <p>테그된 상품</p>
+                        <p>태그된 상품</p>
                     </div>
                     <div className="StyleDetail_Lookup_List">
-                        {articleData.articleItems && articleData.articleItems.map((item) => (
-                            <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
-                                <div className="StyleDetail_Lookup_List_Img">
-                                    {/* 이미지 렌더링 */}
-                                    <img
-                                        src={item.imageUrl.replace("C:\\kostafinalfrontend\\frontend-jhs\\public\\", "/")}
-                                        alt={item.itemName}
-                                    />
-                                </div>
+                        {articleData.articleItems &&
+                            articleData.articleItems.map((item) => (
+                                <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
+                                    <Link to={`/DetailPage?itemId=${item.itemId}`}>
+                                        <div className="StyleDetail_Lookup_List_Img">
+                                            {/* 이미지 렌더링 */}
+                                            <img
+                                                src={item.imageUrl.replace(
+                                                    "C:\\kostafinalfrontend\\frontend-jhs\\public\\",
+                                                    "/"
+                                                )}
+                                                alt={item.itemName}
+                                            />
+                                        </div>
 
-                                <div className="StyleDetail_Lookup_List_Content">
-                                    {/* 아이템 이름 */}
-                                    <p>{item.itemName}</p>
-                                </div>
+                                        <div className="StyleDetail_Lookup_List_Content">
+                                            {/* 아이템 이름 */}
+                                            <p>{item.itemName}</p>
+                                        </div>
 
-                                <div className="StyleDetail_Lookup_List_Price">
-                                    {/* 가격 */}
-                                    <p>￦ {item.price}원</p>
+                                        <div className="StyleDetail_Lookup_List_Price">
+                                            {/* 가격 */}
+                                            <p>￦ {item.price}원</p>
+                                        </div>
+                                    </Link>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
                 </div>
                 {/* ---------------------interest----------------- */}
@@ -373,11 +469,25 @@ const StyleDetail = () => {
                         <span onClick={toggleComments}>💬</span>
                         {articleData.commentCount}
                     </div>
-                    <div className="StyleDetail_interest_comment" onClick={handleSaveArticle}>
-                        <div className="capture-button">
-                            <span className="capture-icon">📷</span> {/* 카메라 이모지 또는 아이콘 */}
+                    {isArticleSaved  ? (
+                        <div
+                            className="StyleDetail_interest_comment"
+                            onClick={handleDeleteArticle}
+                        >
+                            <div className="capture-button">
+                                <span className="capture-icon">삭제</span>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div
+                            className="StyleDetail_interest_comment"
+                            onClick={handleSaveArticle}
+                        >
+                            <div className="capture-button">
+                                <span className="capture-icon">📷</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* ---------------------social_text----------------- */}

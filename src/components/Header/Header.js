@@ -116,18 +116,22 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
       }
     };
 
-    const fetchMemberId = async () =>{
+    const fetchMemberId = async () => {
       const memberId = await initializeLoginState();
-      if(memberId){
-        console.log("현재 사용자 memberId",memberId);
-        //여기서 memberId로 필요한 작업 수행
-      }else{
+      if (memberId) {
+        console.log("현재 사용자 memberId", memberId);
+        // memberId를 로컬스토리지에 저장
+        localStorage.setItem("loggedInUserId", memberId); // localStorage에 memberId 저장
+
+      } else {
         console.warn("로그인 상태가 아니거나memberId를가져오지 못했습니다.")
       }
     }
 
     fetchMemberId();
   }, [setIsLoggedIn]);
+
+
 
   // 카테고리 클릭 시 처리
   const handleCategoryClick = (categoryId) => {
@@ -255,8 +259,8 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   };
 
-  {/* 통합검색 핸들러 */}
-  const handleSearch  = (event) => {
+  {/* 통합검색 핸들러 */ }
+  const handleSearch = (event) => {
     event.preventDefault();
     if (searchKeyword.trim()) {
       navigate(`/SearchProduct?keyword=${searchKeyword}`); // 검색 페이지로 이동
@@ -268,11 +272,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
         <div className="headerMainContainer">
           <div className="left">
             <a href="/">
-            <img className="logo" src="/img/shoplogo.webp" alt="logo" />
+              <img className="logo" src="/img/shoplogo.webp" alt="logo" />
             </a>
           </div>
 
-    {/* 통합검색 */}
+          {/* 통합검색 */}
           <div className="TotalSearchHead_search">
             <form onSubmit={handleSearch}>
               <div className="TotalSearchHead_search_container">
@@ -391,11 +395,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
               ))}
             </ul>
           </nav>
-       
+
           <div className="communitysection">
             <ul>
-            <a href="/" >HOME</a>
-            <a href="/BoardshoppingLi" >SHOP</a>
+              <a href="/" >HOME</a>
+              <a href="/BoardshoppingLi" >SHOP</a>
               <a href="/StyleMain">STYLE</a>
             </ul>
           </div>
