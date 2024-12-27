@@ -138,6 +138,7 @@ const StyleDetail = () => {
                             )
                         ),
                         hashtags: data.hashtags,
+                        articleItems:data.articleItems,
                         content: data.content,
                         isFollowing: data.isFollowing,
                         likeCount: data.likeCount,
@@ -145,7 +146,8 @@ const StyleDetail = () => {
                         likeId: data.likeId,
                         createdAt: data.createdAt,
                     };
-
+                    console.log("data", data);
+                    // console.log(articleData.articleItems);
                     setArticleData(processedData);
 
                     const memberArticlesResponse = await fetch(
@@ -329,6 +331,35 @@ const StyleDetail = () => {
                     </div>
                 </div>
 
+
+                <div className='StyleDetail_Lookup'>
+                    <div className='StyleDetail_Lookup_Title'>
+                        <p>테그된 상품</p>
+                    </div>
+                    <div className="StyleDetail_Lookup_List">
+                        {articleData.articleItems && articleData.articleItems.map((item) => (
+                            <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
+                                <div className="StyleDetail_Lookup_List_Img">
+                                    {/* 이미지 렌더링 */}
+                                    <img
+                                        src={item.imageUrl.replace("C:\\kostafinalfrontend\\frontend-jhs\\public\\", "/")}
+                                        alt={item.itemName}
+                                    />
+                                </div>
+
+                                <div className="StyleDetail_Lookup_List_Content">
+                                    {/* 아이템 이름 */}
+                                    <p>{item.itemName}</p>
+                                </div>
+
+                                <div className="StyleDetail_Lookup_List_Price">
+                                    {/* 가격 */}
+                                    <p>￦ {item.price}원</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 {/* ---------------------interest----------------- */}
                 <div className="StyleDetail_interest">
                     <div
@@ -366,8 +397,9 @@ const StyleDetail = () => {
                 </div>
             </div>
 
-            {/* ----------------------------social_container---------------------------- */ }
-                    < div className = "StyleDetail_social_container" >
+
+            {/* ----------------------------social_container---------------------------- */}
+            < div className="StyleDetail_social_container" >
                 <div className="StyleDetail_container_title">
                     @{articleData.memberName}님의 다른 스타일
                     <Link to={`/Styleprofile?memberId=${articleData.memberId}`}>

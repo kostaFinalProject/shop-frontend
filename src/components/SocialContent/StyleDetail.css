@@ -231,4 +231,10 @@
     object-fit: contain;
 }
 
+.StyleDetail_Lookup_List{
+    display: flex;
+}
 
+.StyleDetail_Lookup_List_Item{
+    width: 159px;
+}
