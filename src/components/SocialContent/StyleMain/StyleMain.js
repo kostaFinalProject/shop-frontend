@@ -80,7 +80,9 @@ const StyleMain = () => {
             const url = new URL(baseUrl);
             url.searchParams.append("page", reset ? 0 : page);
             url.searchParams.append("size", 12);
-            url.searchParams.append("sort", newSort); // 정렬 기준 추가
+            if (newSort) {
+                url.searchParams.append("sort", newSort); // 정렬 기준 추가
+            }
 
             // tag 또는 item이 존재할 경우 쿼리 파라미터 추가
             if (tag) {
