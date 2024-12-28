@@ -96,8 +96,8 @@ const QnAdetail = () => {
       return;
     }
 
-    if (!questionComment.trim()) {
-      alert("질문 내용을 입력해주세요.");
+    if (!questionTitle.trim() || !questionComment.trim()) {
+      alert("질문 및 본문 내용을 입력해주세요.");
       return;
     }
 
@@ -147,7 +147,7 @@ const QnAdetail = () => {
       return;
     }
 
-    if (!answerComment.trim()) {
+    if (!answerComment || !answerComment.trim()) {
       alert("답변 내용을 입력해주세요.");
       return;
     }
@@ -190,14 +190,14 @@ const QnAdetail = () => {
       return;
     }
 
-    if (!answerComment.trim()) {
+    if (!answerComment || !answerComment.trim()) {
       alert("답변 내용을 입력해주세요.");
       return;
     }
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/qna/answer/${answerDetail.answerId}`,
+        `http://localhost:8080/api/v1/qna/answer/${answerDetail[0].answerId}`,
         {
           method: "PUT",
           headers: {
@@ -279,7 +279,7 @@ const QnAdetail = () => {
 
   const handleCommentDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/qna/answer/${answerDetail.answerId}`, {
+      const response = await fetch(`http://localhost:8080/api/v1/qna/answer/${answerDetail[0].answerId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -353,11 +353,13 @@ const QnAdetail = () => {
               <div>
                 {editingQuestion ? (
                   <form onSubmit={handleQuestionUpdate}>
+                    <span style={{ fontWeight: "bold" }}>질문</span>
                     <textarea
-                      className="QnAdetail_comment-textarea"
+                      className="QnAdetail_title-textarea"
                       value={questionTitle}
                       onChange={(e) => setQuestionTitle(e.target.value)}
                     ></textarea>
+                    <span style={{ fontWeight: "bold" }}>본문</span>
                     <textarea
                       className="QnAdetail_comment-textarea"
                       value={questionComment}
@@ -401,7 +403,7 @@ const QnAdetail = () => {
           <div className="QnAdetail_comment-section">
             {answerDetail !== null ? (
               <div className="QnAdetail_comment-display">
-                <p>{answerDetail.memberNickname} | {answerDetail.createAt}</p>
+                <p>관리자 | {formatDate(answerDetail[0].createAt)}</p>
                 {editing ? (
                   <form onSubmit={handleCommentUpdate}>
                     <textarea
@@ -412,9 +414,16 @@ const QnAdetail = () => {
                     <button type="submit" className="QnAdetail_submit-button">
                       수정
                     </button>
+                    <button
+                      type="button"
+                      className="QnAdetail_cancel-button"
+                      onClick={() => setEditing(false)}
+                    >
+                      뒤로가기
+                    </button>
                   </form>
                 ) : (
-                  <p>{answerDetail.content}</p>
+                  <p>{answerDetail[0].content}</p>
                 )}
 
                 {/* 수정과 삭제 버튼을 조건부 렌더링 */}

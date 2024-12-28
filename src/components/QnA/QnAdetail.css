@@ -123,6 +123,16 @@ h2 {
   border-radius: 4px;
 }
 
+.QnAdetail_title-textarea {
+  width: 100%;
+  height: 40px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
 .QnAdetail_comment-textarea {
   width: 100%;
   height: 100px;
@@ -134,6 +144,7 @@ h2 {
 }
 
 .QnAdetail_submit-button {
+  margin-right: 5px;
   padding: 10px 20px;
   font-size: 14px;
   color: #fff;
@@ -141,6 +152,15 @@ h2 {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.QnAdetail_cancel-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #fff; /* 흰색 배경 */
+  border: 1px solid black; /* 검정 테두리: 너비 1px, 실선, 색상 black */
+  border-radius: 4px; /* 모서리 둥글게 */
+  cursor: pointer; /* 커서 모양 포인터 */
 }
 
 .QnAdetail_submit-button:hover {
