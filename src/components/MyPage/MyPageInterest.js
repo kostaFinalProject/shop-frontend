@@ -241,19 +241,20 @@ const MyPageInterest = () => {
                           <a href="">
                             {/* 이미지 경로 수정 */}
                             <img
-                              src={item.itemRepImageUrl.replace(
-                                "C:\\uploads\\",
-                                "/uploads/"
-                              )}
+                              src={`/uploads/${item.itemRepImageUrl.replace(
+                                "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                                ""
+                              )}`}
                               alt={item.itemName}
-                              width={140}
-                              height={140}
+                              width={100}
+                              height={100}
+                              style={{marginTop: "10px"}}
                             />
                           </a>
                         </div>
                         <div className="description">
                           <strong className="manufacturer" title="제조사">
-                            [제조사]
+                            {`[${item.manufacturer}] `}
                           </strong>
                           <strong className="itemname" title="상품명">
                             {item.itemName}
@@ -265,14 +266,14 @@ const MyPageInterest = () => {
                           </ul>
                           <ul className="info">
                             <li>
-                              배송 :<span className="delivery">3000원</span>
+                              <span>{item.itemSeller}</span>
                             </li>
                             <li>
-                              적립금 :<span className="mileage">300원</span>
+                              배송 :<span className="delivery">5000원</span>
                             </li>
-                          </ul>
-                          <ul className="optional">
-                            <li>옵션1</li>
+                            <li>
+                              적립금 :<span className="mileage">{item.points}원</span>
+                            </li>
                           </ul>
                         </div>
                         <div className="sumprice">
@@ -283,7 +284,7 @@ const MyPageInterest = () => {
                             <img src="/img/x-lg.svg" alt="삭제" />
                           </a>
                           <div className="orderBtn">
-                            <a href="#none" className="btnSubmit sizeS">
+                            <a href={`/DetailPage?itemId=${item.itemId}`} className="btnSubmit sizeS">
                               상세보기
                             </a>
                           </div>
