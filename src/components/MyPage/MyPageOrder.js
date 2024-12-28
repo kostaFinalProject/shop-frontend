@@ -124,6 +124,37 @@ const MyPageOrder = () => {
     }
   };
 
+  const handleCancelOrder = async (orderId) => {
+    try {
+      const accesstoken = localStorage.getItem("accessToken");
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      if (!accesstoken || !refreshToken) {
+        alert("로그인이 필요한 기능입니다.");
+        return;
+      }
+
+      const response = await fetch(`http://localhost:8080/api/v1/orders/${orderId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: accesstoken,
+          "Refresh-Token": refreshToken,
+        },
+      });
+
+      if (response.ok) {
+        alert("주문이 취소되었습니다.");
+        // 추가로 리스트 갱신 로직을 추가
+        window.location.reload(); // 간단한 새로고침으로 갱신
+      } else {
+        alert("주문 취소에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error) {
+      console.error("주문 취소 오류:", error);
+      alert("주문 취소 중 오류가 발생했습니다.");
+    }
+  };
+
   const renderButtons = (status, orderTime, order) => {
     const isPaymentCancelable = (orderTime) => {
       const currentTime = new Date();
@@ -132,34 +163,51 @@ const MyPageOrder = () => {
       const sevenDaysInMillis = 1 * 24 * 60 * 60 * 1000;
       return timeDifference <= sevenDaysInMillis;
     };
-
+  
+    const buttons = [];
+  
     // 결제 취소 버튼을 표시할 조건
-    if (status === "PAID" && isPaymentCancelable(orderTime)) {
-      return (
+    if (status === "PAID" && isPaymentCancelable(orderTime) && order.orderItems.every(item => item.itemStatus === "ACTIVE" || item.itemStatus === "SOLD_OUT")) {
+      buttons.push(
         <button
           className="orderBtn sizeS"
           onClick={() => handleCancelPayment(order.paymentsId)}
+          key="cancelPayment"
         >
           결제 취소
         </button>
       );
     }
-
+  
+    // 주문 취소 버튼을 표시할 조건
+    if (status === "ORDERED" && order.orderItems.some(item => item.itemStatus === "ACTIVE" || item.itemStatus === "SOLD_OUT")) {
+      buttons.push(
+        <button
+          className="orderBtn sizeS"
+          onClick={() => handleCancelOrder(order.orderId)}
+          key="cancelOrder"
+        >
+          주문 취소
+        </button>
+      );
+    }
+  
     // 결제하기 버튼을 표시할 조건
-    if (status === "ORDERED") {
-      return (
+    if (status === "ORDERED" && order.orderItems.every(item => item.itemStatus === "ACTIVE")) {
+      buttons.push(
         <button
           className="orderBtn sizeS"
           onClick={() => handlePayment(order)}
+          key="payOrder"
         >
           결제하기
         </button>
       );
     }
-
-    return null;
+  
+    // 두 개 이상의 버튼을 모두 반환하도록 배열로 반환
+    return buttons.length > 0 ? buttons : null;
   };
-
 
   const formatOrderTime = (orderTime) => {
     const date = new Date(orderTime);
@@ -217,7 +265,7 @@ const MyPageOrder = () => {
                   <strong>
                     결제 상태: {
                       order.orderStatus === "ORDERED" ? "결제 미완료" :
-                        order.orderStatus === "CANCELED" ? "결제 취소" :
+                        order.orderStatus === "CANCELED" ? "주문 취소" :
                           order.orderStatus === "PAID" ? "결제 완료" :
                             "상태 불명"
                     }

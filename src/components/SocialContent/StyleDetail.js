@@ -376,7 +376,7 @@ const StyleDetail = () => {
         }
     };
 
-    const isArticleSaved = articleCollections.content.some(
+    const isArticleSaved = articleCollections?.content?.some(
         (collection) => String(collection.articleId) === String(articleId)
     );
 
@@ -443,32 +443,35 @@ const StyleDetail = () => {
                     </div>
                     <div className="StyleDetail_Lookup_List">
                         {articleData.articleItems &&
-                            articleData.articleItems.map((item) => (
-                                <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
-                                    <Link to={`/DetailPage?itemId=${item.itemId}`}>
-                                        <div className="StyleDetail_Lookup_List_Img">
-                                            {/* 이미지 렌더링 */}
-                                            <img
-                                                src={`uploads/${item.imageUrl.replace(
-                                                    "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
-                                                    ""
-                                                )}`}
-                                                alt={item.itemName}
-                                            />
-                                        </div>
+                            articleData.articleItems
+                                .filter((item) => item.itemStatus === "ACTIVE" || item.itemStatus === "SOLD_OUT") // ACTIVE나 SOLD_OUT인 아이템만 필터링
+                                .map((item) => (
+                                    <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
+                                        <Link to={`/DetailPage?itemId=${item.itemId}`}>
+                                            <div className="StyleDetail_Lookup_List_Img">
+                                                {/* 이미지 렌더링 */}
+                                                <img
+                                                    src={`uploads/${item.imageUrl.replace(
+                                                        "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                                                        ""
+                                                    )}`}
+                                                    alt={item.itemName}
+                                                />
+                                            </div>
 
-                                        <div className="StyleDetail_Lookup_List_Content">
-                                            {/* 아이템 이름 */}
-                                            <p style={{fontSize: "15px"}}>{item.itemName}</p>
-                                        </div>
+                                            <div className="StyleDetail_Lookup_List_Content">
+                                                {/* 아이템 이름 */}
+                                                <p style={{ fontSize: "15px" }}>{item.itemName}</p>
+                                            </div>
 
-                                        <div className="StyleDetail_Lookup_List_Price">
-                                            {/* 가격 */}
-                                            <p style={{fontSize: "15px"}}>￦ {item.price}원</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
+                                            <div className="StyleDetail_Lookup_List_Price">
+                                                {/* 가격 */}
+                                                <p style={{ fontSize: "15px" }}>￦ {item.price}원</p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
+
                     </div>
                 </div>
                 {/* ---------------------interest----------------- */}
@@ -484,7 +487,7 @@ const StyleDetail = () => {
                         <span onClick={toggleComments}>💬</span>
                         {articleData.commentCount}
                     </div>
-                    {isArticleSaved  ? (
+                    {isArticleSaved ? (
                         <div
                             className="StyleDetail_interest_comment"
                             onClick={handleDeleteArticle}
