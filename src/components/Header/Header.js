@@ -9,6 +9,8 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState(""); // 검색어 상태
   const [memberId, setMemberId] = useState(null);
+  const [memberGrade, setMemberGrade] = useState("USER");
+
   const refreshAccessToken = async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
@@ -41,6 +43,8 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     }
   };
 
+  const isAdmin = memberGrade === "SUPER_ADMIN" || memberGrade === "ADMIN";
+
   // 초기 isLoggedIn 상태 설정
   useEffect(() => {
     const initializeLoginState = async () => {
@@ -68,6 +72,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
           const userData = await userResponse.json();
           setIsLoggedIn(true);
           setMemberId(userData.memberId);
+          setMemberGrade(userData.grade);
           return userData.memberId;
         } else {
           // AccessToken 만료로 인한 실패 시
@@ -301,10 +306,12 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
                 />
                 <span>마이페이지</span>
               </a>
-              <a href="/AdminPage/Adminright">
+              {isAdmin && (
+                <a href="/AdminPage/Adminright">
                 <img src="/img/basket3.svg" alt="장바구니" className="icon" />
-                <span>장바구니</span>
+                <span>관리자페이지</span>
               </a>
+              )}
               <a href="/" onClick={handleLogout}>
                 <img
                   src="/img/box-arrow-right.svg"
