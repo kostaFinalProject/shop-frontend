@@ -405,6 +405,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
 
           <div className="communitysection">
             <ul>
+              <a href="/Qna">Q&A</a>
               <a href="/" >HOME</a>
               <a href="/BoardshoppingLi" >SHOP</a>
               <a href="/StyleMain">STYLE</a>
