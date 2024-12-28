@@ -269,10 +269,10 @@ const MyPageInterest = () => {
                               <span>{item.itemSeller}</span>
                             </li>
                             <li>
-                              배송 :<span className="delivery">5000원</span>
+                              배송 : <span className="delivery">5000원</span>
                             </li>
                             <li>
-                              적립금 :<span className="mileage">{item.points}원</span>
+                              적립금 : <span className="mileage">{item.points}원</span>
                             </li>
                           </ul>
                         </div>
