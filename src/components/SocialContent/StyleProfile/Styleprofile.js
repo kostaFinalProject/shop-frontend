@@ -92,7 +92,7 @@ const Styleprofile = () => {
                             "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
                             ""
                         )
-                        : "https://fakeimg.pl/150x150/",
+                        : null,
                     memberStatus: data.memberStatus,
                     followerId: data.followId || null,
                     articleCount: data.articleCount,

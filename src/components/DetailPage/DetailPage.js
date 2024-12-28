@@ -352,7 +352,7 @@ const DetailPage = () => {
                             </button>
 
                             <button className="DetailPage_interest_product_button" onClick={() => handlewishlist(itemData.itemId)}>
-                                📷 관심상품 등록
+                                관심상품 등록
                             </button>
                         </div>
                     </div>

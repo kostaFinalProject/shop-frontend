@@ -288,7 +288,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
         <div className="Styleprofile_profile">
             <div className="Styleprofile_profile_img">
                 <img
-                    src={profile.memberProfileImageUrl ? `/uploads/${profile.memberProfileImageUrl}` : 'https://fakeimg.pl/150x150/'}
+                    src={profile.memberProfileImageUrl ? `/uploads/${profile.memberProfileImageUrl}` : 'https://fakeimg.pl/150x150'}
                     alt="Profile"
                 />
             </div>
