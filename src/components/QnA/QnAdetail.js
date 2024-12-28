@@ -350,7 +350,7 @@ const QnAdetail = () => {
                 </button>
               </div>
 
-              <div>
+              <div style={{ height: "150px" }}>
                 {editingQuestion ? (
                   <form onSubmit={handleQuestionUpdate}>
                     <span style={{ fontWeight: "bold" }}>질문</span>
@@ -401,10 +401,32 @@ const QnAdetail = () => {
           )}
 
           <div className="QnAdetail_comment-section">
-            {answerDetail !== null ? (
+            {/* 답변이 존재하면 모두 볼 수 있음 */}
+            {answerDetail !== null && (
               <div className="QnAdetail_comment-display">
                 <p>관리자 | {formatDate(answerDetail[0].createAt)}</p>
-                {editing ? (
+                <p>{answerDetail[0].content}</p>
+
+                {/* 수정과 삭제 버튼은 SUPER_ADMIN 또는 ADMIN에게만 보이도록 */}
+                {(questionDetail.memberGrade === "SUPER_ADMIN" || questionDetail.memberGrade === "ADMIN") && !editing && (
+                  <>
+                    <button
+                      className="QnAdetail_qna-list-button"
+                      onClick={handleCommentDelete}
+                    >
+                      삭제
+                    </button>
+                    <button
+                      className="QnAdetail_qna-list-button"
+                      onClick={() => setEditing(true)}
+                    >
+                      수정
+                    </button>
+                  </>
+                )}
+
+                {/* 수정 모드 */}
+                {editing && (
                   <form onSubmit={handleCommentUpdate}>
                     <textarea
                       className="QnAdetail_comment-textarea"
@@ -422,44 +444,30 @@ const QnAdetail = () => {
                       뒤로가기
                     </button>
                   </form>
-                ) : (
-                  <p>{answerDetail[0].content}</p>
-                )}
-
-                {/* 수정과 삭제 버튼을 조건부 렌더링 */}
-                {!editing && (
-                  <>
-                    <button
-                      className="QnAdetail_qna-list-button"
-                      onClick={handleCommentDelete}
-                    >
-                      삭제
-                    </button>
-                    <button
-                      className="QnAdetail_qna-list-button"
-                      onClick={() => setEditing(true)}
-                    >
-                      수정
-                    </button>
-                  </>
                 )}
               </div>
-            ) : (
-              // 댓글이 없으면 댓글 입력 폼을 표시
-              <form className="QnAdetail_comment-form" onSubmit={handleCommentSubmit}>
-                <h5 className="QnAdetail_comment-title">답변 작성</h5>
-                <textarea
-                  className="QnAdetail_comment-textarea"
-                  placeholder="답변 내용을 입력하세요"
-                  value={answerComment}
-                  onChange={(e) => setAnswerComment(e.target.value)}
-                ></textarea>
-                <button type="submit" className="QnAdetail_submit-button">
-                  등록
-                </button>
-              </form>
+            )}
+
+            {/* 답변이 없을 때만 댓글 입력 폼을 표시 */}
+            {answerDetail === null && (
+              questionDetail.memberGrade === "SUPER_ADMIN" || questionDetail.memberGrade === "ADMIN" ? (
+                <form className="QnAdetail_comment-form" onSubmit={handleCommentSubmit}>
+                  <h5 className="QnAdetail_comment-title">답변 작성</h5>
+                  <textarea
+                    className="QnAdetail_comment-textarea"
+                    placeholder="답변 내용을 입력하세요"
+                    value={answerComment}
+                    onChange={(e) => setAnswerComment(e.target.value)}
+                  ></textarea>
+                  <button type="submit" className="QnAdetail_submit-button">
+                    등록
+                  </button>
+                </form>
+              ) : null
             )}
           </div>
+
+
         </>
       )}
     </div>
