@@ -13,7 +13,6 @@ const Styleprofile = () => {
     const [profile, setProfile] = useState(null); // 프로필 상태 추가
     const [loggedInUserId, setLoggedInUserId] = useState(null); // 접속한 사용자 ID
     const [articleCollections, setArticleCollections] = useState(null);
-    const [articleCollectionId, setArticleCollectionId] = useState();
     const location = useLocation();
 
     const accessToken = localStorage.getItem("accessToken");
@@ -205,7 +204,7 @@ const Styleprofile = () => {
                         className={`Styleprofile_taglist ${activeTab === 'tags' ? 'active' : ''}`}
                         onClick={() => setActiveTab('tags')}
                     >
-                        태그상품
+                        태그한 상품
                     </span>
 
                     {/* 로그인한 사용자의 프로필인 경우에만 내 관심상품 탭 표시 */}
@@ -214,7 +213,7 @@ const Styleprofile = () => {
                             className={`Styleprofile_MyInterestlist ${activeTab === 'MyInterests' ? 'active' : ''}`}
                             onClick={() => setActiveTab('MyInterests')}
                         >
-                            내 관심상품
+                            저장된 게시글
                         </span>
                     )}
 

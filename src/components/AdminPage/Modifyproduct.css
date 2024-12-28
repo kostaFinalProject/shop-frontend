@@ -1,20 +1,18 @@
-
-.admindeliverysection {
+.Registproduct_section {
   width: 1280px;
   display: flex;
   margin: 0 auto;
   padding: 0;
-  justify-content: space-between;
+  justify-content: center;
   font-family: 'SpoqaHanSansNeo-Regular';
+
 }
 
-.modifyproductsection .info {
+.Registproduct_info{
   width: 1024px;
   margin: 64px 10px 0 0;
 }
-
-
-.modifyproductsection .content-name {
+.Registproduct_content-name {
   color: rgb(24, 26, 28);
   height: 44px;
   letter-spacing: -0.4px;
@@ -25,159 +23,51 @@
   align-items: center;
 }
 
-.modifyproductsection hr {
+.Registproduct_section hr {
   border-color: rgb(231, 231, 231, 0.3);
   background: rgb(231, 231, 231, 0.3);
   height: 1px;
 }
 
 
-.modifyproductsection h2 {
+.Registproduct_section h2 {
   color: #333;
 }
 
-.modifyproductsection thead {
-  display: table-header-group;
-  vertical-align: middle;
-  border-color: inherit;
-}
-
-.modifyproductsection table {
-  width: 100%;
-  border: 0;
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.modifyproductsection tbody {
-  display: table-row-group;
-  vertical-align: middle;
-  border-color: inherit;
-}
-
-.modifyproductsection th {
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 15px 10px 16px;
-}
-
-.modifyproductsection td {
-  text-align: center;
-  border-bottom: 1px solid #666;
-  padding: 15px 10px 16px;
-}
-
-.modifyproductsection .empty {
-  border: 0;
-  border-bottom: 1px solid #e8e8e8;
-  font-size: 12px;
-  height: 150px;
-  line-height: 150px;
-  padding: 0;
-  color: var(--font-color-gray);
-  font-weight: normal;
-  text-align: center;
-}
-
-.modifyproductsection .typelist {
-  margin-bottom: 100px;
-}
-
-
-/* 모달 스타일 */
-.modifyproductsection .modal {
-  display: none;
-  /* 처음에는 숨겨짐 */
-  position: fixed;
-  /* 고정된 위치 */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  /* 반투명 배경 */
-  justify-content: center;
-  /* 세로로 중앙 정렬 */
-  align-items: center;
-  /* 가로로 중앙 정렬 */
+.Registproduct_categoryselect{
   display: flex;
-  /* flexbox 활성화 */
-  z-index: 1000;
-  /* 다른 요소들 위에 표시 */
 }
 
-/* 모달 내용 */
-.modifyproductsection .modal-content {
-  background-color: #fff;
-  width: 50%;
-  /* 너비를 50%로 설정 (원하는 크기로 조절 가능) */
-  max-width: 600px;
-  /* 최대 너비를 설정 (너무 넓지 않게) */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  /* 그림자 효과 */
-  overflow: scroll;
-  height: 800px;
-}
-
-/* 탭 스타일 */
-.modifyproductsection .tabs {
-  background-color: #ddd;
-  text-align: center;
-  font-size: 32px;
-}
-
-.modifyproductsection .tab-link {
-  width: 600px;
-  height: 50px;
-  padding: 10px;
-  cursor: pointer;
-  border: none;
-  background-color: #f0f0f0;
-  transition: background-color 0.3s;
-}
-
-.modifyproductsection .tab-link.active {
-  background-color: #ddd;
-}
-
-/* 페이지 스타일 */
-.modifyproductsection .page {
-  display: none;
-}
-
-.modifyproductsection .page.active {
-  display: block;
+.Registproduct_mainselect,
+.Registproduct_subselect{
+width: 412px;
 }
 
 
-.modifyproductsection article {
-  width: 550px;
-  display: block;
-  height: auto;
 
+.Registproduct_section select{
+  width: 220px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin: 3px 0 10px 0;
+  text-align:left;
 }
-
-.modifyproductsection .selectcategory {
+.Registproduct_category{
   margin-top: 10px;
   font-weight: bold;
   margin-bottom: 7px;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  white-space: nowrap;
-  justify-content: center;
 }
 
-.modifyproductsection .form-group label {
+.Registproduct_form-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.modifyproductsection .form-group input[type="text"],
-.modifyproductsection .form-group input[type="number"] {
+.Registproduct_form-group input[type="text"],
+.Registproduct_form-group input[type="number"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -186,13 +76,13 @@
   margin-bottom: 10px;
 }
 
-.modifyproductsection .image-list {
+.Registproduct_image-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.modifyproductsection .image-list li {
+.Registproduct_image-list li {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 10px;
@@ -203,12 +93,12 @@
   justify-content: space-between;
 }
 
-.modifyproductsection .image-list li input[type="file"] {
+.Registproduct_image-list li input[type="file"] {
   flex-grow: 1;
   margin-right: 10px;
 }
 
-.modifyproductsection .rep-img-label {
+.Registproduct_rep-img-label {
   font-weight: bold;
   color: green;
   font-size: 12px;
@@ -218,8 +108,8 @@
   margin-right: 10px;
 }
 
-.modifyproductsection .add-image-btn,
-.modifyproductsection .remove-image-btn {
+.Registproduct_add-image-btn,
+.Registproduct_remove-image-btn {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -230,25 +120,22 @@
   margin-right: 5px;
 }
 
-.modifyproductsection .add-image-btn:hover {
+.aRegistproduct_dd-image-btn:hover{
   background-color: #47C83E;
 }
 
 
-.modifyproductsection .remove-image-btn {
+.Registproduct_remove-image-btn {
   background-color: red;
 }
 
-.modifyproductsection .remove-image-btn:disabled {
-  background-color: red;
-  /* 여전히 빨간색을 유지 */
-  cursor: not-allowed;
-  /* 사용 금지 상태 커서 */
-  opacity: 0.6;
-  /* 비활성화 상태 표시 */
+.Registproduct_remove-image-btn:disabled {
+  background-color: red; /* 여전히 빨간색을 유지 */
+  cursor: not-allowed;  /* 사용 금지 상태 커서 */
+  opacity: 0.6;         /* 비활성화 상태 표시 */
 }
 
-.modifyproductsection button[type="submit"] {
+.Registproduct_section button[type="submit"] {
   background-color: #008CBA;
   color: white;
   padding: 10px 20px;
@@ -258,34 +145,11 @@
   margin-top: 10px
 }
 
-.modifyproductsection button[type="submit"]:hover {
+.Registproduct_section button[type="submit"]:hover {
   background-color: #007bb5;
 }
 
-.modifyproductsection .error-message {
+.Registproduct_section .error-message {
   color: red;
   font-size: 14px;
-}
-
-.modifyproductsection .categoryselect {
-  display: flex;
-  justify-content: space-around;
-
-}
-
-.modifyproductsection .mainselect,
-.modifyproductsection .subselect {
-  width: 250px;
-}
-
-
-
-.modifyproductsection select {
-  width: 220px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin: 3px 0 10px 0;
-  text-align: left;
 }

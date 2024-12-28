@@ -14,6 +14,8 @@ const DetailPage = () => {
     const [articlesLoading, setArticlesLoading] = useState(true);
     const [articlesError, setArticlesError] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]); // 선택된 아이템
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+    const [discountPercent, setDiscountPercent] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
@@ -91,6 +93,85 @@ const DetailPage = () => {
     if (error) return <div>에러가 발생했습니다: {error}</div>;
 
     const isAdmin = itemData?.memberGrade === "SUPER_ADMIN" || itemData?.memberGrade === "ADMIN";
+
+    const handleDiscountStop = async (discountId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/discounts/${discountId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("accessToken"),
+                    "Refresh-Token": localStorage.getItem("refreshToken"),
+                }
+            });
+
+            if (response.ok) {
+                const message = await response.text(); // 서버에서 반환한 메시지 받기
+                alert(message); // "할인이 종료되었습니다." 메시지 출력
+
+                // 할인이 종료되었으므로 상태를 업데이트하거나 UI를 변경
+                // 예: itemData.discountId를 null로 설정
+                setItemData((prevData) => ({
+                    ...prevData,
+                    discountId: null,
+                    discountPercent: 0,
+                    discountPrice: itemData.price,
+                }));
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || "할인 중단 요청 실패");
+            }
+        } catch (error) {
+            console.error("할인 중단 요청 실패:", error);
+            alert("요청 중 문제가 발생했습니다. 다시 시도해주세요.");
+        }
+    };
+
+    // 할인 시작 버튼 클릭 시 호출
+    const handleDiscountStart = () => {
+        setIsModalOpen(true); // 모달 열기
+    };
+
+    // 할인 퍼센트 전송
+    const handleDiscountSubmit = async () => {
+        if (!discountPercent) {
+            alert("할인 퍼센트를 입력해주세요.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/discounts/${itemData.itemId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("accessToken"),
+                    "Refresh-Token": localStorage.getItem("refreshToken"),
+                },
+                body: JSON.stringify({ discountPercent: parseInt(discountPercent, 10) }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                setItemData((prevData) => ({
+                    ...prevData,
+                    discountId: data.discountId,
+                    discountPercent: data.discountPercent,
+                    discountPrice: data.discountPrice,
+                }));
+                alert("할인이 적용되었습니다!");
+                setIsModalOpen(false); // 모달 닫기
+                setDiscountPercent(""); // 입력 초기화
+            } else {
+                const errorData = await response.json();
+                alert(`오류 발생: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error("할인 요청 중 오류 발생:", error);
+            alert("할인 요청에 실패했습니다. 다시 시도해주세요.");
+        }
+    };
+
 
     const handleArticleClick = (articleId) => {
         navigate(`/StyleDetail?articleId=${articleId}`);
@@ -246,6 +327,33 @@ const DetailPage = () => {
             });
     }
 
+    const handleDeleteItem = async () => {
+        const confirmDelete = window.confirm("정말로 이 상품을 삭제하시겠습니까?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/items/${itemData.itemId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': accessToken,
+                    'Refresh-Token': refreshToken,
+                },
+            });
+
+            if (response.ok) {
+                alert("상품이 성공적으로 삭제되었습니다.");
+                navigate("/BoardshoppingLi")
+            } else {
+                const errorData = await response.json();
+                alert(`삭제 실패: ${errorData.message}`);
+            }
+        } catch (error) {
+            console.error("삭제 요청 중 오류 발생:", error);
+            alert("삭제 요청에 실패했습니다. 다시 시도해주세요.");
+        }
+    };
+
     const renderRelatedArticles = () => {
         if (articlesLoading) return <div>스타일 정보를 로딩 중...</div>;
         if (articlesError) return <div>스타일 데이터를 불러오지 못했습니다: {articlesError}</div>;
@@ -273,7 +381,7 @@ const DetailPage = () => {
                 </ul>
             </div>
         ) : (
-            <div style={{height: "50px"}}>관련된 스타일이 없습니다.</div>
+            <div style={{ height: "50px" }}>관련된 스타일이 없습니다.</div>
         );
     };
 
@@ -386,11 +494,49 @@ const DetailPage = () => {
 
                 {/* 관리자 권한 버튼 */}
                 {isAdmin && (
-                    <div className="DetailPage_admin_buttons" style={{ textAlign: "right", marginBottom: "20px" }}>
-                        <button className="DetailPage_edit_button">수정</button>
-                        <button className="DetailPage_delete_button">삭제</button>
+                    <div
+                        className="DetailPage_admin_buttons"
+                        style={{ textAlign: "right", marginBottom: "20px" }}
+                    >
+                        {itemData.discountId ? (
+                            <button
+                                className="DetailPage_discount_button"
+                                onClick={() => handleDiscountStop(itemData.discountId)}
+                            >
+                                할인 중단
+                            </button>
+                        ) : (
+                            <button
+                                className="DetailPage_discount_button"
+                                onClick={handleDiscountStart} // 모달 열기
+                            >
+                                할인
+                            </button>
+                        )}
+                        <button className="DetailPage_edit_button" onClick={() => navigate("/AdminPage/modifyProduct", { state: { itemData } })}>수정</button>
+                        <button className="DetailPage_delete_button" onClick={handleDeleteItem}>삭제</button>
+
+                        {/* 모달 */}
+                        {isModalOpen && (
+                            <div className="modal">
+                                <div className="modal-content">
+                                    <h2>할인 퍼센트 입력</h2>
+                                    <input
+                                        type="number"
+                                        value={discountPercent}
+                                        onChange={(e) => setDiscountPercent(e.target.value)}
+                                        placeholder="할인 퍼센트를 입력하세요"
+                                    />
+                                    <div className="modal-actions">
+                                        <button className="discount_apply" onClick={handleDiscountSubmit}>적용</button>
+                                        <button className="discount_cancel" onClick={() => setIsModalOpen(false)}>취소</button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
+
 
                 <ScrollUp />
             </div>

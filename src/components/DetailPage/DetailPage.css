@@ -1,5 +1,4 @@
-
-.DetailPage_full_screen  {
+.DetailPage_full_screen {
     margin: 0 auto;
     padding: 0;
     margin-top: 225px;
@@ -17,7 +16,7 @@
     justify-content: center;
     align-items: center;
 
-}   
+}
 
 /*---------------- 상세페이지 전체 설정 ----------------*/
 .DetailPage_product_detail {
@@ -48,54 +47,61 @@
     height: 100%;
     max-height: 680px;
 
-    object-fit: contain;/* 비율을 유지하면서 자르지 않도록 설정 */
-    background-size: auto; /* 원본 크기 그대로 유지 */
-    background-repeat: no-repeat;   /* 이미지 반복하지 않도록 설정 */
-    background-position: center; /* 이미지를 요소 중앙에 배치 */
+    object-fit: contain;
+    /* 비율을 유지하면서 자르지 않도록 설정 */
+    background-size: auto;
+    /* 원본 크기 그대로 유지 */
+    background-repeat: no-repeat;
+    /* 이미지 반복하지 않도록 설정 */
+    background-position: center;
+    /* 이미지를 요소 중앙에 배치 */
 }
 
 .DetailPage_prev_button,
-.DetailPage_next_button{
+.DetailPage_next_button {
     all: unset;
 }
+
 .DetailPage_prev_button:hover,
-.DetailPage_next_button:hover{
+.DetailPage_next_button:hover {
     cursor: pointer;
     transform: scale(1.5);
-    
+
 }
 
 
 /* 이미지 슬라이드 스타일링 */
-.DetailPage_image_dot_box{
+.DetailPage_image_dot_box {
     width: 100%;
     height: 100%;
     display: block;
 }
+
 .DetailPage_slider_image {
     transition: transform 0.5s ease-in-out;
 }
-  .DetailPage_pagination {
+
+.DetailPage_pagination {
     text-align: center;
 
-  }
-  
-  .DetailPage_dot {
+}
+
+.DetailPage_dot {
     font-size: 40px;
     height: 10px;
     width: 10px;
     margin: 0 5px;
     color: #ccc;
     font-weight: 1000;
-   
-  }
-  
-  .DetailPage_dot.active {
+
+}
+
+.DetailPage_dot.active {
     color: #333;
-  }
-  
+}
+
 /* ---------------- 상세페이지 설명글 ----------------*/
- .DetailPage_detail_text {
+.DetailPage_detail_text {
     width: 680px;
     height: auto;
     margin-left: 40px;
@@ -208,34 +214,38 @@
 
 .DetailPage_button_product_detail_description {
     width: 50%;
-    height:60px;
-    
+    height: 60px;
+
 }
 
 .DetailPage_button_review {
     width: 50%;
-    height:60px;
+    height: 60px;
 
 }
-.DetailPage_button_Question{
+
+.DetailPage_button_Question {
     width: 50%;
-    height:60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    
+
 }
+
 .DetailPage_button_Question button {
     all: unset;
 
 }
+
 .DetailPage_button_product_detail_description:hover,
 .DetailPage_button_review:hover,
-.DetailPage_button_Question:hover{
+.DetailPage_button_Question:hover {
     cursor: pointer;
     transform: scale(1.2);
 }
+
 .DetailPage_button_product_detail_description a,
 .DetailPage_button_review a {
     display: block;
@@ -282,7 +292,7 @@
 }
 
 
-.DetailPage_Join_Style{
+.DetailPage_Join_Style {
     width: 100%;
     max-width: 1280px;
     height: auto;
@@ -291,28 +301,31 @@
     display: flex;
     justify-content: center;
     font-size: 20px;
-    
+
 }
 
 
 
 /* --------------------스타일 더보기 */
-.DetailPage_Style_More{
+.DetailPage_Style_More {
     width: 100%;
     max-width: 840px;
     height: 300px;
 
 }
-.DetailPage_Style_More_h3{
+
+.DetailPage_Style_More_h3 {
     width: 100%;
     height: 40px;
 }
-.DetailPage_Style_More_list{
+
+.DetailPage_Style_More_list {
     width: 100%;
     height: 260px;
     display: flex;
 }
-.DetailPage_Style_More_item{
+
+.DetailPage_Style_More_item {
     width: 200px;
     height: 260px;
     display: flex;
@@ -322,48 +335,106 @@
     margin: 0 5px;
 
 }
-.DetailPage_Style_More_item:hover{
+
+.DetailPage_Style_More_item:hover {
     cursor: pointer;
 }
+
 .DetailPage_Style_More_img {
     height: 200px;
     width: 200px;
     object-fit: contain;
 
 }
-.DetailPage_Style_More_content{
+
+.DetailPage_Style_More_content {
     height: 40px;
     margin: 5px;
 }
-.DetailPage_Style_More_p_box{
+
+.DetailPage_Style_More_p_box {
     height: 20px;
     font-size: 13px;
     padding-bottom: 10px;
 
 }
-.DetailPage_Style_More_hashtags{
+
+.DetailPage_Style_More_hashtags {
     height: 20px;
     font-size: 8px;
 
 }
+
 .DetailPage_edit_button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 5px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
 }
 
 .DetailPage_delete_button {
-  background-color: #cf1b1b;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 5px;
+    background-color: #cf1b1b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.DetailPage_discount_button {
+    background-color: #131fc9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.discount_apply {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.discount_cancel {
+    background-color: #cf1b1b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 5px;
 }

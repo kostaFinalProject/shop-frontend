@@ -26,6 +26,11 @@
 
     
 }
+.SearchProfile_user_img img{
+  width: 60PX;
+  height: 60PX;
+  border-radius: 100px;
+}
 .Styleprofile_profile_img img {
     width: 150px;
     height: 150px;

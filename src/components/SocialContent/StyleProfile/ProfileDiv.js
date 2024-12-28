@@ -95,18 +95,20 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
             });
 
             // 요청 성공 후 상태 업데이트
-            alert(response.data); // "팔로우 요청을 수락했습니다." 메시지 출력
+            alert("맞팔로우 요청을 수락했습니다."); // "팔로우 요청을 수락했습니다." 메시지 출력
+
+            setProfile((prevProfile) => ({
+                ...prevProfile,
+                followerCount: prevProfile.followerCount + 1,
+            }));
 
             // 팔로우 요청 목록에서 수락한 팔로우 제거
             setFollowRequests(prevRequests =>
-                prevRequests.filter(request => request.id !== followId)
+                prevRequests.filter(request => request.followId !== followId)
             );
 
-            // 팔로우 목록에 추가 (팔로우 상태가 ACCEPTED로 변경되었으므로)
-            setFollowers(prevFollowers => [
-                ...prevFollowers,
-                { ...prevFollowers.find(f => f.id === followId), followStatus: 'ACCEPTED' }
-            ]);
+            fetchFollowees();
+            fetchFollowers();
         } catch (error) {
             alert("팔로우 요청 수락에 실패했습니다.");
             console.error("Error accepting follow request:", error);
@@ -157,6 +159,9 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
             if (response.status === 200) {
                 setBlockList(prevBlockList => prevBlockList.filter(block => block.blockId !== blockId)); // 차단 리스트에서 해당 사용자 제거
+                fetchFollowees();
+                fetchFollowers();
+                fetchFollowRequests();
                 alert("차단이 해제되었습니다.");
             }
         } catch (error) {
@@ -237,10 +242,20 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
                 setProfile((prevProfile) => ({
                     ...prevProfile,
-                    followerStatus: 'ACCEPT',
                     followerCount: prevProfile.followerCount + 1,
-                    followerId: data.followerId,
                 }));
+
+                setFollowees(prevFollowees =>
+                    prevFollowees.map(followee =>
+                        followee.id === data.followId
+                            ? { ...followee, followStatus: 'ACCEPTED' }
+                            : followee
+                    )
+                );
+
+                fetchFollowers();
+                fetchFollowRequests();
+
                 alert("팔로우 요청을 보냈습니다.");
             } else {
                 const errorData = await response.json();
@@ -266,10 +281,15 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                 // 언팔로우
                 setProfile((prevProfile) => ({
                     ...prevProfile,
-                    followerStatus: 'REQUEST',
                     followerCount: prevProfile.followerCount - 1,
-                    followerId: null,
                 }));
+
+                setFollowers((prevFollowers) =>
+                    prevFollowers.filter((follower) => follower.followId !== followId)
+                );
+
+                fetchFollowees();
+                fetchFollowRequests();
                 alert("언팔로우 되었습니다.");
             } else {
                 const errorData = await response.json();
@@ -284,31 +304,37 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
     const handleBlockUser = async () => {
         if (!profile || !profile.memberId) {
-          return;
+            return;
         }
-      
+
         try {
-          const response = await fetch(`http://localhost:8080/api/v1/blocks/${profile.memberId}`, {
-            method: "POST",
-            headers: headers,
-          });
-      
-          if (response.ok) {
-            alert("차단 목록에 추가했습니다.");
-            navigate("/StyleMain");
-          } else {
-            const errorText = await response.text();
-            alert(`차단 실패: ${errorText}`);
-          }
+            const response = await fetch(`http://localhost:8080/api/v1/blocks/${profile.memberId}`, {
+                method: "POST",
+                headers: headers,
+            });
+
+            if (response.ok) {
+                alert("차단 목록에 추가했습니다.");
+                navigate("/StyleMain");
+            } else {
+                const errorText = await response.text();
+                alert(`차단 실패: ${errorText}`);
+            }
         } catch (error) {
-          console.error("Error blocking user:", error);
-          alert("차단 처리 중 오류가 발생했습니다.");
+            console.error("Error blocking user:", error);
+            alert("차단 처리 중 오류가 발생했습니다.");
         }
-      };
-      
+    };
+
 
     const openPage = (pageName) => setActivePage(pageName);
 
+    const handleNavigate = (memberId) => {
+        setIsModalOpen(false);
+
+        navigate(`/Styleprofile?memberId=${memberId}`);
+        window.location.reload();
+    }
 
     return (
         <div className="Styleprofile_profile">
@@ -364,7 +390,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
                                 {/* 페이지 내용 */}
                                 <div id="page1" className={`page ${activePage === 'page1' ? 'active' : ''}`}>
-                                    {/* Page 2 내용 */}
+                                    {/* Page 1 내용 */}
                                     {isLoading ? (
                                         <div>로딩 중...</div>
                                     ) : (
@@ -375,17 +401,20 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                                     {followees.map((followee, index) => (
                                                         <div key={index} className="SearchProfile_feed_user">
                                                             <div className="SearchProfile_user_img">
-                                                                <img src="https://fakeimg.pl/60x60/" alt="Profile" />
+                                                                <img src={followee.memberProfileImageUrl ? `/uploads/${followee.memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")}` : "https://fakeimg.pl/60x60/"} alt="Profile" />
                                                             </div>
                                                             <div className="SearchProfile_user_information">
                                                                 <a href="#">
                                                                     <div className="SearchProfile_user_id">{followee.memberNickname}</div>
-                                                                    <div className="SearchProfile_user_message">프로필 검색시 필요</div>
+                                                                    <div className="SearchProfile_user_message">{followee.introduction ? followee.introduction : "소개글이 없습니다."}</div>
                                                                 </a>
                                                             </div>
                                                             <div className="SearchProfile_btn">
+                                                                <button className="SearchProfile_follow_btn" style={{ fontSize: "10px" }} onClick={() => handleNavigate(followee.memberId)}>
+                                                                    프로필 이동
+                                                                </button>
                                                                 {followee.followStatus === "REQUEST" && profile.follow === "Me" && (
-                                                                    <button className="SearchProfile_follow_btn" onClick={() => handleFollow(followee.memberId)}>
+                                                                    <button className="SearchProfile_follow_btn" style={{ fontSize: "10px" }} onClick={() => handleFollow(followee.memberId)}>
                                                                         팔로우
                                                                     </button>
                                                                 )}
@@ -409,18 +438,21 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                                     {followers.map((follower, index) => (
                                                         <div key={index} className="SearchProfile_feed_user">
                                                             <div className="SearchProfile_user_img">
-                                                                <img src="https://fakeimg.pl/60x60/" alt="Profile" />
+                                                                <img src={follower.memberProfileImageUrl ? `/uploads/${follower.memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")}` : "https://fakeimg.pl/60x60/"} alt="Profile" />
                                                             </div>
                                                             <div className="SearchProfile_user_information">
                                                                 <a href="#">
                                                                     <div className="SearchProfile_user_id">{follower.memberNickname}</div>
-                                                                    <div className="SearchProfile_user_message">프로필 검색시 필요</div>
+                                                                    <div className="SearchProfile_user_message">{follower.introduction ? follower.introduction : "소개글이 없습니다."}</div>
                                                                 </a>
                                                             </div>
                                                             <div className="SearchProfile_btn">
+                                                                <button className="SearchProfile_follow_btn" style={{ fontSize: "10px" }} onClick={() => handleNavigate(follower.memberId)}>
+                                                                    프로필 이동
+                                                                </button>
                                                                 {/* 이미 맞팔로우된 사람은 버튼이 아예 표시되지 않음 */}
                                                                 {profile.follow === "Me" && (
-                                                                    <button className="SearchProfile_follow_btn" onClick={() => handleUnfollow(follower.followId)}>언팔로우</button>
+                                                                    <button className="SearchProfile_follow_btn" style={{ fontSize: "10px" }} onClick={() => handleUnfollow(follower.followId)}>언팔로우</button>
                                                                 )}
                                                             </div>
                                                         </div>
@@ -437,12 +469,12 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                             {blockList.map((block, index) => (
                                                 <div key={index} className="SearchProfile_feed_user">
                                                     <div className="SearchProfile_user_img">
-                                                        <img src="https://fakeimg.pl/60x60/" alt="" />
+                                                        <img src={block.memberProfileImageUrl ? `/uploads/${block.memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")}` : "https://fakeimg.pl/60x60/"} alt="Profile" />
                                                     </div>
                                                     <div className="SearchProfile_user_information">
                                                         <a href="#">
                                                             <div className="SearchProfile_user_id">{block.blockMemberNickname}</div>
-                                                            <div className="SearchProfile_user_message">차단된 사용자</div>
+                                                            <div className="SearchProfile_user_message">{block.blockMemberIntroduction ? block.blockMemberIntroduction : "소개글이 없습니다."}</div>
                                                         </a>
                                                     </div>
                                                     <div className="SearchProfile_btn">
@@ -462,13 +494,13 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                                             {followRequests.map((request, index) => (
                                                 <div key={index} className="SearchProfile_feed_user">
                                                     <div className="SearchProfile_user_img">
-                                                        <img src="https://fakeimg.pl/60x60/" alt="Profile" />
+                                                        <img src={request.memberProfileImageUrl ? `/uploads/${request.memberProfileImageUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")}` : "https://fakeimg.pl/60x60/"} alt="Profile" />
                                                     </div>
                                                     <div className="SearchProfile_user_information">
                                                         <a href="#">
                                                             <div className="SearchProfile_user_id">{request.memberNickname}</div>
                                                             <div className="SearchProfile_user_message">
-                                                                {request.introduction || "소개 정보 없음"}
+                                                                {request.introduction ? request.introduction : "소개글이 없습니다."}
                                                             </div>
                                                         </a>
                                                     </div>
