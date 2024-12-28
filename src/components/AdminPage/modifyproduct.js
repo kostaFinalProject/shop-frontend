@@ -217,10 +217,10 @@ const Modifyproduct = () => {
   };
 
   return (
-    <section className="Registproduct_section">
-      <div className="Registproduct_info">
+    <section className="Modityproduct_section">
+      <div className="Modityproduct_info">
         <div
-          className="Registproduct_content-name"
+          className="Modityproduct_content-name"
           style={{ marginBottom: 7, fontSize: 20 }}
         >
           상품수정
@@ -228,9 +228,9 @@ const Modifyproduct = () => {
         <hr />
         <form id="createItemForm" action="" method="post" onSubmit={handleCreateItemSubmit}>
           {/* 카테고리 선택 */}
-          <div className="Registproduct_categoryselect">
-            <div className="Registproduct_mainselect">
-              <div className="Registproduct_category">상위 카테고리</div>
+          <div className="Modityproduct_categoryselect">
+            <div className="Modityproduct_mainselect">
+              <div className="Modityproduct_category">상위 카테고리</div>
               <div>
                 <select
                   id="maincategory"
@@ -247,8 +247,8 @@ const Modifyproduct = () => {
                 </select>
               </div>
             </div>
-            <div className="Registproduct_subselect">
-              <div className="Registproduct_category">하위 카테고리</div>
+            <div className="Modityproduct_subselect">
+              <div className="Modityproduct_category">하위 카테고리</div>
               <div>
                 <select id="subcategory" name="subcategory" required disabled={!selectedCategory}>
                   {selectedCategory && subCategories[selectedCategory]
@@ -263,7 +263,7 @@ const Modifyproduct = () => {
             </div>
           </div>
           {/* 상품 정보 입력 */}
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label htmlFor="name">상품명</label>
             <input
               type="text"
@@ -274,7 +274,7 @@ const Modifyproduct = () => {
               required
             />
           </div>
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label htmlFor="price">가격</label>
             <input
               type="number"
@@ -285,7 +285,7 @@ const Modifyproduct = () => {
               required
             />
           </div>
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label htmlFor="manufacturer">제조사</label>
             <input
               type="text"
@@ -296,7 +296,7 @@ const Modifyproduct = () => {
               required
             />
           </div>
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label htmlFor="seller">판매자</label>
             <input
               type="text"
@@ -309,7 +309,7 @@ const Modifyproduct = () => {
           </div>
 
           {/* 사이즈별 재고 입력 */}
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label>수량 (사이즈별)</label>
             {stockQuantities.map((stock, index) => (
               <div key={stock.size} className="size-group">
@@ -334,9 +334,9 @@ const Modifyproduct = () => {
           </div>
 
           {/* 이미지 업로드 */}
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label>제품이미지 등록</label>
-            <ul className="Registproduct_image-list" id="imageList">
+            <ul className="Modityproduct_image-list" id="imageList">
               {imageList.map((item, index) => (
                 <li key={index}>
                   {index > 0 && (
@@ -358,14 +358,14 @@ const Modifyproduct = () => {
             </ul>
             <button
               type="button"
-              className="Registproduct_add-image-btn"
+              className="Modityproduct_add-image-btn"
               onClick={addImageInput}
             >
               + 이미지 추가
             </button>
             <button
               type="button"
-              className="Registproduct_remove-image-btn"
+              className="Modityproduct_remove-image-btn"
               onClick={removeCheckedImages}
               disabled={imageList.length <= 1}
             >
@@ -374,7 +374,7 @@ const Modifyproduct = () => {
           </div>
 
           {/* 상세 이미지 업로드 */}
-          <div className="Registproduct_form-group">
+          <div className="Modityproduct_form-group">
             <label>상세이미지 등록</label>
             <input
               type="file"
@@ -386,7 +386,7 @@ const Modifyproduct = () => {
           </div>
 
           {/* 제출 버튼 */}
-          <button type="submit">수정하기</button>
+          <button type="submit" style={{marginBottom: "20px"}}>수정하기</button>
         </form>
       </div>
     </section>

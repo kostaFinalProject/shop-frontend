@@ -1,4 +1,4 @@
-.Registproduct_section {
+.Modityproduct_section {
   width: 1280px;
   display: flex;
   margin: 0 auto;
@@ -8,11 +8,11 @@
 
 }
 
-.Registproduct_info{
+.Modityproduct_info{
   width: 1024px;
   margin: 64px 10px 0 0;
 }
-.Registproduct_content-name {
+.Modityproduct_content-name {
   color: rgb(24, 26, 28);
   height: 44px;
   letter-spacing: -0.4px;
@@ -23,29 +23,29 @@
   align-items: center;
 }
 
-.Registproduct_section hr {
+.Modityproduct_section hr {
   border-color: rgb(231, 231, 231, 0.3);
   background: rgb(231, 231, 231, 0.3);
   height: 1px;
 }
 
 
-.Registproduct_section h2 {
+.Modityproduct_section h2 {
   color: #333;
 }
 
-.Registproduct_categoryselect{
+.Modityproduct_categoryselect{
   display: flex;
 }
 
-.Registproduct_mainselect,
-.Registproduct_subselect{
+.Modityproduct_mainselect,
+.Modityproduct_subselect{
 width: 412px;
 }
 
 
 
-.Registproduct_section select{
+.Modityproduct_section select{
   width: 220px;
   padding: 8px;
   border: 1px solid #ccc;
@@ -54,20 +54,20 @@ width: 412px;
   margin: 3px 0 10px 0;
   text-align:left;
 }
-.Registproduct_category{
+.Modityproduct_category{
   margin-top: 10px;
   font-weight: bold;
   margin-bottom: 7px;
 }
 
-.Registproduct_form-group label {
+.Modityproduct_form-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.Registproduct_form-group input[type="text"],
-.Registproduct_form-group input[type="number"] {
+.Modityproduct_form-group input[type="text"],
+.Modityproduct_form-group input[type="number"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -76,13 +76,13 @@ width: 412px;
   margin-bottom: 10px;
 }
 
-.Registproduct_image-list {
+.Modityproduct_image-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.Registproduct_image-list li {
+.Modityproduct_image-list li {
   background-color: #fff;
   border: 1px solid #ccc;
   padding: 10px;
@@ -93,12 +93,12 @@ width: 412px;
   justify-content: space-between;
 }
 
-.Registproduct_image-list li input[type="file"] {
+.Modityproduct_image-list li input[type="file"] {
   flex-grow: 1;
   margin-right: 10px;
 }
 
-.Registproduct_rep-img-label {
+.Modityproduct_rep-img-label {
   font-weight: bold;
   color: green;
   font-size: 12px;
@@ -108,8 +108,8 @@ width: 412px;
   margin-right: 10px;
 }
 
-.Registproduct_add-image-btn,
-.Registproduct_remove-image-btn {
+.Modityproduct_add-image-btn,
+.Modityproduct_remove-image-btn {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -120,22 +120,22 @@ width: 412px;
   margin-right: 5px;
 }
 
-.aRegistproduct_dd-image-btn:hover{
+.aModityproduct_dd-image-btn:hover{
   background-color: #47C83E;
 }
 
 
-.Registproduct_remove-image-btn {
+.Modityproduct_remove-image-btn {
   background-color: red;
 }
 
-.Registproduct_remove-image-btn:disabled {
+.Modityproduct_remove-image-btn:disabled {
   background-color: red; /* 여전히 빨간색을 유지 */
   cursor: not-allowed;  /* 사용 금지 상태 커서 */
   opacity: 0.6;         /* 비활성화 상태 표시 */
 }
 
-.Registproduct_section button[type="submit"] {
+.Modityproduct_section button[type="submit"] {
   background-color: #008CBA;
   color: white;
   padding: 10px 20px;
@@ -145,11 +145,11 @@ width: 412px;
   margin-top: 10px
 }
 
-.Registproduct_section button[type="submit"]:hover {
+.Modityproduct_section button[type="submit"]:hover {
   background-color: #007bb5;
 }
 
-.Registproduct_section .error-message {
+.Modityproduct_section .error-message {
   color: red;
   font-size: 14px;
 }
