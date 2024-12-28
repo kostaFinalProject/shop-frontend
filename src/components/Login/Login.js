@@ -47,6 +47,7 @@ const Login = ({ setIsLoggedIn }) => {
         localStorage.setItem("refreshToken", data.refreshToken);
         setIsLoggedIn(true);
         navigate("/");
+        window.location.reload();
       } else {
         alert("로그인 실패: 응답 데이터에 문제가 있습니다.");
       }
