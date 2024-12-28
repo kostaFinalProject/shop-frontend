@@ -279,9 +279,9 @@ const MyPageOrder = () => {
               </div>
             </div>
           ))}
-          <div ref={loader} className="loader">
+          {/* <div ref={loader} className="loader">
             {hasMore ? "Loading..." : "더 이상 내역이 없습니다."}
-          </div>
+          </div> */}
         </section>
       </div>
     </div>
