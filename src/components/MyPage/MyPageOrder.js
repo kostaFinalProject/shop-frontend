@@ -237,7 +237,7 @@ const MyPageOrder = () => {
                 </div>
                 <div className="prdBox">
                   {order.orderItems.map((item, itemIndex) => (
-                    <div key={itemIndex} className="itemCard">
+                    <div key={itemIndex} className="itemCard" style={{ display: "flex", marginBottom: "20px"}}>
                       <div className="thumbnail">
                         <a href="">
                           <img
