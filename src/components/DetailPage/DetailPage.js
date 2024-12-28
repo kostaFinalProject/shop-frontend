@@ -273,7 +273,7 @@ const DetailPage = () => {
                 </ul>
             </div>
         ) : (
-            <div>관련된 상품이 없습니다.</div>
+            <div style={{height: "50px"}}>관련된 스타일이 없습니다.</div>
         );
     };
 
@@ -344,7 +344,7 @@ const DetailPage = () => {
 
                         {/* 버튼 메뉴 */}
                         <div className="DetailPage_sub_button_menu">
-                            <button className="DetailPage_like_button"><a href="#">❤️</a></button>
+                            {/* <button className="DetailPage_like_button"><a href="#">❤️</a></button> */}
                             <button
                                 className="DetailPage_basket_button"
                                 onClick={handleAddToCart}>
@@ -379,19 +379,18 @@ const DetailPage = () => {
                     </div>
                 </div>
 
-                {/* 관리자 권한 버튼 */}
-                {isAdmin && (
-                    <div className="DetailPage_admin_buttons">
-                        <button className="DetailPage_edit_button">수정</button>
-                        <button className="DetailPage_delete_button">삭제</button>
-                    </div>
-                )}
-
-
                 {/* 관련 스타일 */}
                 <div className="DetailPage_Join_Style" id="DetailPage_Join_Style">
                     {renderRelatedArticles()}
                 </div>
+
+                {/* 관리자 권한 버튼 */}
+                {isAdmin && (
+                    <div className="DetailPage_admin_buttons" style={{ textAlign: "right", marginBottom: "20px" }}>
+                        <button className="DetailPage_edit_button">수정</button>
+                        <button className="DetailPage_delete_button">삭제</button>
+                    </div>
+                )}
 
                 <ScrollUp />
             </div>
