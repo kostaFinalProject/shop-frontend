@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './ProfileDiv.css';
 
@@ -13,6 +14,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
     const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
     const [error, setError] = useState(null);  // 에러 상태
+    const navigate = useNavigate();
 
     if (!profile) {
         return <div>Loading...</div>;
@@ -280,6 +282,30 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
     };
 
 
+    const handleBlockUser = async () => {
+        if (!profile || !profile.memberId) {
+          return;
+        }
+      
+        try {
+          const response = await fetch(`http://localhost:8080/api/v1/blocks/${profile.memberId}`, {
+            method: "POST",
+            headers: headers,
+          });
+      
+          if (response.ok) {
+            alert("차단 목록에 추가했습니다.");
+            navigate("/StyleMain");
+          } else {
+            const errorText = await response.text();
+            alert(`차단 실패: ${errorText}`);
+          }
+        } catch (error) {
+          console.error("Error blocking user:", error);
+          alert("차단 처리 중 오류가 발생했습니다.");
+        }
+      };
+      
 
     const openPage = (pageName) => setActivePage(pageName);
 
@@ -309,7 +335,8 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                     </button>
                     <button
                         className="Styleprofile_follow_btn"
-                        hidden={profile.follow === "Me"}>
+                        hidden={profile.follow === "Me"}
+                        onClick={handleBlockUser}>
                         차단
                     </button>
                 </div>
