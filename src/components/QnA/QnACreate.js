@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./QnACreate.css";
-import { Link } from "react-router-dom";
 
-const QnACreate = () => {
+const QnAcreate = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const itemData = location.state?.itemData; // 전달된 itemData 가져오기
 
     const [title, setTitle] = useState('');
     const [comment, setComment] = useState('');
+
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
 
     if (!itemData) {
         return <div>상품 정보가 없습니다.</div>; // itemData가 없으면 에러 메시지 출력
@@ -18,6 +20,18 @@ const QnACreate = () => {
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
 
+        // 비회원 체크: 로그인 토큰이 없으면 바로 리다이렉트
+        if (!accessToken || !refreshToken) {
+            alert("로그인이 필요한 서비스입니다.");
+            navigate("/login");
+            return;  // 로그인이 안 되어 있으면 더 이상 진행하지 않음
+        }
+
+        if (!accessToken || !refreshToken) {
+            alert("로그인이 필요한 서비스입니다.");
+            navigate("/login");
+        }
+
         if (!title.trim() || !comment.trim()) {
             alert("제목과 질문 내용을 모두 입력해주세요.");
             return;
@@ -25,15 +39,17 @@ const QnACreate = () => {
 
         try {
             const payload = {
-                itemId: itemData.id, // itemData에서 itemId 가져오기
-                title,
+                itemId: itemData.itemId, // itemData에서 itemId 가져오기
+                title: title,
                 content: comment,
             };
 
-            const response = await fetch('/api/v1/qna', {
+            const response = await fetch('http://localhost:8080/api/v1/qna', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: accessToken,
+                    'Refresh-Token': refreshToken,
                 },
                 body: JSON.stringify(payload),
             });
@@ -51,70 +67,52 @@ const QnACreate = () => {
     };
 
     return (
-        <div className="QnACreate_container">
+        <div className="qna-container">
             <h2>Q&A 상품문의</h2>
-            {/* -------------상품 이미지 및 상품명 , 가격 -------------- */}
-            <div className="QnACreate_product_info">
-                <Link to={`/DetailPage?itemId=${itemData.itemId}`} className="QnACreate_product_link">
-                    <img
-                        src={`/uploads/${itemData.imageUrls[0]}`} // 첫 번째 이미지 사용
-                        alt="Product"
-                        className="QnACreate_product_image"
-                    />
-                </Link>
-                <div className="QnACreate_product_details">
-                    <Link to={`/DetailPage?itemId==${itemData.itemId}`} className="QnACreate_product_link">
-                        <h3 className="_product_title">{itemData.name}</h3>
-                    </Link>
-                    <Link to={`/DetailPage?itemId==${itemData.itemId}`} className="QnACreate_product_link">
-                        <p className="QnACreate_product_price">{itemData.price}원</p>
-                    </Link>
+
+            <div className="product-info">
+                <img
+                    src={`/uploads/${itemData.imageUrls[0]}`} // 첫 번째 이미지 사용
+                    alt="Product"
+                    className="product-image"
+                />
+                <div className="product-details">
+                    <h3 className="product-title">{itemData.name}</h3>
+                    <p className="product-price">{itemData.price}원</p>
                 </div>
             </div>
 
-            {/* 질문 */}
-            <div className="QnACreate_comment_section">
-                <form className="QnACreate_comment_form" onSubmit={handleCommentSubmit}>
-                    {/* 제목 */}
-                    <div className="QnACreate_tilte_box">
-                        <div className="QnACreate_title">제목</div>
-                        <div className="QnACreate_form_group">
-                            <input
-                                id="title"
-                                type="text"
-                                className="QnACreate_comment_input"
-                                placeholder="제목을 입력하세요"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
-                        </div>
+            <div className="comment-section">
+                <form className="comment-form" onSubmit={handleCommentSubmit}>
+                    <div className="form-group">
+                        <input
+                            id="title"
+                            type="text"
+                            className="comment-input"
+                            placeholder="제목을 입력하세요"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
                     </div>
-
-                    {/* 내용 */}
-                    <div className="QnACreate_textarea_box">
-                        <textarea
-                            className="QnACreate_comment_textarea"
-                            placeholder="질문 내용을 입력하세요"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                        ></textarea>
-
-                    </div>
-
-                    {/* 버튼 */}
-                    <div className="QnACreate_button_container">
+                    <textarea
+                        className="comment-textarea"
+                        placeholder="질문 내용을 입력하세요"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                    <div className="button-container">
                         <button
                             type="button"
-                            className="QnACreate_list_button"
+                            className="list-button"
                             onClick={() => navigate('/QnA')}
                         >
                             목록
                         </button>
-                        <div className="QnACreate_right_buttons">
-                            <button type="submit" className="QnACreate_submit_button">등록</button>
+                        <div className="right-buttons">
+                            <button type="submit" className="submit-button">등록</button>
                             <button
                                 type="button"
-                                className="QnACreate_cancel_button"
+                                className="cancel-button"
                                 onClick={() => navigate(-1)}
                             >
                                 취소
@@ -127,4 +125,4 @@ const QnACreate = () => {
     );
 };
 
-export default QnACreate;
+export default QnAcreate;

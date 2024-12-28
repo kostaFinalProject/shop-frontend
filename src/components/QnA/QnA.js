@@ -1,54 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./QnA.css";
 import Pagination from "../Pagination/Pagination";
 
 const QnA = () => {
-  // 더미 데이터 준비
-  const dummyPosts = Array.from({ length: 45 }, (_, index) => ({
-    id: index + 1,
-    productInfo: "https://placehold.co/70x70",
-    title: `글 제목 ${index + 1}`,
-    writer: `작성자 ${index + 1}`,
-    date: `2024-12-${String(index + 1).padStart(2, "0")}`,
-  }));
-
+  const navigate = useNavigate();
+  const location = useLocation();
   // 상태 관리
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchDate, setSearchDate] = useState("");
-  const [searchKey, setSearchKey] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+  const [qnaPosts, setQnaPosts] = useState([]); // QnA 게시글 저장
+  const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
+
   const postsPerPage = 10; // 한 페이지당 보여줄 글 수
 
-  // 검색 조건에 맞는 게시글 필터링
-  const filteredPosts = dummyPosts.filter((post) => {
-    const matchDate =
-      searchDate === "" || post.date.includes(searchDate); // 날짜 필터링
-    const matchKey =
-      searchKey === "" ||
-      (searchKey === "subject" && post.title.includes(searchValue)) ||
-      (searchKey === "content" && post.title.includes(searchValue)) ||
-      (searchKey === "writer_name" && post.writer.includes(searchValue)) ||
-      (searchKey === "member_id" && post.writer.includes(searchValue)) ||
-      (searchKey === "nick_name" && post.writer.includes(searchValue)) ||
-      (searchKey === "product" && post.productInfo.includes(searchValue)); // 제목, 내용 등 필터링
-    return matchDate && matchKey;
-  });
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
 
-  // 현재 페이지의 데이터 계산
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+  // API 호출 (QnA 데이터 가져오기)
+  useEffect(() => {
+    const fetchQnaPosts = async () => {
+      try {
+        // 헤더 추가 (JWT 인증)
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (accessToken && refreshToken) {
+          headers["Authorization"] = accessToken;
+          headers["Refresh-Token"] = refreshToken;
+        }
+
+        // API 호출
+        const response = await fetch(
+          `http://localhost:8080/api/v1/qna?page=${currentPage - 1}&size=${postsPerPage}`,
+          { headers }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // 이미지 경로 포맷팅
+        const formattedPosts = data.content.map(post => ({
+          ...post,
+          repImgYn: post.repImgYn.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", ""),
+        }));
+
+        setQnaPosts(formattedPosts);  // 데이터 저장
+        setTotalPages(data.totalPages); // 전체 페이지 수 저장
+
+      } catch (error) {
+        console.error("Error fetching QnA posts:", error);
+      }
+    };
+
+    // URL 쿼리 매개변수 업데이트
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set("page", currentPage);
+    navigate(`${location.pathname}?${queryParams.toString()}`, { replace: true });
+
+    fetchQnaPosts();
+  }, [currentPage]); // currentPage가 변경될 때마다 API 호출
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // ---------------notice form-------------
-  const handleSubmit = (e) => {
-    e.preventDefault(); // 폼 기본 동작 방지
-    console.log("검색 조건:", { searchDate, searchKey, searchValue });
+  const handleTitleClick = async (questionId) => {
+    navigate(`/QnAdetail?questionId=${questionId}`);
   };
+
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${year}. ${month}. ${day}. ${hours}:${minutes}`;
+};
 
   return (
     <>
@@ -57,7 +91,7 @@ const QnA = () => {
           <h2>Q&A</h2>
         </div>
 
-        {/* --------------notice_board------------------  */}
+        {/* QnA 게시글 목록 */}
         <div className="QnA_notice_board">
           <table border="1">
             <colgroup>
@@ -65,6 +99,7 @@ const QnA = () => {
               <col style={{ width: "100px" }} />
               <col style={{ width: "910px" }} />
               <col style={{ width: "150px" }} />
+              <col style={{ width: "120px" }} />
               <col style={{ width: "120px" }} />
             </colgroup>
             <thead className="QnA_board_thead">
@@ -74,78 +109,46 @@ const QnA = () => {
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
+                <th scope="col">상태</th>
               </tr>
             </thead>
             <tbody className="QnA_board_tbody">
-              {currentPosts.map((post) => (
-                <tr key={post.id}>
-                  <td>{post.id}</td>
+              {qnaPosts.map((post) => (
+                <tr key={post.questionId}>
+                  <td>{post.questionId}</td>
                   <td>
                     <a href="#">
-                      <img src={post.productInfo} alt={`Product ${post.id}`} />
+                      <img
+                        src={`/uploads/${post.repImgYn}`}
+                        alt={`Product ${post.questionId}`}
+                        style={{ width: "90px", height: "80px" }}
+                      />
                     </a>
                   </td>
                   <td className="QnA_tbody_title">
-                    <a href="#">
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault(); // 기본 동작 방지
+                        handleTitleClick(post.questionId);
+                      }}
+                    >
                       <p>{post.title}</p>
                     </a>
                   </td>
-                  <td>{post.writer}</td>
-                  <td>{post.date}</td>
+                  <td>{post.memberNickname}</td>
+                  <td style={{ fontSize: "15px" }}>{formatDate(post.createAt)}</td>
+                  <td>{post.questionStatus === "PROGRESS" ? "답변 중" : "답변 완료"}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        {/* --------------------Notice from-------------------- */}
-        <div className="QnA_notice_form">
-          <form onSubmit={handleSubmit}>
-            <select
-              className="QnA_selArray"
-              id="search_date"
-              name="search_date"
-              value={searchDate}
-              onChange={(e) => setSearchDate(e.target.value)}
-            >
-              <option value="week">일주일</option>
-              <option value="month">한달</option>
-              <option value="month3">세달</option>
-              <option value="all">전체</option>
-            </select>
-            <select
-              className="QnA_selArray"
-              id="search_key"
-              name="search_key"
-              value={searchKey}
-              onChange={(e) => setSearchKey(e.target.value)}
-            >
-              <option value="subject">제목</option>
-              <option value="content">내용</option>
-              <option value="writer_name">글쓴이</option>
-              <option value="member_id">아이디</option>
-              <option value="nick_name">별명</option>
-              <option value="product">상품정보</option>
-            </select>
-            <input
-              id="search"
-              name="search"
-              className="QnA_notice_form_input"
-              placeholder="검색어를 입력하세요"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              type="text"
-            />
-            <button type="submit" className="QnA_btnNormal">
-              찾기
-            </button>
-          </form>
-        </div>
-
-        {/* --------------------------페이징처리-------------------- */}
+        {/* 페이징처리 */}
         <div className="QnA_paging">
           <Pagination
-            totalPages={Math.ceil(filteredPosts.length / postsPerPage)}
+            totalPages={totalPages}
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />

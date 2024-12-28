@@ -1,146 +1,157 @@
 /* QnA.css */
 .QnAdetail_qna-container {
-    width: 80%;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
+  width: 80%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center; /* 중앙 정렬 */
+  margin-bottom: 40px; /* 아래로 40px 마진 */
+}
+
+.QnAdetail_product-info {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.QnAdetail_product-image {
+  width: 125px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.QnAdetail_product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.QnAdetail_product-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.QnAdetail_product-price {
+  font-size: 16px;
+  color: #555;
+}
+
+.QnAdetail_qna-section {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0; /* 위아래 20px, 좌우 0 */
+  margin: 20px 0;  /* 위아래 20px, 좌우 0 */
+  text-align: center; /* 텍스트 및 인라인 요소를 중앙 정렬 */
+}
+
+.QnAdetail_qna-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.QnAdetail_qna-user {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.QnAdetail_qna-content {
+  font-size: 13px;
+  padding: 40px;
+  color: #333;
+}
+
+.QnAdetail_qna-list-button {
+  float: right;
+  margin-top: 10px; /* 버튼과 텍스트 사이 간격 */
+  padding: 8px 16px; /* 버튼 내부 여백 */
+  background-color: white; /* 버튼 배경색을 흰색으로 변경 */
+  color: black; /* 글자색을 검은색으로 설정 */
+  border: 1px solid black; /* 테두리 추가 (파란색 테두리) */
+  border-radius: 4px; /* 버튼 모서리 둥글게 */
+  cursor: pointer; /* 커서 모양 변경 */
+  font-size: 14px; /* 글자 크기 */
   }
 
-  h2 {
-    text-align: center; /* 중앙 정렬 */
-    margin-bottom: 40px; /* 아래로 40px 마진 */
-  }
-  
-  .QnAdetail_product-info {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  
-  .QnAdetail_product-image {
-    width: 125px;
-    height: 100px;
-    margin-right: 20px;
-  }
-  
-  .QnAdetail_product-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .QnAdetail_product-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .QnAdetail_product-price {
-    font-size: 16px;
-    color: #555;
-  }
-  
-  .QnAdetail_qna-section {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 20px 0; /* 위아래 20px, 좌우 0 */
-    margin: 20px 0;  /* 위아래 20px, 좌우 0 */
-    text-align: center; /* 텍스트 및 인라인 요소를 중앙 정렬 */
-  }
-  
-  .QnAdetail_qna-title {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .QnAdetail_qna-user {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 10px;
-  }
-  
-  .QnAdetail_qna-content {
-    font-size: 13px;
-    padding: 40px;
-    color: #333;
+  .QnAdetail_qna-list-button:hover {
+      background-color: #f0f0f0; /* 호버 시 배경색을 연한 회색으로 변경 */
+      border-color: black; /* 호버 시 테두리 색을 더 진한 파란색으로 변경 */
   }
 
-  .QnAdetail_qna-list-button {
-    float: right;
-    margin-top: 10px; /* 버튼과 텍스트 사이 간격 */
-    padding: 8px 16px; /* 버튼 내부 여백 */
-    background-color: white; /* 버튼 배경색을 흰색으로 변경 */
-    color: black; /* 글자색을 검은색으로 설정 */
-    border: 1px solid black; /* 테두리 추가 (파란색 테두리) */
-    border-radius: 4px; /* 버튼 모서리 둥글게 */
-    cursor: pointer; /* 커서 모양 변경 */
-    font-size: 14px; /* 글자 크기 */
-    }
+.QnAdetail_comment-section {
+  margin: 50px 0px;
+}
 
-    .QnAdetail_qna-list-button:hover {
-        background-color: #f0f0f0; /* 호버 시 배경색을 연한 회색으로 변경 */
-        border-color: black; /* 호버 시 테두리 색을 더 진한 파란색으로 변경 */
-    }
-  
-  .QnAdetail_comment-section {
-    margin: 50px 0px;
-  }
+.QnAdetail_comment-display {
+  font-size:13px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding-top: 10px; /* 위쪽 패딩 없애기 */
+  padding-bottom: 50px; /* 아래쪽 패딩 50px */
+  margin-top: 0;  /* 위쪽 margin 없애기 */
+  margin-bottom: 20px;  /* 아래쪽 margin 20px */
+  text-align: left; /* 텍스트 및 인라인 요소를 중앙 정렬 */
+}
 
-  .QnAdetail_comment-display {
-    font-size:13px;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    padding: 50px 0; /* 위아래 20px, 좌우 0 */
-    margin: 20px 0;  /* 위아래 20px, 좌우 0 */
-    text-align: left; /* 텍스트 및 인라인 요소를 중앙 정렬 */
-  }
-  
-  .QnAdetail_comment-title {
-    font-size: 16px;
-    margin-bottom: 15px;
-  }
-  
-  .QnAdetail_comment-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .QnAdetail_form-group {
-    margin-bottom: 15px;
-  }
-  
-  .QnAdetail_form-group label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .QnAdetail_form-group input {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .QnAdetail_comment-textarea {
-    width: 100%;
-    height: 100px;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 15px;
-  }
-  
-  .QnAdetail_submit-button {
-    padding: 10px 20px;
-    font-size: 14px;
-    color: #fff;
-    background-color: #000;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .QnAdetail_submit-button:hover {
-    background-color: #555;
-  }
+.QnAdetail_comment-title {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.QnAdetail_comment-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.QnAdetail_form-group {
+  margin-bottom: 15px;
+}
+
+.QnAdetail_form-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.QnAdetail_form-group input {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.QnAdetail_comment-textarea {
+  width: 100%;
+  height: 100px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.QnAdetail_submit-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.QnAdetail_submit-button:hover {
+  background-color: #555;
+}
+
+.QnAdetail_loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  font-size: 1.1em;
+  color: #666;
+}

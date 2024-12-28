@@ -366,9 +366,10 @@ const DetailPage = () => {
                         <a href="#DetailPage_Join_Style">SNS</a>
                     </div>
                     <div className="DetailPage_button_Question">
-                        {!isAdmin && (
+                        {/* {!isAdmin && (
                             <button id="review" onClick={handleGoToQnA}>상품 문의</button>
-                        )}
+                        )} */}
+                        <button id="review" onClick={handleGoToQnA}>상품 문의</button>
                     </div>
                 </div>
 

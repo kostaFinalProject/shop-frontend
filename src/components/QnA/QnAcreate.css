@@ -1,123 +1,86 @@
-.QnACreate_container {
-    width: 100%;
-    max-width: 1280px;
+QnA.css
+.qna-container {
+    width: 80%;
     margin: 0 auto;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     font-family: Arial, sans-serif;
   }
 
-  .QnACreate_container h2 {
+  h2 {
     text-align: center; /* 중앙 정렬 */
     margin-bottom: 40px; /* 아래로 40px 마진 */
   }
   
-  .QnACreate_product_info {
-    width: 80%;
-    height: 150px;
-    justify-content: center;
-    align-items: center;
+  .product-info {
     border: 1px solid #ddd;
     display: flex;
-  }
-  /* --------------상품 이미지 및 상품명 , 가격 --------------*/
-  .QnACreate_product_image {
-    width: 150px;
-    height: 150px;
-
-  }
-
-  .QnACreate_product_details {
-    width: 100%;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    
-  }
-  .QnACreate_product_title {
-    font-size: 18px;
-    font-weight: bold;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
   }
   
-  .QnACreate_product_price {
+  .product-image {
+    width: 125px;
+    height: 100px;
+    margin-right: 20px;
+  }
+  
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-price {
     font-size: 16px;
     color: #555;
   }
   
-  /* 질문  */
-  .QnACreate_comment_section {
-    width: 80%;
-    padding-top: 20px;
+  .comment-section {
+    margin: 50px 0px;
   }
-  .QnACreate_comment_form {
+  
+  .comment-form {
     display: flex;
     flex-direction: column;
   }
-  /* 제목 */
-  .QnACreate_tilte_box{
-    width: 100%;
-    height: 50px;
-    display: flex;
-
-  }
-
-  .QnACreate_title{
-    width: 20%;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e7e7e7;
-  }
-
-  .QnACreate_form_group {
-   width: 80%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  
+  .form-group {
+    margin-bottom: 15px;
   }
   
   
-  .QnACreate_form_group input {
+  .form-group input {
     width: 100%;
     padding: 8px;
-    height: 50px;
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-left: 10px;
-  }
-  /* 내용 */
-  .QnACreate_textarea_box{
-    width: 100%;
-    height: 300px;
-    padding-top: 20px;
   }
   
-  .QnACreate_comment_textarea {
-
+  .comment-textarea {
     width: 100%;
-    height: 100%;
-    padding: 10px;
+    height: 100px;
+    padding: 8px;
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    resize: none; 
-
+    margin-bottom: 15px;
   }
   
-  .QnACreate_button_container {
+  .button-container {
     display: flex;
     justify-content: space-between; /* 버튼을 양쪽으로 배치 */
     align-items: center;
-    padding-top: 20px;
+    margin-top: 15px;
 }
 
-.QnACreate_list_button {
-    padding: 10px 30px;
+.list-button {
+    padding: 10px 20px;
     font-size: 14px;
     color: #000;
     background-color: #fff;
@@ -126,17 +89,17 @@
     cursor: pointer;
 }
 
-.QnACreate_list_button:hover {
+.list-button:hover {
     background-color: #f0f0f0; /* 호버 시 배경색 변경 */
 }
 
-.QnACreate_right_buttons {
+.right-buttons {
     display: flex;
     gap: 10px; /* 버튼 간 간격 */
 }
 
-.QnACreate_submit_button {
-    padding: 10px 30px;
+.submit-button {
+    padding: 10px 20px;
     font-size: 14px;
     color: #fff;
     background-color: #000;
@@ -145,12 +108,12 @@
     cursor: pointer;
 }
 
-.QnACreate_submit_button:hover {
+.submit-button:hover {
     background-color: #555;
 }
 
-.QnACreate_cancel_button {
-    padding: 10px 30px;
+.cancel-button {
+    padding: 10px 20px;
     font-size: 14px;
     color: #000;
     background-color: #fff;
@@ -159,6 +122,6 @@
     cursor: pointer;
 }
 
-.QnACreate_cancel_button:hover {
+.cancel-button:hover {
     background-color: #f0f0f0;
 }
