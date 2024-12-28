@@ -328,9 +328,6 @@ const StyleDetail = () => {
                     const updatedContent = [...(prev.content || []), processedData];
                     return { ...prev, content: updatedContent };
                 });
-
-
-                alert("내 관심상품으로 등록되었습니다.");
             } else {
                 alert(`저장 실패: ${data.message || "오류 발생"}`);
             }
@@ -366,7 +363,6 @@ const StyleDetail = () => {
                         ...prevState,
                         content: prevState.content.filter(collection => collection.articleCollectionId !== articleCollectionId)
                     }));
-                    alert("내 관심상품에서 삭제되었습니다.");
                 } else {
                     const errorData = await response.json();
                     alert(`삭제 실패: ${errorData.message || "오류 발생"}`);
@@ -379,7 +375,7 @@ const StyleDetail = () => {
             alert("삭제할 게시글이 존재하지 않습니다.");
         }
     };
-    // 게시글이 이미 내 관심상품에 등록되었는지 확인하는 함수
+
     const isArticleSaved = articleCollections.content.some(
         (collection) => String(collection.articleId) === String(articleId)
     );
@@ -494,7 +490,7 @@ const StyleDetail = () => {
                             onClick={handleDeleteArticle}
                         >
                             <div className="capture-button">
-                                <span className="capture-icon">삭제</span>
+                                <span className="capture-icon">🟦</span>
                             </div>
                         </div>
                     ) : (
@@ -503,7 +499,7 @@ const StyleDetail = () => {
                             onClick={handleSaveArticle}
                         >
                             <div className="capture-button">
-                                <span className="capture-icon">📷</span>
+                                <span className="capture-icon">🔖</span>
                             </div>
                         </div>
                     )}
