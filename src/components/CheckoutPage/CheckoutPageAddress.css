@@ -4,173 +4,117 @@
     margin: 0 auto;
     padding: 0;
 
+    padding-bottom: 20px;
 }
-/* 배송지 전체 폼  */
-.CheckoutPageAddress_body{
+
+.CheckoutPageAddress_Head{
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 10px;
-  gap: 5px;
-
-  font-weight: normal;
-
+  height: 90px;
+  margin-top: 5px;
+}
+.CheckoutPageAddress_Head h3{
+  font-size: 20px;
 }
 
-/* 배송지명 칸-------------------------  */
-.CheckoutPageAddress_Address_Name{
+.CheckoutPageAddress_address_actions {
+  width: 100%;
+  height: 50px;
+  display: flex; 
+}
 
-  display: flex;
+.CheckoutPageAddress_address_actions button {
+  width: calc(33.33% - 2px); 
   height: 40px;
-}
-.CheckoutPageAddress_Address_Name_Title{
-  width: 200px;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-
-}
-.CheckoutPageAddress_Address_Title label {
-  font-size: 18px;
-}
-.CheckoutPageAddress_Address_Name_Body{
-
-  width: 700px;
+  background-color: inherit;
+  border: 1px solid transparent; 
+  font-size: 14px;
+  transition: font-size 0.3s ease, border-color 0.3s ease; 
 }
 
-/* 주문자 성명 칸-------------------------  */
-.CheckoutPageAddress_Buyer_Name{
-
-  display: flex;
-  height: 40px;
-}
-.CheckoutPageAddress_Buyer_Name_Title{
-  width: 200px;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-
-}
-.CheckoutPageAddress_Buyer_Name_Title label {
-  font-size: 18px;
-}
-.CheckoutPageAddress_Buyer_Name_Body{
-
-  width: 700px;
+.CheckoutPageAddress_address_actions button:hover {
+  cursor: pointer;
 }
 
-
-/* 이메일 칸-------------------------  */
-.CheckoutPageAddress_Email{
-
-  display: flex;
-  height: 40px;
-}
-.CheckoutPageAddress_Email_Title{
-  width: 200px;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-
-}
-.CheckoutPageAddress_Email_Title label {
-  font-size: 18px;
-}
-.CheckoutPageAddress_Email_Body{
-
-  width: 330px;
-}
-.CheckoutPageAddress_Email_Body_p {
-  padding: 0 10px 0 10px;
+.CheckoutPageAddress_address_actions button:active {
+  font-size: 16px; 
 }
 
-
-/* 주소 칸-------------------------  */
-
-.CheckoutPageAddress_Address_address_Form{
-  display: flex;
+.CheckoutPageAddress_address_actions button:not(:last-child) {
+  border-right: 1px solid #ccc; 
 }
-.CheckoutPageAddress_Address_address_label{
-  width: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-}
-.CheckoutPageAddress_Address_address_inpuit{
-  width:700px;
 
+.CheckoutPageAddress_address_actions button:focus {
+  font-size: 16px; 
+  border-color: #ccc; 
+  border-radius: 10px;
   
 }
-.CheckoutPageAddress_AddressNumber{
-  width: 200px;
-  height: 40px;
 
-  margin-bottom: 10px;
+/* 등록된 주소  */
+.CheckoutPageAddress_Registered_Add h4{
+  font-size: 16px;
 }
-.CheckoutPageAddress_SearchBtn{
-  width: 120px;
-  height: 43px;
-  margin-left: 10px;
-
-}
-.CheckoutPageAddress_AddressBox{
-  width: 690px;
-  height: 40px;
-  margin-bottom: 10px;
-
-}
-
-/* 일반전화 ---------------------  */
-.CheckoutPageAddress_callNumber{
-  width: 900px;
-  display: flex;
-  font-size: 18px;
-  height: 40px;
-
-}
-.CheckoutPageAddress_callNumber_label{
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-
-}
-.CheckoutPageAddress_callNumber_callbox{
-  width: 225px;
-  margin: 0 10px 0 10px;
-  font-size: 15px;
-}
-.CheckoutPageAddress_callNumber_callbox:nth-last-child(1){
-  margin-right: 0;
-}
-
-
-/* 배송지 기본저장 및 버튼----------------- */
-.CheckoutPageAddress_Save_Btn{
-  width: 900px;
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-}
-.CheckoutPageAddress_Save_Btn_AddressSave{
-  width: 200px;
+.CheckoutPageAddress_Registered_Select{
+  width: 100%;
+  height: 50px;
   font-size: 13px;
-  margin-left: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  border-radius: 10px;
 }
 
-.CheckoutPageAddress_SaveBtn{
-  width: 120px;
-  height: 60px;
+/* 새로운 주소 */
+.CheckoutPageAddress_New_Add h4{
+  font-size: 16px;
+}
+.CheckoutPageAddress_New_Box_01{
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.CheckoutPageAddress_New_input {
+  width: 50%;
+  height: 40px;
+
+}
+.CheckoutPageAddress_New_button {
+  width: 100px;
+  height: 35px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.CheckoutPageAddress_New_button:hover{
+  cursor: pointer;
+}
+.CheckoutPageAddress_New_Box_02{
+  width: 100%;
+  height: 100px;
+  gap: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-right: 20px;
+  flex-direction: column;
+}
+.CheckoutPageAddress_New_TextBox{
+  width: 100%;
+  height: 40px;
+
+}
+
+/* 주소삭제 */
+.CheckoutPageAddress_Delete_Add h4{
+  font-size: 16px;
+}
+.CheckoutPageAddress_Delete_Select{
+  width: 80%;
+  height: 50px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+.CheckoutPageAddress_Delete_Button{
+  width: 50px;
+  height: 35px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.CheckoutPageAddress_Delete_Button:hover{
+  cursor: pointer;
+  background-color: red;
 }

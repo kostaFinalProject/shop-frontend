@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, data } from "react-router-dom";
 import "./MyPageIntro.css";
+import MyPageNavigation from "./MyPageNavigation";
 
 const MyPageIntro = () => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -75,6 +76,8 @@ const MyPageIntro = () => {
       if (response.status === 200) {
         const data = await response.json();
         setCurrentUser(data);
+
+        localStorage.setItem("currentUser", JSON.stringify(data));
       } else {
         setCurrentUser(null);
       }
@@ -127,7 +130,7 @@ const MyPageIntro = () => {
 
   const profileImageUrl = currentUser.memberProfileImageUrl
     ? currentUser.memberProfileImageUrl.replace(
-      "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+      "C:\\Users\\dusrb\\FinalTotalProject\\frontend\\frontend-jhs-Ingu\\frontend-jhs-Ingu\\public\\uploads\\",
       ""
     )
     : "https://fakeimg.pl/150x150/";
@@ -142,62 +145,7 @@ const MyPageIntro = () => {
   return (
     <div className="MyPageIntrocontainer">
       <div id="content" className="-frame">
-        <section className="manuwrap">
-          <h3>마이 페이지</h3>
-          <article className="myshopmain">
-            <h4>나의 쇼핑활동</h4>
-            <ul>
-              <a href="/MyPage/order">
-                <li>주문/배송조회</li>
-              </a>
-              <a href="/MyPage/basket">
-                <li>장바구니</li>
-              </a>
-              <a href="/MyPage/interest">
-                <li>관심상품</li>
-              </a>
-              <a href="/MyPage/resentview">
-                <li>최근 본 상품</li>
-              </a>
-            </ul>
-          </article>
-          <article className="myshopmain">
-            <h4>쇼핑혜택 안내</h4>
-            <ul>
-              <a href="/MyPage/coupon">
-                <li>내 쿠폰정보</li>
-              </a>
-              <a href="/MyPage/mileage">
-                <li>적립금 내역</li>
-              </a>
-            </ul>
-          </article>
-          <article className="myshopmain">
-            <h4>스타일</h4>
-            <ul>
-              <a href="/MyPage/stylemodify">
-                <li>프로필 관리</li>
-              </a>
-              <a href="">
-                <li>내 스타일</li>
-              </a>
-            </ul>
-          </article>
-          <article className="myshopmain">
-            <h4>나의 정보 관리</h4>
-            <ul>
-              <a href="/MyPage/address">
-                <li>배송지 관리</li>
-              </a>
-              <a href="">
-                <li>회원 정보 수정</li>
-              </a>
-              <a href="">
-                <li>로그아웃</li>
-              </a>
-            </ul>
-          </article>
-        </section>
+        <MyPageNavigation />
         <section className="contentwrap">
           <article>
             <div className="profile">
@@ -253,7 +201,7 @@ const MyPageIntro = () => {
                 <li>
                   <a href="">
                     <span className="tit">총주문</span>
-                      <span className="orderprice">{currentUser.payment}&nbsp;원</span>
+                    <span className="orderprice">{currentUser.payment}&nbsp;원</span>
                   </a>
                 </li>
                 <li>
