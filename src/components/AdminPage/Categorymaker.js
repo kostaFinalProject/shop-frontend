@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Categorymaker.css";
+import AdminNavi from "./AdminComponent/AdminNavi";
 
 const Categorymaker = () => {
   const [image, setImage] = useState(null); // 선택된 파일을 관리
@@ -203,85 +204,40 @@ const Categorymaker = () => {
 
 
   return (
-    <section className="categorymakersection">
-      <div className="list">
-        <div className="introduce">
-          <div className="name">
-            <strong style={{ marginRight: 5, marginLeft: 10 }}>최고 관리자</strong>
-            님
-          </div>
-        </div>
-        <div className="detail">
-          <div className="detail-list" />
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/reportuser")}
-          >
-            <div className="item">신고 유저 관리</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/adminright")}
-          >
-            <div className="item">관리자 권한 관리</div>
-          </div>
-          <div
-            className="detail-select"
-            onClick={() => (window.location.href = "/AdminPage/categorymaker")}
-          >
-            <div className="item">카테고리 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/registproduct")}
-          >
-            <div className="item">상품 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/modifyproduct")}
-          >
-            <div className="item">상품 수정</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/admindelivery")}
-          >
-            <div className="item">배송 관리</div>
-          </div>
-        </div>
-      </div>
-      <div className="info">
-        <div className="content-name" style={{ marginBottom: 7, fontSize: 20 }}>
+    <section className="categorymaker_section">
+      <AdminNavi />
+      <div className="categorymaker_info">
+        <div className="categorymaker_content-name" style={{ marginBottom: 7, fontSize: 20 }}>
           카테고리 등록
         </div>
         <hr />
-        <div className="content">
-          <div className="makecategory">
-            <span>카테고리 만들기</span>
-            <div className="upcategory">
+        {/* --------------------------- */}
+        <div className="categorymaker_content">
+          <div className="categorymaker_makecategory">
+            <span className="categorymaker_Head">카테고리 만들기</span>
 
+            <div className="categorymaker_upcategory">
               <span>상위 카테고리</span>
-              <form id="updateCategoryForm" action="" method="post" onSubmit={handleparentCategorySubmit}>
+              <form id="categorymaker_updateCategoryForm" action="" method="post" onSubmit={handleparentCategorySubmit}>
                 <input
                   type="text"
                   id="parentCategory"
                   value={categoryName}
                   onChange={(e) => setCategoryName(e.target.value)} // 카테고리 이름 입력
-                  style={{ width: 300, height: 20 }}
                 />
 
-                <button type="submit" style={{ width: 100 }}>
+                <button className="categorymaker_updateCategoryForm_button" type="submit" >
                   제출
                 </button>
               </form>
+
             </div>
 
-            <div className="downcategory">
+            <div className="categorymaker_downcategory">
 
               <span>하위 카테고리</span>
               <form id="handlesonCategorySubmit" action="" method="post" onSubmit={handlesonCategorySubmit}>
-                <div>
+                <div className="categorymaker_parent_Box">
                   <select id="parentCategory1" name="parentCategory1" required>
                     <option value="">카테고리를 선택하세요</option>
                     {categories.map((category) => (
@@ -291,10 +247,18 @@ const Categorymaker = () => {
                     ))}
                   </select>
                 </div>
-                <input type="text" style={{ width: 300, height: 20 }} id="subCategoryName" name="subCategoryName" />
-                <div>
-                  파일선택
+
+                <div className="categorymaker_parent_Box">
+                  <div className="categorymaker_parent_TeamName" >
+                    팀명
+                  </div>
+                  <input type="text" id="subCategoryName" name="subCategoryName" />
+                </div>
+
+                <div className="categorymaker_parent_File_Box">
+                  <div className="categorymaker_parent_File" >파일선택</div>
                   <input
+                    className="categorymaker_parent_File_Input"
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
@@ -302,7 +266,7 @@ const Categorymaker = () => {
                   {image && <div>선택된 파일: {image.name}</div>}
                 </div>
 
-                <button type="submit" style={{ width: 100 }}>
+                <button className="categorymaker_parent_Button" type="submit">
                   제출
                 </button>
               </form>
@@ -310,11 +274,14 @@ const Categorymaker = () => {
             </div>
 
           </div>
+          {/* 카테고리 리스트  */}
+          <div className="categorymaker_categorylist">
+            <div className="categorymaker_categorylist_Head">
+              <span>카테고리 리스트</span>
+              <button className="categorymaker_categorylist_Delete" onClick={() => alert("삭제 기능 구현 필요")}>삭제</button>
+            </div>
 
-          <div className="categorylist">
-            <span>카테고리 리스트</span>
-            <button onClick={() => alert("삭제 기능 구현 필요")}>삭제</button>
-            <div className="categoryli">
+            <div className="categorymaker_categorylist_Box">
               {categories.map((category) => (
                 <div key={category.categoryId}>
                   <input type="checkbox" />

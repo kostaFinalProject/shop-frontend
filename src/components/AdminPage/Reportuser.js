@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";  // useNavigate 훅 임포트
 import "./Reportuser.css";
+import AdminNavi from "./AdminComponent/AdminNavi";
 
 const Reportuser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,53 +22,7 @@ const Reportuser = () => {
 
   return (
     <section className="reportusersection">
-      <div className="list">
-        <div className="introduce">
-          <div className="name">
-            <strong style={{ marginRight: 5, marginLeft: 10 }}>최고 관리자</strong>
-            님
-          </div>
-        </div>
-        <div className="detail">
-          <div className="detail-list" />
-          <div
-            className="detail-select"
-            onClick={() => (window.location.href = "/AdminPage/reportuser")}
-          >
-            <div className="item">신고 유저 관리</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/adminright")}
-          >
-            <div className="item">관리자 권한 관리</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/categorymaker")}
-          >
-            <div className="item">카테고리 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/registproduct")}
-          >
-            <div className="item">상품 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/modifyproduct")}
-          >
-            <div className="item">상품 수정</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/admindelivery")}
-          >
-            <div className="item">배송 관리</div>
-          </div>
-        </div>
-      </div>
+      <AdminNavi />
       <div className="info">
         <div className="content-name" style={{ marginBottom: 7, fontSize: 20 }}>
           신고된 유저

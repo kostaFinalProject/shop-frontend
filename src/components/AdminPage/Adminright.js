@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Adminright.css";
+import AdminNavi from "./AdminComponent/AdminNavi";
 
 const Adminright = () => {
   const [admins, setadmins] = useState([]); // 상태에 데이터를 저장할 배열
@@ -75,72 +76,29 @@ const Adminright = () => {
 
 
   return (
-    <section className="adminrightsection">
-      <div className="list">
-        <div className="introduce">
-          <div className="name">
-            <strong style={{ marginRight: 5, marginLeft: 10 }}>최고 관리자</strong>님
-          </div>
-        </div>
-        <div className="detail">
-          <div className="detail-list" />
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/reportuser")}
-          >
-            <div className="item">신고 유저 관리</div>
-          </div>
-          <div
-            className="detail-select"
-            onClick={() => (window.location.href = "/AdminPage/adminright")}
-          >
-            <div className="item">관리자 권한 관리</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/categorymaker")}
-          >
-            <div className="item">카테고리 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/registproduct")}
-          >
-            <div className="item">상품 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/modifyproduct")}
-          >
-            <div className="item">상품 수정</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/admindelivery")}
-          >
-            <div className="item">배송 관리</div>
-          </div>
-        </div>
-      </div>
-      <div className="info">
-        <div className="content-name" style={{ marginBottom: 7, fontSize: 20 }}>
+    <section className="Adminright_adminrightsection">
+
+      <AdminNavi />
+
+      <div className="Adminright_info">
+        <div className="Adminright_content-name">
           관리자 권한 관리
         </div>
         <hr />
-        <div className="content">
+        <div className="Adminright_content">
           {admins.map((admin) => (
-            <div className="profile" key={admin.memberId}>
-              <div className="profile_text">
-                <div className="profile_information">
+            <div className="Adminright_profile" key={admin.memberId}>
+              <div className="Adminright_profile_text">
+                <div className="Adminright_profile_information">
                   <p id={`user-id-${admin.memberId}`}>{admin.userId}</p>
                   <p id={`grade-${admin.memberId}`}>
                     {admin.grade === "NO_AUTHORIZATION_ADMIN" ? "권한 없음" : "권한 있음"}
                   </p>
                 </div>
               </div>
-              <div className="profile-button">
+              <div className="Adminright_profile-button">
                 <select
-                  name="adminstatus"
+                  className="Adminright_adminstatus"
                   defaultValue={
                     admin.grade === "NO_AUTHORIZATION_ADMIN" ? "rightX" : "rightO"
                   }

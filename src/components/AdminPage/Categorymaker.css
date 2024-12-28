@@ -1,89 +1,20 @@
 
-.categorymakersection {
+.categorymaker_section {
   width: 1280px;
   display: flex;
   margin: 0 auto;
   padding: 0;
   justify-content: space-between;
   font-family: 'SpoqaHanSansNeo-Regular';
+
 }
 
-.categorymakersection .list {
-  width: 182px;
-  margin: 64px 0 0 20px;
-  border: 1px solid #111;
-}
-
-.categorymakersection .name {
-  padding-left: 5px;
-  height: 52px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  background-color: rgb(248, 248, 248);
-  border-bottom: 1px solid #111;
-  background-repeat: no-repeat;
-  background-size: 36% 0.5em;
-  background-position: 13% 69%;
-}
-
-.categorymakersection .detail-list {
-  padding: 14px 16px 15px 0px;
-  font-size: 14px;
-  font-weight: 700;
-  margin-top: 10px;
-}
-
-.categorymakersection .detail-select {
-  padding: 14px 16px 15px;
-  border-bottom: 1px solid #111;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.categorymakersection .order .member .item {
-  font-size: 15px;
-  font-weight: bold;
-}
-
-
-.categorymakersection .detail-noselect {
-  padding: 14px 16px 15px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 500;
-  align-items: center;
-  cursor: pointer;
-  border-bottom: 1px solid #111;
-}
-
-.categorymakersection .detail div:hover {
-  background-color: #F3F5F7;
-}
-
-.categorymakersection .info {
+.categorymaker_info {
   width: 1024px;
   margin: 64px 10px 0 0;
 }
 
-.categorymakersection .home {
-  color: white;
-  background-color: #e9302d;
-  border: none;
-  font-size: 16px;
-  font-weight: bold;
-  height: 30px;
-  width: 150px;
-  margin-right: 4px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.categorymakersection .content-name {
+.categorymaker_content-name {
   color: rgb(24, 26, 28);
   height: 44px;
   letter-spacing: -0.4px;
@@ -93,94 +24,161 @@
   display: flex;
   align-items: center;
 }
-
-.categorymakersection hr {
-  border-color: rgb(231, 231, 231, 0.3);
-  background: rgb(231, 231, 231, 0.3);
-  height: 1px;
+/* -------------------------- */
+.categorymaker_content {
+  height: 430px;
+  margin: 20px 0 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.categorymakersection .content {
-  height: 430px;
-  background-color: #e1e1e1;
-  margin: 20px 0 100px 0;
+
+/* -----------------------------1------------- */
+.categorymaker_makecategory{
+  width: 70%;
+  height: 410px;
   display: flex;
   flex-direction: column;
+
+}
+.categorymaker_Head{
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+/* 상위카테고리 */
+.categorymaker_upcategory{
+  width: 100%;
+  height: 80px;
+
+  justify-content: center;
+  align-items: center;
+
+}
+
+.categorymaker_upcategory span {
+  font-size: 16px;
+}
+#categorymaker_updateCategoryForm{
+  width: 100%;
+  height: 50px;
+  margin-top: 10px;
+}
+#parentCategory {
+  width: 80%;
+  height: 43px;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+
+}
+.categorymaker_updateCategoryForm_button{
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 5px;
+ 
+}
+
+/* 하위 카테고리  */
+.categorymaker_downcategory{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.categorymaker_downcategory span {
+  font-size: 16px;
+}
+#handlesonCategorySubmit{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.categorymaker_parent_Box{
+  display: flex;
+  width: 100%;
+}
+#parentCategory1{
+  width: 95%;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+#subCategoryName{
+  width: 75%;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 10px;
+
+}
+.categorymaker_parent_TeamName{
+  width: 20%;
+  height: 40px;
+  font-size: 18px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+
+}
+/* 파일선택 */
+.categorymaker_parent_File_Box{
+  display: flex;
+  width: 100%;
+}
+.categorymaker_parent_File{
+  width: 20%;
+  height: 40px;
+  font-size: 18px;
+  display: flex;
+  text-align: center;
+
+  align-items: center;
+
+}
+.categorymaker_parent_File_Input{
+
+  font-size: 16px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
   align-items: center;
 }
-
-
-.categorymakersection .reportbox {
-  width: 800px;
-  align-content: center;
+.categorymaker_parent_Button{
   margin-top: 10px;
-  
+  width: 80px;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 5px;
+
+
+}
+/* -----------------------------2------------- */
+.categorymaker_categorylist{
+  width: 30%;
+  height: 410px;
+
 }
 
-.categorymakersection .reportboxheader{
-  width: 800px;
-
-  margin-bottom: 5px
-}
-
-.categorymakersection .reportboxdetail {
-  border: 1px solid #111;
+.categorymaker_categorylist_Head{
+  width: 100%;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 7px;
 }
 
-.categorymakersection #reportcomment{
-  width: 740px;
+.categorymaker_categorylist_Delete{
+  font-size: 12px;
+  margin-right: 5px;
 }
 
-.categorymakersection .justice{
-  margin: 0 auto;
-}
-
-.categorymakersection .profile-button div {
-  border: 1px solid #000;
-  border-radius: 10px;
-  height: 36px;
-  line-height: 34px;
-  margin-bottom: 5px;
-  font-weight: 800;
-  width: 80px;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  /* color: black !important;
-  text-decoration: none !important; */
-}
-
-.categorymakersection .profile-button {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-}
-
-.categorymakersection .content{
-  display: flex; 
-  flex-direction: row;
-  justify-content: center;
-}
-.categorymakersection .categorylist{
-  width: 400px;
-  height: 410px;
-}
-
-.categorymakersection .makecategory{
-  width: 400px;
-  height: 410px;
-  display: flex;
-  flex-direction: column;
-}
-
-.categorymakersection .categoryli{
-  background-color: #F3F5F7;
-  
+.categorymaker_categorylist_Box{
+  font-size: 16px;
 
 }

@@ -305,9 +305,28 @@ const StyleDetail = () => {
 
             if (response.status === 200) {
                 // 저장 후 상태를 업데이트 (articleCollections에 새로 추가된 게시글 반영)
+                // 게시글 데이터 가공
+                const processedData = {
+                    articleCollectionId: data.articleId, // 저장된 컬렉션 ID
+                    articleId: articleData.articleId,
+                    memberId: articleData.memberId,
+                    memberName: articleData.memberName,
+                    imageUrl: articleData.images[0] // 첫 번째 이미지 사용
+                        ? articleData.images[0].replace(
+                            "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
+                            ""
+                        )
+                        : null,
+                    content: articleData.content,
+                    likeCount: articleData.likeCount,
+                    viewCount: 0, // 조회수는 필요에 따라 초기화
+                    likeId: articleData.likeId,
+                };
+
+                // `articleCollections`에 새 게시글 추가
                 setArticleCollections((prev) => {
-                    const updatedArticleCollections = [...prev, data];
-                    return updatedArticleCollections;
+                    const updatedContent = [...(prev.content || []), processedData];
+                    return { ...prev, content: updatedContent };
                 });
 
 

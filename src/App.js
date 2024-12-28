@@ -45,8 +45,6 @@ import CartCheckoutPage from "./components/CheckoutPage/CartCheckoutPage .js";
 import ProfileMyInterests from "./components/SocialContent/StyleProfile/ProfileMyInterests.js";
 
 
-
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

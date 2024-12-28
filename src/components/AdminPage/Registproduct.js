@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./Registproduct.css";
+import AdminNavi from './AdminComponent/AdminNavi';
 
 const Registproduct = () => {
   const [imageList, setImageList] = useState([{ file: null, checked: false }]); // 초기 상태에 파일 입력 하나 추가
@@ -88,7 +89,7 @@ const Registproduct = () => {
         const updatedData = data.map(item => ({
           categoryId: item.categoryId,
           categoryName: item.categoryName,
-          imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
+          imageUrl: item.categoryImageUrl.replace('C:\\Users\\dusrb\\FinalTotalProject\\frontend\\frontend-jhs-Ingu\\frontend-jhs-Ingu\\public\\uploads\\', ''),
         }));
         setSubCategories((prev) => ({
           ...prev,
@@ -210,66 +211,20 @@ const Registproduct = () => {
   }
 
   return (
-    <section className="registproductsection">
+    <section className="Registproduct_section">
+      <AdminNavi />
+     
 
-      <div className="list">
-        <div className="introduce">
-          <div className="name">
-            <strong style={{ marginRight: 5, marginLeft: 10 }}>최고 관리자</strong>
-            님
-          </div>
-        </div>
-        <div className="detail">
-          <div className="detail-list" />
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/reportuser")}
-          >
-            <div className="item">신고 유저 관리</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/adminright")}
-          >
-            <div className="item">관리자 권한 관리</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/categorymaker")}
-          >
-            <div className="item">카테고리 등록</div>
-          </div>
-          <div
-            className="detail-select"
-            onClick={() => (window.location.href = "/AdminPage/registproduct")}
-          >
-            <div className="item">상품 등록</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/modifyproduct")}
-          >
-            <div className="item">상품 수정</div>
-          </div>
-          <div
-            className="detail-noselect"
-            onClick={() => (window.location.href = "/AdminPage/admindelivery")}
-          >
-            <div className="item">배송 관리</div>
-          </div>
-        </div>
-      </div>
-
-      <div className="info">
-        <div className="content-name" style={{ marginBottom: 7, fontSize: 20 }}>
+      <div className="Registproduct_info">
+        <div className="Registproduct_content-name" style={{ marginBottom: 7, fontSize: 20 }}>
           상품등록
         </div>
         <hr />
         <form id="createItemForm" action="" method="post" onSubmit={handleCreateItemSubmit}>
           {/* 카테고리 선택 */}
-          <div className="categoryselect">
-            <div className="mainselect">
-              <div className="category">상위 카테고리</div>
+          <div className="Registproduct_categoryselect">
+            <div className="Registproduct_mainselect">
+              <div className="Registproduct_category">상위 카테고리</div>
               <div>
                 <select
                   id="maincategory"
@@ -286,8 +241,8 @@ const Registproduct = () => {
                 </select>
               </div>
             </div>
-            <div className="subselect">
-              <div className="category">하위 카테고리</div>
+            <div className="Registproduct_subselect">
+              <div className="Registproduct_category">하위 카테고리</div>
               <div>
                 <select id="subcategory" name="subcategory" required disabled={!selectedCategory}>
                   {selectedCategory && subCategories[selectedCategory]
@@ -303,25 +258,25 @@ const Registproduct = () => {
           </div>
 
           {/* 상품 정보 입력 */}
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label htmlFor="name">상품명</label>
             <input type="text" id="name" name="name" required />
           </div>
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label htmlFor="price">가격</label>
             <input type="number" id="price" name="price" required />
           </div>
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label htmlFor="manufacturer">제조사</label>
             <input type="text" id="manufacturer" name="manufacturer" required />
           </div>
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label htmlFor="seller">판매자</label>
             <input type="text" id="seller" name="seller" required />
           </div>
 
           {/* 사이즈별 재고 입력 */}
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label>수량 (사이즈별)</label>
             {["XS", "S", "M", "L", "XL", "2XL"].map((size) => (
               <div key={size} className="size-group">
@@ -339,9 +294,9 @@ const Registproduct = () => {
           </div>
 
           {/* 이미지 업로드 */}
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label>제품이미지 등록</label>
-            <ul className="image-list" id="imageList">
+            <ul className="Registproduct_image-list" id="imageList">
               {imageList.map((item, index) => (
                 <li key={index}>
                   {index > 0 && (
@@ -358,21 +313,21 @@ const Registproduct = () => {
                     onChange={(e) => handleFileChange(index, e)}
                     required={index === 0}
                   />
-                  {index === 0 && <span className="rep-img-label">대표 이미지</span>}
+                  {index === 0 && <span className="Registproduct_rep-img-label">대표 이미지</span>}
                 </li>
               ))}
             </ul>
-            <button type="button" className="add-image-btn" onClick={addImageInput}>
+            <button type="button" className="Registproduct_add-image-btn" onClick={addImageInput}>
               + 이미지 추가
             </button>
-            <button type="button" className="remove-image-btn" onClick={removeCheckedImages} disabled={imageList.length <= 1}>
+            <button type="button" className="Registproduct_remove-image-btn" onClick={removeCheckedImages} disabled={imageList.length <= 1}>
               선택 이미지 삭제
             </button>
           </div>
 
 
           {/* 이미지 업로드 */}
-          <div className="form-group">
+          <div className="Registproduct_form-group">
             <label>상세이미지 등록</label>
             <input
               type="file"
