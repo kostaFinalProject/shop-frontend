@@ -397,8 +397,11 @@ const MyPageBasket = () => {
                         <div className="description">
                           <span className="itemid">{userBasket.cartId}</span>
                           <strong className="itemname" title="상품명">
-                            {userBasket.name}
+                            {`[${userBasket.manufacturer}]`} {userBasket.name}
                           </strong>
+                          <ul className="optional">
+                            <li>사이즈: {userBasket.size}</li>
+                          </ul>
                           <ul className="price">
                             <li>
                               <strong>{userBasket.price}</strong>원
@@ -406,11 +409,14 @@ const MyPageBasket = () => {
                           </ul>
                           <ul className="info">
                             <li>
-                              적립금 :<span className="mileage">{Math.floor(userBasket.price * 0.01)}원</span>
+                              <span className="mileage">{userBasket.seller}</span>
                             </li>
-                          </ul>
-                          <ul className="optional">
-                            <li>{userBasket.itemSizeId}</li>
+                            <li>
+                              배송 : <span className="mileage">5000원</span>
+                            </li>
+                            <li>
+                              적립금 : <span className="mileage">{Math.floor(userBasket.price * 0.01)}원</span>
+                            </li>
                           </ul>
                         </div>
                         <div className="sumprice">
@@ -453,7 +459,13 @@ const MyPageBasket = () => {
                             </button>
                           </span>
                         </div>
-                        
+                        <div className="buttonGroup">
+                          <div className="orderBtn">
+                            <a href={`/DetailPage?itemId=${userBasket.itemId}`} className="btnSubmit sizeS">
+                              상세보기
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     ))
                   )}

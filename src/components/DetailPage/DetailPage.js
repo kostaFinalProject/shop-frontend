@@ -163,31 +163,58 @@ const DetailPage = () => {
 
     // 장바구니에 아이템 추가
     const handleAddToCart = () => {
-        const cartData = {
-            itemId: itemId,
-            size: selectedItems[0]?.id, // 선택된 사이즈 (첫 번째 아이템의 사이즈)
-            quantity: selectedItems[0]?.quantity, // 선택된 수량 (첫 번째 아이템의 수량)
-        };
+        if (!selectedItems || selectedItems.length === 0) {
+            alert("사이즈와 수량을 선택해주세요.");
+            return;
+        }
 
-        fetch(`http://localhost:8080/api/v1/carts`, {
-            method: 'POST',
-            headers: {
-                'Authorization': accessToken,
-                'Refresh-Token': refreshToken,
-                'Content-Type': 'application/json',  // 헤더에 Content-Type 추가
-            },
-            body: JSON.stringify(cartData),
-        })
-            .then(response => {
-                if (response.ok) {
-                    alert("장바구니에 추가되었습니다.");
+        const accessToken = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        if (!accessToken || !refreshToken) {
+            alert("로그인이 필요한 기능입니다.");
+            navigate("/login");
+            return;
+        }
+
+        // 선택된 아이템 각각에 대해 요청 전송
+        const requests = selectedItems.map((item) => {
+            const cartData = {
+                itemId: itemData.itemId, // 현재 상품 ID
+                size: item.name,        // 선택된 사이즈 이름
+                quantity: item.quantity // 선택된 수량
+            };
+
+            return fetch("http://localhost:8080/api/v1/carts", {
+                method: "POST",
+                headers: {
+                    "Authorization": accessToken,
+                    "Refresh-Token": refreshToken,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(cartData),
+            });
+        });
+
+        // 모든 요청 처리
+        Promise.all(requests)
+            .then((responses) => {
+                let allSuccessful = true;
+                responses.forEach((response) => {
+                    if (!response.ok) {
+                        allSuccessful = false;
+                    }
+                });
+
+                if (allSuccessful) {
+                    alert("장바구니에 성공적으로 추가되었습니다.");
                 } else {
-                    alert("장바구니에 추가하는데 실패했습니다.");
+                    alert("일부 상품 추가에 실패했습니다. 다시 시도해주세요.");
                 }
             })
-            .catch(error => {
-                console.error("Error adding item to cart:", error);
-                alert("장바구니 추가 중 오류가 발생했습니다.");
+            .catch((error) => {
+                console.error("장바구니 추가 중 오류 발생:", error);
+                alert("서버 오류로 인해 장바구니 추가에 실패했습니다.");
             });
     };
 
@@ -318,7 +345,12 @@ const DetailPage = () => {
                         {/* 버튼 메뉴 */}
                         <div className="DetailPage_sub_button_menu">
                             <button className="DetailPage_like_button"><a href="#">❤️</a></button>
-                            <button className="DetailPage_basket_button"><a href="#">장바구니</a></button>
+                            <button
+                                className="DetailPage_basket_button"
+                                onClick={handleAddToCart}>
+                                장바구니
+                            </button>
+
                             <button className="DetailPage_interest_product_button" onClick={() => handlewishlist(itemData.itemId)}>
                                 📷 관심상품 등록
                             </button>
