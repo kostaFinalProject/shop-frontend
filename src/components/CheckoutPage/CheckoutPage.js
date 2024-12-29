@@ -178,7 +178,7 @@ const CheckoutPage = () => {
     return (
         <div className="CheckoutPage_fullScreen">
             {/* 주문 정보 */}
-            <div>
+            <div className="CheckoutPage_Box_Address">
                 <button onClick={() => setIsVisible1(!isVisible1)} className="CheckoutPage_UpDownBtn">
                     <div>주문 정보</div>
                     {isVisible1 ? "▲" : "▼"}
@@ -187,9 +187,20 @@ const CheckoutPage = () => {
                     <div>
                         {memberInfo ? (
                             <>
-                                <p>이름: {memberInfo.name}</p>
-                                <p>이메일: {memberInfo.email}</p>
-                                <p>전화번호: {memberInfo.phone}</p>
+                                <div className="CheckoutPage_Address_Name">
+                                    <p className="CheckoutPage_Address_Box1">이름</p>
+                                    <p className="CheckoutPage_Address_Box2">{memberInfo.name}</p>
+                                </div>
+                                <div className="CheckoutPage_Address_Email">
+                                    <p className="CheckoutPage_Address_Box1">이메일 </p>
+                                    <p className="CheckoutPage_Address_Box2">{memberInfo.email}</p>
+
+                                </div>
+                                <div className="CheckoutPage_Address_PhoneNumber">
+                                    <p className="CheckoutPage_Address_Box1">전화번호 </p>
+                                    <p className="CheckoutPage_Address_Box2">{memberInfo.phone}</p>
+
+                                </div>
                             </>
                         ) : (
                             <p>회원 정보를 불러오는 중...</p>
@@ -199,7 +210,7 @@ const CheckoutPage = () => {
             </div>
 
             {/* 배송지 선택 */}
-            <div>
+            <div >
                 <button onClick={() => setIsVisible2(!isVisible2)} className="CheckoutPage_UpDownBtn">
                     <div>배송지</div>
                     {isVisible2 ? "▲" : "▼"}
@@ -220,7 +231,10 @@ const CheckoutPage = () => {
                 {isVisible3 && (
                     <div>
                         {items.map((item) => (
-                            <div key={item.itemSizeId} className="CheckoutPage_ItemBox">
+
+
+
+                            <div key={item.itemSizeId} className="CheckoutPage_Order_Items">
                                 {/* 상품 이미지 */}
                                 <div className="CheckoutPage_ItemImageWrapper">
                                     <img
@@ -229,15 +243,37 @@ const CheckoutPage = () => {
                                         className="CheckoutPage_ItemImage"
                                     />
                                 </div>
-                                {/* 상품 정보 */}
-                                <p>상품명: {`[${item.manufacturer}]`} {item.itemName}</p>
-                                <p>판매처: {item.seller}</p>
-                                <p>사이즈: {item.size}</p>
-                                <p>수량: {item.quantity}</p>
-                                <p>가격: {item.quantity * item.price}원</p>
+
+                                <div className="CheckoutPage_Order_Items_Text">
+                                    {/* 상품 정보 */}
+                                    <div className="CheckoutPage_Order_Items_Box">
+                                        <p className="CheckoutPage_Order_Items_Head">상품명</p>
+                                        <p className="CheckoutPage_Order_Items_Body">{`[${item.manufacturer}]`} {item.itemName}</p>
+                                    </div>
+
+                                    <div className="CheckoutPage_Order_Items_Box">
+                                        <p className="CheckoutPage_Order_Items_Head">판매처</p>
+                                        <p className="CheckoutPage_Order_Items_Body">{item.seller}</p>
+                                    </div>
+
+                                    <div className="CheckoutPage_Order_Items_Box">
+                                        <p className="CheckoutPage_Order_Items_Head">사이즈</p>
+                                        <p className="CheckoutPage_Order_Items_Body">{item.size}</p>
+                                    </div>
+
+                                    <div className="CheckoutPage_Order_Items_Box">
+                                        <p className="CheckoutPage_Order_Items_Head">수량</p>
+                                        <p className="CheckoutPage_Order_Items_Body"> {item.quantity}</p>
+                                    </div>
+
+                                    <div className="CheckoutPage_Order_Items_Box">
+                                        <p className="CheckoutPage_Order_Items_Head">가격</p>
+                                        <p className="CheckoutPage_Order_Items_Body">{item.quantity * item.price}원</p>
+                                    </div>
+                                </div>
                             </div>
                         ))}
-                        <div>
+                        <div className="CheckoutPage_Order_Items_TotalPrice" >
                             <strong>총 상품 금액: {totalAmount}원</strong>
                         </div>
                     </div>
@@ -245,28 +281,32 @@ const CheckoutPage = () => {
             </div>
 
             {/* 적립금 */}
-            <div>
+            <div >
                 <button onClick={() => setIsVisible5(!isVisible5)} className="CheckoutPage_UpDownBtn">
                     <div>보유 적립금</div>
                     <div>{appliedPoints}원이 사용되었습니다</div>
                     {isVisible5 ? "▲" : "▼"}
                 </button>
                 {isVisible5 && (
-                    <div>
-                        <p>보유 적립금: {availablePoints}원</p>
-                        <div>
-                            <button onClick={handleUseAllPoints}>전액 사용</button>
+                    <div className="CheckoutPage_Reward_Points">
+                        <div className="CheckoutPage_Available_Points">
+                            <p className="CheckoutPage_Available_Points_Text">보유 적립금: {availablePoints}원</p>
+                            <div className="CheckoutPage_Available_Points_button">
+                                <button onClick={handleUseAllPoints}>전액 사용</button>
+                            </div>
                         </div>
-                        <div>
+
+                        <div className="CheckoutPage_Apply_Points">
                             <input
+                                className="CheckoutPage_Apply_Points_input"
                                 type="number"
                                 value={inputPoints}
                                 onChange={handleInputChange}
                                 placeholder="적립금 입력"
                             />
-                            <button onClick={handleApplyPoints}>적용</button>
+                            <button className="CheckoutPage_Apply_Points_button" onClick={handleApplyPoints}>적용</button>
                         </div>
-                        <div>
+                        <div className="CheckoutPage_Applied_Points">
                             <strong>적용된 적립금: {appliedPoints}원</strong>
                         </div>
                     </div>
@@ -274,27 +314,45 @@ const CheckoutPage = () => {
             </div>
 
             {/* 결제 정보 */}
-            <div>
+            <div >
                 <button onClick={() => setIsVisible6(!isVisible6)} className="CheckoutPage_UpDownBtn">
                     <div>결제 정보</div>
                     <div>{finalPrice}원</div>
+                    {isVisible6 ? "▲" : "▼"}
                 </button>
                 {isVisible6 && (
-                    <div>
-                        <p>상품 금액: {totalAmount}원</p>
-                        <p>배송비: {shippingFee}원</p>
-                        <p>포인트 사용: {appliedPoints}원</p>
-                        <strong>최종 결제 금액: {finalPrice}원</strong>
+                    <div className="CheckoutPage_Payment_Information">
+                        <div className="CheckoutPage_Payment_Box">
+                            <p className="CheckoutPage_Payment_Head">상품 금액</p>
+                            <p className="CheckoutPage_Payment_Body">{totalAmount}원</p>
+                        </div>
+
+                        <div className="CheckoutPage_Payment_Box">
+                            <p className="CheckoutPage_Payment_Head">배송비</p>
+                            <p className="CheckoutPage_Payment_Body">{shippingFee}원</p>
+                        </div>
+
+                        <div className="CheckoutPage_Payment_Box">
+                            <p className="CheckoutPage_Payment_Head">포인트 사용</p>
+                            <p className="CheckoutPage_Payment_Body">{appliedPoints}원</p>
+                        </div>
+
+                        <div className="CheckoutPage_Payment_Box">
+                            
+                                <p className="CheckoutPage_Payment_Head">최종 결제 금액</p>
+                                <p className="CheckoutPage_Payment_Body"><strong>{finalPrice}원</strong></p>
+                         
+                        </div>
                     </div>
                 )}
             </div>
 
             {/* 결제 버튼 */}
-            <div>
+            <div className="CheckoutPage_CheckOut_Button">
                 <Link to="/MyPage/order">
-                    <button>뒤로가기</button>
+                    <button className="CheckoutPage_CheckOut_Beak">뒤로가기</button>
                 </Link>
-                <button onClick={handleOrderSubmit}>{finalPrice}원 결제하기</button>
+                <button className="CheckoutPage_CheckOut_Pay" onClick={handleOrderSubmit}>{finalPrice}원 결제하기</button>
             </div>
         </div>
     );

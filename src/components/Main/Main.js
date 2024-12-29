@@ -275,46 +275,59 @@ const Main = () => {
             </div>
           </div>
           <div className="flame-swiper-container">
-            <ul className="flameWrapper" id="swiper-wrapper">
-              {/* Style List */}
-              {articleData.map((article) => (
-                <Link to={`/StyleDetail?articleId=${article.articleId}`}>
-                  <li
-                    key={article.articleId}
-                    className="swiperSlideItem"
-
-                  >
-                    <div className="detail_page_review_list_item_img">
-                      <img
-                        src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://default-image-url.com"}
-                        alt={article.content || "Article Image"}
-                      />
-                    </div>
-                    <div className="detail_page_review_content">
-                      <div className="detail_page_review_title">
+            {articleData.length > 0 ? (
+              <ul className="flameWrapper" id="swiper-wrapper">
+                {/* Style List */}
+                {articleData.map((article) => (
+                  <Link to={`/StyleDetail?articleId=${article.articleId}`} key={article.articleId}>
+                    <li className="swiperSlideItem">
+                      <div className="detail_page_review_list_item_img">
                         <img
-                          src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
-                          alt={article.memberName}
-                          className="detail_page_review_title_img"
+                          src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://default-image-url.com"}
+                          alt={article.content || "Article Image"}
                         />
-                        <span className="detail_page_review_title_id">{article.memberName}</span>
-                        <span className="detail_page_review_title_like">
-                          {article.likeId ? "❤️" : "♡"} {article.likeCount}
-                        </span>
                       </div>
-                      <p className="detail_page_review_body_tag">
-                        {article.hashtags.map((hashtag, index) => (
-                          <span key={index} className="StyleMain_sns_card_hashtag">
-                            {`${hashtag} `}
+                      <div className="detail_page_review_content">
+                        <div className="detail_page_review_title">
+                          <img
+                            src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
+                            alt={article.memberName}
+                            className="detail_page_review_title_img"
+                          />
+                          <span className="detail_page_review_title_id">{article.memberName}</span>
+                          <span className="detail_page_review_title_like">
+                            {article.likeId ? "❤️" : "♡"} {article.likeCount}
                           </span>
-                        ))}
-                      </p>
-                    </div>
-                  </li>
-                </Link>
-              ))}
-            </ul>
+                        </div>
+                        <p className="detail_page_review_body_tag">
+                          {article.hashtags.map((hashtag, index) => (
+                            <span key={index} className="StyleMain_sns_card_hashtag">
+                              {`${hashtag} `}
+                            </span>
+                          ))}
+                        </p>
+                      </div>
+                    </li>
+                  </Link>
+                ))}
+              </ul>
+            ) : (
+              <div
+                className="SearchStyle_No_item"
+                style={{
+                  width: "100%",
+                  height: "20px",
+                  display: "flex",
+                  justifyContent: "center", // 가로 중앙 정렬
+                  alignItems: "center", // 세로 중앙 정렬
+                  textAlign: "center",
+                }}
+              >
+                스타일이 없습니다.
+              </div>
+            )}
           </div>
+
         </div>
         <ScrollUp />
       </article>
