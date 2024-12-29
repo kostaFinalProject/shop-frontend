@@ -39,21 +39,42 @@ const ProfileMyInterests = ({ articleCollections }) => {
 
     return (
         <>
-            <Masonry
-                breakpointCols={breakpointColumnsObj}
-                className="ProfileMyInterests_list_body"
-                columnClassName="ProfileMyInterests_masonry_column"
-            >
-                {myInterests.map((item, index) => (
-                    <Link to={`/StyleDetail?articleId=${item.articleId}`} key={index}>
-                        <li className="ProfileMyInterests_list_item">
-                            <img src={`/uploads/${item.img}`} alt="interestData" className='ProfileMyInterests_list_item_img' />
-                            <span className="ProfileMyInterests_title_id">{item.memberId}</span>
-                            <p className="ProfileMyInterests_MyInterests">{item.memberName}</p>
-                        </li>
-                    </Link>
-                ))}
-            </Masonry>
+            {myInterests.length === 0 ? (
+                // 저장된 게시글이 없는 경우 표시할 메시지
+                <div
+                    style={{
+                        width: "100%",
+                        height: "500px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                    }}
+                >
+                    저장된 게시글이 없습니다
+                </div>
+            ) : (
+                // 저장된 게시글이 있을 경우 Masonry로 렌더링
+                <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="ProfileMyInterests_list_body"
+                    columnClassName="ProfileMyInterests_masonry_column"
+                >
+                    {myInterests.map((item, index) => (
+                        <Link to={`/StyleDetail?articleId=${item.articleId}`} key={index}>
+                            <li className="ProfileMyInterests_list_item">
+                                <img
+                                    src={`/uploads/${item.img}`}
+                                    alt="interestData"
+                                    className="ProfileMyInterests_list_item_img"
+                                />
+                                <span className="ProfileMyInterests_title_id">{item.memberId}</span>
+                                <p className="ProfileMyInterests_MyInterests">{item.memberName}</p>
+                            </li>
+                        </Link>
+                    ))}
+                </Masonry>
+            )}
         </>
     );
 };

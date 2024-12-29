@@ -79,16 +79,8 @@
     font-size: 18px;
 }   
 
-.Styleprofile_detail_page_review_title_like {
-
-    /* 만약 좋아요 script 기능 한 후 아이콘 벗어날 시 
-    위의 아이디와 라이크 width 조정하거나 다시 정렬 */
-
-}
-
 .Styleprofile_detail_page_review_body_tag {
     width: 100%;
     font-size: 12px;
     margin-top: 10px;
 }
-
