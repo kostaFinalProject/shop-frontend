@@ -113,9 +113,10 @@ const QnA = () => {
               </tr>
             </thead>
             <tbody className="QnA_board_tbody">
-              {qnaPosts.map((post) => (
+              {qnaPosts.map((post, index) => (
                 <tr key={post.questionId}>
-                  <td>{post.questionId}</td>
+                  <td>{qnaPosts.length - ((currentPage - 1) * postsPerPage + index)}
+                  </td>
                   <td>
                     <a href="#">
                       <img
