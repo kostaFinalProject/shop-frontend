@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import ScrollUp from '../ScrollUp/ScrollUp.js';
 
 const Main = () => {
-  const [loading, setLoading] = useState(true);
+  const [bestloading, setBestLoading] = useState(true);
+  const [newloading, setNewLoading] = useState(true);
   const [bestItems, setBestItems] = useState([]);
   const [newItems, setNewItems] = useState([]);
   const [allItems, setAllItems] = useState([]);
@@ -18,16 +19,16 @@ const Main = () => {
 
   // 데이터 가져오기
   useEffect(() => {
-    const fetchItems = async () => {
-      setLoading(true);
+    const fetchBestItems = async () => {
+      setBestLoading(true);
       try {
-        const response = await fetch("http://localhost:8080/api/v1/items?size=4");
+        const response = await fetch("http://localhost:8080/api/v1/items?size=4&sort=order");
         if (!response.ok) {
           throw new Error("Failed to fetch items");
         }
         const data = await response.json();
 
-        const updatedArticles = data.content.map((item) => ({
+        const updatedBestItems = data.content.map((item) => ({
           itemId: item.itemId,
           itemCategory: item.itemCategory,
           manufacturer: item.manufacturer,
@@ -38,25 +39,51 @@ const Main = () => {
           seller: item.seller,
           discountPercent: item.discountPercent,
           discountPrice: item.discountPrice,
+          orderCount: item.orderCount
         }));
 
-        // BEST ITEM: 가격 내림차순 정렬
-        const sortedByPriceDesc = [...updatedArticles].sort((a, b) => b.price - a.price);
-        // NEW ITEM: 아이디 내림차순 정렬
-        const sortedByIdDesc = [...updatedArticles].sort((a, b) => b.itemId - a.itemId);
-
         // 초기 상태 설정 (8개씩만 보여줌)
-        setBestItems(sortedByPriceDesc.slice(0, 8));
-        setNewItems(sortedByIdDesc.slice(0, 8));
-        // 전체 데이터 저장
-        setAllItems(updatedArticles);
+        setBestItems(updatedBestItems);
       } catch (error) {
         console.error("Error fetching items:", error.message);
       } finally {
-        setLoading(false); // 로딩 종료
+        setBestLoading(false); // 로딩 종료
       }
     };
-    fetchItems(); // 함수 호출
+
+    const fetchNewItems = async () => {
+      setNewLoading(true);
+      try {
+        const response = await fetch("http://localhost:8080/api/v1/items?size=4&sort=newest");
+        if (!response.ok) {
+          throw new Error("Failed to fetch items");
+        }
+        const data = await response.json();
+
+        const updatedNewItems = data.content.map((item) => ({
+          itemId: item.itemId,
+          itemCategory: item.itemCategory,
+          manufacturer: item.manufacturer,
+          name: item.name,
+          price: item.price,
+          itemImage: item.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
+          itemStatus: item.itemStatus,
+          seller: item.seller,
+          discountPercent: item.discountPercent,
+          discountPrice: item.discountPrice,
+          orderCount: item.orderCount
+        }));
+
+        // 초기 상태 설정 (8개씩만 보여줌)
+        setNewItems(updatedNewItems);
+      } catch (error) {
+        console.error("Error fetching items:", error.message);
+      } finally {
+        setNewLoading(false); // 로딩 종료
+      }
+    };
+    fetchBestItems();
+    fetchNewItems(); // 함수 호출
   }, []);  // 의존성 배열
 
   // ---------------------------- 가져온 데이터 원하는대로 뿌려주기
@@ -106,7 +133,7 @@ const Main = () => {
               ""
             )
             : null,
-          itemImage: article.imageUrl.replace(
+          imageUrl: article.imageUrl.replace(
             "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
             ""
           ),
@@ -231,14 +258,15 @@ const Main = () => {
               <span className="aaa">다양한 착용샷을 한눈에 보세요</span>
             </h2>
             <div className="flame-controls">
-              <button className='prevSlide_button' id="prevSlide">◀</button>
-              <button className='nextSlide_button' id="nextSlide">▶</button>
+              {/* <button className='prevSlide_button' id="prevSlide">◀</button>
+              <button className='nextSlide_button' id="nextSlide">▶</button> */}
+              <a href='/StyleMain'>더보기</a>
             </div>
           </div>
           <div className="flame-swiper-container">
             <ul className="flameWrapper" id="swiper-wrapper">
               {/* Style List */}
-              {articles.map((article) => (
+              {articleData.map((article) => (
                 <li
                   key={article.articleId}
                   className="swiperSlideItem"
