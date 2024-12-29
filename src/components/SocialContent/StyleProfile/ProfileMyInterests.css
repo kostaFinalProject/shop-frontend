@@ -11,18 +11,19 @@
 
 }
 .ProfileMyInterests_masonry_column{
-    width: 300px !important;
+    width: 280px !important;
+
 
 }
 .ProfileMyInterests_list_item  {
-    width: 300px;
+    width: 230px;
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     border-radius: 20px;
-    
+  
 
 }
 .ProfileMyInterests_list_item:hover {
@@ -30,9 +31,11 @@
 }
 
 .ProfileMyInterests_list_item_img{
-    width: 300px;
+    width: 230px;
     height: auto;
     border-radius: 10px;
+
+
 }
 
 /* -------------------리뷰 리스트 --------------- */

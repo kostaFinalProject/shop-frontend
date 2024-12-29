@@ -104,7 +104,7 @@ const Modifyproduct = () => {
         const updatedData = data.map(item => ({
           categoryId: item.categoryId,
           categoryName: item.categoryName,
-          imageUrl: item.categoryImageUrl.replace('C:\\Users\\dusrb\\FinalTotalProject\\frontend\\frontend-jhs-Ingu\\frontend-jhs-Ingu\\public\\uploads\\', ''),
+          imageUrl: item.categoryImageUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
         }));
         setSubCategories((prev) => ({
           ...prev,

@@ -11,7 +11,7 @@
 
 /* -----------------------postlist,taglist ------------------------ */
 .Styleprofile_post_tag {
-    margin: 20px 0 0 20px;
+    margin: 20px 0 0 0;
     border-bottom: 1px solid #B5B6B5;
     width: 1280px;
     height: 45px;
@@ -19,6 +19,7 @@
     font-size: 20px;
     text-align: left;
     gap: 30px;
+    padding-bottom: 50px;
 
 }
 
@@ -37,4 +38,8 @@
     font-weight: bold;
     text-decoration: underline;
     margin-bottom: 10px;
+}
+
+.Styleprofile_sns_container{
+    padding-top: 10px;
 }

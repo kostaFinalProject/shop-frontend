@@ -37,48 +37,32 @@ const ProfileTags = ({ headers, profile }) => {
     }, [isPrivateAccount, profile.memberId, headers]);
 
     if (isPrivateAccount) {
-        return <div className="private-account-message" style={{
-            width: "100%",
-            height: "500px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}>비공개 계정입니다.</div>;
+        return <div className="ProfileTags_private_account_message">
+          비공개 계정입니다.
+          </div>;
     }
-
     if (!item) {
         return <div>Loading...</div>;
     }
 
     return (
         <>
-          <div className="Styleprofile_sns_container">
-            <ul className="Styleprofile_detail_page_review_list_body">
+          <div className="ProfileTags_container">
+            <ul className="ProfileTags_list_body">
               {item.length === 0 ? (
-                <div
-                  className="private-account-message"
-                  style={{
-                    width: "100%",
-                    height: "500px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    textAlign: "center",
-                  }}
-                >
+                <div className="ProfileTags_private_account_message">
                   등록된 상품 태그가 없습니다.
                 </div>
               ) : (
                 item.map((item) => (
                   <Link to={`/DetailPage?itemId=${item.itemId}`} key={item.itemId}>
-                    <li className="Styleprofile_detail_page_review_list_item">
-                      <div className="Styleprofile_detail_page_review_list_item_img">
+                    <li className="ProfileTags_list_item">
+                      <div className="ProfileTags_list_item_img">
                         <img src={`/uploads/${item.imageUrl}`} alt="tag" />
                       </div>
-                      <div className="Styleprofile_detail_page_review_content">
-                        <div className="Styleprofile_detail_page_review_title">
-                          <span className="Styleprofile_detail_page_review_title_id">
+                      <div className="ProfileTags_content">
+                        <div className="ProfileTags_title">
+                          <span className="ProfileTags_title_id">
                             {item.itemName}
                           </span>
                         </div>

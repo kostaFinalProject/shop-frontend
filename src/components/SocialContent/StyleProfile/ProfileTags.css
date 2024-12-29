@@ -1,14 +1,13 @@
 /* -------------------sns_container---------------- */
-.Styleprofile_sns_container{
+.ProfileTags_container{
 
     width: 1280px;
     margin: 0 auto;
-    padding: 0;
-    
+    padding: 0; 
+    display: flex;
+
 }
-
-
-.Styleprofile_detail_page_review_list_body {
+.ProfileTags_list_body {
 
     width: 100%;
     max-width: 1280px;
@@ -16,71 +15,66 @@
     margin: 0 auto;
     padding: 0;
     list-style: none; /* 기본 리스트 스타일 제거 */
-
     display: flex;
     flex-wrap: wrap; 
 
 }
 
-
-.Styleprofile_detail_page_review_list_item {
-    width: 300px;
-    height: 380px;
+/* ----태그상품 없을 시 나오는 메세지. */
+.ProfileTags_private_account_message{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+/* ----------------------------------- */
+.ProfileTags_list_item {
+    width: 280px;
+    height: 360px;
     list-style: none; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
-.Styleprofile_detail_page_review_list_item:hover {
+.ProfileTags_list_item:hover {
     cursor: pointer;
 }
 
-.Styleprofile_detail_page_review_list_item_img img {
-    width: 262px;
-    height: 262px;
-    margin-top: 10px;
+.ProfileTags_list_item_img img {
+    width: 260px;
+    height: 260px;
     object-fit: contain;
     border-radius: 20px;
-   
+    
 }
 
 /* -------------------리뷰 리스트 --------------- */
 
-
-.Styleprofile_detail_page_review_content {
+.ProfileTags_content {
     width: 90%;
+    height: 80px;
     padding: 0;
+    overflow: hidden;
 
 }
 
-.Styleprofile_detail_page_review_title {
+.ProfileTags_title {
     width: 100%;
     padding: 0;
-    height: 32px;
+    height: 80px;
     margin-top: 5px;
     display: flex;
     align-items: center;
+    overflow: hidden;
 
 }
 
-.Styleprofile_detail_page_review_title_img {
-
-    border-radius: 100px;
-    width: 30px;
-    height: 30px;
-
-
-}
-
-.Styleprofile_detail_page_review_title_id {
-    width: 70%;
-    margin-left: 10px;
-    font-size: 18px;
+.ProfileTags_title_id {
+    height: 80px;
+    font-size: 12px;
 }   
 
-.Styleprofile_detail_page_review_body_tag {
-    width: 100%;
-    font-size: 12px;
-    margin-top: 10px;
-}
