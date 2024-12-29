@@ -77,6 +77,17 @@ const MyPageNavigation = () => {
                         </a>
                     </ul>
                 </article>
+                <article className="myshopmain">
+                    <h4>Q&A</h4>
+                    <ul>
+                        <a href="/QNA">
+                            <li>Q & A 게시판</li>
+                        </a>
+                        {/* <a href="/QnACreate">
+                            <li>Q & A 작성하기</li>
+                        </a> */}
+                    </ul>
+                </article>
             </section>
         </>
     );
