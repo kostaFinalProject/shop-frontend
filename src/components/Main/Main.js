@@ -204,9 +204,9 @@ const Main = () => {
             ))}
           </div>
 
-          <div className="more">
+          {/* <div className="more">
             {isBestMoreButtonVisible && <button className="moreBtn" onClick={loadMoreBestItems}>더보기</button>}
-          </div>
+          </div> */}
         </div>
       </article>
       {/* New Itekm */}
@@ -241,10 +241,10 @@ const Main = () => {
               </Link>
             ))}
           </div>
-
+{/* 
           <div className="more">
             {isNewMoreButtonVisible && <button className="moreBtn" onClick={loadMoreNewItems}>더보기</button>}
-          </div>
+          </div> */}
         </div>
       </article>
 
