@@ -133,7 +133,7 @@ const MyPageIntro = () => {
       "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
       ""
     )
-    : "https://fakeimg.pl/150x150/";
+    : null;
 
   if (!currentUser) {
     return <div>Loading...</div>;
@@ -150,7 +150,7 @@ const MyPageIntro = () => {
           <article>
             <div className="profile">
               <div className="profile_img">
-                <img src={`/uploads/${profileImageUrl}`} alt="Profile" />
+                <img src={profileImageUrl ? `/uploads/${profileImageUrl}` : 'https://fakeimg.pl/150x150/'} alt="Profile" />
               </div>
 
               <div className="profile_text">
