@@ -4,6 +4,25 @@ import { Link } from 'react-router-dom';
 
 const ShoppingList = ({ items }) => {
     console.log("쇼핑리스트아이템페이지로 넘어온  items", items);
+
+    // 데이터 없는 경우 처리
+    if (items.length === 0) {
+        return (
+            <div
+                style={{
+                    width: "100%",
+                    height: "500px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                }}
+            >
+                등록된 상품이 없습니다.
+            </div>
+        );
+    }
+    
     return (
         <>
             {/* ------------------아이템 카드------------------  */}

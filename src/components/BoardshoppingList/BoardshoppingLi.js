@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import './BoardshoppingLi.css';
 import Pagination from '../Pagination/Pagination.js';
@@ -7,21 +6,30 @@ import ShoppingList from './ShoppingList';  // ShoppingList 컴포넌트를 가�
 import { useLocation } from 'react-router-dom';
 
 const BoardshoppingLi = () => {
-    const itemsPerPage = 8; // 한 페이지당 표시할 항목 수
+    const itemsPerPage = 20; // 한 페이지당 표시할 항목 수
     const [items, setItems] = useState([]); // 전체 아이템 상태
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [totalElements, setTotalElements] = useState(0);
     const [filteredItems, setFilteredItems] = useState([]); // 필터링된 아이템 상태
+    const [sortCondition, setSortCondition] = useState("newest");
     const location = useLocation(); // URL의 쿼리 파라미터를 가져옵니다.
-    const categoryId = new URLSearchParams(location.search).get('categoryId'); // categoryId 가져오기
-    
+    const categoryId = new URLSearchParams(location.search).get('category'); // categoryId 가져오기
+
     // 데이터 가져오기
     useEffect(() => {
         const fetchItems = async () => {
             setLoading(true); // 로딩 시작
             try {
-                const response = await fetch("http://localhost:8080/api/v1/items");
+                let url = `http://localhost:8080/api/v1/items?sort=${sortCondition}&page=${currentPage - 1}&size=${itemsPerPage}`;
+
+                // categoryId가 있으면 URL에 category 파라미터 추가
+                if (categoryId) {
+                    url += `&category=${categoryId}`;
+                }
+
+                const response = await fetch(url);
+
                 if (!response.ok) {
                     throw new Error("Failed to fetch items");
                 }
@@ -41,10 +49,6 @@ const BoardshoppingLi = () => {
                     seller: item.seller,
                     discountPercent: item.discountPercent,
                     discountPrice: item.discountPrice,
-
-                    // ...item,
-                    // discountPercent : 15,
-                    // itemImage: item.repImgUrl.replace("C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\", "")
                 }));
 
                 console.log("updatedArticles", updatedArticles)
@@ -68,7 +72,7 @@ const BoardshoppingLi = () => {
                     setTotalElements(updatedArticles.length);
                 }
 
-                  // 페이지 초기화
+                // 페이지 초기화
                 setCurrentPage(1);
             } catch (error) {
                 console.error("Error fetching items:", error.message);
@@ -78,12 +82,13 @@ const BoardshoppingLi = () => {
         };
 
         fetchItems();
-    },  [categoryId, location]); // categoryId나 location 변경 시 fetchItems 재실행
+    }, [categoryId, sortCondition, currentPage, location]); // categoryId나 location 변경 시 fetchItems 재실행
 
-      // 페이지네이션 계산
-      useEffect(() => {
+    // 페이지네이션 계산
+    useEffect(() => {
         setCurrentPage(1); // 필터링 후 페이지 초기화
     }, [filteredItems]);
+
 
     // 페이지네이션 계산
     const totalItems = filteredItems.length > 0 ? filteredItems : items;
@@ -99,12 +104,38 @@ const BoardshoppingLi = () => {
         setCurrentPage(page);
     };
 
-
+    const handleSortChange = (sort) => {
+        setSortCondition(sort);
+        setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+    };
 
     if (loading) {
         return <div>Loading...</div>; // 로딩 중일 때 표시
     }
 
+    if (totalItems.length === 0) {
+        return (
+            <div className="BoardshoppingLi_full_screen">
+                <div className="BoardshoppingLi_Benner_list">
+                    <div className="BoardshoppingLi_Benner_title">
+                        <h2>SHOP</h2>
+                    </div>
+                </div>
+                <div
+                    style={{
+                        width: "100%",
+                        height: "500px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                    }}
+                >
+                    등록된 상품이 없습니다.
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="BoardshoppingLi_full_screen">
@@ -119,7 +150,7 @@ const BoardshoppingLi = () => {
 
             {/* ------------------상품 조회수 및 상품 조회------------------ */}
             <div>
-                <ProductListMenu totalElements={totalElements} />
+                <ProductListMenu totalElements={totalElements} onSortChange={handleSortChange} currentSort={sortCondition} />
             </div>
 
             <div className="BoardshoppingLi_container">

@@ -153,7 +153,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }) => {
     if (!subCategories[categoryName]) {
       fetchChildrenCategories(categoryName); // 하위 카테고리 가져오기
     }
-    navigate(`/BoardshoppingLi?categoryId=${categoryName}`);
+    navigate(`/BoardshoppingLi?category=${categoryName}`);
   };
 
   document.addEventListener("DOMContentLoaded", () => {
