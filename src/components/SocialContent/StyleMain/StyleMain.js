@@ -168,7 +168,9 @@ const StyleMain = () => {
         <>
             <div className="StyleMain_full_screen">
                 {/* ------------------------- banner ------------------------ */}
-                <div className="StyleMain_banner">STYLE BANNER</div>
+                <div className="StyleMain_banner">
+                    <h2 style={{ fontSize: "50px"}}>STYLE</h2>
+                </div>
 
                 {/* ------------------------ sorting ------------------------ */}
                 <div className="StyleMain_sorting">
