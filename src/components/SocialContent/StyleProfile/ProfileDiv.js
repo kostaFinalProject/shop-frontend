@@ -129,8 +129,9 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
     };
 
     // 모달 관련 함수
-    const openModal = () => {
+    const openModal = (page) => {
         setIsModalOpen(true);
+        setActivePage(page);
         fetchFollowers();  // 모달 열릴 때 팔로워 목록을 불러옴
         fetchFollowees();  // 팔로잉 목록을 불러옴
         fetchBlockList();  // 차단 리스트를 불러옴
@@ -332,21 +333,6 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
     };
       
     const openPage = (pageName) => setActivePage(pageName);
-    // const openPage = (page) => {
-    //     setActivePage(page);
-    
-    //     // 페이지가 바뀔 때마다 해당하는 데이터를 새로 불러옴
-    //     if (page === 'page1') {
-    //         fetchFollowers();  // 팔로워 목록 새로 불러오기
-    //     } else if (page === 'page2') {
-    //         fetchFollowees();  // 팔로잉 목록 새로 불러오기
-    //     } else if (page === 'page3') {
-    //         fetchBlockList();  // 차단 리스트 새로 불러오기
-    //     } else if (page === 'page4') {
-    //         fetchFollowRequests();  // 맞팔로우 새로 불러오기
-    //     }
-    // };
-    
 
     return (
         <div className="Styleprofile_profile">
@@ -364,8 +350,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                         className="Styleprofile_follow_btn"
                         onClick={handleFollowToggle}
                         style={{
-                            backgroundColor: profile.follow === "Followed" ? "blue" : "black",
-                            color: "white",
+                            backgroundColor: profile.follow === "Followed" ? "#3897f0" : "black",
                         }}
                         hidden={profile.follow === "Me"}
                     >
@@ -373,6 +358,7 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                     </button>
                     <button
                         className="Styleprofile_follow_btn"
+                        style={{backgroundColor: "black"}}
                         hidden={profile.follow === "Me"}
                         onClick={handleBlockUser}>
                         차단
@@ -381,8 +367,12 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
 
                 <div className="Styleprofile_follow_following">
                     <div className="Styleprofile_follow">
-                        <button id="modal-open" onClick={openModal}>팔로워</button>
-                        <span>{profile.followeeCount}</span>
+                    <button id="modal-open" onClick={() => openModal('page1')}>팔로워</button>
+                        <span style={{ fontSize: "16px"}}>{profile.followeeCount}</span>
+                    </div>
+                    <div className="Styleprofile_following">
+                        <button id="modal-open" onClick={() => openModal('page2')}>팔로우</button>
+                        <span style={{ fontSize: "16px"}}>{profile.followerCount}</span>
                     </div>
                     {/* 모달 구조 (조건부 렌더링) */}
                     {isModalOpen && (
@@ -539,12 +529,6 @@ const ProfileDiv = ({ headers, profile, setProfile }) => {
                             </div>
                         </div>
                     )}
-
-
-                    <div className="Styleprofile_following">
-                        <a href="#">팔로잉</a>
-                        <span>{profile.followerCount}</span>
-                    </div>
                 </div>
 
                 <div className="Styleprofile_profile_information">

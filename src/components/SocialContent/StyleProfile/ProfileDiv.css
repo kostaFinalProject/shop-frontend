@@ -3,170 +3,254 @@
 .Styleprofile_profile a,
 .Styleprofile_follow a,
 .Styleprofile_following a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 
 }
 
 .Styleprofile_profile {
-    margin: 20px 0 0 20px;
-    width: 1200px;
-    height: 150px;
-    display: flex;
-    justify-content: space-between;
+  margin: 20px 0 0 20px;
+  width: 1200px;
+  height: 150px;
+  display: flex;
+  justify-content: space-between;
 
 }
 
 
-.Styleprofile_profile_img{
-    margin: 20px 0 0 0;
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
+.Styleprofile_profile_img {
+  margin: 20px 0 0 0;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
 
-    
+
 }
-.SearchProfile_user_img img{
+
+.Styleprofile_profile_img img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 100px;
+}
+
+.Styleprofile_profile_text {
+  margin: 20px 0 0 20px;
+  padding-top: 10px;
+  width: 1000px;
+  height: 100%;
+
+}
+
+.Styleprofile_profile_head {
+
+  height: 36px;
+  margin: 0;
+  padding-left: 10px;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.Styleprofile_profile_nickname {
+  font-size: 18px;
+}
+
+.Styleprofile_profile_nicknamebutton {
+  all: unset;
+  margin-left: 20px;
+}
+
+.Styleprofile_profile_nicknamebutton:hover {
+  cursor: pointer;
+  color: red;
+}
+
+
+
+.Styleprofile_follow_btn {
+  /* all: unset; */
+  background-color: #3897f0;
+  color: white;
+  font-size: 10px;
+  text-align: center;
+  width: 60px;
+  height: 25px;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.Styleprofile_follow_btn:hover {
+  background-color: #2973b6;
+  /* 호버 시 버튼 색상 */
+  transform: scale(1.05);
+  /* 호버 시 크기 약간 커지게 */
+}
+
+.Styleprofile_follow_following {
+  padding-left: 10px;
+  height: 36px;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+
+}
+
+.Styleprofile_follow {
+  width: 100px;
+  display: flex;
+}
+
+.Styleprofile_following {
+  width: 100px;
+  display: flex;
+}
+
+#modal-open {
+  all: unset;
+  font-size: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#modal-open:hover {
+  width: 60px;
+  height: 25px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #2973b6;
+  /* 호버 시 버튼 색상 */
+  transform: scale(1.05);
+  /* 호버 시 크기 약간 커지게 */
+}
+
+.modal-open_span {
+  font-size: 15px;
+}
+
+.Styleprofile_following {
+  width: 80px;
+  display: flex;
+  font-size: 15px;
+
+}
+
+.Styleprofile_following_span {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.Styleprofile_profile_img {
+  margin: 20px 0 0 0;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+
+
+}
+
+.SearchProfile_user_img img {
   width: 60PX;
   height: 60PX;
   border-radius: 100px;
 }
-.Styleprofile_profile_img img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 100px;
-}
-.Styleprofile_profile_text {
-    margin: 20px 0 0 20px;
-    padding-top: 10px;
-    width: 1000px;
-    height: 100%;
-
-}
-.Styleprofile_profile_head{
-    
-    height: 36px;
-    margin: 0;
-    padding-left: 10px;
-    align-items: center;
-    font-size: 15px;
-    font-weight: bold;
-}
-.Styleprofile_follow_btn{
-    background-color: black;
-    color: white;
-    font-size: 10px;
-    width: 55px;
-    height: 25px;
-    margin-left: 10px;
-    border-radius: 10px;
-}
-.Styleprofile_follow_following {
-    height: 36px;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-
-}
-.Styleprofile_follow {
-    width: 80px;
-    display: flex;
-
-
-}
-.Styleprofile_following {
-    width: 80px;
-    display: flex;
-
-}
 
 .Styleprofile_profile_information {
-    height: 36px;
-    margin: 10px 0 10px 0;
-    padding-left: 10px;
-    font-size: 12px;
-    align-items: center;
+  height: 36px;
+  margin: 10px 0 10px 0;
+  padding-left: 10px;
+  font-size: 15px;
+  align-items: center;
 
 }
 
 /* 모달 스타일 */
 .followmodal {
-    display: none; /* 처음에는 숨겨짐 */
-    position: fixed; /* 고정된 위치 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-    justify-content: center; /* 세로로 중앙 정렬 */
-    align-items: center; /* 가로로 중앙 정렬 */
-    display: flex; /* flexbox 활성화 */
-    z-index: 1000; /* 다른 요소들 위에 표시 */
-  }
-  
-  /* 모달 내용 */
-  .followmodal-content {
-    background-color: #fff;
-    width: 800px;
-    height: 800px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-  }
-  
-  /* 탭 스타일 */
-  .followtabs {
-    display: flex;
-    border-bottom: 2px solid #ddd;
-  }
-  
-  .followtab-link {
-    width: 200px;
-    height: 50px;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    background-color: #f0f0f0;
-    transition: background-color 0.3s;
-  }
-  
-  .followtab-link.active {
-    background-color: #ddd;
-  }
-  
-  /* 페이지 스타일 */
-  .page {
-    display: none;
-  }
-  
-  .page.active {
-    display: block;
-  }
-  
-  
-  
-  
-  
-  .follow_btn{
-    background-color: black;
-    color: white;
-    font-size: 10px;
-    width: 100px;
-    height: 35px;
-    margin-left: 10px;
-    border-radius: 10px;
-  
-  }
-  
-  
-  .followProfile_full {
-    margin: 0 auto;
-    padding: 0;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: auto;
-  }
+  display: none;
+  /* 처음에는 숨겨짐 */
+  position: fixed;
+  /* 고정된 위치 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 반투명 배경 */
+  justify-content: center;
+  /* 세로로 중앙 정렬 */
+  align-items: center;
+  /* 가로로 중앙 정렬 */
+  display: flex;
+  /* flexbox 활성화 */
+  z-index: 1000;
+  /* 다른 요소들 위에 표시 */
+}
+
+/* 모달 내용 */
+.followmodal-content {
+  background-color: #fff;
+  width: 800px;
+  height: 800px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* 그림자 효과 */
+}
+
+/* 탭 스타일 */
+.followtabs {
+  display: flex;
+  border-bottom: 2px solid #ddd;
+}
+
+.followtab-link {
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.followtab-link.active {
+  background-color: #ddd;
+}
+
+/* 페이지 스타일 */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+
+
+
+
+.follow_btn {
+  background-color: black;
+  color: white;
+  font-size: 10px;
+  width: 100px;
+  height: 35px;
+  margin-left: 10px;
+  border-radius: 10px;
+
+}
+
+
+.followProfile_full {
+  margin: 0 auto;
+  padding: 0;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+}
