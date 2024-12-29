@@ -171,7 +171,7 @@ const StyleMain = () => {
                 <div className="StyleMain_banner">
                     <h2 style={{ fontSize: "50px"}}>STYLE</h2>
                 </div>
-
+    
                 {/* ------------------------ sorting ------------------------ */}
                 <div className="StyleMain_sorting">
                     <span>
@@ -202,58 +202,74 @@ const StyleMain = () => {
             </div>
             {/* -------------------sns_container---------------- */}
             <div className="StyleMain_sns_container">
-                <ul className="StyleMain_sns_list_body">
-                    {articles.map((article) => (
-                        <li
-                            key={article.articleId}
-                            className="StyleMain_sns_list_item"
-                            onClick={() => handleArticleClick(article.articleId)}
-                        >
-                            <div className="StyleMain_sns_profile" >
-                                <div className="StyleMain_sns_img_box">
+                {articles.length > 0 ? (
+                    <ul className="StyleMain_sns_list_body">
+                        {articles.map((article) => (
+                            <li
+                                key={article.articleId}
+                                className="StyleMain_sns_list_item"
+                                onClick={() => handleArticleClick(article.articleId)}
+                            >
+                                <div className="StyleMain_sns_profile" >
+                                    <div className="StyleMain_sns_img_box">
+                                        <img
+                                            src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
+                                            alt={article.memberName}
+                                            className="StyleMain_sns_profile_img"
+                                        />
+                                    </div>
+                                    <div className="StyleMain_sns_profile_id_box">
+                                        <span className="StyleMain_sns_profile_id">{article.memberName}</span>
+                                    </div>
+                                </div>
+    
+                                <div className="StyleMain_sns_item_img_box">
                                     <img
-                                        src={article.memberProfileImageUrl ? `/uploads/${article.memberProfileImageUrl}` : "https://fakeimg.pl/50x50/"}
-                                        alt={article.memberName}
-                                        className="StyleMain_sns_profile_img"
+                                        src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://fakeimg.pl/150x150/"}
+                                        alt={article.content}
+                                        className="StyleMain_sns_item_img"
                                     />
                                 </div>
-                                <div className="StyleMain_sns_profile_id_box">
-                                    <span className="StyleMain_sns_profile_id">{article.memberName}</span>
-                                </div>
-                            </div>
-
-                            <div className="StyleMain_sns_item_img_box">
-                                <img
-                                    src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://fakeimg.pl/150x150/"}
-                                    alt={article.content}
-                                    className="StyleMain_sns_item_img"
-                                />
-                            </div>
-                            <div className="StyleMain_sns_content">
-                                <div className="StyleMain_sns_title">
-                                    <p className="StyleMain_sns_body_text" >
-                                        {article.content}
-                                    </p>
-                                    <span className="StyleMain_sns_title_like">
-                                        {article.likeId ? "❤️" : "♡"} {article.likeCount}
-                                    </span>
-                                </div>
-
-                                <p className="StyleMain_sns_body_tag">
-                                    {article.hashtags.map((hashtag, index) => (
-                                        <span key={index} className="StyleMain_sns_card_hashtag">
-                                            {`${hashtag} `}
+                                <div className="StyleMain_sns_content">
+                                    <div className="StyleMain_sns_title">
+                                        <p className="StyleMain_sns_body_text" >
+                                            {article.content}
+                                        </p>
+                                        <span className="StyleMain_sns_title_like">
+                                            {article.likeId ? "❤️" : "♡"} {article.likeCount}
                                         </span>
-                                    ))}
-                                </p>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                                    </div>
+    
+                                    <p className="StyleMain_sns_body_tag">
+                                        {article.hashtags.map((hashtag, index) => (
+                                            <span key={index} className="StyleMain_sns_card_hashtag">
+                                                {`${hashtag} `}
+                                            </span>
+                                        ))}
+                                    </p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <div
+                        className="SearchStyle_No_item"
+                        style={{
+                            width: "100%",
+                            height: "500px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center",
+                        }}
+                    >
+                        스타일이 없습니다.
+                    </div>
+                )}
                 {loading && <p>로딩 중...</p>}
             </div>
         </>
-    );
+    );    
 };
 
 export default StyleMain;
