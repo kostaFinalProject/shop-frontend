@@ -156,9 +156,9 @@ const Main = () => {
                   <div className="board_content">
                     <div className="board_title"><a href="#">{item.name}</a></div>
                     <div className="board_price">
-                      {item.discountPrice && item.discountPercent !== 0 ? (
+                      {item.discountPercent > 0 ? (
                         <>
-                          <span className="original-price" style={{ textDecoration: 'line-through' }}>
+                          <span className="original-price" style={{ textDecoration: 'line-through', color: "#aaa" }}>
                             {item.price.toLocaleString()}원
                           </span>
                           <span className="discounted-price">

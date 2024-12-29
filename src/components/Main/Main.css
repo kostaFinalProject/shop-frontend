@@ -288,11 +288,6 @@ body {
 
 }
 
-
-.original-price{
-  text-decoration: line-through;
-  color: #aaa;
-}
 .discounted-price,
 .discount-rate{
   padding-left: 10px;
