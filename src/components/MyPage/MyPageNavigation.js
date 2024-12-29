@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import './MyPageNavigation.css';
 
 const MyPageNavigation = () => {
@@ -23,7 +23,9 @@ const MyPageNavigation = () => {
     return (
         <>
             <section className="manuwrap">
-                <h3>마이 페이지</h3>
+                <a href="/MyPage">
+                    <h3>마이 페이지</h3>
+                </a>
                 <article className="myshopmain">
                     <h4>나의 쇼핑활동</h4>
                     <ul>
@@ -72,9 +74,9 @@ const MyPageNavigation = () => {
                         <a href="">
                             <li>회원 정보 수정</li>
                         </a>
-                        <a href="">
+                        {/* <a href="">
                             <li>로그아웃</li>
-                        </a>
+                        </a> */}
                     </ul>
                 </article>
                 <article className="myshopmain">
