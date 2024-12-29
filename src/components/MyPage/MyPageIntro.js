@@ -130,7 +130,7 @@ const MyPageIntro = () => {
 
   const profileImageUrl = currentUser.memberProfileImageUrl
     ? currentUser.memberProfileImageUrl.replace(
-      "C:\\Users\\dusrb\\FinalTotalProject\\frontend\\frontend-jhs-Ingu\\frontend-jhs-Ingu\\public\\uploads\\",
+      "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
       ""
     )
     : "https://fakeimg.pl/150x150/";
@@ -150,7 +150,7 @@ const MyPageIntro = () => {
           <article>
             <div className="profile">
               <div className="profile_img">
-                <img src={profileImageUrl} alt="Profile" />
+                <img src={`/uploads/${profileImageUrl}`} alt="Profile" />
               </div>
 
               <div className="profile_text">
