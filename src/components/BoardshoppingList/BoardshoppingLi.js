@@ -39,8 +39,7 @@ const BoardshoppingLi = () => {
                     itemImage: item.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
                     itemStatus: item.itemStatus,
                     seller: item.seller,
-                    // discountPercent: item.discountPercent,
-                    discountPercent: 10,
+                    discountPercent: item.discountPercent,
                     discountPrice: item.discountPrice,
 
                     // ...item,

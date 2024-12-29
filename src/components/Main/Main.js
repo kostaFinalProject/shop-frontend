@@ -36,8 +36,7 @@ const Main = () => {
           itemImage: item.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
           itemStatus: item.itemStatus,
           seller: item.seller,
-          // discountPercent: item.discountPercent,
-          discountPercent: 10,  // 할인율 임시 설정
+          discountPercent: item.discountPercent,
           discountPrice: item.discountPrice,
         }));
 
