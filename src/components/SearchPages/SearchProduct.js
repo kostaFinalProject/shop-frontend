@@ -40,8 +40,8 @@ const SearchProduct = () => {
                 repImgUrl: product.repImgUrl.replace('C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\', ''),
                 itemStatus: product.itemStatus,
                 seller: product.seller,
-                // discountPercent: product.discountPercent,
-                discountPercent: 10,
+                discountPercent: product.discountPercent,
+                // discountPercent: 10,
                 discountPrice: product.discountPrice,
             }));
 

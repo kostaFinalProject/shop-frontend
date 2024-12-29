@@ -202,21 +202,21 @@ const MyPageModifyMember = () => {
     };
 
     return (
-        <div className="form-wrap" style={{ margin: "0" }}>
-            <div id="content">
+        <div className="MyPageModifyMember_form_wrap" >
+            <div id="MyPageModifyMember_content" style={{display: "flex"}}>
                 <MyPageNavigation />
-                <form onSubmit={handleSignupSubmit} action="" method="POST" style={{ height: "500px", marginBottom: "50px" }}>
-                    <div className="secondmenu">
-                        <div style={{ display: "block", justifyContent: "center", borderBottom: "1px solid black", marginBottom: 10 }}>
-                            <h2 style={{ textAlign: "center", margin: "10px 0" }}>회원수정</h2>
-                            <p style={{ textAlign: "right" }}>
-                                <span style={{ color: "#ed4848", marginBottom: "10px" }}>*</span> 필수입력사항
+                <form onSubmit={handleSignupSubmit} action="" method="POST" >
+                    <div className="MyPageModifyMember_secondmenu">
+                        <div className="MyPageModifyMember_Title" >
+                            <h2>회원수정</h2>
+                            <p>
+                                <span>*</span> 필수입력사항
                             </p>
                         </div>
-                        <div className="form">
+                        <div className="MyPageModifyMember_form_Body">
                             {/* 아이디, 비밀번호, 이름, 닉네임 필드 */}
-                            <div className="form-section">
-                                <div className="form-row">
+                            <div className="MyPageModifyMember_form_section">
+                                <div className="MyPageModifyMember_form_row">
                                     <label htmlFor="userid">
                                         아이디 <span style={{ color: "#ed4848" }}>*</span>
                                     </label>
@@ -226,13 +226,13 @@ const MyPageModifyMember = () => {
                                         id="userid"
                                         name="userid"
                                         placeholder="아이디를 입력하세요."
-                                        style={{ width: 170 }}
+                                        style={{ width: "50%", marginLeft: "25px" }}
                                         onChange={handleUseridChange}
                                         required
                                     />
                                     {!useridChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>영문과 숫자 조합으로 8~16자 사이로 입력하세요.</span>}
                                 </div>
-                                <div className="form-row">
+                                <div className="MyPageModifyMember_form_row">
                                     <label htmlFor="pw">
                                         비밀번호 <span style={{ color: "#ed4848" }}>*</span>
                                     </label>
@@ -241,23 +241,23 @@ const MyPageModifyMember = () => {
                                         maxLength={16}
                                         id="pw"
                                         name="password"
-                                        style={{ width: 170 }}
+                                        style={{ width: "50%", marginLeft: "65px" }}
                                         placeholder="비밀번호를 입력하세요."
                                         onChange={handlePwChange}
                                         required
                                     />
                                     {!pwChk && <span style={{ color: "#FA3E3E", fontSize: "12px" }}>영문 대소문자, 숫자, 특수문자(!,@,#,$,%)를 최소 1자 이상 포함해 8~16자 사이로 입력하세요.</span>}
                                 </div>
-                                <div className="form-row">
+                                <div className="MyPageModifyMember_form_row">
                                     <label htmlFor="re_pw">
                                         비밀번호 확인 <span style={{ color: "#ed4848" }}>*</span>
                                     </label>
                                     <input
+                                     style={{ width: "50%" , marginLeft: "25px"}}
                                         type="password"
                                         maxLength={16}
                                         id="re_pw"
                                         name="re_pw"
-                                        style={{ width: 170 }}
                                         placeholder="비밀번호를 입력하세요."
                                         onChange={handleRePwChange}
                                         onPaste="return false;"
@@ -268,15 +268,15 @@ const MyPageModifyMember = () => {
 
                             </div>
                             {/* 이름 필드 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyMember_form_row">
                                 <label htmlFor="name">이름 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     maxLength={10}
                                     id="name"
                                     name="name"
+                                    style={{ width: "79%" }}
                                     value={formData.name}
-                                    style={{ width: 170 }}
                                     placeholder="이름을 입력하세요."
                                     onChange={handleInputChange}
                                     required
@@ -285,15 +285,15 @@ const MyPageModifyMember = () => {
                             </div>
 
                             {/* 닉네임 필드 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyMember_form_row">
                                 <label htmlFor="nickname">닉네임 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     maxLength={10}
                                     id="nickname"
                                     name="nickname"
+                                    style={{ width: "79%" }}
                                     value={formData.nickname}
-                                    style={{ width: 170 }}
                                     placeholder="사용할 닉네임을 입력하세요"
                                     onChange={handleInputChange}
                                     required
@@ -302,7 +302,7 @@ const MyPageModifyMember = () => {
                             </div>
 
                             {/* 휴대폰 번호 입력 섹션 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyMember_form_row">
                                 <label htmlFor="phone">휴대폰 번호 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                     <select
@@ -323,6 +323,7 @@ const MyPageModifyMember = () => {
                                         name="phoneMiddle"
                                         style={{ width: "100px" }}
                                         maxLength={4}
+                                        
                                         value={formData.phoneMiddle}
                                         onChange={handleInputChange}
                                         required
@@ -343,39 +344,39 @@ const MyPageModifyMember = () => {
                             </div>
 
                             {/* 주소 섹션 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyMember_form_row">
                                 <label htmlFor="postcode">우편번호 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     id="postcode"
                                     name="postCode"
                                     value={formData.postCode}
-                                    style={{ width: 165 }}
+                                    style={{ width: "40%" }}
                                     placeholder="우편번호"
                                     readOnly
                                     required
                                 />
                                 <button type="button" onClick={execDaumPostcode}>주소 찾기</button>
                             </div>
-                            <div className="form-row">
+                            <div className="MyPageModifyMember_form_row">
                                 <label htmlFor="roadAddress">기본주소 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     id="roadAddress"
                                     name="roadAddress"
                                     value={formData.roadAddress}
-                                    style={{ width: 250 }}
+                                    style={{ width: "79%" }}
                                     placeholder="주소"
                                     readOnly
                                 />
                             </div>
-                            <div className="form-row">
+                            <div className="MyPageModifyMember_form_row">
                                 <label htmlFor="detailAddress">상세주소 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     id="detailAddress"
                                     name="detailAddress"
-                                    style={{ width: 250 }}
+                                    style={{ width: "79%" }}
                                     value={formData.detailAddress}
                                     placeholder="상세주소"
                                     onChange={handleInputChange}
@@ -383,8 +384,8 @@ const MyPageModifyMember = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="register">
-                        <button className="join-button" type="submit">회원수정</button>
+                    <div className="MyPageModifyMember_registerregister">
+                        <button className="MyPageModifyMember_join-button" type="submit">회원수정</button>
                     </div>
                 </form>
             </div>

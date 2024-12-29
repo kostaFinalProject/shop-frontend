@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./MyPageModifyMember.css";
+import "./MyPageModifyOauthMember.css";
 import MyPageNavigation from "./MyPageNavigation";
 
 const MyPageModifyOauthMember = () => {
@@ -161,28 +161,29 @@ const MyPageModifyOauthMember = () => {
     };
 
     return (
-        <div className="form-wrap" style={{ margin: "0" }}>
-            <div id="content">
+        <div className="MyPageModifyOauthMember_form_wrap" >
+            <div className="MyPageModifyOauthMember_content">
                 <MyPageNavigation />
-                <form onSubmit={handleSignupSubmit} action="" method="POST" style={{ height: "500px", marginBottom: "50px" }}>
-                    <div className="secondmenu">
-                        <div style={{ display: "block", justifyContent: "center", borderBottom: "1px solid black", marginBottom: 10 }}>
-                            <h2 style={{ textAlign: "center", margin: "10px 0" }}>회원수정</h2>
-                            <p style={{ textAlign: "right" }}>
-                                <span style={{ color: "#ed4848", marginBottom: "10px" }}>*</span> 필수입력사항
+                <form onSubmit={handleSignupSubmit} action="" method="POST" >
+                    <div className="MyPageModifyOauthMember_secondmenu">
+                        <div className="MyPageModifyOauthMember_Title" >
+                            <h2 >회원수정</h2>
+                            <p>
+                                <span >*</span> 필수입력사항
                             </p>
                         </div>
-                        <div className="form">
+                        <div className="MyPageModifyOauthMember_form_Body">
                             {/* 이름 필드 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyOauthMember_form_row">
                                 <label htmlFor="name">이름 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
+                                    
                                     type="text"
                                     maxLength={10}
                                     id="name"
                                     name="name"
+                                    style={{ width: "79%" }}
                                     value={formData.name}
-                                    style={{ width: 170 }}
                                     placeholder="이름을 입력하세요."
                                     onChange={handleInputChange}
                                     required
@@ -191,15 +192,15 @@ const MyPageModifyOauthMember = () => {
                             </div>
 
                             {/* 닉네임 필드 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyOauthMember_form_row">
                                 <label htmlFor="nickname">닉네임 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     maxLength={10}
                                     id="nickname"
                                     name="nickname"
+                                    style={{ width: "79%" }}
                                     value={formData.nickname}
-                                    style={{ width: 170 }}
                                     placeholder="사용할 닉네임을 입력하세요"
                                     onChange={handleInputChange}
                                     required
@@ -208,7 +209,7 @@ const MyPageModifyOauthMember = () => {
                             </div>
 
                             {/* 휴대폰 번호 입력 섹션 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyOauthMember_form_row">
                                 <label htmlFor="phone">휴대폰 번호 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                     <select
@@ -249,39 +250,39 @@ const MyPageModifyOauthMember = () => {
                             </div>
 
                             {/* 주소 섹션 */}
-                            <div className="form-row">
+                            <div className="MyPageModifyOauthMember_form_row">
                                 <label htmlFor="postcode">우편번호 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     id="postcode"
                                     name="postCode"
                                     value={formData.postCode}
-                                    style={{ width: 165 }}
+                                     style={{ width: "40%" }}
                                     placeholder="우편번호"
                                     readOnly
                                     required
                                 />
                                 <button type="button" onClick={execDaumPostcode}>주소 찾기</button>
                             </div>
-                            <div className="form-row">
+                            <div className="MyPageModifyOauthMember_form_row">
                                 <label htmlFor="roadAddress">기본주소 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     id="roadAddress"
                                     name="roadAddress"
                                     value={formData.roadAddress}
-                                    style={{ width: 250 }}
+                                    style={{ width: "79%" }}
                                     placeholder="주소"
                                     readOnly
                                 />
                             </div>
-                            <div className="form-row">
+                            <div className="MyPageModifyOauthMember_form_row">
                                 <label htmlFor="detailAddress">상세주소 <span style={{ color: "#ed4848" }}>*</span></label>
                                 <input
                                     type="text"
                                     id="detailAddress"
                                     name="detailAddress"
-                                    style={{ width: 250 }}
+                                    style={{ width: "79%" }}
                                     value={formData.detailAddress}
                                     placeholder="상세주소"
                                     onChange={handleInputChange}
@@ -289,8 +290,8 @@ const MyPageModifyOauthMember = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="register">
-                        <button className="join-button" type="submit">회원수정</button>
+                    <div className="MyPageModifyOauthMember_register">
+                        <button className="MyPageModifyOauthMember_join-button" type="submit">회원수정</button>
                     </div>
                 </form>
             </div>

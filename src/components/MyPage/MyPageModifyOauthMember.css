@@ -5,7 +5,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 
-.MyPageModifyMember_form_wrap {
+.MyPageModifyOauthMember_form_wrap {
     margin: 0 auto;
     padding: 0;
     width: 1280px;
@@ -15,7 +15,7 @@
     align-items: center;
 
   }
- .MyPageModifyMember_content{
+ .MyPageModifyOauthMember_content{
 
     width: 1280px; 
     margin: 0 auto; 
@@ -26,27 +26,27 @@
 
   }
   
-.MyPageModifyMember_secondmenu {
+.MyPageModifyOauthMember_secondmenu {
   width: 1080px;
     text-align: left;
  
   }
 
-  .MyPageModifyMember_Title{
+  .MyPageModifyOauthMember_Title{
     display: flex;
     flex-direction: column;
     justify-content: center;
 
   }
-  .MyPageModifyMember_Title h2{
+  .MyPageModifyOauthMember_Title h2{
     height: 1px;
   }
-  .MyPageModifyMember_Title p {
+  .MyPageModifyOauthMember_Title p {
     font-size: 15px;
     text-align: end;
   }
   /* 전체 폼 */
-  .MyPageModifyMember_form_Body{
+  .MyPageModifyOauthMember_form_Body{
 
     width: 100%;
     display: flex;
@@ -57,14 +57,7 @@
 
 
   }
-
-  .MyPageModifyMember_form_section{
-    width: 100%;
-
-
-    /* 이부분은 아이디 비밀번호 비밀번호 확인부분 */
-  }
-.MyPageModifyMember_form_row {
+.MyPageModifyOauthMember_form_row {
     width: 95%;
     height: 50px;
     display: flex; 
@@ -73,7 +66,7 @@
 
   }
   
-.MyPageModifyMember_form_row label {
+.MyPageModifyOauthMember_form_row label {
     width: 20%;
     font-weight: bold;
     font-size: 20px;
@@ -81,7 +74,7 @@
 
   }
 
-.MyPageModifyMember_form_row input[type="text"] {
+.MyPageModifyOauthMember_form_row input[type="text"] {
     font-size: 13px;
     width: 250px;
     flex: 0 0 auto; 
@@ -90,7 +83,7 @@
     border-radius: 4px;
   }
   
-.MyPageModifyMember_form_row input[type="password"] {
+.MyPageModifyOauthMember_form_row input[type="password"] {
     width: 360px;
     padding: 8px;
     border: 1px solid #ccc;
@@ -101,7 +94,7 @@
     -moz-user-select: none; /* Firefox 지원 */
   }
   
-.MyPageModifyMember_form_row input[type="button"] {
+.MyPageModifyOauthMember_form_row input[type="button"] {
     padding: 8px 12px;
     background-color: #333;
     color: white;
@@ -110,11 +103,11 @@
     cursor: pointer;
   }
   
-.MyPageModifyMember_form_row input[type="button"]:hover {
+.MyPageModifyOauthMember_form_row input[type="button"]:hover {
     background-color: #555;
   }
   
-.MyPageModifyMember_form_row button {
+.MyPageModifyOauthMember_form_row button {
     padding: 8px 12px;
     background-color: #333;
     color: white;
@@ -123,11 +116,11 @@
     cursor: pointer;
   }
   
-.MyPageModifyMember_form_row button:hover {
+.MyPageModifyOauthMember_form_row button:hover {
     background-color: #555;
   }
   
-  .MyPageModifyMember_form_wrap ul {
+  .MyPageModifyOauthMember_form_wrap ul {
     display: block;
     list-style-type: disc;
     margin-block-start: 1em;
@@ -138,7 +131,7 @@
     padding: 0;
   }
   
-  .MyPageModifyMember_form_wrap li{
+  .MyPageModifyOauthMember_form_wrap li{
     display: list-item;
     text-align: -webkit-match-parent;
     list-style: none;
@@ -146,7 +139,7 @@
   }
   
   /* select 요소 스타일 */
-.MyPageModifyMember_form_row select {
+.MyPageModifyOauthMember_form_row select {
     
     padding: 8px; /* input과 동일한 패딩 */
     border: 1px solid #ccc; /* input과 동일한 테두리 */
@@ -155,7 +148,7 @@
   }
   
   
-.MyPageModifyMember_join-button {
+.MyPageModifyOauthMember_join-button {
     display: inline-block;
     width: 100%;
     padding: 15px;
@@ -169,16 +162,16 @@
     text-align: center;
   }
   
-.MyPageModifyMember_join-button:hover {
+.MyPageModifyOauthMember_join-button:hover {
     background-color: #555;
   }
   
-  .MyPageModifyMember_form_wrap #email1, #email2{
+  .MyPageModifyOauthMember_form_wrap #email1, #email2{
     background-color: #999;
     flex: 0.1 !important;
   }
 
-  .MyPageModifyMember_register {
+  .MyPageModifyOauthMember_register {
     margin-top: 20px;
     padding: 8px 12px;
     color: #333;
@@ -197,7 +190,7 @@
 
   /* --왼쪽 네비 css 추후에 css 정리하면서 navi에 ㅊ합쳐야함 */
   /* 왼쪽 메뉴 스타일 */
-.MyPageModifyMember_form_wrap .manuwrap {
+.MyPageModifyOauthMember_form_wrap .manuwrap {
   width: 200px; /* 고정 너비 */
   font-size: 16px; /* 글씨 크기 */
   line-height: 1.8; /* 행간 */
@@ -207,28 +200,28 @@
   gap: 40px;
 }
 
-.MyPageModifyMember_form_wrap .manuwrap h3{
+.MyPageModifyOauthMember_form_wrap .manuwrap h3{
   font-size: 18px;
   font-weight: bold;
 }
 
-.MyPageModifyMember_form_wrap .manuwrap article{
+.MyPageModifyOauthMember_form_wrap .manuwrap article{
   line-height: 1,5;
 }
 
-.MyPageModifyMember_form_wrap .manuwrap article ul{
+.MyPageModifyOauthMember_form_wrap .manuwrap article ul{
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin: 0 5px;
 }
 
-.MyPageModifyMember_form_wrap article h4{
+.MyPageModifyOauthMember_form_wrap article h4{
   font-size: 15px;
   font-weight: bold;
   margin: 0 0 20px;
 }
 
-.MyPageModifyMember_form_wrap .manuwrap article ul li a{
+.MyPageModifyOauthMember_form_wrap .manuwrap article ul li a{
   color: var(--font-color-gray);
 }
