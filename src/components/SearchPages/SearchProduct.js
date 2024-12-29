@@ -97,7 +97,14 @@ const SearchProduct = () => {
                     <div className="SearchProduct_board_list">
                         <ul className="SearchProduct_board_list_body">
                             {products.length === 0 ? (
-                                <div className="SearchProduct_No_item">{keywordFromUrl} 상품이 없습니다.</div>
+                                <div className="SearchProduct_No_item" style={{
+                                    width: "100%",
+                                    height: "500px",
+                                    display: "flex",
+                                    justifyContent: "center", // 가로 중앙 정렬
+                                    alignItems: "center", // 세로 중앙 정렬
+                                    textAlign: "center",
+                                  }}>{keywordFromUrl} 상품이 없습니다.</div>
                             ) : (
                                 products.map((product) => (
                                     <Link to={`/DetailPage?itemId=${product.itemId}`}>

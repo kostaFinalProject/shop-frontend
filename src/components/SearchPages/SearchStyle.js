@@ -159,7 +159,14 @@ const SearchStyle = () => {
             <div className="SearchStyle_sns_container">
                 <ul className="SearchStyle_sns_list_body">
                     {articles.length === 0 ? (
-                        <div className="SearchStyle_No_item">{keywordFromUrl} 스타일이 없습니다.</div>
+                        <div className="SearchStyle_No_item" style={{
+                            width: "100%",
+                            height: "500px",
+                            display: "flex",
+                            justifyContent: "center", // 가로 중앙 정렬
+                            alignItems: "center", // 세로 중앙 정렬
+                            textAlign: "center",
+                          }}>{keywordFromUrl} 스타일이 없습니다.</div>
                     ) : (
                         articles.map((article) => (
                             <li
