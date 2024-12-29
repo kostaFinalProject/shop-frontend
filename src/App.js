@@ -12,6 +12,7 @@ import MyPageCoupon from "./components/MyPage/MyPageCoupon";
 import MyPageMileage from "./components/MyPage/MyPageMileage";
 import MyPageAddress from "./components/MyPage/MyPageAddress";
 import AddressRegisterForm from "./components/MyPage/AddressRegisterForm";
+import MyPageModifyMember from "./components/MyPage/MyPageModifyMember.js";
 import StyleModify from "./components/MyPage/StyleModify";
 import Footer from "./components/Footer/footer";
 import Adminright from "./components/AdminPage/Adminright";
@@ -43,7 +44,6 @@ import UpdateArticle from "./components/NewCreate/UpdateArticle.js";
 import CheckoutPage from "./components/CheckoutPage/CheckoutPage.js";
 import CartCheckoutPage from "./components/CheckoutPage/CartCheckoutPage .js";
 import ProfileMyInterests from "./components/SocialContent/StyleProfile/ProfileMyInterests.js";
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -78,6 +78,7 @@ function App() {
         <Route path="/MyPage/mileage" element={<MyPageMileage />} />
         <Route path="/MyPage/address" element={<MyPageAddress />} />
         <Route path="/MyPage/address/addressregist" element={<AddressRegisterForm />} />
+        <Route path="/MyPage/modifymember" element={<MyPageModifyMember />} />
         <Route path="/MyPage/stylemodify" element={<StyleModify />} />
         <Route path="/AdminPage/reportuser" element={<Reportuser />} />
         <Route path="/AdminPage/categorymaker" element={<Categorymaker />} />
