@@ -36,12 +36,12 @@ const MyPageNavigation = () => {
                         <a href="/MyPage/interest">
                             <li>관심상품</li>
                         </a>
-                        <a href="/MyPage/resentview">
+                        {/* <a href="/MyPage/resentview">
                             <li>최근 본 상품</li>
-                        </a>
+                        </a> */}
                     </ul>
                 </article>
-                <article className="myshopmain">
+                {/* <article className="myshopmain">
                     <h4>쇼핑혜택 안내</h4>
                     <ul>
                         <a href="/MyPage/coupon">
@@ -51,7 +51,7 @@ const MyPageNavigation = () => {
                             <li>적립금 내역</li>
                         </a>
                     </ul>
-                </article>
+                </article> */}
                 <article className="myshopmain">
                     <h4>스타일</h4>
                     <ul>
@@ -66,9 +66,9 @@ const MyPageNavigation = () => {
                 <article className="myshopmain">
                     <h4>나의 정보 관리</h4>
                     <ul>
-                        <a href="/MyPage/address">
+                        {/* <a href="/MyPage/address">
                             <li>배송지 관리</li>
-                        </a>
+                        </a> */}
                         <a href="">
                             <li>회원 정보 수정</li>
                         </a>
