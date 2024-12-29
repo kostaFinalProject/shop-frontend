@@ -232,7 +232,7 @@ body {
   max-width: 100%;
   display: block;
   text-size-adjust: 100%;
-  object-fit: cover; /* 이미지가 슬라이드 크기에 맞게 자르기 */
+  object-fit: contain; /* 이미지가 슬라이드 크기에 맞게 자르기 */
   font-size: 0;
   background-size: cover;
   /* 이미지 크기를 부모에 맞게 조정 */
@@ -241,7 +241,7 @@ body {
 }
 
 .mainContainer .board_img img{
-  object-fit: cover; /* 이미지가 슬라이드 크기에 맞게 자르기 */
+  object-fit: contain; /* 이미지가 슬라이드 크기에 맞게 자르기 */
   width: 278.5px;
   height: 348.125px;
   overflow: hidden;
@@ -271,6 +271,7 @@ body {
   margin: 0;
   padding: 0;
   text-align: left;
+  overflow: hidden;
 
 }
 
@@ -396,6 +397,7 @@ body {
   width: 28px;
   height: 28px;
 
+
 }
 
 .mainContainer .detail_page_review_title_id {
@@ -446,4 +448,3 @@ body {
   transform: translateY(2px); /* 눌렸을 때 살짝 내려감 */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
 }
-

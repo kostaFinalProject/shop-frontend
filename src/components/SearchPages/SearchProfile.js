@@ -67,7 +67,14 @@ const SearchProfile = () => {
 
             <div className="SearchProfile_full">
                 {members.length === 0 ? (
-                    <div className="SearchProfile_No_item">{keywordFromUrl} 프로필이 없습니다.</div>
+                    <div className="SearchProfile_No_item" style={{
+                        width: "100%",
+                        height: "500px",
+                        display: "flex",
+                        justifyContent: "center", // 가로 중앙 정렬
+                        alignItems: "center", // 세로 중앙 정렬
+                        textAlign: "center",
+                      }}>{keywordFromUrl} 프로필이 없습니다.</div>
                 ) : (
                     members.map((member) => (
                         <div className="SearchProfile_pageline" key={member.id}>

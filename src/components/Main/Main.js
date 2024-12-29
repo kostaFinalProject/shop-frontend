@@ -278,12 +278,12 @@ const Main = () => {
             <ul className="flameWrapper" id="swiper-wrapper">
               {/* Style List */}
               {articleData.map((article) => (
-                <li
-                  key={article.articleId}
-                  className="swiperSlideItem"
+                <Link to={`/StyleDetail?articleId=${article.articleId}`}>
+                  <li
+                    key={article.articleId}
+                    className="swiperSlideItem"
 
-                >
-                  <a href={`/StyleDetail?articleId=${article.articleId}`}>
+                  >
                     <div className="detail_page_review_list_item_img">
                       <img
                         src={article.imageUrl ? `/uploads/${article.imageUrl}` : "https://default-image-url.com"}
@@ -310,11 +310,9 @@ const Main = () => {
                         ))}
                       </p>
                     </div>
-                  </a>
-                </li>
+                  </li>
+                </Link>
               ))}
-
-
             </ul>
           </div>
         </div>
