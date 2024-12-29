@@ -71,9 +71,10 @@ const MyPageNavigation = () => {
                         {/* <a href="/MyPage/address">
                             <li>배송지 관리</li>
                         </a> */}
-                        <a href="/MyPage/modifymember">
+                        <a href={currentUser.provider === 'GENERAL' ? '/MyPage/modifymember' : '/MyPage/modifyoauthmember'}>
                             <li>회원 정보 수정</li>
                         </a>
+
                         {/* <a href="">
                             <li>로그아웃</li>
                         </a> */}

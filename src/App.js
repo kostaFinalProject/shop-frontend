@@ -13,6 +13,7 @@ import MyPageMileage from "./components/MyPage/MyPageMileage";
 import MyPageAddress from "./components/MyPage/MyPageAddress";
 import AddressRegisterForm from "./components/MyPage/AddressRegisterForm";
 import MyPageModifyMember from "./components/MyPage/MyPageModifyMember.js";
+import MyPageModifyOauthMember from "./components/MyPage/MyPageModifyOauthMember.js";
 import StyleModify from "./components/MyPage/StyleModify";
 import Footer from "./components/Footer/footer";
 import Adminright from "./components/AdminPage/Adminright";
@@ -79,6 +80,7 @@ function App() {
         <Route path="/MyPage/address" element={<MyPageAddress />} />
         <Route path="/MyPage/address/addressregist" element={<AddressRegisterForm />} />
         <Route path="/MyPage/modifymember" element={<MyPageModifyMember />} />
+        <Route path="/MyPage/modifyoauthmember" element={<MyPageModifyOauthMember />} />
         <Route path="/MyPage/stylemodify" element={<StyleModify />} />
         <Route path="/AdminPage/reportuser" element={<Reportuser />} />
         <Route path="/AdminPage/categorymaker" element={<Categorymaker />} />
