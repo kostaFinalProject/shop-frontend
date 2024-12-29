@@ -138,7 +138,7 @@ const CheckoutPage = () => {
                     pay_method: "card",
                     merchant_uid: `order_${orderId}`,
                     name: items.map(item => `[${item.manufacturer}] ${item.itemName} (${item.size})`).join(", "),
-                    amount: amount + shippingFee,
+                    amount: finalPrice,
                     buyer_email: memberInfo.email,
                     buyer_name: memberInfo.name,
                     buyer_tel: memberInfo.phone,
@@ -157,7 +157,8 @@ const CheckoutPage = () => {
                             body: JSON.stringify({
                                 orderId: orderId,
                                 impUid: response.imp_uid,
-                                orderPrice: amount
+                                orderPrice: finalPrice,
+                                usePoints: appliedPoints
                             })
                         });
 

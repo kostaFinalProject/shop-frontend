@@ -53,25 +53,32 @@ const MyPageOrder = () => {
   }, [page, hasMore]);
 
   useEffect(() => {
+    // 초기 데이터 로드
+    if (orders.length === 0) {
+        fetchOrders();
+    }
+
+    // IntersectionObserver 설정
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchOrders();
-        }
-      },
-      { threshold: 1.0 }
+        (entries) => {
+            if (entries[0].isIntersecting) {
+                fetchOrders();
+            }
+        },
+        { threshold: 1.0 }
     );
 
     if (loader.current) {
-      observer.observe(loader.current);
+        observer.observe(loader.current);
     }
 
     return () => {
-      if (loader.current) {
-        observer.unobserve(loader.current);
-      }
+        if (loader.current) {
+            observer.unobserve(loader.current);
+        }
     };
-  }, [fetchOrders]);
+}, [fetchOrders, orders.length]); // 초기 로드와 IntersectionObserver 연결
+
 
   const handlePayment = (order) => {
     const orderData = {
@@ -271,9 +278,19 @@ const MyPageOrder = () => {
                     }
                   </strong>
                   <strong>배송비: 5000원</strong>
-                  <strong>
-                    총 주문 금액: {(order.orderPrice + 5000).toLocaleString()}원
-                  </strong>
+                  {order.paymentsId && (
+                    <strong>포인트 사용 금액: {order.usePoints}원</strong>
+                  )}
+                  {order.paymentsId ? (
+                    <strong>
+                      총 주문 금액: {(order.orderPrice).toLocaleString()}원
+                    </strong>
+                  ) : (
+                    <strong>
+                      총 주문 금액: {(order.orderPrice + 5000).toLocaleString()}원
+                    </strong>
+                  )}
+                
                   <div className="buttonGroup">{renderButtons(order.orderStatus, order.orderTime, order)}</div>
                 </div>
               </div>

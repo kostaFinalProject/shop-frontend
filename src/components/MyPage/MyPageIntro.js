@@ -167,12 +167,12 @@ const MyPageIntro = () => {
               </div>
 
               <div className="profile-button">
-                <a href="">
+                <a href="/Mypage/stylemodify">
                   <div>
                     프로필 관리
                   </div>
                 </a>
-                <a>
+                <a href={`Styleprofile?memberId=${currentUser.memberId}`}>
                   <div>
                     내 스타일
                   </div>
