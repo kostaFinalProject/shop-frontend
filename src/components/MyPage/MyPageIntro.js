@@ -181,32 +181,40 @@ const MyPageIntro = () => {
             </div>
           </article>
           <article className="myinfobox">
-
             <div>
               <p>
                 <b className="mambername">{currentUser.name}&nbsp;</b>
                 님은&nbsp;
-                <span className="membergrade">{currentUser.pointGrade}&nbsp;</span>
+                <span
+                  className="membergrade"
+                  style={{
+                    fontWeight: "bold",
+                    color:
+                      currentUser.pointGrade === "BRONZE"
+                        ? "#CD7F32" // 동색
+                        : currentUser.pointGrade === "SILVER"
+                          ? "#C0C0C0" // 은색
+                          : currentUser.pointGrade === "GOLD"
+                            ? "#FFD700" // 금색
+                            : "#000", // 기본값: 검정색
+                  }}
+                >
+                  {currentUser.pointGrade}&nbsp;
+                </span>
                 등급입니다.
               </p>
-              <ul className="displaynone">
-                <li className="displaynone">등급혜택 여기에</li>
-              </ul>
-              <ul className="displaynone">
-                <li className="displaynone">상위 등급으로 가는 법은 여기에</li>
-              </ul>
             </div>
             <div>
               <ul className="bankbook">
                 <li>
                   <a href="">
-                    <span className="tit">총주문</span>
+                    <span className="tit">총주문: </span>
                     <span className="orderprice">{currentUser.payment}&nbsp;원</span>
                   </a>
                 </li>
                 <li>
                   <a href="">
-                    <span className="tit">적립금</span>
+                    <span className="tit">포인트: </span>
                     <span className="mileage">{currentUser.point}&nbsp;원</span>
                   </a>
                 </li>
@@ -215,37 +223,105 @@ const MyPageIntro = () => {
           </article>
           <article>
             <div className="title">
-              최근 주문 내역
-              <span className="desc">최근 5개 출력</span>
-              <span className="desc" />
-              <a href="">+ more</a>
+              UNI LABEL 등급 산정 기준
             </div>
-            <div className="listwrap">
-              <div className="ec-base-table typelist">
-                <table border={0} summary="">
+            <div className="listwrap" style={{ display: "flex" }}>
+              <div className="notice">
+                <h3 style={{ marginBottom: "10px", fontWeight: "bold", fontSize: "16px", color: "#555" }}>
+                  📌 포인트 적립 및 차감 안내
+                </h3>
+                <ul style={{ paddingLeft: "20px" }}>
+                  <li>상품 구입, 게시글 작성, 댓글 작성 시 포인트가 적립됩니다.</li>
+                  <li>상품 구매 시 상품 가격의 <strong style={{ color: "#007BFF" }}>1%</strong>가 포인트로 적립됩니다.</li>
+                  <li><strong style={{ color: "#DC3545" }}>단,</strong> 포인트를 사용해 상품 구매 시 포인트가 적립되지 않습니다.</li>
+                  <li>게시글 작성 시 <strong style={{ color: "#28A745" }}>100P</strong>가 적립됩니다.</li>
+                  <li>
+                    <strong style={{ color: "#DC3545" }}>단,</strong> 게시글 삭제 시 <strong>100P</strong>, 운영 정책 위반 시
+                    <strong>1000P</strong>가 차감됩니다.
+                  </li>
+                  <li>댓글 작성 시 <strong style={{ color: "#28A745" }}>50P</strong>가 적립됩니다.</li>
+                  <li>
+                    <strong style={{ color: "#DC3545" }}>단,</strong> 댓글 삭제 시 <strong>50P</strong>, 운영 정책 위반 시
+                    <strong>500P</strong>가 차감됩니다.
+                  </li>
+                  <li>그 외, 각종 이벤트로 포인트 적립이 가능합니다.</li>
+                </ul>
+              </div>
+              <div className="ec-base-table typelist" style={{ marginTop: "50px" }}>
+                <table
+                  border={0}
+                  summary=""
+                  style={{
+                    width: "680px",
+                    maxWidth: "100%",
+                    margin: "0 auto",
+                    borderCollapse: "collapse",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    backgroundColor: "#fff",
+                    borderRadius: "8px",
+                    overflow: "hidden"
+                  }}
+                >
                   <colgroup>
-                    <col style={{ width: "18%" }} />
-                    <col style={{ width: "10%" }} />
-                    <col style={{ width: "auto" }} />
-                    <col style={{ width: "18%" }} />
-                    <col style={{ width: "15%" }} />
+                    <col style={{ width: "20%" }} />
+                    <col style={{ width: "80%" }} />
                   </colgroup>
                   <thead>
-                    <tr>
-                      <th scope="col">주문번호</th>
-                      <th scope="col">이미지</th>
-                      <th scope="col">상품정보</th>
-                      <th scope="col">주문처리상태</th>
-                      <th scope="col">주문일자</th>
+                    <tr
+                      style={{
+                        backgroundColor: "#007BFF",
+                        color: "#fff",
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      <th scope="col" style={{ padding: "10px", color: "black" }}>등급</th>
+                      <th scope="col" style={{ padding: "10px", color: "black" }}>포인트</th>
                     </tr>
                   </thead>
-                  <tbody className="data" />
+                  <tbody className="data" style={{ textAlign: "center" }}>
+                    <tr
+                      style={{
+                        borderBottom: "1px solid #e0e0e0",
+                        backgroundColor: "#f9f9f9"
+                      }}
+                    >
+                      <td style={{ padding: "10px", fontWeight: "bold", color: "#CD7F32" }}>BRONZE</td>
+                      <td style={{ padding: "10px" }}>
+                        상품 구매 금액이 0 ~ 150,000원 사이 고객의 등급입니다.
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody className="data" style={{ textAlign: "center" }}>
+                    <tr
+                      style={{
+                        borderBottom: "1px solid #e0e0e0",
+                        backgroundColor: "#ffffff"
+                      }}
+                    >
+                      <td style={{ padding: "10px", fontWeight: "bold", color: "#C0C0C0" }}>SILVER</td>
+                      <td style={{ padding: "10px" }}>
+                        상품 구매 금액이 150,000 ~ 500,000원 사이 고객의 등급입니다.
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody className="data" style={{ textAlign: "center" }}>
+                    <tr
+                      style={{
+                        borderBottom: "1px solid #e0e0e0",
+                        backgroundColor: "#f9f9f9"
+                      }}
+                    >
+                      <td style={{ padding: "10px", fontWeight: "bold", color: "#FFD700" }}>GOLD</td>
+                      <td style={{ padding: "10px" }}>
+                        상품 구매 금액이 500,000원 이상 고객의 등급입니다.
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
-                <p className="loading" style={{ display: "none" }}>
-                  <i className="xi-spinner-3 xi spin" />
-                </p>
-                <p className="empty">주문 내역이 없습니다.</p>
               </div>
+
             </div>
           </article>
         </section>
