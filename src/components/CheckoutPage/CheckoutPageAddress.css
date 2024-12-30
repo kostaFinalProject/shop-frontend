@@ -118,3 +118,87 @@
   cursor: pointer;
   background-color: red;
 }
+
+.CheckoutPageAddress_Form {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.CheckoutPageAddress_Form h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.address-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.address-actions button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.address-actions button:hover {
+  background-color: #0056b3;
+}
+
+.address-actions button.active {
+  background-color: #0056b3;
+  font-weight: bold;
+}
+
+.CheckoutPageAddress_Form select,
+.CheckoutPageAddress_Form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.CheckoutPageAddress_Form select:focus,
+.CheckoutPageAddress_Form input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.CheckoutPageAddress_Form button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.CheckoutPageAddress_Form button:hover {
+  background-color: #218838;
+}
+
+.CheckoutPageAddress_Form .address-actions button:nth-child(2) {
+  background-color: #17a2b8;
+}
+
+.CheckoutPageAddress_Form .address-actions button:nth-child(2):hover {
+  background-color: #138496;
+}

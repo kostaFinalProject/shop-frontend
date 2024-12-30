@@ -3,7 +3,7 @@
     margin: 0 auto;
     padding: 0;
     width: 900px;
-    height: auto;
+    min-height: 47vh;
     list-style: none;
     box-sizing: border-box;
     font-family: Arial, sans-serif;

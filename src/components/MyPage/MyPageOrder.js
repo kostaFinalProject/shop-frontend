@@ -55,29 +55,29 @@ const MyPageOrder = () => {
   useEffect(() => {
     // 초기 데이터 로드
     if (orders.length === 0) {
-        fetchOrders();
+      fetchOrders();
     }
 
     // IntersectionObserver 설정
     const observer = new IntersectionObserver(
-        (entries) => {
-            if (entries[0].isIntersecting) {
-                fetchOrders();
-            }
-        },
-        { threshold: 1.0 }
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchOrders();
+        }
+      },
+      { threshold: 1.0 }
     );
 
     if (loader.current) {
-        observer.observe(loader.current);
+      observer.observe(loader.current);
     }
 
     return () => {
-        if (loader.current) {
-            observer.unobserve(loader.current);
-        }
+      if (loader.current) {
+        observer.unobserve(loader.current);
+      }
     };
-}, [fetchOrders, orders.length]); // 초기 로드와 IntersectionObserver 연결
+  }, [fetchOrders, orders.length]); // 초기 로드와 IntersectionObserver 연결
 
 
   const handlePayment = (order) => {
@@ -107,6 +107,11 @@ const MyPageOrder = () => {
 
       if (!accesstoken || !refreshToken) {
         alert("로그인이 필요한 기능입니다.");
+        return;
+      }
+
+      const userConfirmed = window.confirm("정말로 결제를 취소하시겠습니까?");
+      if (!userConfirmed) {
         return;
       }
 
@@ -141,6 +146,11 @@ const MyPageOrder = () => {
         return;
       }
 
+      const userConfirmed = window.confirm("정말로 주문을 취소하시겠습니까?");
+      if (!userConfirmed) {
+        return;
+      }
+
       const response = await fetch(`http://localhost:8080/api/v1/orders/${orderId}`, {
         method: "DELETE",
         headers: {
@@ -170,9 +180,9 @@ const MyPageOrder = () => {
       const sevenDaysInMillis = 1 * 24 * 60 * 60 * 1000;
       return timeDifference <= sevenDaysInMillis;
     };
-  
+
     const buttons = [];
-  
+
     // 결제 취소 버튼을 표시할 조건
     if (status === "PAID" && isPaymentCancelable(orderTime) && order.orderItems.every(item => item.itemStatus === "ACTIVE" || item.itemStatus === "SOLD_OUT")) {
       buttons.push(
@@ -185,7 +195,7 @@ const MyPageOrder = () => {
         </button>
       );
     }
-  
+
     // 주문 취소 버튼을 표시할 조건
     if (status === "ORDERED" && order.orderItems.some(item => item.itemStatus === "ACTIVE" || item.itemStatus === "SOLD_OUT")) {
       buttons.push(
@@ -198,7 +208,7 @@ const MyPageOrder = () => {
         </button>
       );
     }
-  
+
     // 결제하기 버튼을 표시할 조건
     if (status === "ORDERED" && order.orderItems.every(item => item.itemStatus === "ACTIVE")) {
       buttons.push(
@@ -211,7 +221,7 @@ const MyPageOrder = () => {
         </button>
       );
     }
-  
+
     // 두 개 이상의 버튼을 모두 반환하도록 배열로 반환
     return buttons.length > 0 ? buttons : null;
   };
@@ -244,7 +254,7 @@ const MyPageOrder = () => {
                 </div>
                 <div className="prdBox">
                   {order.orderItems.map((item, itemIndex) => (
-                    <div key={itemIndex} className="itemCard" style={{ display: "flex", marginBottom: "20px"}}>
+                    <div key={itemIndex} className="itemCard" style={{ display: "flex", marginBottom: "20px" }}>
                       <div className="thumbnail">
                         <a href="">
                           <img
@@ -290,7 +300,7 @@ const MyPageOrder = () => {
                       총 주문 금액: {(order.orderPrice + 5000).toLocaleString()}원
                     </strong>
                   )}
-                
+
                   <div className="buttonGroup">{renderButtons(order.orderStatus, order.orderTime, order)}</div>
                 </div>
               </div>
