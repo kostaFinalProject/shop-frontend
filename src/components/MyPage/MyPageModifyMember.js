@@ -226,7 +226,7 @@ const MyPageModifyMember = () => {
                                         id="userid"
                                         name="userid"
                                         placeholder="아이디를 입력하세요."
-                                        style={{ width: "50%", marginLeft: "25px" }}
+                                        style={{ width: "30%", marginLeft: "25px" }}
                                         onChange={handleUseridChange}
                                         required
                                     />
@@ -241,7 +241,7 @@ const MyPageModifyMember = () => {
                                         maxLength={16}
                                         id="pw"
                                         name="password"
-                                        style={{ width: "50%", marginLeft: "65px" }}
+                                        style={{ width: "30%", marginLeft: "25px"}}
                                         placeholder="비밀번호를 입력하세요."
                                         onChange={handlePwChange}
                                         required
@@ -253,7 +253,7 @@ const MyPageModifyMember = () => {
                                         비밀번호 확인 <span style={{ color: "#ed4848" }}>*</span>
                                     </label>
                                     <input
-                                     style={{ width: "50%" , marginLeft: "25px"}}
+                                     style={{ width: "30%", marginLeft: "25px" }}
                                         type="password"
                                         maxLength={16}
                                         id="re_pw"
