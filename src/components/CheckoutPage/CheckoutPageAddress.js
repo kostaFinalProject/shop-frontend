@@ -118,28 +118,78 @@ const CheckoutPageAddress = ({ onAddressChange }) => {
 
     return (
         <div className="CheckoutPageAddress_Form">
+        <div className="CheckoutPageAddress_Head">
+
             <h3>배송지 관리</h3>
-            <div className="address-actions">
+            <div className="CheckoutPageAddress_address_actions">
                 {["view", "add", "delete"].map((action) => (
                     <button key={action} onClick={() => handleModeChange(action)}>
                         {action === "view" ? "배송지 선택" : action === "add" ? "배송지 추가" : "배송지 삭제"}
                     </button>
                 ))}
             </div>
+        </div>
 
-            {mode === "view" && (
-                <div>
-                    <h4>등록된 주소</h4>
-                    {addressList.length === 0 ? (
-                        <p>등록된 주소가 없습니다.</p>
-                    ) : (
-                        <select
+
+        {mode === "view" && (
+            <div className="CheckoutPageAddress_Registered_Add">
+                <h4>등록된 주소</h4>
+                {addressList.length === 0 ? (
+                    <p>등록된 주소가 없습니다.</p>
+                ) : (
+                    <select
+                        className="CheckoutPageAddress_Registered_Select"
+                        value={selectedAddressId || ""}
+                        onChange={(e) => {
+                            const id = Number(e.target.value);
+                            setSelectedAddressId(id);
+                            updateSelectedAddress(id);
+                        }}
+                    >
+                        <option value="" disabled>
+                            선택해주세요
+                        </option>
+                        {addressList.map((address) => (
+                            <option key={address.deliveryAddressId} value={address.deliveryAddressId}>
+                                {address.roadAddress} {address.detailAddress} ({address.postCode})
+                            </option>
+                        ))}
+                    </select>
+                )}
+            </div>
+        )}
+
+        {mode === "add" && (
+            <div className="CheckoutPageAddress_New_Add">
+                <h4>새로운 주소 추가</h4>
+                <div className="CheckoutPageAddress_New_Box_01">
+                    <input className="CheckoutPageAddress_New_input" type="text" placeholder="우편번호" ref={postCodeRef} readOnly />
+                    <button className="CheckoutPageAddress_New_button" onClick={handleSearchAddress}>주소 검색</button>
+                </div>
+                <div className="CheckoutPageAddress_New_Box_02">
+                    <input className="CheckoutPageAddress_New_TextBox" type="text" placeholder="도로명 주소" ref={roadAddressRef} readOnly />
+                    <input className="CheckoutPageAddress_New_TextBox" type="text" placeholder="상세 주소" ref={detailAddressRef} />
+                </div>
+                <div className="CheckoutPageAddress_New_Box_03">
+
+                </div>
+
+                <button className="CheckoutPageAddress_New_button" onClick={handleAddNewAddress}>등록</button>
+                <button className="CheckoutPageAddress_New_button" onClick={() => handleModeChange("view")}>취소</button>
+            </div>
+        )}
+
+        {mode === "delete" && (
+            <div className="CheckoutPageAddress_Delete_Add">
+                <h4>주소 삭제</h4>
+                {addressList.length === 0 ? (
+                    <p>삭제할 주소가 없습니다.</p>
+                ) : (
+                    <>
+                        <select 
+                            className="CheckoutPageAddress_Delete_Select"
                             value={selectedAddressId || ""}
-                            onChange={(e) => {
-                                const id = Number(e.target.value);
-                                setSelectedAddressId(id);
-                                updateSelectedAddress(id);
-                            }}
+                            onChange={(e) => setSelectedAddressId(Number(e.target.value))}
                         >
                             <option value="" disabled>
                                 선택해주세요
@@ -150,49 +200,13 @@ const CheckoutPageAddress = ({ onAddressChange }) => {
                                 </option>
                             ))}
                         </select>
-                    )}
-                </div>
-            )}
-
-            {mode === "add" && (
-                <div>
-                    <h4>새로운 주소 추가</h4>
-                    <input type="text" placeholder="우편번호" ref={postCodeRef} readOnly />
-                    <button onClick={handleSearchAddress}>주소 검색</button>
-                    <input type="text" placeholder="도로명 주소" ref={roadAddressRef} readOnly />
-                    <input type="text" placeholder="상세 주소" ref={detailAddressRef} />
-                    <button onClick={handleAddNewAddress}>등록</button>
-                    <button onClick={() => handleModeChange("view")}>취소</button>
-                </div>
-            )}
-
-            {mode === "delete" && (
-                <div>
-                    <h4>주소 삭제</h4>
-                    {addressList.length === 0 ? (
-                        <p>삭제할 주소가 없습니다.</p>
-                    ) : (
-                        <>
-                            <select
-                                value={selectedAddressId || ""}
-                                onChange={(e) => setSelectedAddressId(Number(e.target.value))}
-                            >
-                                <option value="" disabled>
-                                    선택해주세요
-                                </option>
-                                {addressList.map((address) => (
-                                    <option key={address.deliveryAddressId} value={address.deliveryAddressId}>
-                                        {address.roadAddress} {address.detailAddress} ({address.postCode})
-                                    </option>
-                                ))}
-                            </select>
-                            <button onClick={() => handleDeleteAddress(selectedAddressId)}>삭제</button>
-                        </>
-                    )}
-                </div>
-            )}
-        </div>
-    );
+                        <button className="CheckoutPageAddress_Delete_Button" onClick={() => handleDeleteAddress(selectedAddressId)}>삭제</button>
+                    </>
+                )}
+            </div>
+        )}
+    </div>
+);
 };
 
 export default CheckoutPageAddress;
