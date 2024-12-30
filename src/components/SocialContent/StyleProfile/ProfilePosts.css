@@ -9,11 +9,17 @@
 }
 
 /* -------------------sns_container---------------- */
+.ProfilePosts_Box{
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    justify-content: center;
 
+}
 
 .ProfilePosts_list_body {
-    
     width: 100%;
+    max-width: 1220px;
     gap: 20px; /* 각 아이템 사이의 간격 */
     margin: 0;
     padding: 0;
@@ -23,12 +29,14 @@
 
     padding-bottom: 20px;
 
+
 }
 
 
 .ProfilePosts_list_item {
-    width: 288px;
+    width: 290px;
     height: 390px;    
+
     list-style: none; /* 기본 리스트 스타일 제거 */
 }
 .ProfilePosts_list_item:hover{

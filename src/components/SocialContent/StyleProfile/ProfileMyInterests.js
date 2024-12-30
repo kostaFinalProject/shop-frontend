@@ -5,12 +5,12 @@ import Masonry from 'react-masonry-css';
 
 const ProfileMyInterests = ({ articleCollections }) => {
     const [myInterests, setMyInterests] = useState([]); // myInterests 상태 추가
-    
+
 
     useEffect(() => {
         console.log("articleCollections received:", articleCollections);
     }, [articleCollections]);
-    
+
     const breakpointColumnsObj = {
         default: 4,
         900: 3,
@@ -26,7 +26,7 @@ const ProfileMyInterests = ({ articleCollections }) => {
                 articleCollectionId: item.articleCollectionId,
                 articleId: item.articleId,
                 content: item.content,
-                img: item.imageUrl, 
+                img: item.imageUrl,
                 likeCount: item.likeCount,
                 likeId: item.likeId,
                 memberId: item.memberId,
@@ -55,25 +55,30 @@ const ProfileMyInterests = ({ articleCollections }) => {
                 </div>
             ) : (
                 // 저장된 게시글이 있을 경우 Masonry로 렌더링
-                <Masonry
-                    breakpointCols={breakpointColumnsObj}
-                    className="ProfileMyInterests_list_body"
-                    columnClassName="ProfileMyInterests_masonry_column"
-                >
-                    {myInterests.map((item, index) => (
-                        <Link to={`/StyleDetail?articleId=${item.articleId}`} key={index}>
-                            <li className="ProfileMyInterests_list_item">
-                                <img
-                                    src={`/uploads/${item.img}`}
-                                    alt="interestData"
-                                    className="ProfileMyInterests_list_item_img"
-                                />
-                                <span className="ProfileMyInterests_title_id">{item.memberId}</span>
-                                <p className="ProfileMyInterests_MyInterests">{item.memberName}</p>
-                            </li>
-                        </Link>
-                    ))}
-                </Masonry>
+                <div className="ProfileMyInterests_Box">
+                    <Masonry
+                        breakpointCols={breakpointColumnsObj}
+                        className="ProfileMyInterests_list_body"
+                        columnClassName="ProfileMyInterests_masonry_column"
+                    >
+                        {myInterests.map((item, index) => (
+                            <Link to={`/StyleDetail?articleId=${item.articleId}`} key={index}>
+                                <li className="ProfileMyInterests_list_item">
+                                    <img
+                                        src={`/uploads/${item.img}`}
+                                        alt="interestData"
+                                        className="ProfileMyInterests_list_item_img"
+                                    />
+                                    <span className="ProfileMyInterests_title_id">{item.memberId}</span>
+                                    <p className="ProfileMyInterests_MyInterests">{item.memberName}</p>
+                                </li>
+                            </Link>
+                        ))}
+                    </Masonry>
+                </div>
+
+
+
             )}
         </>
     );

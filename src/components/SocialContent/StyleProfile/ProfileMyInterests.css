@@ -1,39 +1,45 @@
 /* -------------------sns_container---------------- */
 
+.ProfileMyInterests_Box{
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  justify-content: center;
 
+}
 .ProfileMyInterests_list_body {
 
-    list-style: none;
-    display: flex;
-    margin-left: 20px;
-    width: 1280px;
-    justify-content: center;
+  list-style: none;
+  display: flex;
+  margin-left: 20px;
+  width: 1150px;
+
 
 }
 .ProfileMyInterests_masonry_column{
-    width: 280px !important;
+  width: 280px !important;
 
 
 }
 .ProfileMyInterests_list_item  {
-    width: 230px;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border-radius: 20px;
-  
+  width: 230px;
+  margin-top: 20px;
+  display: flex;
+
+  align-items: center;
+  text-align: center;
+  border-radius: 20px;
+
 
 }
 .ProfileMyInterests_list_item:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .ProfileMyInterests_list_item_img{
-    width: 230px;
-    height: auto;
-    border-radius: 10px;
+  width: 230px;
+  height: auto;
+  border-radius: 10px;
 
 
 }
@@ -42,11 +48,11 @@
 
 
 .ProfileMyInterests_title_id {
-    display: none;
+  display: none;
 }   
 
 
 .ProfileMyInterests_MyInterests {
-     display: none;
+   display: none;
 }
 

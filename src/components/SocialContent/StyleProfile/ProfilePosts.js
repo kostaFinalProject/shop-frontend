@@ -64,6 +64,7 @@ const ProfilePosts = ({ headers, profile }) => {
   }
 
   return (
+      <div className="ProfilePosts_Box">
     <ul className="ProfilePosts_list_body">
       {article.length === 0 ? (
         <div className="Styleprofile_private_account_message">
@@ -125,6 +126,7 @@ const ProfilePosts = ({ headers, profile }) => {
         ))
       )}
     </ul>
+    </div>
   );
 };
 

@@ -448,9 +448,10 @@ const StyleDetail = () => {
                                 .map((item) => (
                                     <div key={item.itemId} className="StyleDetail_Lookup_List_Item">
                                         <Link to={`/DetailPage?itemId=${item.itemId}`}>
-                                            <div className="StyleDetail_Lookup_List_Img">
+                                            <div className="StyleDetail_Lookup_List_Img_Box">
                                                 {/* 이미지 렌더링 */}
                                                 <img
+                                                    className="StyleDetail_Lookup_List_Img"
                                                     src={`uploads/${item.imageUrl.replace(
                                                         "C:\\Users\\JungHyunSu\\react\\soccershop\\public\\uploads\\",
                                                         ""
@@ -461,12 +462,12 @@ const StyleDetail = () => {
 
                                             <div className="StyleDetail_Lookup_List_Content">
                                                 {/* 아이템 이름 */}
-                                                <p style={{ fontSize: "15px" }}>{item.itemName}</p>
+                                                <p >{item.itemName}</p>
                                             </div>
 
                                             <div className="StyleDetail_Lookup_List_Price">
                                                 {/* 가격 */}
-                                                <p style={{ fontSize: "15px" }}>￦ {item.price}원</p>
+                                                <p>￦ {item.price}원</p>
                                             </div>
                                         </Link>
                                     </div>
