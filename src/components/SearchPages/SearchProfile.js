@@ -89,7 +89,6 @@ const SearchProfile = () => {
                             <div className="SearchProfile_user_information">
                                 <a href={`/StyleProfile?memberId=${member.id}`}>
                                     <div className="SearchProfile_user_id">{member.nickname}</div>
-                                    <div className="SearchProfile_user_message">소개 메시지 없음</div>
                                 </a>
                             </div>
                         </div>
