@@ -149,6 +149,7 @@
 }
 /* -------------------------------------------- */
 
+
 /* 적립금 */
 .CheckoutPage_Reward_Points {
     width: 100%;
@@ -170,17 +171,25 @@
     align-items: center;
 }
 .CheckoutPage_Available_Points_Text{
-    width: 70%;
+    width: 400px;
 }
-.CheckoutPage_Available_Points_button{
+.CheckoutPage_Available_Points_button_Box{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%; 
+    width: 80%;     
 }
-.CheckoutPage_Available_Points_button button:hover{
+.CheckoutPage_Available_Points_button{
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%; 
+}
+.CheckoutPage_Available_Points_button:hover{
     cursor: pointer;
-    
+    color: red;
+    font-weight: bold;
 }
 .CheckoutPage_Apply_Points{
     width: 30%;
@@ -201,10 +210,14 @@
     margin-right: 10px;
 }
 .CheckoutPage_Apply_Points_button{
+    all: unset;
     height: 20px;
+    
 }
 .CheckoutPage_Apply_Points_button:hover{
     cursor: pointer;
+    color: red;
+    font-weight: bold;
 }
 /* 강하게 표시되는 적립금 */
 .CheckoutPage_Applied_Points strong {

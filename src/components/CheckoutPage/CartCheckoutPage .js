@@ -291,8 +291,8 @@ const CartCheckoutPage = () => {
                     <div className="CheckoutPage_Reward_Points">
                         <div className="CheckoutPage_Available_Points">
                             <p className="CheckoutPage_Available_Points_Text">보유 적립금: {availablePoints}원</p>
-                            <div className="CheckoutPage_Available_Points_button">
-                                <button onClick={handleUseAllPoints}>전액 사용</button>
+                            <div className="CheckoutPage_Available_Points_button_Box">
+                                <button className="CheckoutPage_Available_Points_button" onClick={handleUseAllPoints}>전액 사용</button>
                             </div>
                         </div>
 
