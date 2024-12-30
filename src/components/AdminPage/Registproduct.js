@@ -146,7 +146,7 @@ const Registproduct = () => {
     }
 
     // 이미지 파일 리스트 처리
-    const imageInputs = document.querySelectorAll(".image-list input[type='file']");
+    const imageInputs = document.querySelectorAll(".Registproduct_image-list input[type='file']");
     const itemImages = Array.from(imageInputs)
       .map(input => input.files[0])
       .filter(file => file !== undefined); // 파일이 있는 경우만 추가
